@@ -50,3 +50,61 @@ kubectl create deployment --image=nginx nginx --replicas=4 --dry-run=client -o y
 
 `kubectl create service nodeport my-service --tcp=80:80 -o yaml > service-definition-1.yaml`
 
+kubectl create service nodeport webapp-service --tcp=30080:8080 -o yaml > service-definition-1.yaml
+
+
+## notice there is no labels in this configuration. Labels is what is used to assicuate a specific template. 
+### sample with declarative mode
+
+```yaml
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: webapp-service
+  namespace: default
+spec:
+  ports:
+  - nodePort: 30080
+    port: 8080
+    targetPort: 8080
+  selector:
+    name: simple-webapp
+  type: NodePort
+
+```
+
+```yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: webapp-service
+  creationTimestamp: "2024-08-27T16:19:59Z"
+
+  namespace: default
+  resourceVersion: "1329"
+  uid: 048927bc-7419-4225-9be6-0e9fc71a93b3
+spec:
+  clusterIP: 10.43.130.130
+  clusterIPs:
+  - 10.43.130.130
+  externalTrafficPolicy: Cluster
+  internalTrafficPolicy: Cluster
+  ipFamilies:
+  - IPv4
+  ipFamilyPolicy: SingleStack
+  ports:
+  - name: 8080-8080
+    nodePort: 30080
+    port: 8080
+    protocol: TCP
+    targetPort: 8080
+  selector:
+    name: simple-webapp
+  sessionAffinity: None
+  type: NodePort
+status:
+  loadBalancer: {}
+
+```
+
