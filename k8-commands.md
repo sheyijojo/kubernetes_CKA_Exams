@@ -118,3 +118,7 @@ status:
 `kubectl get pods --all-namespaces`
 `kubectl get pods -A`
 
+
+`kubectl run redis --image=redis:alpine --labels=tier=db`
+
+kubectl create service clusterip redis-service --tcp=6379:6379
