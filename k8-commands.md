@@ -135,15 +135,16 @@ kubectl create service clusterip redis-service --tcp=6379:6379
 `kubectl create ns dev-ns`
 
 
+```md
 Create a new deployment called redis-deploy in the dev-ns namespace with the redis image. It should have 2 replicas.
 
 
 Use imperative commands.
 
-`kubectl create deployment redis-deploy --image=redis --replicas=2 --namespace=dev-ns`
+kubectl create deployment redis-deploy --image=redis --replicas=2 --namespace=dev-ns
 
-`kubectl expose pod httpd --port 80`
-
+kubectl expose pod httpd --port 80
+```
 
 ## nodeport for manual scheduling 
 ```yaml
@@ -170,10 +171,19 @@ kubectl get pods --watch
 ## get a pod name with the selector to get the label
 
 `kubectl get pods --selector app=App1`
-
+`kubectl get pods --selector app=App1  --no-headers | wc -l`
 `kubectl get pods --selector env=dev`
 
 ## get all objects in an env
 `kubectl get all --selector env=prod`
 
 
+## get all pods in different env 
+`kubectl get pods -l 'env in (prod,finance,frontend)`
+
+## Identify the POD which is part of the prod environment, the finance BU and of frontend tier?
+`kubectl get pods -l env=prod,bu=finance,tier=frontend`
+
+OR
+
+`kubectl get all --selector env=prod,bu=finance,tier=frontend
