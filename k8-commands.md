@@ -142,7 +142,7 @@ Use imperative commands.
 
 `kubectl create deployment redis-deploy --image=redis --replicas=2 --namespace=dev-ns`
 
-kubectl expose pod httpd --port 80
+`kubectl expose pod httpd --port 80`
 
 
 ## nodeport for manual scheduling 
@@ -157,6 +157,23 @@ spec:
     name: nginx
   nodeName: node01  # Replace with the name of the node you want to schedule the pod on
 
-
-
 ```
+
+## check if the scheduler is runnig in namesystem
+kubectl get pods -n kube-system
+
+## Instead of deleting a pod, you can replace 
+kubectl replace --force -f nginx.yaml
+
+kubectl get pods --watch
+
+## get a pod name with the selector to get the label
+
+`kubectl get pods --selector app=App1`
+
+`kubectl get pods --selector env=dev`
+
+## get all objects in an env
+`kubectl get all --selector env=prod`
+
+
