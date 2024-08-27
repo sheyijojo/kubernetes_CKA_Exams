@@ -122,3 +122,41 @@ status:
 `kubectl run redis --image=redis:alpine --labels=tier=db`
 
 kubectl create service clusterip redis-service --tcp=6379:6379
+
+
+
+`kubectl create service clusterip redis-service --tcp=6379`
+
+
+
+`kubectl run custom-nginx --image=nginx --port=8080`
+
+
+`kubectl create ns dev-ns`
+
+
+Create a new deployment called redis-deploy in the dev-ns namespace with the redis image. It should have 2 replicas.
+
+
+Use imperative commands.
+
+`kubectl create deployment redis-deploy --image=redis --replicas=2 --namespace=dev-ns`
+
+kubectl expose pod httpd --port 80
+
+
+## nodeport for manual scheduling 
+```yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: nginx
+spec:
+  containers:
+  - image: nginx
+    name: nginx
+  nodeName: node01  # Replace with the name of the node you want to schedule the pod on
+
+
+
+```
