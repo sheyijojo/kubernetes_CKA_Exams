@@ -108,3 +108,13 @@ status:
 
 ```
 
+## Namespace
+`kubectl run redis --image=redis --namespace=finance`
+
+`kubectl get pods --namespace=research`
+
+`kubectl get pods -n=researchnamespace`
+
+`kubectl get pods --all-namespaces`
+`kubectl get pods -A`
+
