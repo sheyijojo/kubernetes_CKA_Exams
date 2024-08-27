@@ -42,3 +42,11 @@ OR
 In k8s version 1.19+, we can specify the –replicas option to create a deployment with 4 replicas.
 
 kubectl create deployment --image=nginx nginx --replicas=4 --dry-run=client -o yaml > nginx-deployment.yaml
+
+## Create a service 
+
+`kubectl create service nodeport <service-name> --tcp=<port>:<target-port> -o yaml > service-definition-1.yaml`
+
+
+`kubectl create service nodeport my-service --tcp=80:80 -o yaml > service-definition-1.yaml`
+
