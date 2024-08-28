@@ -211,9 +211,12 @@ Tains are ste on Nodes, tolerance are set on pods.
 `kubectl get pods -o wide`
 
 ## Label a Node for NodeSelector section
-
 `kubectl label nodes <node-name> <label-key>=<label-value>`
+
 `kubectl label nodes node-1 size=Large`
+
+
+`kubectl label nodes node01 color=blue`
 
 ## specify node selector in the pod-sefintion file
 ```yaml
