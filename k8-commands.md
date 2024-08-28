@@ -210,4 +210,37 @@ Tains are ste on Nodes, tolerance are set on pods.
 ## get more inforation like nodes from this command 
 `kubectl get pods -o wide`
 
+## Label a Node for NodeSelector section
 
+`kubectl label nodes <node-name> <label-key>=<label-value>`
+`kubectl label nodes node-1 size=Large`
+
+## specify node selector in the pod-sefintion file
+```yaml
+
+spec:
+  nodeSelector:
+    size: Large
+```yaml
+## Node Affinity and Antiffinity is better and address complex needs 
+```yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: nginx
+spec:
+  affinity:
+    nodeAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        nodeSelectorTerms:
+        - matchExpressions:
+          - key:  size ##disktype
+            operator: In  ##NotIn
+            values:
+            -  Large   ##ssd
+            -  Medium          
+  containers:
+  - name: nginx
+    image: nginx
+    imagePullPolicy: IfNotPresent
+```
