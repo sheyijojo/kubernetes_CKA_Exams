@@ -256,3 +256,41 @@ spec:
 kubectl create deployment red --replicas=2 --image=nginx --dry-run=client -o yaml > sample.yaml
 
 ```
+
+## Create Deploymemnt with Affinity to a Label on controlnode
+```yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    app: red
+  name: red
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: red
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: red
+    spec:
+      affinity:
+        nodeAffinity:
+         requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+             - matchExpressions:
+               - key: node-role.kubernetes.io/control-plane
+                 operator: In
+                 values:
+                    - ""
+
+      containers:
+      - image: nginx
+        name: nginx
+        resources: {}
+status: {}
+```
