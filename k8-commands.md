@@ -199,6 +199,15 @@ Tains are ste on Nodes, tolerance are set on pods.
 
 `kubectl describe node kubemaster | grep Taint`
 
+## Remove taint from a node
+`kubectl taint nodes controlplane example-key:NoSchedule-`
 
+`kubectl taint nodes controlplane node-role.kubernetes.io/control-plane:NoSchedule-`
+
+## Create a pod in yaml but do not run
+`kubectl run nginx --image=nginx --dry-run=client -o yaml > bee.yaml`
+
+## get more inforation like nodes from this command 
+`kubectl get pods -o wide`
 
 
