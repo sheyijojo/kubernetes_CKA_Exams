@@ -235,7 +235,7 @@ spec:
         nodeSelectorTerms:
         - matchExpressions:
           - key:  size ##disktype
-            operator: In  ##NotIn
+            operator: In  ##NotIn ##exist
             values:
             -  Large   ##ssd
             -  Medium          
