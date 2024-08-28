@@ -225,7 +225,7 @@ spec:
   nodeSelector:
     size: Large
 ```yaml
-## Node Affinity and Antiffinity is better and address complex needs 
+## Node Affinity and Antiffinity is better and address complex needs, spec affinit should be under pods not Deployment
 ```yaml
 apiVersion: v1
 kind: Pod
@@ -246,4 +246,13 @@ spec:
   - name: nginx
     image: nginx
     imagePullPolicy: IfNotPresent
+```
+
+## sample task 
+`kubectl create deployment red --replicas=2 --image=nginx -o yaml > sample.yaml`
+
+## Dry run
+```yaml
+kubectl create deployment red --replicas=2 --image=nginx --dry-run=client -o yaml > sample.yaml
+
 ```
