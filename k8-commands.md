@@ -257,7 +257,7 @@ kubectl create deployment red --replicas=2 --image=nginx --dry-run=client -o yam
 
 ```
 
-## Create Deploymemnt with Affinity to a Label on controlnode
+## Create Deployment with Affinity to a Label on controlnode
 ```yaml
 apiVersion: apps/v1
 kind: Deployment
