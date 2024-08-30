@@ -10,7 +10,8 @@ spec.activeDeadlineSeconds
 spec.tolerations
 For example, you cannot edit the environment variables, service accounts, and resource limits (all of which we will discuss later) of a running pod. But if you really want to, you have 2 options:
 
-1. Run the kubectl edit pod  command. This will open the pod specification in an editor (vi editor). Then edit the required properties. When you try to save it, you will be denied. This is because you are attempting to edit a field on the pod that is not editable.
+1. Run the kubectl edit pod  command. This will open the pod specification in an editor (vi editor). Then edit the required properties. 
+When you try to save it, you will be denied. This is because you are attempting to edit a field on the pod that is not editable.
 
 Image
 
