@@ -334,4 +334,7 @@ spec:
 
 ```
 
+## Daemonsets
+`kubectl get daemonsets`
+
 
