@@ -386,7 +386,18 @@ kubectl run static-busybox --image=busybox --dry-run=client -o yaml --command --
 cp static-busybox.yaml  /etc/kubernetes/manifests/
 ```
 
-## watach while your pods get deployed 
+## watch while your pods get deployed 
 `kubectl get pods --watch`
 
+## to get nodes in manifest file in another nodes
+```yaml
+## ssh into the nodes
+kubectl get nodes -o wide
 
+ssh internalipaddr
+
+ls /etc/kubernetes/manifests/
+
+## check the kuubelet config
+cat /var/lib/kubelet
+```
