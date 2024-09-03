@@ -381,7 +381,12 @@ cat /var/lib/kubelet/config.yaml   ##for any given static pod config
 
 ## create a static pod name static-busybox that uses the busy-box image and the command sleep 1000
 
-`yaml
-kubectl run static-busybox --image=busybox --dry-run=client -o yaml --command -- sleep 1000
+```yaml
+kubectl run static-busybox --image=busybox --dry-run=client -o yaml --command -- sleep 1000 > static-busybox.yaml 
+cp static-busybox.yaml  /etc/kubernetes/manifests/
+```
 
-`
+## watach while your pods get deployed 
+`kubectl get pods --watch`
+
+
