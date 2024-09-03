@@ -26,7 +26,7 @@ Generate POD Manifest YAML file (-o yaml). Don’t create it(–dry-run)
 `kubectl create deployment --image=nginx nginx --dry-run=client -o yaml`
 
 
-Generate Deployment YAML file (-o yaml). Don’t create it(–dry-run) and save it to a file.
+## Generate Deployment YAML file (-o yaml). Don’t create it(–dry-run) and save it to a file.
 
 `kubectl create deployment --image=nginx nginx --dry-run=client -o yaml > nginx-deployment.yaml`
 
@@ -37,6 +37,7 @@ Generate Deployment YAML file (-o yaml). Don’t create it(–dry-run) and save 
 
 
 `kubectl create deployment httpd-frontend --image=httpd:2.4-alpine --replicas=3`
+
 OR
 
 In k8s version 1.19+, we can specify the –replicas option to create a deployment with 4 replicas.
@@ -340,6 +341,7 @@ spec:
 ## get in all namespace
 kubectl get daemonsers -A
 
-
+## Namespace continued
+kubectl describe daemonsets kube-proxy -n=kube-system
 
 
