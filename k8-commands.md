@@ -368,7 +368,20 @@ kubectl get pod name-of-pod -n kube-system -o yaml
 `kubectl get nodes`
 ## find config files in linux 
 `find /etc -type f -name "*.conf"`
-
+```yaml
 ## How many static pods exist in this cluster in all namespaces 
-`kubectl get pods -A`
+kubectl get pods -A
 
+## path to directory for the static pod
+check the kubelt conf
+cat /var/lib/kubelet/config.yaml   ##for any given static pod config
+## check for static pod path
+
+```
+
+## create a static pod name static-busybox that uses the busy-box image and the command sleep 1000
+
+`yaml
+kubectl run static-busybox --image=busybox --dry-run=client -o yaml --command -- sleep 1000
+
+`
