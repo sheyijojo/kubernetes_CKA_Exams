@@ -337,4 +337,9 @@ spec:
 ## Daemonsets
 `kubectl get daemonsets`
 
+## get in all namespace
+kubectl get daemonsers -A
+
+
+
 
