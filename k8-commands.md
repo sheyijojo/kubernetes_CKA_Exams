@@ -339,9 +339,36 @@ spec:
 `kubectl get daemonsets`
 
 ## get in all namespace
-kubectl get daemonsers -A
+`kubectl get daemonsets -A`
 
 ## Namespace continued
-kubectl describe daemonsets kube-proxy -n=kube-system
+`kubectl describe daemonsets kube-proxy -n kube-system`
 
+## Daemonsets shortcut
+`kubectl describe ds kube-flannel-ds -n kube-system`
+
+## copy from the documentation or use deployment dry run and change it 
+`kubectl create deployment elasticsearch -n kube-system --image=aaas --dry-run=client -o yaml`
+
+```yaml
+## No replicas
+## change the image name
+##
+kubectl create -f fluendt.yaml
+
+kubectly get ds -n kube-system
+```
+
+## get static pods
+- static pods usually have node name appended to their name, clue to know them
+- check for the owner reference session, check the kind and name. The kind should be like a Node. otherwise could be Relicaset, or any other object 
+
+## another way 
+kubectl get pod name-of-pod -n kube-system -o yaml
+`kubectl get nodes`
+## find config files in linux 
+`find /etc -type f -name "*.conf"`
+
+## How many static pods exist in this cluster in all namespaces 
+`kubectl get pods -A`
 
