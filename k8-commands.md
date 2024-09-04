@@ -401,3 +401,9 @@ ls /etc/kubernetes/manifests/
 ## check the kuubelet config
 cat /var/lib/kubelet
 ```
+
+## Debug schedulers
+`kubectl get events -o wide`
+
+- **schedulers logs**
+- `kubectl logs my-custom-scheduler --name-space=kube-system`
