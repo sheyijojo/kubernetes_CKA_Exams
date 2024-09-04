@@ -10,8 +10,8 @@
 `minikube addons enable metrics-server
 
 ## Metrics Server 
-
-`git clone https://github.com/kodekloudhub/kubernetes-metrics-server.git
+- **Do not use this for PROD, use official documentation**
+`git clone https://github.com/kodekloudhub/kubernetes-metrics-server.git`
 `kubectl create -f deploy/1.8+/`
 
 **running `kubectl create -f .**
@@ -33,3 +33,10 @@ clusterrolebinding.rbac.authorization.k8s.io/system:metrics-server created
 `kubectl top node`
 
 `kubectl top pod`
+
+## Application logs 
+
+**view logs life in pods**
+- `kubectl logs -f event-simulator-pod`
+- `kubectl logs -f event-simulator-pod container-name`
+  
