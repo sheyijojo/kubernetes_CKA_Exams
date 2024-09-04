@@ -122,7 +122,7 @@ status:
 
 `kubectl run redis --image=redis:alpine --labels=tier=db`
 
-kubectl create service clusterip redis-service --tcp=6379:6379
+`kubectl create service clusterip redis-service --tcp=6379:6379`
 
 
 
