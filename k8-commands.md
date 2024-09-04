@@ -38,12 +38,13 @@ Generate POD Manifest YAML file (-o yaml). Don’t create it(–dry-run)
 
 `kubectl create deployment httpd-frontend --image=httpd:2.4-alpine --replicas=3`
 
-OR
+**OR**
+```yaml
 
 In k8s version 1.19+, we can specify the –replicas option to create a deployment with 4 replicas.
 
 kubectl create deployment --image=nginx nginx --replicas=4 --dry-run=client -o yaml > nginx-deployment.yaml
-
+```
 ## Create a service 
 
 `kubectl create service nodeport <service-name> --tcp=<port>:<target-port> -o yaml > service-definition-1.yaml`
@@ -51,7 +52,7 @@ kubectl create deployment --image=nginx nginx --replicas=4 --dry-run=client -o y
 
 `kubectl create service nodeport my-service --tcp=80:80 -o yaml > service-definition-1.yaml`
 
-kubectl create service nodeport webapp-service --tcp=30080:8080 -o yaml > service-definition-1.yaml
+`kubectl create service nodeport webapp-service --tcp=30080:8080 -o yaml > service-definition-1.yaml`
 
 
 ## notice there is no labels in this configuration. Labels is what is used to assicuate a specific template. 
@@ -136,13 +137,13 @@ status:
 `kubectl create ns dev-ns`
 
 
-```md
-Create a new deployment called redis-deploy in the dev-ns namespace with the redis image. It should have 2 replicas.
+```yaml
+## Create a new deployment called redis-deploy in the dev-ns namespace with the redis image. It should have 2 replicas.
 
 
 Use imperative commands.
 
-kubectl create deployment redis-deploy --image=redis --replicas=2 --namespace=dev-ns
+`kubectl create deployment redis-deploy --image=redis --replicas=2 --namespace=dev-ns
 
 kubectl expose pod httpd --port 80
 ```
@@ -162,12 +163,12 @@ spec:
 ```
 
 ## check if the scheduler is runnig in namesystem
-kubectl get pods -n kube-system
+`kubectl get pods -n kube-system`
 
 ## Instead of deleting a pod, you can replace 
-kubectl replace --force -f nginx.yaml
+`kubectl replace --force -f nginx.yaml`
 
-kubectl get pods --watch
+`kubectl get pods --watch`
 
 ## get a pod name with the selector to get the label
 
@@ -187,7 +188,7 @@ kubectl get pods --watch
 
 OR
 
-`kubectl get all --selector env=prod,bu=finance,tier=frontend
+`kubectl get all --selector env=prod,bu=finance,tier=frontend`
 
 ## Taints and Tolerance
 Tains are ste on Nodes, tolerance are set on pods. 
@@ -363,9 +364,11 @@ kubectly get ds -n kube-system
 - static pods usually have node name appended to their name, clue to know them
 - check for the owner reference session, check the kind and name. The kind should be like a Node. otherwise could be Relicaset, or any other object 
 
-## another way 
-kubectl get pod name-of-pod -n kube-system -o yaml
+## another way of getting pod yaml from a running pod
+`kubectl get pod name-of-pod -n kube-system -o yaml`
 `kubectl get nodes`
+
+
 ## find config files in linux 
 `find /etc -type f -name "*.conf"`
 ```yaml
@@ -403,7 +406,12 @@ cat /var/lib/kubelet
 ```
 
 ## Debug schedulers
+
+```yaml
 `kubectl get events -o wide`
 
-- **schedulers logs**
-- `kubectl logs my-custom-scheduler --name-space=kube-system`
+## schedulers logs
+  - kubectl logs my-custom-scheduler --name-space=kube-system
+
+```
+
