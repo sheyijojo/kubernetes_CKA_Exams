@@ -422,4 +422,35 @@ cat /var/lib/kubelet
 kubectl describe pod pod-name -n kube-system | grep Image
 
 ```
+## configmap sample
+```yaml
+apiVersion: v1
+data:
+  my-scheduler-config.yaml: |
+    apiVersion: kubescheduler.config.k8s.io/v1
+    kind: KubeSchedulerConfiguration
+    profiles:
+      - schedulerName: my-scheduler
+    leaderElection:
+      leaderElect: false
+kind: ConfigMap
+metadata:
+  creationTimestamp: null
+  name: my-scheduler-config
+  namespace: kube-system
 
+```
+## custom scheduler
+```
+apiVersion: v1
+kind: Pod 
+metadata:
+  name: nginx
+spec:
+  containers:
+  - image: nginx
+    name: nginx
+  schedulerName: 
+     my-scheduler
+
+```
