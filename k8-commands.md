@@ -413,5 +413,8 @@ cat /var/lib/kubelet
 ## schedulers logs
   - kubectl logs my-custom-scheduler --name-space=kube-system
 
+## find an image witing  a pod
+kubectl describe pod pod-name -n kube-system | grep Image
+
 ```
 
