@@ -454,3 +454,16 @@ spec:
      my-scheduler
 
 ```
+
+## See status of deployment 
+`kubectl rollout status deployment/myapp-deployment`
+
+## see history of deployment 
+
+`kubectl rollout history deployment/myapp-deployment`
+
+## list environment variables in Helm 
+`helm env`
+
+## enable bverbose option
+`helm --debug`
