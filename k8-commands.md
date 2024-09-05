@@ -462,8 +462,25 @@ spec:
 
 `kubectl rollout history deployment/myapp-deployment`
 
+# All Helm
+```yaml
+
+https://artifacthub.io/
+
 ## list environment variables in Helm 
-`helm env`
+helm env
 
 ## enable bverbose option
-`helm --debug`
+helm --debug
+
+## search for wordpress repo
+helm search wordpress
+
+helm search hub wordpress
+
+## add the repo
+helm repo add bitnami https://charts.bitnami.com/bitnami
+
+## install the app
+helm install my-release bitnami/wordpress
+```
