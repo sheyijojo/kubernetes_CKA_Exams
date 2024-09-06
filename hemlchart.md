@@ -17,7 +17,7 @@ https://artifacthub.io/
 `helm repo add bitnami https://charts.bitnami.com/bitnami`
 
 ## search
-`helm repo search bitnami`
+`helm search repo bitnami`
 
 ## install the app
 `helm install my-release bitnami/wordpress`
