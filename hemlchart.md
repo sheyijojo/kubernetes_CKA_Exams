@@ -38,12 +38,21 @@ https://artifacthub.io/
 `help repo update`
 
 
-- customiize installation using --set on the cli
+
 
 ## overides the value set at values.yaml file 
+- customiize installation using --set on the cli
 
 `helm install --set wordpressBlogName="Sheyi Blog Tutorial" my-release bitnami/wordpress --set wordpresseMAIL="john@gmail.com"`
+## Install example
+```md
+Deploy the Apache application on the cluster using the apache from the bitnami repository.
 
+
+Set the release Name to: amaze-surf
+```
+
+`helm install amaze-surf bitnami/apache`
 ## if values are too mnay
 **create a custom-values.yaml**
 
