@@ -139,5 +139,22 @@ ls nginx-chart
 metada:
   name: {{  .Release.Name }}-nginx
 ```
+## verify your chart is working 
+```yaml
+1. ## Lint
 
+helm lint ./nginx-chart
+
+2. ## Template
+helm template ./nginx-chart
+
+helm template ./nginx-chart --debug
+
+
+3. ##dry Run
+## if error is not from template, or from chart, it will be from kubernetes
+helm install hello-world-1 ./nginx-chart --dry-run
+
+
+```
 
