@@ -107,4 +107,15 @@ helm upgrade nginx-release bitnami/nginx
 ```
 
 
+## Installation nginx chart version
 
+```yaml
+## You can install any nginx helm chart version above 13 for installing 1.23.
+
+## Run the command:
+
+helm upgrade dazzling-web bitnami/nginx --version 13
+
+##which will install the current latest nginx helm chart.
+
+```
