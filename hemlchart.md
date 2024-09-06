@@ -98,6 +98,9 @@ helm rollback nginx-release 1
 //This takes back to revision 3 with the conf of revision1
 
 ## upgrade a the release
+
+Usage:  helm upgrade [RELEASE] [CHART] [flags]
+
 helm upgrade nginx-release bitnami/nginx
 
 ## Rollback does not restore persistent volume rollbacks, you will use chart hooks
