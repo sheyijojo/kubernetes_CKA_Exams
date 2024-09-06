@@ -1,65 +1,66 @@
 ## All Helm Chart
 
-
-
 https://artifacthub.io/
 
 ## list environment variables in Helm 
-helm env
+`helm env`
 
 ## enable bverbose option
-helm --debug
+`helm --debug`
 
 ## search for wordpress repo
-helm search wordpress
+`helm search wordpress`
 
-helm search hub wordpress
+`helm search hub wordpress`
 
 ## add the repo
-helm repo add bitnami https://charts.bitnami.com/bitnami
+`helm repo add bitnami https://charts.bitnami.com/bitnami`
 
 ## search
-helm repo search bitnami
+`helm repo search bitnami`
 
 ## install the app
-helm install my-release bitnami/wordpress
+`helm install my-release bitnami/wordpress`
 
 ## tracing releases
-helm list
+`helm list`
 
 ## Delete app
 
-helm unistall my-relase
+`helm unistall my-relase`
 
 ## check repos
 
-helm repo
+`helm repo`
 
-helm repo list
+`helm repo list`
 
-help repo update
+`help repo update`
 
-## customiize installation using --set on the cli
 
-## overides the va;ue set at values.yaml file 
+- customiize installation using --set on the cli
 
-helm install --set wordpressBlogName="Sheyi Blog Tutorial" my-release bitnami/wordpress --set wordpresseMAIL="john@gmail.com"
+## overides the value set at values.yaml file 
+
+`helm install --set wordpressBlogName="Sheyi Blog Tutorial" my-release bitnami/wordpress --set wordpresseMAIL="john@gmail.com"`
 
 ## if values are too mnay
-create a custom-values.yaml
+**create a custom-values.yaml**
+
 wordpressBlogName: Sheyi Blog
+
 wordpressRmail: john@gmail.com
 
 ## run the values flag to pick up the value
-helm install --values custom-values.yaml my-release bitnami/wordpress
+`helm install --values custom-values.yaml my-release bitnami/wordpress`
 
 
 ## other way of dediting direcctly
-helm pull bitnami/wordpress
+`helm pull bitnami/wordpress`
 
-helm pull --untar bitnami/wordpress
+`helm pull --untar bitnami/wordpress`
 
-ls
+`ls`
 
-helm install my-release ./wordpress
+`helm install my-release ./wordpress`
 
