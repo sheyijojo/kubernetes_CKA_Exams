@@ -53,6 +53,8 @@ Set the release Name to: amaze-surf
 ```
 
 `helm install amaze-surf bitnami/apache`
+
+- After installation is where we found chart releases. Search for releases(charts) using `helm list`
 ## if values are too mnay
 **create a custom-values.yaml**
 
