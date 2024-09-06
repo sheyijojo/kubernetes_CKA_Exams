@@ -119,3 +119,25 @@ helm upgrade dazzling-web bitnami/nginx --version 13
 ##which will install the current latest nginx helm chart.
 
 ```
+
+## Writing helm charts
+
+- Check the pdfs
+
+```yaml
+## first create a chart structure
+helm create nginx-chart
+
+ls nginx-chart
+
+## check the templaes directory
+
+## we don not want a static names on the files . e.g deployment name 
+
+
+## can specify release name for uniqueness
+metada:
+  name: {{  .Release.Name }}-nginx
+```
+
+
