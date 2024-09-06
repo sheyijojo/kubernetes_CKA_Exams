@@ -19,6 +19,8 @@ https://artifacthub.io/
 ## search
 `helm search repo bitnami`
 
+## remove repo 
+`helm repo remove hashicorp`
 ## install the app
 `helm install my-release bitnami/wordpress`
 
