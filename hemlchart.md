@@ -77,3 +77,31 @@ wordpressRmail: john@gmail.com
 
 `helm install my-release ./wordpress`
 
+
+## Helm Lifecycle management 
+
+```yaml
+## Install a version of a chart
+helm install nginx-release bitnami/nginx --version 7.1.0
+
+## check the pods from the release
+kubectl get pods
+
+## check the lrelease
+helm list
+
+## more details
+helm history
+
+## return to revision 1
+helm rollback nginx-release 1
+//This takes back to revision 3 with the conf of revision1
+
+## upgrade a the release
+helm upgrade nginx-release bitnami/nginx
+
+## Rollback does not restore persistent volume rollbacks, you will use chart hooks
+```
+
+
+
