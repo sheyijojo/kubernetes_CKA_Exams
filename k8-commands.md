@@ -462,4 +462,17 @@ spec:
 
 `kubectl rollout history deployment/myapp-deployment`
 
+## Undo a deployment rollout 
+`kubectl rollout undo deployment/myapp-deployment`
 
+## create deployments
+
+`kubectl create -f deployment-definiition.yaml`
+## Get Depployment
+`kubectl get deployments`
+
+##update- becareful, it creates a new config
+`kubectl apply -f deployment-definition.yaml`
+
+## deployment status
+`kubectl set image deployment/myapp-deployment nginx=nginx:1.9.1`
