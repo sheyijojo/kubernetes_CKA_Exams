@@ -440,7 +440,7 @@ metadata:
   namespace: kube-system
 
 ```
-## custom scheduler
+## custom scheduler.
 ```
 apiVersion: v1
 kind: Pod 
