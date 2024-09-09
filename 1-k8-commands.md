@@ -454,6 +454,8 @@ spec:
      my-scheduler
 
 ```
+## kubectl logs
+`kubectl logs podname`
 
 ## See status of deployment 
 `kubectl rollout status deployment/myapp-deployment`
@@ -471,8 +473,10 @@ spec:
 ## Get Depployment
 `kubectl get deployments`
 
-##update- becareful, it creates a new config
+## update - be careful, it creates a new config
 `kubectl apply -f deployment-definition.yaml`
 
-## deployment status
+## deployment status - Deployment files will have diff configs
 `kubectl set image deployment/myapp-deployment nginx=nginx:1.9.1`
+
+## Application Lifecycle k
