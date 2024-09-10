@@ -576,3 +576,9 @@ spec:
       -  "sleep"
       -  "1200"
 ```
+
+## Approach for editing 
+
+`kuubectl edit pod name-of-the-pod`
+
+`kubectl replace --force -f /tmp/kuubectl-edit-2623.yaml
