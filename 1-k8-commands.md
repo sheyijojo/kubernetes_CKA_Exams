@@ -495,3 +495,70 @@ or
 
 
 ## Application Lifecycle 
+
+```yaml
+## docker
+CMD
+
+## SPECIFY DIFFERENT cmd to satrt a docker
+
+docker run ubuntu [COMMAND]
+docker run ubuntu sleep 5
+
+## Make the change permanent
+FROM ubuntu
+
+CMD sleep 5
+
+docker build -t ubuntu-sleepr .
+
+docker run ubuntu-sleeper
+
+## change optionall 5 secs
+
+docker run ubuntu-sleeper 10
+
+## ADD ENTRYPOINT IN THE DOCKERFILE, to append additional CLI inout
+FROM Ubuntu
+
+ENTRYPOINT["sleep"]
+
+docker run ubuntu-sleeper 10
+
+## Add default value like 5 even if you forget on command line
+
+FROM Ubuuntu
+
+ENTRYPOINT ["sleep"]
+
+CMD["5"]
+
+docker run ubuntu-sleeper 10
+
+## In Kubernetes Pod
+Anything appended to the command goes to the args property in K8
+
+
+## for example
+
+docker run --name ubuntu-sleeper ubuntu-sleeper 10
+
+entrypoiit for dockerfile is sleep
+CMD in Dockerfile == ARGS in Kubernetes
+
+to overwrite ENTRPOINT will be command in Kubernetes
+
+apiVersion: v1
+kind: Pod
+metadata:
+  name: ubuntu-sleeper-pod
+spec:
+   containers:
+     - name: ubuntu-sleeper
+       image: ubuntu-sleeper
+       command: ["sleep2.0"]
+       args: ["10"] 
+
+```
+
+
