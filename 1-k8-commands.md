@@ -479,4 +479,19 @@ spec:
 ## deployment status - Deployment files will have diff configs
 `kubectl set image deployment/myapp-deployment nginx=nginx:1.9.1`
 
-## Application Lifecycle k
+## Edit 
+`kubectl edit deployment frontend`
+
+or
+
+`k set image deployment frontend simple-webapp=kodkloud/webapp-clor:v2`
+
+
+`kubectl get deployments frontend  --watch`
+`k get deploy`
+
+`k describe deploy frontend`
+
+
+
+## Application Lifecycle 
