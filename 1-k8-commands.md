@@ -581,4 +581,20 @@ spec:
 
 `kuubectl edit pod name-of-the-pod`
 
-`kubectl replace --force -f /tmp/kuubectl-edit-2623.yaml
+`kubectl replace --force -f /tmp/kuubectl-edit-2623.yaml`  
+
+`kubectl run nginx --image=nginx -- <arg1> <arg2> ... <argN> `
+
+## Config Map
+`kubectl create configmap  <config-name> --from-literal=<key>=<value> `
+
+
+`kubectl create configmap  app-config --from-literal=APP_COLOR=blue \
+                                      --from-literal=APP_MOD=prod
+`
+
+`kubectl create configmap <config-name> --from-file=<path-to-file>`
+
+`kubectl get configmaps`
+
+
