@@ -561,4 +561,18 @@ spec:
 
 ```
 
+## Another options for cpmmand 
 
+```yaml
+apiVersion: v1 
+kind: Pod 
+metadata:
+  name: ubuntu-sleeper-3 
+spec:
+  containers:
+  - name: ubuntu
+    image: ubuntu
+    command:
+      -  "sleep"
+      -  "1200"
+```
