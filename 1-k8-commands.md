@@ -561,7 +561,7 @@ spec:
 
 ```
 
-## Another options for cpmmand 
+## Another options for command 
 
 ```yaml
 apiVersion: v1 
