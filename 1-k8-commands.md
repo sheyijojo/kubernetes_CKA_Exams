@@ -440,7 +440,7 @@ metadata:
   namespace: kube-system
 
 ```
-## custom scheduler
+## custom scheduler.
 ```
 apiVersion: v1
 kind: Pod 
@@ -454,6 +454,8 @@ spec:
      my-scheduler
 
 ```
+## kubectl logs
+`kubectl logs podname`
 
 ## See status of deployment 
 `kubectl rollout status deployment/myapp-deployment`
@@ -471,8 +473,128 @@ spec:
 ## Get Depployment
 `kubectl get deployments`
 
-##update- becareful, it creates a new config
+## update - be careful, it creates a new config
 `kubectl apply -f deployment-definition.yaml`
 
-## deployment status
+## deployment status - Deployment files will have diff configs
 `kubectl set image deployment/myapp-deployment nginx=nginx:1.9.1`
+
+## Edit 
+`kubectl edit deployment frontend`
+
+or
+
+`k set image deployment frontend simple-webapp=kodkloud/webapp-clor:v2`
+
+
+`kubectl get deployments frontend  --watch`
+`k get deploy`
+
+`k describe deploy frontend`
+
+
+
+## Application Lifecycle 
+
+```yaml
+## docker
+CMD
+
+## SPECIFY DIFFERENT cmd to satrt a docker
+
+docker run ubuntu [COMMAND]
+docker run ubuntu sleep 5
+
+## Make the change permanent
+FROM ubuntu
+
+CMD sleep 5
+
+docker build -t ubuntu-sleepr .
+
+docker run ubuntu-sleeper
+
+## change optionall 5 secs
+
+docker run ubuntu-sleeper 10
+
+## ADD ENTRYPOINT IN THE DOCKERFILE, to append additional CLI inout
+FROM Ubuntu
+
+ENTRYPOINT["sleep"]
+
+docker run ubuntu-sleeper 10
+
+## Add default value like 5 even if you forget on command line
+
+FROM Ubuuntu
+
+ENTRYPOINT ["sleep"]
+
+CMD["5"]
+
+docker run ubuntu-sleeper 10
+
+## In Kubernetes Pod
+Anything appended to the command goes to the args property in K8
+
+
+## for example
+
+docker run --name ubuntu-sleeper ubuntu-sleeper 10
+
+entrypoiit for dockerfile is sleep
+CMD in Dockerfile == ARGS in Kubernetes
+
+to overwrite ENTRPOINT will be command in Kubernetes
+
+apiVersion: v1
+kind: Pod
+metadata:
+  name: ubuntu-sleeper-pod
+spec:
+   containers:
+     - name: ubuntu-sleeper
+       image: ubuntu-sleeper
+       command: ["sleep2.0"]
+       args: ["10"] 
+
+```
+
+## Another options for command 
+
+```yaml
+apiVersion: v1 
+kind: Pod 
+metadata:
+  name: ubuntu-sleeper-3 
+spec:
+  containers:
+  - name: ubuntu
+    image: ubuntu
+    command:
+      -  "sleep"
+      -  "1200"
+```
+
+## Approach for editing 
+
+`kuubectl edit pod name-of-the-pod`
+
+`kubectl replace --force -f /tmp/kuubectl-edit-2623.yaml`  
+
+`kubectl run nginx --image=nginx -- <arg1> <arg2> ... <argN> `
+
+## Config Map
+`kubectl create configmap  <config-name> --from-literal=<key>=<value> `
+
+
+`kubectl create configmap  app-config --from-literal=APP_COLOR=blue \
+                                      --from-literal=APP_MOD=prod
+`
+
+`kubectl create configmap <config-name> --from-file=<path-to-file>`
+
+`kubectl get configmaps`
+
+
