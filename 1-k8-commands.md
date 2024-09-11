@@ -600,6 +600,7 @@ spec:
 
 ## Secrets
 `kubectl create secret generic`
+
 `kubectl create secret generic \ app-secret --from-literal=DB_HOST=mysql`
 
 `kubectl create secret generic <secret-name> --from-file=<path-to-file>`
