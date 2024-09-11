@@ -636,6 +636,10 @@ encrypt ETCD data at rest
 
 - `kubectl get secret app-secret -o yaml`
 
+
+https://www.youtube.com/watch?v=MTnQW9MxnRI
+
+
 **decode secrets**
   
 `echo -n "bXlzcWw' | base64 --decode`
