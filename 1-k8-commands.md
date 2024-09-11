@@ -599,13 +599,21 @@ spec:
 
 
 ## Secrets
+
+`kubectl create secret generic db-secret --from-literal=DB_Host=sql01  --from-literal=DB_User=root  --from-literal=DB_password=passw
+ord123`
+
 `kubectl create secret generic`
 
-`kubectl create secret generic \ app-secret --from-literal=DB_HOST=mysql`
+`kubectl create secret generic \ 
+app-secret --from-literal=DB_HOST=mysql \
+           --from-literal=DB_HOST=root  \
+           --from-literal=DB_password=passwrd
+`
 
 `kubectl create secret generic <secret-name> --from-file=<path-to-file>`
 
-`kubectl create secret generic \ app-secret --from-file=app_secret.properties`
+`kubectl create secret generic \ app-secret --from-file=app_secret.properties  `
 
 
 **declarivative**
