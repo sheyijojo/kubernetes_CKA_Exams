@@ -608,7 +608,8 @@ spec:
 
 
 **declarivative**
-`kubectl create -f secret-data.yaml`
+
+- `kubectl create -f secret-data.yaml`
 
 - The data must be in encoded form in secrets. Screts are encoded but not encrypyted
 
@@ -618,13 +619,13 @@ encrypt ETCD data at rest
 
 **on linux**
 
-`echo -n 'mysql' | base64`
+- `echo -n 'mysql' | base64`
 
-`kubectl get secreats`
+- `kubectl get secreats`
 
-`kubectl describe secrets`
+- `kubectl describe secrets`
 
-`kubectl get secret app-secret -o yaml`
+- `kubectl get secret app-secret -o yaml`
 
 **decode secrets**
   
