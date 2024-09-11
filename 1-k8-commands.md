@@ -610,9 +610,9 @@ spec:
 **declarivative**
 `kubectl create -f secret-data.yaml`
 
-The data must be in encoded form in secrets. Screts are encoded but not encrypyted
+- The data must be in encoded form in secrets. Screts are encoded but not encrypyted
 
-Do  ot check in secret objects to SCM along the code 
+- Do not check in secret objects to SCM along the code 
 
 encrypt ETCD data at rest
 
@@ -625,7 +625,9 @@ encrypt ETCD data at rest
 `kubectl describe secrets`
 
 `kubectl get secret app-secret -o yaml`
+
 **decode secrets**
+  
 `echo -n "bXlzcWw' | base64 --decode`
 
 ```yaml
