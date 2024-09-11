@@ -598,3 +598,60 @@ spec:
 `kubectl get configmaps`
 
 
+## Secrets
+`kubectl create secret generic`
+`kubectl create secret generic \ app-secret --from-literal=DB_HOST=mysql`
+
+`kubectl create secret generic <secret-name> --from-file=<path-to-file>`
+
+`kubectl create secret generic \ app-secret --from-file=app_secret.properties`
+
+
+**declarivative**
+`kubectl create -f secret-data.yaml`
+
+The data must be in encoded form in secrets. Screts are encoded but not encrypyted
+
+Do  ot check in secret objects to SCM along the code 
+
+encrypt ETCD data at rest
+
+**on linux**
+
+`echo -n 'mysql' | base64`
+
+`kubectl get secreats`
+
+`kubectl describe secrets`
+
+`kubectl get secret app-secret -o yaml`
+**decode secrets**
+`echo -n "bXlzcWw' | base64 --decode`
+
+```yaml
+spec:
+  containers:
+   - name : simpleapp
+     image: simpleapp
+     ports:
+       - containerPort: 8080
+     envFrom:
+       - secretRef:
+            name: app-secret
+
+
+## single env
+env:
+ - name: DB_Password
+   vakueFrom:
+     secretkeyRef:
+       name: app-secret
+       key: DB_Password
+
+## volumes
+volumes:
+- name: app-secret-volume
+  secret:
+    secretName: app-secret
+
+```
