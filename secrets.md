@@ -1,4 +1,4 @@
-## secrets
+## secrets in kubernetes 
 
 Remember that secrets encode data in base64 format. Anyone with the base64 encoded secret can easily decode it. As such the secrets can be considered not very safe.
 
@@ -19,3 +19,6 @@ Once the Pod that depends on the secret is deleted, kubelet will delete its loca
 Read about the protections and risks of using secrets here.
 
 Having said that, there are other better ways of handling sensitive data like passwords in Kubernetes, such as using tools like Helm Secrets, and HashiCorp Vault.
+
+## Encrypting secret data at Rest 
+
