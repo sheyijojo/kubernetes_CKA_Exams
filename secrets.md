@@ -22,3 +22,115 @@ Having said that, there are other better ways of handling sensitive data like pa
 
 ## Encrypting secret data at Rest 
 
+This is a kubeadm setup
+
+The focus here is the secret data stored inside the etcd in the control plane.
+
+How is this data stored in the etcd
+
+
+## On the control plane
+**Generate certificate manually**
+
+https://kubernetes.io/docs/tasks/administer-cluster/encrypt-data/
+
+`etcdctl`
+
+`apt-get install etcd-client`
+
+**check for the etcd control plane**
+
+`kubectl get pods -n kube-system`
+
+
+- check if you have the cert files on the control plane 
+
+ls /etc/kubernetes/pki/etcd/ca.crt
+
+## change the secret1 to your created secret
+```yaml
+ETCDCTL_API=3 etcdctl \
+   --cacert=/etc/kubernetes/pki/etcd/ca.crt   \
+   --cert=/etc/kubernetes/pki/etcd/server.crt \
+   --key=/etc/kubernetes/pki/etcd/server.key  \
+   get /registry/secrets/default/secret1 | hexdump -C
+
+```
+
+- With this you can get your secret from the etcd server, so not save in an uncrypted format 
+
+**We need encryption at rest**
+
+- check if encyrption is enabled alreadt 
+
+`ps -aux | grep kube-api`
+
+
+`ps -aux | grep kube-api | grep "encryption-provider-config"`
+
+**check for the encrytpion in kube-apiserver.yaml 
+
+`ls /etc/kubernetes/manifests/`
+
+- checking it shows it does not have encryptoon at rest 
+
+## create a config file to store your secrets encrytpted
+
+```yaml
+---
+apiVersion: apiserver.config.k8s.io/v1
+kind: EncryptionConfiguration
+resources:
+  - resources:
+      - secrets
+    providers:
+      - aescbc:
+          keys:
+            - name: key1
+              secret: <BASE 64 ENCODED SECRET>
+      - identity: {} # REMOVE THIS LINE
+
+```
+
+## To create a new secret, generate a random jey and base64 encode it 
+
+`head -c 32 /dev/urandom | base64`
+
+```yaml
+
+enc.yaml
+---
+apiVersion: apiserver.config.k8s.io/v1
+kind: EncryptionConfiguration
+resources:
+  - resources:
+      - secrets
+    providers:
+      - aescbc:
+          keys:
+            - name: key1
+              secret: fbfodfnmrwer3094u34mnms;dmdd>
+      - identity: {} # REMOVE THIS LINE
+
+```
+
+`mkdir /etc/kubernetes/enc`
+
+`mv enc.yaml /etc/kubernetes/enc`
+
+## edit the kuberapi manifest file and make changes
+
+
+`vi /etc/kubernetes/manifests/kube-apiserver.yaml`
+
+
+add path to the encryption file 
+
+`--encryption-provider-config=/etc/kubernetes/enc/enc.yaml`
+
+
+
+`speficy the mount too and local directory`
+
+`done, api server will restart auto`
+
