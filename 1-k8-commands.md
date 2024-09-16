@@ -704,7 +704,20 @@ Run this
 This will delete the pod and recreate a new one 
 
 ## Get all information on all pods
-
+```yaml
 `k describe pod`
 
+## An app wuth inti:CrashLoopBackoff
+
+check the logs of pod
+
+k logs orange
+
+## check the logs of the inti container
+k logs orange -c init-myservcie
+
+
+
+
+```
 
