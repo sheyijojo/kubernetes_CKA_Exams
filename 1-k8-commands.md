@@ -715,9 +715,6 @@ k logs orange
 
 ## check the logs of the inti container
 k logs orange -c init-myservcie
-
-
-
-
 ```
+
 
