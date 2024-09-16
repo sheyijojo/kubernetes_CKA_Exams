@@ -700,3 +700,11 @@ Run this
 `k edit pod app -n elastic-stack`
 
 `k replace --force -f /tmp/kubectl-edit2222323.yaml`
+
+This will delete the pod and recreate a new one 
+
+## Get all information on all pods
+
+`k describe pod`
+
+
