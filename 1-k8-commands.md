@@ -688,4 +688,15 @@ https://kubernetes.io/docs/tasks/access-application-cluster/communicate-containe
 
 k -n elastic-stack exec -it app -- cat /log/app.log
 
+## edit pod in a namespace
+k edit pod app -n elastic-stack
+
 ```
+
+## Error - pods not valid after editing a pod
+
+Run this 
+
+`k edit pod app -n elastic-stack`
+
+`k replace --force -f /tmp/kubectl-edit2222323.yaml`
