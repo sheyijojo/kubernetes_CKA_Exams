@@ -750,5 +750,40 @@ https://github.com/kubernetes/community/blob/master/contributors/devel/sig-archi
 
 https://github.com/kubernetes/community/blob/master/contributors/devel/sig-architecture/api_changes.md
 
+## cluster Update Process
 
+```yaml
+## Using kubeadm tool, kubeadm does not install or upgrade kubelets.
+
+kubeadm upgrade plan 
+
+## to upgrade the cluster, upgrade the kubeadm tool first
+
+apt-get upgrade -y kubeadm=1.12.0-00
+
+kubeadm upgrade apply v1.12.0
+
+## upgrade the kubelet if on master nodes
+apt-get upgrade -y kubelet=1.12.0-00
+
+systemctl restart kubelet
+
+
+## workers node not updated yet
+
+## update them one after the other 
+kubectl drain node-1
+
+apt-get upgrade -y kubeadm=1.12.0-00
+
+apt-get upgrade -y kubelet=1.12.0-00
+
+kubeadm upgrade node config --kubelet-version v1.12.0
+
+systemctl restart kubelet
+
+## make the node schedulable
+
+kubectl uncordon node-1
+```
 
