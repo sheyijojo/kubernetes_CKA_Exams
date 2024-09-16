@@ -725,16 +725,17 @@ kubectl drain node-1
 
 pods are gracefully terminated, no pods can be schedules on this node
 
-## make it scheduler
+## The kubectl uncordon command is used to mark a Kubernetes node as schedulable again after it was previously cordone
 
 kubectl uncordon node-1
 
-## mark a pod on scheduler
+## The kubectl cordon command is used to mark a Kubernetes node as unschedulable. 
 
 kubectl cordon node-01
 
 
 k describe nodes
 
-
+## Get pods with node details 
+ k get pods -o wide
 ```
