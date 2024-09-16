@@ -671,3 +671,21 @@ volumes:
     secretName: app-secret
 
 ```
+
+## Creating a Multi Container Pod
+```yaml
+kubectl run yellow --image=busybox --dry-run=client -o yaml --command -- sleep 1000 > mysample.yaml
+
+k get pods -n elastic-stack
+
+k -n elastic-stack logs kibana
+
+## Edit the pod in the elastic-stack namespace to add a sidecar container to send logs to Elastic Search. Mount the log volume to the sidecar container.
+
+https://kubernetes.io/docs/tasks/access-application-cluster/communicate-containers-same-pod-shared-volume/
+
+## can exec into a runing pod
+
+k -n elastic-stack exec -it app -- cat /log/app.log
+
+```
