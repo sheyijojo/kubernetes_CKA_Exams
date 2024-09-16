@@ -716,5 +716,25 @@ k logs orange
 ## check the logs of the inti container
 k logs orange -c init-myservcie
 ```
+## Os Updates
+
+When working with workloads on a node
+```yaml
+## drain workloads to move to another node
+kubectl drain node-1
+
+pods are gracefully terminated, no pods can be schedules on this node
+
+## make it scheduler
+
+kubectl uncordon node-1
+
+## mark a pod on scheduler
+
+kubectl cordon node-01
 
 
+k describe nodes
+
+
+```
