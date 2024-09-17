@@ -816,3 +816,7 @@ systemctl restart kubelet
 kubectl uncordon node-1
 ```
 
+## Backup - Resource configs
+`kubectl get all -all-namespaces -o yaml > all-deploy-services.yaml`
+
+
