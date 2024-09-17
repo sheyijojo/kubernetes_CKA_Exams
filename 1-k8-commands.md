@@ -643,6 +643,11 @@ https://www.youtube.com/watch?v=MTnQW9MxnRI
 **decode secrets**
   
 `echo -n "bXlzcWw' | base64 --decode`
+## logs 
+`kubectl -n elastic-stack  logs kibana`
+
+## exec into a pod container 
+`kubectl -n elastic-stack exec -it app -- cat /log/app.log`
 
 ```yaml
 spec:
