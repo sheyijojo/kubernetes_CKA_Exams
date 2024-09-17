@@ -38,7 +38,7 @@ Kubernetes provides additional support to check the health of applications runni
 ## Working with ETCDCTL
 
 ```yaml
-ORKING WITH ETCDCTL
+WORKING WITH ETCDCTL
 
 etcdctl is a command line client for etcd.
 
