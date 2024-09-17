@@ -758,11 +758,24 @@ https://github.com/kubernetes/community/blob/master/contributors/devel/sig-archi
 ## cluster Update Process
 
 ```yaml
-## Using kubeadm tool, kubeadm does not install or upgrade kubelets.
 
+## Using kubeadm tool, kubeadm does not install or upgrade kubelets.
+## check the current local version of kubeadm tool, also check the remote version
 kubeadm upgrade plan 
 
 ## to upgrade the cluster, upgrade the kubeadm tool first
+
+## lets say we will upgrade the MASTER NODE first
+
+## drain the controleplane node
+k drain controlplane --ignore-daemonsets
+
+
+## upgrade the control plane compoonent
+## check the docs for upgradimg kubeadm
+
+https://v1-30.docs.kubernetes.io/docs/tasks/administer-cluster/kubeadm/kubeadm-upgrade/
+
 
 apt-get upgrade -y kubeadm=1.12.0-00
 
