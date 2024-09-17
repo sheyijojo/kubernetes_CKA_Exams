@@ -1,6 +1,8 @@
 ## Upgrade
 
-To seamlessly transition from Kubernetes v1.29 to v1.30 and gain access to the packages specific to the desired Kubernetes minor version, follow these essential steps during the upgrade process. This ensures that your environment is appropriately configured and aligned with the features and improvements introduced in Kubernetes v1.30.
+To seamlessly transition from Kubernetes v1.29 to v1.30 and gain access to the packages specific to the desired Kubernetes minor version, 
+
+follow these essential steps during the upgrade process. This ensures that your environment is appropriately configured and aligned with the features and improvements introduced in Kubernetes v1.30.
 
 ## On the controlplane node:
 
@@ -10,6 +12,8 @@ Use any text editor you prefer to open the file that defines the Kubernetes apt 
 Update the version in the URL to the next available minor release, i.e v1.30.
 
 deb [signed-by=/etc/apt/keyrings/kubernetes-apt-keyring.gpg] https://pkgs.k8s.io/core:/stable:/v1.30/deb/ /
+
+
 After making changes, save the file and exit from your text editor. Proceed with the next instruction.
 
 `apt update`
@@ -23,6 +27,7 @@ Run the following command to upgrade the Kubernetes cluster.
 `kubeadm upgrade plan v1.30.0`
 
 `kubeadm upgrade apply v1.30.0`
+
 Note that the above steps can take a few minutes to complete.
 
 Now, upgrade the version and restart Kubelet. Also, mark the node (in this case, the "controlplane" node) as schedulable.
