@@ -761,6 +761,9 @@ https://github.com/kubernetes/community/blob/master/contributors/devel/sig-archi
 
 ## Using kubeadm tool, kubeadm does not install or upgrade kubelets.
 ## check the current local version of kubeadm tool, also check the remote version
+
+vim /etc/apt/sources.list.d/kubernetes.list
+
 kubeadm upgrade plan 
 
 ## to upgrade the cluster, upgrade the kubeadm tool first
@@ -771,22 +774,30 @@ kubeadm upgrade plan
 k drain controlplane --ignore-daemonsets
 
 
-## upgrade the control plane compoonent
-## check the docs for upgradimg kubeadm
+## upgrade the control plane components
+## check the docs for admin with kubeadm
 
 https://v1-30.docs.kubernetes.io/docs/tasks/administer-cluster/kubeadm/kubeadm-upgrade/
 
+//kubeadm ---> master components -----> kubelets --------> workernodes
 
+apt update
+
+//install and upgrade the kubeadm
 apt-get upgrade -y kubeadm=1.12.0-00
 
-kubeadm upgrade apply v1.12.0
+//now, update all the control components
+kubeadm upgrade apply 1.12.0
+
+//Check for the new plan with the update 
+kubeadm upgrade plan
 
 ## upgrade the kubelet if on master nodes
 apt-get upgrade -y kubelet=1.12.0-00
 
 systemctl restart kubelet
 
-
+k get nodes 
 ## workers node not updated yet
 
 ## update them one after the other 
