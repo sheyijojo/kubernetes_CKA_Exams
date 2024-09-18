@@ -820,12 +820,26 @@ sudo apt-mark unhold kubeadm && sudo apt-get update && sudo apt-get install -y k
 
 //e.g  sudo apt-get update && sudo apt-get install -y kubeadm='1.30.0-0' && \
 ## now, update all the control components
+
+drain the master node first 1
+kubectl drain controlplane
+
 kubeadm upgrade apply 1.12.0
 
 ## Check for the new plan with the update 
 kubeadm upgrade plan
 
 ## upgrade the kubelet if on master nodes
+
+sudo apt-mark unhold kubelet kubectl && \
+sudo apt-get update && sudo apt-get install -y kubelet='1.30.0-1.1' kubectl='1.30.0-1.1' && \
+sudo apt-mark hold kubelet kubectl
+
+systemctl daemon-reload
+
+systemctl restart kubelet
+or
+
 apt-get upgrade -y kubelet=1.12.0-00
 apt-get install kubelet=1.30.0-1.1
 systemctl restart kubelet
