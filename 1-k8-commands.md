@@ -776,7 +776,7 @@ vim /etc/apt/sources.list.d/kubernetes.list
 ## What is the latest version available for an upgrade with the current version of the kubeadm tool installed?
 kubeadm upgrade plan 
 
-## to upgrade the cluster, upgrade the kubeadm tool first
+## Notes: to upgrade the cluster, upgrade the kubeadm tool first
 
 ## lets say we will upgrade the MASTER NODE first, actually upgrade the controlplane first 
 
@@ -792,10 +792,29 @@ https://v1-30.docs.kubernetes.io/docs/tasks/administer-cluster/kubeadm/kubeadm-u
 ## kubeadm ---> master components -----> kubelets --------> workernodes
 
 apt update
+## first 
+
+On the controlplane node:
+Use any text editor you prefer to open the file that defines the Kubernetes apt repository.
+
+
+vim /etc/apt/sources.list.d/kubernetes.list
+
+## Update the version in the URL to the next available minor release, i.e v1.30.
+deb [signed-by=/etc/apt/keyrings/kubernetes-apt-keyring.gpg] https://pkgs.k8s.io/core:/stable:/v1.30/deb/ /
+
 
 ## install and upgrade the kubeadm
 apt-get upgrade -y kubeadm=1.12.0-00
 
+## Find the latest 1.30 version in the list.
+## It should look like 1.30.x-*, where x is the latest patch.
+apt-cache madison kubeadm
+sudo apt-mark unhold kubeadm && \
+sudo apt-get update && sudo apt-get install -y kubeadm='1.30.x-*' && \
+sudo apt-mark hold kubeadm
+
+//e.g  sudo apt-get update && sudo apt-get install -y kubeadm='1.30.0-0' && \
 ## now, update all the control components
 kubeadm upgrade apply 1.12.0
 
