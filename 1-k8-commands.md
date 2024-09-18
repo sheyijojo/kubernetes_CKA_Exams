@@ -873,9 +873,54 @@ kubectl uncordon node-1
 ## Backup - Resource configs
 
 ```yaml
+
+## example of using the imperative way
 `kubectl get all -all-namespaces -o yaml > all-deploy-services.yaml`
 
 `k get pods --all-namespaces `
+
+## Do not need to stress, ark(Now Velero can help with the backup)
+
+## We can backup the sates in ETCD  and it brings all our data back
+
+data storage location can be found in the etcd.service
+--data-dir-/var/lib/etcd
+
+## can take snapshot of the ETCD server
+ETCDCLT_API=3 etcdctl \ snapshot save snapshot.db
+
+## status of the snapshot
+ETCDCLT_API=3 etcdctl \ snapshot status snapshot.db
+
+## restore the dcluster from this backup at a later point in time
+
+- Stop the kube api server, because the etcd will be restarted and kubeapi depends on it 
+service kube=apiserver stop
+
+## Then restore
+ETCDCLT_API=3 etcdctl \ snapshot restore snapshot.db \ --data-dir /var/lib/etcd-from-backup
+
+## then configure etcd.service to use the new data dir
+--data-dir=/var/lib/etcd-from-backup
+
+systemctl daemon-reload
+
+service etcd restart
+
+service kube-apiserver start
+
+export ETCDCTL_API=3
+## remember to specify the additional flaga
+
+ETCDCTL_API=3 etcdctl --endpoints=https://[127.0.0.1]:2379 \
+--cacert=/etc/kubernetes/pki/etcd/ca.crt \
+--cert=/etc/kubernetes/pki/etcd/server.crt \
+--key=/etc/kubernetes/pki/etcd/server.key \
+snapshot save /opt/snapshot-pre-boot.db
+
+
+
+
 
 ## What is the version of ETCD running on the cluster?, Check the ETCD Pod or Process
 `k describe pod etcd-controlplane -n kube-system | grep Image`
