@@ -898,7 +898,7 @@ ETCDCLT_API=3 etcdctl \ snapshot status snapshot.db
 service kube=apiserver stop
 
 ## Then restore
-ETCDCLT_API=3 etcdctl \ snapshot restore snapshot.db \ --data-dir /var/lib/etcd-from-backup
+ETCDCTL_API=3 etcdctl \ snapshot restore snapshot.db \ --data-dir /var/lib/etcd-from-backup
 
 ## then configure etcd.service to use the new data dir
 --data-dir=/var/lib/etcd-from-backup
@@ -917,6 +917,14 @@ ETCDCTL_API=3 etcdctl --endpoints=https://[127.0.0.1]:2379 \
 --cert=/etc/kubernetes/pki/etcd/server.crt \
 --key=/etc/kubernetes/pki/etcd/server.key \
 snapshot save /opt/snapshot-pre-boot.db
+
+
+
+## Know the services running
+kubectl get services
+##
+
+k describe service <service-name>
 
 
 
@@ -975,15 +983,12 @@ root@controlplane:~# ETCDCTL_API=3 etcdctl  --data-dir /var/lib/etcd-from-backup
 snapshot restore /opt/snapshot-pre-boot.db
 
 
-2022-03-25 09:19:27.175043 I | mvcc: restore compact to 2552
-2022-03-25 09:19:27.266709 I | etcdserver/membership: added member 8e9e05c52164694d [http://localhost:2380] to cluster cdf818194e3a8c32
-root@controlplane:~# 
 
 
 Note: In this case, we are restoring the snapshot to a different directory but in the same server where we took the backup (the controlplane node) As a result, the only required option for the restore command is the --data-dir.
 
 
-
+## update the k8 dir 
 Next, update the /etc/kubernetes/manifests/etcd.yaml:
 
 We have now restored the etcd snapshot to a new path on the controlplane - /var/lib/etcd-from-backup, so, the only change to be made in the YAML file, is to change the hostPath for the volume called etcd-data from old directory (/var/lib/etcd) to the new directory (/var/lib/etcd-from-backup).
