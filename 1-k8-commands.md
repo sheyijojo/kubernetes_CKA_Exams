@@ -52,15 +52,18 @@ kubectl create deployment --image=nginx nginx --replicas=4 --dry-run=client -o y
 ```
 ## Create a service 
 
-`kubectl create service nodeport <service-name> --tcp=<port>:<target-port> -o yaml > service-definition-1.yaml`
+```
+kubectl create service nodeport <service-name> --tcp=<port>:<target-port> -o yaml > service-definition-1.yaml
 
 
-`kubectl create service nodeport my-service --tcp=80:80 -o yaml > service-definition-1.yaml`
+kubectl create service nodeport my-service --tcp=80:80 -o yaml > service-definition-1.yaml
 
-`kubectl create service nodeport webapp-service --tcp=30080:8080 -o yaml > service-definition-1.yaml`
+kubectl create service nodeport webapp-service --tcp=30080:8080 -o yaml > service-definition-1.yaml
 
 
-## notice there is no labels in this configuration. Labels is what is used to assicuate a specific template. 
+```
+## notice there is no labels in this configuration. Labels is what is used to associate a specific template.
+
 ### sample with declarative mode
 
 ```yaml
@@ -115,32 +118,34 @@ status:
 
 ```
 
-## Namespace
-`kubectl run redis --image=redis --namespace=finance`
+## Namespaces
 
-`kubectl get pods --namespace=research`
+```yaml
+kubectl run redis --image=redis --namespace=finance
 
-`kubectl get pods -n=researchnamespace`
+kubectl get pods --namespace=research
 
-`kubectl get pods --all-namespaces`
-`kubectl get pods -A`
+kubectl get pods -n=researchnamespace
 
+kubectl get pods --all-namespaces
 
-`kubectl run redis --image=redis:alpine --labels=tier=db`
+kubectl get pods -A
 
-`kubectl create service clusterip redis-service --tcp=6379:6379`
+kubectl run redis --image=redis:alpine --labels=tier=db
 
-
-
-`kubectl create service clusterip redis-service --tcp=6379`
+kubectl create service clusterip redis-service --tcp=6379:6379
 
 
 
-`kubectl run custom-nginx --image=nginx --port=8080`
+kubectl create service clusterip redis-service --tcp=6379
 
 
-`kubectl create ns dev-ns`
 
+kubectl run custom-nginx --image=nginx --port=8080
+
+
+kubectl create ns dev-ns
+```
 
 ```yaml
 ## Create a new deployment called redis-deploy in the dev-ns namespace with the redis image. It should have 2 replicas.
