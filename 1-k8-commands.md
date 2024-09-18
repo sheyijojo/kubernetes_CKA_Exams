@@ -805,6 +805,7 @@ deb [signed-by=/etc/apt/keyrings/kubernetes-apt-keyring.gpg] https://pkgs.k8s.io
 
 
 ## install and upgrade the kubeadm
+apt update
 apt-get upgrade -y kubeadm=1.12.0-00
 
 ## Find the latest 1.30 version in the list.
@@ -813,6 +814,9 @@ apt-cache madison kubeadm
 sudo apt-mark unhold kubeadm && \
 sudo apt-get update && sudo apt-get install -y kubeadm='1.30.x-*' && \
 sudo apt-mark hold kubeadm
+
+## example I used
+sudo apt-mark unhold kubeadm && sudo apt-get update && sudo apt-get install -y kubeadm='1.30.0-1.1' && sudo apt-mark hold kubeadm
 
 //e.g  sudo apt-get update && sudo apt-get install -y kubeadm='1.30.0-0' && \
 ## now, update all the control components
@@ -823,7 +827,7 @@ kubeadm upgrade plan
 
 ## upgrade the kubelet if on master nodes
 apt-get upgrade -y kubelet=1.12.0-00
-
+apt-get install kubelet=1.30.0-1.1
 systemctl restart kubelet
 
 k get nodes 
