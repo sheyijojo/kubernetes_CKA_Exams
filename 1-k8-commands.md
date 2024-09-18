@@ -583,47 +583,50 @@ spec:
 ```
 
 ## Approach for editing 
-
+```yaml
 `kuubectl edit pod name-of-the-pod`
 
 `kubectl replace --force -f /tmp/kuubectl-edit-2623.yaml`  
 
 `kubectl run nginx --image=nginx -- <arg1> <arg2> ... <argN> `
-
+```
 ## Config Map
-`kubectl create configmap  <config-name> --from-literal=<key>=<value> `
+
+```yaml
+kubectl create configmap  <config-name> --from-literal=<key>=<value> 
 
 
-`kubectl create configmap  app-config --from-literal=APP_COLOR=blue \
+kubectl create configmap  app-config --from-literal=APP_COLOR=blue \
                                       --from-literal=APP_MOD=prod
-`
 
-`kubectl create configmap <config-name> --from-file=<path-to-file>`
 
-`kubectl get configmaps`
+kubectl create configmap <config-name> --from-file=<path-to-file>
 
+kubectl get configmaps
+```
 
 ## Secrets
 
-`kubectl create secret generic db-secret --from-literal=DB_Host=sql01  --from-literal=DB_User=root  --from-literal=DB_password=passw
-ord123`
+```yaml
 
-`kubectl create secret generic`
+kubectl create secret generic db-secret --from-literal=DB_Host=sql01  --from-literal=DB_User=root  --from-literal=DB_password=passw
+ord123
 
-`kubectl create secret generic \ 
+kubectl create secret generic
+
+kubectl create secret generic \ 
 app-secret --from-literal=DB_HOST=mysql \
            --from-literal=DB_HOST=root  \
            --from-literal=DB_password=passwrd
-`
 
-`kubectl create secret generic <secret-name> --from-file=<path-to-file>`
+kubectl create secret generic <secret-name> --from-file=<path-to-file>
 
-`kubectl create secret generic \ app-secret --from-file=app_secret.properties  `
+kubectl create secret generic \ app-secret --from-file=app_secret.properties  
 
 
 **declarivative**
 
-- `kubectl create -f secret-data.yaml`
+- kubectl create -f secret-data.yaml
 
 - The data must be in encoded form in secrets. Screts are encoded but not encrypyted
 
@@ -633,18 +636,18 @@ encrypt ETCD data at rest
 
 **on linux**
 
-- `echo -n 'mysql' | base64`
+- echo -n 'mysql' | base64
 
-- `kubectl get secreats`
+- kubectl get secreats
 
-- `kubectl describe secrets`
+- kubectl describe secrets
 
-- `kubectl get secret app-secret -o yaml`
+- kubectl get secret app-secret -o yaml
 
 
 https://www.youtube.com/watch?v=MTnQW9MxnRI
 
-
+```
 **decode secrets**
   
 `echo -n "bXlzcWw' | base64 --decode`
@@ -751,7 +754,7 @@ k describe nodes
 ```
 
 ## Kubernetes Releases
-
+```yaml
 https://kubernetes.io/docs/concepts/overview/kubernetes-api/
 
 Here is a link to Kubernetes documentation if you want to learn more about this topic (You don’t need it for the exam, though):
@@ -762,6 +765,7 @@ https://github.com/kubernetes/community/blob/master/contributors/devel/sig-archi
 
 ## cluster Update Process
 
+```
 ```yaml
 
 ## Using kubeadm tool, kubeadm does not install or upgrade kubelets.
