@@ -753,7 +753,7 @@ k describe nodes
  k get pods -o wide
 ```
 
-## Kubernetes Releases
+## Kubernetes Releases and K8 CLuster Upgrade 
 ```yaml
 https://kubernetes.io/docs/concepts/overview/kubernetes-api/
 
@@ -773,11 +773,12 @@ https://github.com/kubernetes/community/blob/master/contributors/devel/sig-archi
 
 vim /etc/apt/sources.list.d/kubernetes.list
 
+## What is the latest version available for an upgrade with the current version of the kubeadm tool installed?
 kubeadm upgrade plan 
 
 ## to upgrade the cluster, upgrade the kubeadm tool first
 
-## lets say we will upgrade the MASTER NODE first
+## lets say we will upgrade the MASTER NODE first, actually upgrade the controlplane first 
 
 ## drain the controleplane node
 k drain controlplane --ignore-daemonsets
@@ -788,17 +789,17 @@ k drain controlplane --ignore-daemonsets
 
 https://v1-30.docs.kubernetes.io/docs/tasks/administer-cluster/kubeadm/kubeadm-upgrade/
 
-//kubeadm ---> master components -----> kubelets --------> workernodes
+## kubeadm ---> master components -----> kubelets --------> workernodes
 
 apt update
 
-//install and upgrade the kubeadm
+## install and upgrade the kubeadm
 apt-get upgrade -y kubeadm=1.12.0-00
 
-//now, update all the control components
+## now, update all the control components
 kubeadm upgrade apply 1.12.0
 
-//Check for the new plan with the update 
+## Check for the new plan with the update 
 kubeadm upgrade plan
 
 ## upgrade the kubelet if on master nodes
