@@ -850,11 +850,18 @@ k get nodes
 ## update them one after the other 
 kubectl drain node-1
 
-apt-get upgrade -y kubeadm=1.12.0-00
+apt-get install kubeadm=1.30.0-1.1
 
-apt-get upgrade -y kubelet=1.12.0-00
+# Upgrade the node 
+kubeadm upgrade node
 
-kubeadm upgrade node config --kubelet-version v1.12.0
+## Now, upgrade the version and restart Kubelet.
+
+apt-get install kubelet=1.30.0-1.1
+
+systemctl daemon-reload
+
+systemctl restart kubelet
 
 systemctl restart kubelet
 
