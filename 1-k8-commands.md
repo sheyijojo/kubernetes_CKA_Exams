@@ -1022,3 +1022,40 @@ If you do change --data-dir to /var/lib/etcd-from-backup in the ETCD YAML file,
 make sure that the volumeMounts for etcd-data is updated as well,
 with the mountPath pointing to /var/lib/etcd-from-backup (THIS COMPLETE STEP IS OPTIONAL AND NEED NOT BE DONE FOR COMPLETING THE RESTORE)
 ```
+
+##
+
+```yaml
+## get the all clusters
+k config get-context
+
+# How many nodes (both controlplane and worker) are part of cluster1?
+# Make sure to switch the context to cluster1:
+
+kubectl config use-context cluster1
+
+## you will notice that etcd is running as a pod:
+## This means that ETCD is set up as a Stacked ETCD Topology
+where the distributed data storage cluster provided by etcd is stacked
+on top of the cluster formed by the nodes managed by kubeadm that run control plane components.
+
+
+## for cluster 2
+## If you check out the pods running in the kube-system namespace in cluster2,
+## you will notice that there are NO etcd pods running in this cluster!
+## ssh cluster2-controlplane
+## ls /etc/kubernetes/manifests/ | grep -i etcd
+
+
+## However, if you inspect the process on the controlplane for cluster2,
+## you will see that that the process for the kube-apiserver is referencing an external etcd datastore:
+
+ ps -ef | grep etcd
+
+## You can see the same information by inspecting the kube-apiserver pod (which runs as a static pod in the kube-system namespace):
+
+kubectl -n kube-system describe pod kube-apiserver-cluster2-controlplane 
+
+
+
+```
