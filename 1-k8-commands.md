@@ -1047,7 +1047,7 @@ on top of the cluster formed by the nodes managed by kubeadm that run control pl
 ## How is ETCD configured for cluster2?
 
 Also, there is NO static pod configuration for etcd under the static pod path:
-
+ls /etc/kubernetes/manifests/ | grep -i etcd
 ## for cluster 2
 ## If you check out the pods running in the kube-system namespace in cluster2,
 ## you will notice that there are NO etcd pods running in this cluster!
