@@ -1048,6 +1048,12 @@ on top of the cluster formed by the nodes managed by kubeadm that run control pl
 
 Also, there is NO static pod configuration for etcd under the static pod path:
 ls /etc/kubernetes/manifests/ | grep -i etcd
+
+
+ kubectl -n kube-system describe pod etcd-cluster1-controlplane | grep data-dir
+      --data-dir=/var/lib/etcd
+
+
 ## for cluster 2
 ## If you check out the pods running in the kube-system namespace in cluster2,
 ## you will notice that there are NO etcd pods running in this cluster!
@@ -1065,6 +1071,117 @@ ls /etc/kubernetes/manifests/ | grep -i etcd
 ## The kubeapi server needs the etcd datastore and as such why we reference it.
 kubectl -n kube-system describe pod kube-apiserver-cluster2-controlplane 
 
+```
 
+## external server 
+How many nodes are part of the ETCD cluster that etcd-server is a part of?
+
+ssh into etcd server 
+```yaml
+ETCDCTL_API=3
+
+ETCDCTL_API=3 etcdctl --endpoints=https://192.21.43.19:2379  --cert=/etc/etcd/pki/etcd.pem   --key=/etc/etcd/pki/etcd-key.pem   --cacert=/etc/etcd/pki/ca.pem    mem
+ber list
+
+
+## Take a backup of etcd on cluster1 and save it on the student-node at the path /opt/cluster1.db
+Next, inspect the endpoints and certificates used by the etcd pod. We will make use of these to take the backup.
+
+Remember it is a static pod 
+
+kubectl describe  pods -n kube-system etcd-cluster1-controlplane  | grep advertise-client-urls
+      --advertise-client-urls=https://192.160.244.10:2379
+
+
+
+
+kubectl describe  pods -n kube-system etcd-cluster1-controlplane  | grep pki
+      --cert-file=/etc/kubernetes/pki/etcd/server.crt
+      --key-file=/etc/kubernetes/pki/etcd/server.key
+      --peer-cert-file=/etc/kubernetes/pki/etcd/peer.crt
+      --peer-key-file=/etc/kubernetes/pki/etcd/peer.key
+      --peer-trusted-ca-file=/etc/kubernetes/pki/etcd/ca.crt
+      --trusted-ca-file=/etc/kubernetes/pki/etcd/ca.crt
+      /etc/kubernetes/pki/etcd from etcd-certs (rw)
+    Path:          /etc/kubernetes/pki/etcd
+
+
+SSH to the controlplane node of cluster1 and then take the backup using the endpoints and certificates we identified above:
+
+ ETCDCTL_API=3 etcdctl --endpoints=https://192.160.244.10:2379 --cacert=/etc/kubernetes/pki/etcd/ca.crt --cert=/etc/kubernetes/pki/etcd/server.crt --key=/etc/kubernetes/pki/etcd/server.key snapshot save /opt/cluster1.db
+Snapshot saved at /opt/cluster1.db
+
+
+Finally, copy the backup to the student-node. To do this, go back to the student-node and use scp as shown below:
+
+ scp cluster1-controlplane:/opt/cluster1.db /opt
+
+
+
+
+
+## question
+
+An ETCD backup for cluster2 is stored at /opt/cluster2.db. Use this snapshot file to carryout a restore on cluster2 to a new path /var/lib/etcd-data-new.
+
+
+
+Once the restore is complete, ensure that the controlplane components on cluster2 are running.
+
+
+The snapshot was taken when there were objects created in the critical namespace on cluster2. These objects should be available post restore.
+
+
+If needed, make sure to set the context to cluster2 (on the student-node):
+
+
+scp /opt/cluster2.db etcd-server:/root
+
+
+Step 2: Restore the snapshot on the cluster2. Since we are restoring directly on the etcd-server, we can use the endpoint https:/127.0.0.1. Use the same certificates that were identified earlier. Make sure to use the data-dir as /var/lib/etcd-data-new:
+
+etcd-server ~ ➜  ETCDCTL_API=3 etcdctl --endpoints=https://127.0.0.1:2379 --cacert=/etc/etcd/pki/ca.pem --cert=/etc/etcd/pki/etcd.pem --key=/etc/etcd/pki/etcd-key.pem snapshot restore /root/cluster2.db --data-dir /var/lib/etcd-data-new
+{"level":"info","ts":1721940922.0441437,"caller":"snapshot/v3_snapshot.go:296","msg":"restoring snapshot","path":"/root/cluster2.db","wal-dir":"/var/lib/etcd-data-new/member/wal","data-dir":"/var/lib/etcd-data-new","snap-dir":"/var/lib/etcd-data-new/member/snap"}
+{"level":"info","ts":1721940922.060755,"caller":"mvcc/kvstore.go:388","msg":"restored last compact revision","meta-bucket-name":"meta","meta-bucket-name-key":"finishedCompactRev","restored-compact-revision":951}
+{"level":"info","ts":1721940922.0667593,"caller":"membership/cluster.go:392","msg":"added member","cluster-id":"cdf818194e3a8c32","local-member-id":"0","added-peer-id":"8e9e05c52164694d","added-peer-peer-urls":["http://localhost:2380"]}
+{"level":"info","ts":1721940922.0732546,"caller":"snapshot/v3_snapshot.go:309","msg":"restored snapshot","path":"/root/cluster2.db","wal-dir":"/var/lib/etcd-data-new/member/wal","data-dir":"/var/lib/etcd-data-new","snap-dir":"/var/lib/etcd-data-new/member/snap"}
+
+
+Step 3: Update the systemd service unit file for etcd by running vi /etc/systemd/system/etcd.service and add the new value for data-dir:
+
+[Unit]
+Description=etcd key-value store
+Documentation=https://github.com/etcd-io/etcd
+After=network.target
+
+[Service]
+User=etcd
+Type=notify
+ExecStart=/usr/local/bin/etcd \
+  --name etcd-server \
+  --data-dir=/var/lib/etcd-data-new \
+---End of Snippet---
+
+
+Step 4: make sure the permissions on the new directory is correct (should be owned by etcd user):
+
+etcd-server /var/lib ➜  chown -R etcd:etcd /var/lib/etcd-data-new
+
+etcd-server /var/lib ➜ 
+
+
+etcd-server /var/lib ➜  ls -ld /var/lib/etcd-data-new/
+drwx------ 3 etcd etcd 4096 Jul 15 20:55 /var/lib/etcd-data-new/
+etcd-server /var/lib ➜
+
+Step 5: Finally, reload and restart the etcd service.
+
+etcd-server ~ ➜  systemctl daemon-reload 
+etcd-server ~ ➜  systemctl restart etcd
+etcd-server ~ ➜
+
+
+
+Step 6 (optional): It is recommended to restart controlplane components (e.g. kube-scheduler, kube-controller-manager, kubelet) to ensure that they don't rely on some stale data.
 
 ```
