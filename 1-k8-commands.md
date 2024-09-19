@@ -1023,15 +1023,20 @@ make sure that the volumeMounts for etcd-data is updated as well,
 with the mountPath pointing to /var/lib/etcd-from-backup (THIS COMPLETE STEP IS OPTIONAL AND NEED NOT BE DONE FOR COMPLETING THE RESTORE)
 ```
 
-##
+## working with multiple k8 clusters 
 
 ```yaml
 ## get the all clusters
+k config get-clusters 
 k config get-context
 
 # How many nodes (both controlplane and worker) are part of cluster1?
 # Make sure to switch the context to cluster1:
 
+
+kubectl get pods -n kube-system  | grep etcd
+
+## ECTD Can run as a pod(stacked topology or configured externally(no pods) in clusters
 kubectl config use-context cluster1
 
 ## you will notice that etcd is running as a pod:
@@ -1039,6 +1044,9 @@ kubectl config use-context cluster1
 where the distributed data storage cluster provided by etcd is stacked
 on top of the cluster formed by the nodes managed by kubeadm that run control plane components.
 
+## How is ETCD configured for cluster2?
+
+Also, there is NO static pod configuration for etcd under the static pod path:
 
 ## for cluster 2
 ## If you check out the pods running in the kube-system namespace in cluster2,
@@ -1050,10 +1058,11 @@ on top of the cluster formed by the nodes managed by kubeadm that run control pl
 ## However, if you inspect the process on the controlplane for cluster2,
 ## you will see that that the process for the kube-apiserver is referencing an external etcd datastore:
 
+ ps -ef | GREP_COLOR='01;31' grep --color=always 'etcd'
  ps -ef | grep etcd
 
 ## You can see the same information by inspecting the kube-apiserver pod (which runs as a static pod in the kube-system namespace):
-
+## The kubeapi server needs the etcd datastore and as such why we reference it.
 kubectl -n kube-system describe pod kube-apiserver-cluster2-controlplane 
 
 
