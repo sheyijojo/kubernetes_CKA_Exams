@@ -1185,3 +1185,10 @@ etcd-server ~ ➜
 Step 6 (optional): It is recommended to restart controlplane components (e.g. kube-scheduler, kube-controller-manager, kubelet) to ensure that they don't rely on some stale data.
 
 ```
+
+## Security in Kubernetes 
+
+```yaml
+
+
+```
