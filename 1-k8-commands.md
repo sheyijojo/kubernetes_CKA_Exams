@@ -979,9 +979,8 @@ snapshot save /opt/snapshot-pre-boot.db
 ```yaml
 First Restore the snapshot:
 
-ETCDCTL_API=3 etcdctl  --data-dir /var/lib/etcd-from-backup \
-snapshot restore /opt/snapshot-pre-boot.db
-
+export ETCDCTL_API=3
+etcdctl  --data-dir /var/lib/etcd-from-backup \ snapshot restore /opt/snapshot-pre-boot.db
 
 
 
@@ -990,7 +989,8 @@ As a result, the only required option for the restore command is the --data-dir.
 
 
 ## update the k8 dir 
-Next, update the /etc/kubernetes/manifests/etcd.yaml:
+Next, update the
+vim  /etc/kubernetes/manifests/etcd.yaml:
 
 - We have now restored the etcd snapshot to a new path on the controlplane - /var/lib/etcd-from-backup,
 - so, the only change to be made in the YAML file,
