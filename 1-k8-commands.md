@@ -1370,3 +1370,36 @@ OPNESSL X509 -req -in apiserver.csr -CA ca.crt -CAkey ca.key -cacreateserial -ou
 
 ## pass the value to usr/local/bin/kube-apiserver 
 ```
+
+## kubernetes- view certificate details 
+
+```yaml
+## The hard way - from scratch
+
+journalctl -u etcd.service -1
+
+
+cat /etc/systemd/system/kube-apiserver.service
+
+## The automated way - kubeadm
+
+cat /etc/kubernetes/manifests/kube-apiserver.yaml
+
+identity the file where it is stroed
+
+## go deeper intot the certifcate to decode and check details
+
+## lets start with the apiserver cert file
+openssl x509 -in /etc/kubernetes/pki/apiserver.crt  -text -noout
+
+
+kubectl logs etcd-master
+
+## can go down t docker
+
+docker ps -a
+docker logs containerid 
+
+```
+
+
