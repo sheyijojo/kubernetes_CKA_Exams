@@ -1187,10 +1187,39 @@ etcd-server ~ ➜
 
 Step 6 (optional): It is recommended to restart controlplane components (e.g. kube-scheduler, kube-controller-manager, kubelet) to ensure that they don't rely on some stale data.
 
+https://github.com/etcd-io/website/blob/main/content/en/docs/v3.5/op-guide/recovery.md
 ```
 
 ## Security in Kubernetes 
 
 ```yaml
+Acess to the host must be very secured, if that is compromised everything is compromised.
+
+control access to the APISERVER, that is the first line of defense
+
+Auth - RBAC, ABAC , Node Aith
+
+Network policy to restrict communciation between components
+
+## AUTH
+
+You cannot create users but you can create service account
+
+k create serviceaccount sa1
+
+k get serviceaccount
+
+## if using a satic toke
+
+--token-auth-file=user-token-details.csv
+
+## then pass the token as an authorization bearer
+
+curl -v -k https://master-node-ip:6443/api/v1/pods --header "Authorization: Bearer nlnklnavlanaknslnkoanrgoan"
+
+- This is not a recommended auth mechanisim in a clear text
+- consider volume mount while providing the auth file in a kubeadm setup
+- setup RBA for the new users
+
 
 ```
