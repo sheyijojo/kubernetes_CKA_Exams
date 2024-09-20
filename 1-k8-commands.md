@@ -1418,6 +1418,11 @@ docker logs containerid
 --cert-file=/etc/kubernetes/pki/etcd/server.crt
 
 
+## connection with kube-api server refused
+
+crtctl ps -a
+//used for envs using crio instead of docker 
+
 ```
 
 
