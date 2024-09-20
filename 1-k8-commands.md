@@ -1158,12 +1158,11 @@ Documentation=https://github.com/etcd-io/etcd
 After=network.target
 
 [Service]
-User=etcd
-Type=notify
-ExecStart=/usr/local/bin/etcd \
-  --name etcd-server \
-  --data-dir=/var/lib/etcd-data-new \
----End of Snippet---
+ User=etcd
+ Type=notify
+ ExecStart=/usr/local/bin/etcd \
+ --name etcd-server \
+ --data-dir=/var/lib/etcd-data-new \
 
 
 Step 4: make sure the permissions on the new directory is correct (should be owned by etcd user):
@@ -1219,5 +1218,49 @@ curl -v -k https://master-node-ip:6443/api/v1/pods --header "Authorization: Bear
 - consider volume mount while providing the auth file in a kubeadm setup
 - setup RBA for the new users
 
+## loction of the key in a company's server
+cat ~/.ssh/authorized_keys
 
+## Assymetric using openssl to generate pub and private key pair on the server, server can have private key securely
+
+openssl genrsa -out my-bank.key 1024
+
+- user gets the pub key from the server
+- user sends the pub key to the server and server decrypyts with priavte key 
+
+This is different from ssh-keygen
+
+
+## All this comm between browser CA and server known as PKI(Public key Infrastructure )
+
+## naming convention for public key
+*.crt *.pem
+
+server.crt
+server.pem
+client.crt
+client.pem
+
+## private key
+
+*.key  *-key.pem
+server.key
+server-key.pem
+client.key
+client-key.pem
+
+## flow of PKI
+- users need https access to a server
+- first server sends a certificate signing request(CSR) to CA
+- CA uses its private key to sign CSR - you know all users have a copy of the CA public key
+- Signed certifcate is sent back to the server
+- server configures the web app with the signed certificate
+- users need access, server first sends the certicate with its public key
+- users browser reads the certifcate and uses the CA's public key to validate and retrieve the server's public key
+- Borwser then generates a symmetric key it uses for communication going forward for all communication.
+- The symmetric key is encrypted using the server as public key and sent back to the server
+- server uses its private key to decrpyt the message and retrieve the symmetric key
+- symmetric key is used for communication going forward
 ```
+
+## Root cert, Client cert, Server Cert 
