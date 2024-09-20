@@ -1193,5 +1193,4 @@ Step 6 (optional): It is recommended to restart controlplane components (e.g. ku
 
 ```yaml
 
-
 ```
