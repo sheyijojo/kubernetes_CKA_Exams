@@ -1385,9 +1385,9 @@ cat /etc/systemd/system/kube-apiserver.service
 
 cat /etc/kubernetes/manifests/kube-apiserver.yaml
 
-identity the file where it is stroed
+identify the file where it is stored
 
-## go deeper intot the certifcate to decode and check details
+## go deeper into the certificate to decode and check details
 
 ## lets start with the apiserver cert file
 openssl x509 -in /etc/kubernetes/pki/apiserver.crt  -text -noout
