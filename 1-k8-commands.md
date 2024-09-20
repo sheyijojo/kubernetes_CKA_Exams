@@ -1264,3 +1264,53 @@ client-key.pem
 ```
 
 ## Root cert, Client cert, Server Cert 
+
+```yaml
+##  server components that need certs
+kuube-api
+etcd server
+kubelet server
+
+## client components through REST to Kube-Api server
+Admin - admin.crt admin.key
+scheduler - schedular.crt scheduler.key
+kube controller manager
+kubeproxy 
+```
+
+
+## Generate Certificate for the cluster 
+
+```yaml
+## tools
+EASYRSA OPENSSL CFSSL
+
+## FIRST generate the CA cert
+openssl genrsa -out ca.key 2048
+
+## generate a certifcate signing request
+
+// CN -COMMON NAME
+openssl req -new -key ca.key -subj "/CN=KUBERNETES-CA" -out ca.csr
+
+//SIGN USING THE OPENSSL
+openssl x509 -req -in ca.csr -signkey ca.key -out ca.crt
+
+
+
+## Follow same process for the client but with little tweak by signing with the CA
+
+## Generate cert for Admin user and group /O
+
+openssl genrsa -out admin.key 2048
+admin.key
+
+//gen a signing in request
+openssl req -new -key admin.key -subj \ "/CN=kube-admin" -out admin.csr
+admin.csr
+
+## generate a signed public certifcate, this time, specify the ca CERT AND CA key
+## we are signing the cert with CA, making it a valid certicate within your cluster
+
+openssl x509 -req -in admin.csr -CA ca.crt -CAkey ca.key -out admin.crt
+```
