@@ -1309,8 +1309,64 @@ admin.key
 openssl req -new -key admin.key -subj \ "/CN=kube-admin" -out admin.csr
 admin.csr
 
+// signing request with an exiting sysems group group in cluster
+openssl req -new -key admin.key -subj \ "/CN=kube-admin/O=system:masters" -out admin.csr
+admin.csr
+
 ## generate a signed public certifcate, this time, specify the ca CERT AND CA key
 ## we are signing the cert with CA, making it a valid certicate within your cluster
 
 openssl x509 -req -in admin.csr -CA ca.crt -CAkey ca.key -out admin.crt
+
+## for system components like kube-scehduler
+
+prefix the name with the keyword system
+
+## what do you do with cert
+
+can run a curl to kube  api-server
+
+curl https://kube-api-server:6443/api/v1/pods --key admun.key --cert admin.crt --cacert ca.crt
+
+
+## can use it withing a kube-config.yaml
+
+## every c;ients need the root CA in their configuration
+
+## ETCD deployed as a cluster across multple servers
+
+needs an additional peer-cert for secure communication btw diff members in the cluster
+peer.key
+peer-trusted-ca-file ca.crt
+etcdpeer1.crt
+truated-ca-file ca.crt
+
+## kubapi-server
+
+you need the name specified in creating the key
+
+opnessl.cnf file
+
+openssl req -new -key apiserver.key -subj\ "/cn=KUBE=APISERVER" -OUT APISERVER.CSR --config openssl.cnf
+
+openssl.cnf file
+[req]
+req_extensions = v3_req
+distinguished_name = req_distinguished_name
+[ v3_req ]
+basicConstri=aints = CA:FALSE
+keyUsage = nonRepudiation,
+subjectAltName = @alt_names
+[alt_names]
+DNS.1 = kubernetes
+DNS.2 = kubernetes.default
+dns.3 = kubernetes.default.svc
+DNS.4 = KUBERNETES.DEFAULT.SVC.CLUSTER.LOCAL
+1P.1 = 10.96.0.1
+
+
+OPNESSL X509 -req -in apiserver.csr -CA ca.crt -CAkey ca.key -cacreateserial -out apiserver.crt -extensions v3_req -extfile openssl.cnf -days 1000 
+
+
+## pass the value to usr/local/bin/kube-apiserver 
 ```
