@@ -1400,6 +1400,24 @@ kubectl logs etcd-master
 docker ps -a
 docker logs containerid 
 
+
+## grep additions
+
+ k describe pods -n kube-system kube-apiserver-controlplane | grep -E '\.ca$|\.crt$|'
+
+## kube-apiserver
+--tls-cert-file=/etc/kubernetes/pki/apiserver.crt
+
+## Identify the Certificate file used to authenticate kube-apiserver as a client to ETCD Server.
+--etcd-certfile=/etc/kubernetes/pki/apiserver-etcd-client.crt
+
+## Identify the ETCD Server Certificate used to host ETCD server.
+  --tls-cert-file=/etc/kubernetes/pki/apiserver.crt
+
+## What is the Common Name (CN) configured on the ETCD Server certificate?
+--cert-file=/etc/kubernetes/pki/etcd/server.crt
+
+
 ```
 
 
