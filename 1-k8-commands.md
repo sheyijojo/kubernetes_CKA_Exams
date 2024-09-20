@@ -1170,18 +1170,16 @@ Step 4: make sure the permissions on the new directory is correct (should be own
 
 etcd-server /var/lib ➜  chown -R etcd:etcd /var/lib/etcd-data-new
 
-etcd-server /var/lib ➜ 
-
 
 etcd-server /var/lib ➜  ls -ld /var/lib/etcd-data-new/
-drwx------ 3 etcd etcd 4096 Jul 15 20:55 /var/lib/etcd-data-new/
-etcd-server /var/lib ➜
+ /var/lib/etcd-data-new/
+
 
 Step 5: Finally, reload and restart the etcd service.
 
 etcd-server ~ ➜  systemctl daemon-reload 
 etcd-server ~ ➜  systemctl restart etcd
-etcd-server ~ ➜
+
 
 
 
