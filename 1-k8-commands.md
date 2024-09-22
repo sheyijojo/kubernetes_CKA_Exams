@@ -1483,6 +1483,9 @@ kind: CertificateSigningRequest
 metadata:
   name: akshay
 spec:
+  groups:
+  - system:admin
+  - system:authenticated
   request: $(cat akshay.csr | base64 | tr -d '\n')
   signerName: kubernetes.io/kube-apiserver-client
   usages:
@@ -1491,8 +1494,23 @@ EOF
 
 kubectl get scr
 
- kubectl certificate approve akshay
+kubectl certificate approve akshay
 
+kubectl delete csr agent-smith 
+
+
+```
+
+## kube config
+
+```yaml
+
+$HOME/.kube/config 
+kubectl config view
+
+## change the context to access production cluster based on the configuration in the cofig file
+
+kubectl config use-context prod-user@production 
 
 ```
 
