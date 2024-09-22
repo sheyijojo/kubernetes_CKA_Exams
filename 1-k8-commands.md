@@ -1467,4 +1467,32 @@ Anyone who needs to sign certifcate need the CA server root certificcate and pro
 --cluster-signing-cert-file=/etc/kubernetes/pki/ca.key
 ```
 
+## Example of creating and approving certificate 
+
+```yaml
+- Create a CertificateSigningRequest object with the name akshay with the contents of the akshay.csr file
+- As of kubernetes 1.19, the API to use for CSR is certificates.k8s.io/v1.
+- Please note that an additional field called signerName should also be added when creating CSR.
+- For client authentication to the API server we will use the built-in signer kubernetes.io/kube-apiserver-client.
+
+## Answer
+
+cat <<EOF | kubectl apply -f -
+apiVersion: certificates.k8s.io/v1
+kind: CertificateSigningRequest
+metadata:
+  name: akshay
+spec:
+  request: $(cat akshay.csr | base64 | tr -d '\n')
+  signerName: kubernetes.io/kube-apiserver-client
+  usages:
+  - client auth 
+EOF
+
+kubectl get scr
+
+ kubectl certificate approve akshay
+
+
+```
 
