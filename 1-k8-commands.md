@@ -1419,10 +1419,52 @@ docker logs containerid
 
 
 ## connection with kube-api server refused
+docker ps -a | grep etcd
 
+## use crtctl for crio environments 
 crtctl ps -a
 //used for envs using crio instead of docker 
 
+```
+
+## Certificates API
+```yaml
+## TLS Certtificates - Certificates wotkflow and API
+Kubernetes has a certificate buit-in API
+
+once a new admin generates its key and sent to KA8Admin
+He creates a certificate signing object
+
+converts the admin key to base64
+
+cat jane.csr | base64
+
+place the encoded object in the request filed in the object
+
+## check all siginin requests
+kubectl get csr
+
+## approve the reuest
+
+kubectl certifcate approve jane 
+
+
+## get certifcate in yaml format
+
+kubectl get csr jane -o yank
+
+## to decode it
+
+echo "a0qahqbqdqh0ndqd-qnasqwdnm" | base64 --decode
+
+who does this - controller manager
+
+Anyone who needs to sign certifcate need the CA server root certificcate and provet key
+
+/etc/kubernetes/manifests/kube-controller-manager.yaml
+
+--cluster-signing-cert-file=/etc/kubernetes/pki/ca.crt
+--cluster-signing-cert-file=/etc/kubernetes/pki/ca.key
 ```
 
 
