@@ -1656,14 +1656,17 @@ kind: Role
 
 kubectl create -f developer-group.yaml
 
-## link user to the role object  using ROLE BINDING object
+## link a user to the role object  using ROLE BINDING object
 Kind: RoleBinding
 
 kubectl create -f devuser-developer-binding.yaml
 
 
-##
-kuubectl get roles
+## Get roles
+kubectl get roles
+kubectl get roles -A
+
+k get roles kube-proxy -n kube-system -o yaml
 
 kubectl get rolebinding
 
@@ -1677,5 +1680,71 @@ kubectl can-i  create depolyments --as dev-user
 kubectl can-i  create depolyments --as dev-user -n test
 
 
-```
+## Which account is the kube-proxy role assigned to?
 
+kubectl describe rolebinding kube-proxy -n kube-system
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  creationTimestamp: "2024-09-23T16:23:51Z"
+  name: kube-proxy
+  namespace: kube-system
+  resourceVersion: "262"
+  uid: f5150644-6bca-4031-b974-4269027d1c00
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: kube-proxy
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: system:bootstrappers:kubeadm:default-node-token
+
+
+answer is  system:bootstrappers:kubeadm:default-node-token
+
+```
+## Task
+```yaml
+
+
+Create the necessary roles and role bindings required for the dev-user to create, list and delete pods in the default namespace.
+
+Use the given spec:
+
+Role: developer
+Role Resources: pods
+Role Actions: list
+Role Actions: create
+Role Actions: delete
+RoleBinding: dev-user-binding
+RoleBinding: Bound to dev-user
+
+
+
+kind: Role
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  namespace: default
+  name: developer
+rules:
+- apiGroups: [""]
+  resources: ["pods"]
+  verbs: ["list", "create","delete"]
+
+---
+kind: RoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: dev-user-binding
+subjects:
+- kind: User
+  name: dev-user
+  apiGroup: rbac.authorization.k8s.io
+roleRef:
+  kind: Role
+  name: developer
+  apiGroup: rbac.authorization.k8s.io
+
+```
