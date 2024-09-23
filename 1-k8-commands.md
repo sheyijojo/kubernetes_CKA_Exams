@@ -1799,5 +1799,10 @@ rules:
 
 ```
 
+## Cluster Roles and Roles Binding 
+```yaml
+
+
+```
 
 
