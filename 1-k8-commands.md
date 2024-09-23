@@ -1651,12 +1651,20 @@ Alwyas Deny
 
 
 ## RBAC
+
+kubectl create role developer --verb=list,create,delete --resource=pods 
+
+
 kind: Role
 - Create a role with a yaml file
 
 kubectl create -f developer-group.yaml
 
 ## link a user to the role object  using ROLE BINDING object
+
+kubectl create rolebinding dev-user-binding --role=developer --user=dev-user 
+
+
 Kind: RoleBinding
 
 kubectl create -f devuser-developer-binding.yaml
@@ -1665,6 +1673,8 @@ kubectl create -f devuser-developer-binding.yaml
 ## Get roles
 kubectl get roles
 kubectl get roles -A
+
+ps -aux | grep authorization 
 
 k get roles kube-proxy -n kube-system -o yaml
 
@@ -1678,6 +1688,8 @@ kubectl auth can-i delete nodes
 ## Test users auth as an Admin without authenticating
 kubectl can-i  create depolyments --as dev-user
 kubectl can-i  create depolyments --as dev-user -n test
+
+kubectl edit role developer -n blue
 
 
 ## Which account is the kube-proxy role assigned to?
@@ -1708,6 +1720,7 @@ answer is  system:bootstrappers:kubeadm:default-node-token
 ## Task
 ```yaml
 
+k --as dev-user create deployement nginx --image=nginx -n blue
 
 Create the necessary roles and role bindings required for the dev-user to create, list and delete pods in the default namespace.
 
@@ -1746,5 +1759,42 @@ roleRef:
   kind: Role
   name: developer
   apiGroup: rbac.authorization.k8s.io
+
+
+## another example
+
+Add a new rule in the existing role developer to grant the dev-user permissions to create deployments in the blue namespace.
+
+
+Remember to add api group "apps".
+
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  creationTimestamp: "2024-09-23T16:26:01Z"
+  name: developer
+  namespace: blue
+  resourceVersion: "4570"
+  uid: 4c353f0d-cb82-405f-a2fe-4797523626d4
+rules:
+- apiGroups:
+  - ""
+  resourceNames:
+  - blue-app
+  - dark-blue-app
+  resources:
+  - pods
+  verbs:
+  - get
+  - watch
+  - create
+  - delete
+- apiGroups:
+  - "apps"
+  resources:
+  - deployments
+  verbs:
+  - create
 
 ```
