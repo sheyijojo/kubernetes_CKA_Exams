@@ -1810,6 +1810,16 @@ cluster-scoped
 
 kubectl api-resources --namespaced=false
 
+## Get cluster role
+k get clusterroles --no-headers | wc -l
+
+kubectl get clusterroles --no-headers  -o json | jq '.items | length'
+
+
+## Get cluster role binding
+
+ k get clusterrolebinding --no-headers | wc -l
+
 ```
 
 
