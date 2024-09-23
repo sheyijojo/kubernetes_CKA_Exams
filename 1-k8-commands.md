@@ -1802,6 +1802,13 @@ rules:
 ## Cluster Roles and Roles Binding 
 ```yaml
 
+cluster scope resources 
+## get resources in a namsepace
+kubectl api-resources --namespaced=true
+
+cluster-scoped
+
+kubectl api-resources --namespaced=false
 
 ```
 
