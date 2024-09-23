@@ -1505,6 +1505,10 @@ kubectl delete csr agent-smith
 
 ```yaml
 
+## Use a context with a different file name and location
+
+kubectl config use-context research --kubeconfig /root/my-kube-config 
+
 $HOME/.kube/config 
 kubectl config view
 
@@ -1512,7 +1516,14 @@ kubectl config view
 
 kubectl config use-context prod-user@production
 
-## sample config file with users, context 
+## To know the current context, run the command:
+kubectl config --kubeconfig=/root/my-kube-config current-context
+
+
+## sample config file with users, context
+
+k config view --kubeconfig my-kube-config
+
 apiVersion: v1
 kind: Config
 
