@@ -1,17 +1,17 @@
 ## Here’s a tip!
-```yaml
-As you might have seen already, creating and editing YAML files is a bit difficult, especially in the CLI. 
-During the exam, you might find it difficult to copy and paste YAML files from the browser to the terminal.
 
-Using the kubectl run command can help in generating a YAML template. And sometimes, you can even get away with just the kubectl run command without having to create a YAML file at all. 
+- As you might have seen already, creating and editing YAML files is a bit difficult, especially in the CLI. 
+- During the exam, you might find it difficult to copy and paste YAML files from the browser to the terminal.
 
-For example, if you were asked to create a pod or deployment with a specific name and image, you can simply run the kubectl run command.
+- Using the kubectl run command can help in generating a YAML template. And sometimes, you can even get away with just the kubectl run command without having to create a YAML file at all. 
 
-Use the below set of commands and try the previous practice tests again, but this time, try to use the below commands instead of YAML files. Try to use these as much as you can going forward in all exercises.
+- For example, if you were asked to create a pod or deployment with a specific name and image, you can simply run the kubectl run command.
 
-Reference (Bookmark this page for the exam. It will be very handy):
+- Use the below set of commands and try the previous practice tests again, but this time, try to use the below commands instead of YAML files. Try to use these as much as you can going forward in all exercises.
 
-```
+- Reference (Bookmark this page for the exam. It will be very handy):
+
+
 
 `https://kubernetes.io/docs/reference/kubectl/conventions/`
 
@@ -1591,6 +1591,91 @@ preferences: {}
 
 
 Error in configuration: context was not found for specified context: dev-user@research
+
+```
+
+## API Groups 
+```yaml
+## Core API and Named API Groups 
+
+## list available groups from your cluster
+
+curl http:/localhost:6443 -k
+
+## list groups on the named api group
+
+curl http://localhost:6443/apis -k | grep "name"
+
+## you need auth for more return from the api
+
+curl http"//localhost:6443 -k
+      --key admin.key
+      --cert admin.crt
+      --cacert ca.crt
+
+## another option is to start a proxy client
+- kubectl procy uses cred and certs from your kubeconfig file to access the cluster - port 8002
+kubectl proxy
+
+## after the service has started
+curl http://locahost:8001 -k
+
+kube proxy is not equal kubectl proxy 
+```
+
+## Authorization 
+
+```yaml
+## using namespaces to partiction users and service account
+Auth supported by kubernetes
+- Node Auth
+- ABAC(Attribute Based Auth)
+- RBAC (Resource Based Auth)
+- Webhook
+
+
+## Authorization Mode
+
+Always Allow
+
+Alwyas Deny
+
+## check the mdoe in the /usr/local/bin/kube-apiserver
+- By default 
+--authorization-mode=AlwyasAllow
+
+## you can set MUTLIPLE node Auth
+- It is done in sequence 
+--authorization-mode=Node,RBAC,Webhook
+
+
+
+## RBAC
+kind: Role
+- Create a role with a yaml file
+
+kubectl create -f developer-group.yaml
+
+## link user to the role object  using ROLE BINDING object
+Kind: RoleBinding
+
+kubectl create -f devuser-developer-binding.yaml
+
+
+##
+kuubectl get roles
+
+kubectl get rolebinding
+
+## Check your auth as a user
+kubectl auth can-i create deployments
+
+kubectl auth can-i delete nodes
+
+## Test users auth as an Admin without authenticating
+kubectl can-i  create depolyments --as dev-user
+kubectl can-i  create depolyments --as dev-user -n test
+
 
 ```
 
