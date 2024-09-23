@@ -1,5 +1,5 @@
 ## Here’s a tip!
-
+```yaml
 As you might have seen already, creating and editing YAML files is a bit difficult, especially in the CLI. 
 During the exam, you might find it difficult to copy and paste YAML files from the browser to the terminal.
 
@@ -11,11 +11,14 @@ Use the below set of commands and try the previous practice tests again, but thi
 
 Reference (Bookmark this page for the exam. It will be very handy):
 
+```
+
 `https://kubernetes.io/docs/reference/kubectl/conventions/`
 
 ## Create an NGINX Pod
 
 `kubectl run nginx --image=nginx`
+
 Generate POD Manifest YAML file (-o yaml). Don’t create it(–dry-run)
 
 `kubectl run nginx --image=nginx --dry-run=client -o yaml`
