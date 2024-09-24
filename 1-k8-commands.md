@@ -1879,7 +1879,7 @@ rules:
 ```
 
 ## Service Accounts in Kubernetes 
-
+Every namespace has a default service account 
 ```yaml
 ## There are two kinds of accounts -
 - service account - used by machines like jenkins, prometheus
@@ -1895,4 +1895,9 @@ kubectl get serviceaccount
 kubectl describe secret <secret-name>
 
 curl https:49u34u34/spi -insecure --header "Authroization: Bearer sdssdmdsdmdmsdmsdm"
+
+## Default service account with secret token is automatically mounted as volume mount in a pod by default
+## a vol is automtaiclaly creaeted for the service acount
+
+kubectl exec -it my-dashboard -- ls /var/run/secrets/kubernetes.io/serviceaccount 
 ```
