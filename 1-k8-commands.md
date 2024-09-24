@@ -1722,7 +1722,8 @@ answer is  system:bootstrappers:kubeadm:default-node-token
 
 k --as dev-user create deployement nginx --image=nginx -n blue
 
-Create the necessary roles and role bindings required for the dev-user to create, list and delete pods in the default namespace.
+- Create the necessary roles and role bindings required for the dev-user to create,
+- list and delete pods in the default namespace.
 
 Use the given spec:
 
@@ -1806,7 +1807,7 @@ cluster scope resources
 ## get resources in a namsepace
 kubectl api-resources --namespaced=true
 
-cluster-scoped
+## cluster-scoped roles 
 
 kubectl api-resources --namespaced=false
 
