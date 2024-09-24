@@ -1878,4 +1878,21 @@ rules:
 
 ```
 
+## Service Accounts in Kubernetes 
 
+```yaml
+## There are two kinds of accounts -
+- service account - used by machines like jenkins, prometheus
+- user account - e.g admin user
+
+## create a service account
+
+kubectl create serviceaccount dashboard-sa
+
+kubectl get serviceaccount
+## service account create token stored as a secret object
+
+kubectl describe secret <secret-name>
+
+curl https:49u34u34/spi -insecure --header "Authroization: Bearer sdssdmdsdmdmsdmsdm"
+```
