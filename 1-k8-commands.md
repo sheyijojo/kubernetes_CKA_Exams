@@ -1821,6 +1821,61 @@ kubectl get clusterroles --no-headers  -o json | jq '.items | length'
 
  k get clusterrolebinding --no-headers | wc -l
 
+## A new user michelle joined the team. She will be focusing on the nodes in the cluster.
+## Create the required ClusterRoles and ClusterRoleBindings so she gets access to the nodes.
+
+
+Use the command kubectl create to create a clusterrole and clusterrolebinding for user michelle to grant access to the nodes.
+After that test the access using the command:
+
+ kubectl auth can-i list nodes --as michelle.
+
+## answer
+
+k create clusterrole michelleuser --verb=list --resource=nodes
+
+k create clusterrolebinding michellebind --clusterrole=michelleuser --user=michelle
+
+
+## michelle's responsibilities are growing and now she will be responsible for storage as well.
+## Create the required ClusterRoles and ClusterRoleBindings to allow her access to Storage.
+## Get the API groups and resource names from command kubectl api-resources. Use the given spec:
+
+
+kubectl auth can-i list storageclasses --as michelle
+
+ k create clusterrole storage-admin --verb=get,list,watch --resource=storageclasses,persistentvolumes
+
+ k create clusterrolebinding michelle-storage-admin --clusterrole=storage-admin --user=michelle
+
+k get clusterrole storage-admin -o yaml
+
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  creationTimestamp: "2024-09-24T17:23:23Z"
+  name: storage-admin
+  resourceVersion: "1253"
+  uid: 359a0c92-d7f7-426b-9c6b-8ae4bf445c20
+rules:
+- apiGroups:
+  - ""
+  resources:
+  - persistentvolumes
+  verbs:
+  - get
+  - list
+  - watch
+- apiGroups:
+  - storage.k8s.io
+  resources:
+  - storageclasses
+  verbs:
+  - get
+  - list
+  - watch
+
 ```
 
 
