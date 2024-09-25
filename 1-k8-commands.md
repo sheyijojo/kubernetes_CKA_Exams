@@ -2034,5 +2034,9 @@ spec:
 //CAPABILTIES ARE ONLY SUPPORTED A THE CONTAINER LEVEL 
 
 
+## check which user is running processes on a pod
+
+kubectl exec ubuntu-sleeper -- whoami 
+
 ```
 
