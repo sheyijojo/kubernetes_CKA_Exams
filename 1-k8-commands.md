@@ -1899,5 +1899,53 @@ curl https:49u34u34/spi -insecure --header "Authroization: Bearer sdssdmdsdmdmsd
 ## Default service account with secret token is automatically mounted as volume mount in a pod by default
 ## a vol is automtaiclaly creaeted for the service acount
 
-kubectl exec -it my-dashboard -- ls /var/run/secrets/kubernetes.io/serviceaccount 
+kubectl exec -it my-dashboard -- ls /var/run/secrets/kubernetes.io/serviceaccount
+
+## The flow
+- create service account
+kuubectl create serviceaccounts logging-dash
+
+- create a token for the service account
+kubectl create token logging-dash
+
+```md
+
+13 / 14
+You shouldn't have to copy and paste the token each time. The Dashboard application is programmed to read token from the secret mount location.
+However currently, the default service account is mounted. Update the deployment to use the newly created ServiceAccount
+
+
+Edit the deployment to change ServiceAccount from default to dashboard-sa.
+
+or edit the deployment and add serviceAccountName
+
+kubectl set serviceaccount deploy/web-dashboard dashboard-sa
+
+
+
+## make sure is inside the container spec
+    spec:
+      containers:
+      - env:
+        - name: PYTHONUNBUFFERED
+          value: "1"
+        image: gcr.io/kodekloud/customimage/my-kubernetes-dashboard
+        imagePullPolicy: Always
+        name: web-dashboard
+        ports:
+        - containerPort: 8080
+          protocol: TCP
+        resources: {}
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      securityContext: {}
+      serviceAccount: dashboard-sa
+      serviceAccountName: dashboard-sa
+      terminationGracePeriodSeconds: 30
+```
+
+
 ```
