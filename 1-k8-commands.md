@@ -1971,5 +1971,13 @@ spec:
   imagePullSecrets:
   - name: <secret-name>
 
+
+k create secret docker-registry private-reg-cred \
+ --docker-server=myprivateregistry.com:5000 \
+ --docker-username=docker_user  \
+ --docker-email=dock_user@myprivateregistry.com \
+ --docker-password=dock_password
+secret/private-reg-cred created
+
 ```
 
