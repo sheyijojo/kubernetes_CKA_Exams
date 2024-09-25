@@ -1958,6 +1958,8 @@ docker run private-registry.io/apps/internal-app
 ## use image on pods on the worker nodes from private registry
 - hOW DO WE IMPLEMENT THE AUTH
 
+docker create secret docker-registry --help
+
 ## CREATE A SECRET object  called docker-registry with the credentials in it 
 kubectl create secret docker-registry <secret-name>  \
 --docker-server=  \
