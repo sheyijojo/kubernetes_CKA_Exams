@@ -1983,3 +1983,26 @@ secret/private-reg-cred created
 
 ```
 
+## DOCKER SECURITY 
+
+```yaml
+## advisable to speicifi user to run processes in a container
+
+USER 1000
+
+## Check what users can do in linux
+
+/usr/include/linux/capability.h
+
+root user in container does not have has much capabikity as that of linux HOST
+
+## CONTROL CAPBILITY TO A USER
+
+docker run --cap-add MAC_ADMIN ubuntu
+docker run --cap-drop KILL ubuntu
+
+## run with all priviledges
+
+docker run --privileged ubuntu 
+```
+
