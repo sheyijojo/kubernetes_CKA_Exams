@@ -1990,6 +1990,8 @@ secret/private-reg-cred created
 
 USER 1000
 
+docker run --user=1001 ubuntu sleep 3600
+
 ## Check what users can do in linux
 
 /usr/include/linux/capability.h
@@ -2004,5 +2006,33 @@ docker run --cap-drop KILL ubuntu
 ## run with all priviledges
 
 docker run --privileged ubuntu 
+```
+
+## Security Context 
+```yaml
+## security context on the spec/kubernetes level 
+spec:
+ securityContext:
+    runAsUser: 1000
+ containers:
+   - name: ubuntu
+     image: ubuntu
+     comannd: ["sleep", "3600"]
+
+
+## security context on the container level 
+spec:
+ containers:
+   - name: ubuntu
+     image: ubuntu
+     comannd: ["sleep", "3600"]
+     securityContext:
+        runAsUser: 1000
+        capablities:
+           add:  ["MAC_ADMIN"]
+
+//CAPABILTIES ARE ONLY SUPPORTED A THE CONTAINER LEVEL 
+
+
 ```
 
