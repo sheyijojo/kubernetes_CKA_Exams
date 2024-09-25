@@ -1951,14 +1951,14 @@ kubectl set serviceaccount deploy/web-dashboard dashboard-sa
 ## Private Repository 
 
 ```yaml
-docker login private-registry,io
+docker login private-registry.io
 
 docker run private-registry.io/apps/internal-app
 
 ## use image on pods on the worker nodes from private registry
 - hOW DO WE IMPLEMENT THE AUTH
 
-## CREATE A SECRET object with the credentials in it 
+## CREATE A SECRET object  called docker-registry with the credentials in it 
 kubectl create secret docker-registry <secret-name>  \
 --docker-server=  \
 --docker-username=  \
