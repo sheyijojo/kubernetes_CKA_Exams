@@ -1946,5 +1946,30 @@ kubectl set serviceaccount deploy/web-dashboard dashboard-sa
       terminationGracePeriodSeconds: 30
 
 
+```
+
+## Private Repository 
+
+```yaml
+docker login private-registry,io
+
+docker run private-registry.io/apps/internal-app
+
+## use image on pods on the worker nodes from private registry
+- hOW DO WE IMPLEMENT THE AUTH
+
+## CREATE A SECRET object with the credentials in it 
+kubectl create secret docker-registry <secret-name>  \
+--docker-server=  \
+--docker-username=  \
+--docker-email=    \
+
+
+## on the pod
+spec:
+  containers:
+  imagePullSecrets:
+  - name: <secret-name>
 
 ```
+
