@@ -1908,10 +1908,9 @@ kuubectl create serviceaccounts logging-dash
 - create a token for the service account
 kubectl create token logging-dash
 
-```md
 
-13 / 14
-You shouldn't have to copy and paste the token each time. The Dashboard application is programmed to read token from the secret mount location.
+
+## You shouldn't have to copy and paste the token each time. The Dashboard application is programmed to read token from the secret mount location.
 However currently, the default service account is mounted. Update the deployment to use the newly created ServiceAccount
 
 
@@ -1945,7 +1944,7 @@ kubectl set serviceaccount deploy/web-dashboard dashboard-sa
       serviceAccount: dashboard-sa
       serviceAccountName: dashboard-sa
       terminationGracePeriodSeconds: 30
-```
+
 
 
 ```
