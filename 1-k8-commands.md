@@ -2040,3 +2040,71 @@ kubectl exec ubuntu-sleeper -- whoami
 
 ```
 
+## link a Network Policy to a pod
+Use labels and selectors
+- label the pod
+- use podSelector in the network policy 
+```yaml
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metada:
+  name: db-policy
+spec:
+  podSelector:
+    matchLabels:
+       role: db
+  policyTypes:
+  - Ingress
+  ingress:
+  - from
+    - podSelector:
+        matchlabels:
+           name: api-pod
+      namespaceSelector:
+          matchLabels:
+              name: prod
+    - ipBlock:
+        cidr: 192.168.5.10/32
+   ports:
+   - protocol: TCP
+     PORT: 3306 
+
+  
+## add external ip not part of the cluster , see abobe
+
+
+## EGRESS: what if nrtwork egress from the DB to the backup server
+
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metada:
+  name: db-policy
+spec:
+  podSelector:
+    matchLabels:
+       role: db
+  policyTypes:
+  - Ingress
+  - Egress
+  ingress:
+  - from
+    - podSelector:
+        matchlabels:
+           name: api-pod
+      namespaceSelector:
+          matchLabels:
+              name: prod
+    ports:
+    - protocol: TCP
+      port: 3306
+
+  egress:
+   - to
+     - ipBlock:
+        cidr: 192.168.5.10/32
+   ports:
+   - protocol: TCP
+     port: 80
+
+```
+
