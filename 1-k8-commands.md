@@ -2228,3 +2228,5 @@ To switch back to previous namespace:
 kubens –
 
 ```
+
+## STORAGE
