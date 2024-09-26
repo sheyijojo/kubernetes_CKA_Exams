@@ -2039,8 +2039,9 @@ spec:
 kubectl exec ubuntu-sleeper -- whoami 
 
 ```
-
-## link a Network Policy to a pod
+## Network Policy
+- By default, all pods talk to each other 
+- link a Network Policy to a pod
 Use labels and selectors
 - label the pod
 - use podSelector in the network policy 
@@ -2119,6 +2120,17 @@ Use the spec given below. You might want to enable ingress traffic to the pod to
 
 Also, ensure that you allow egress traffic to DNS ports TCP and UDP (port 53) to enable DNS resolution from the internal pod.
 
+## My note
+So this is allowing internal app to allow traffic out only to DB and payroll and not the external app
+
+- Policy Name: internal-policy
+- Policy Type: Egress
+- Egress Allow: payroll
+- Payroll Port: 8080
+- Egress Allow: mysql
+- MySQL Port: 3306 
+
+
 
 apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
@@ -2151,11 +2163,6 @@ spec:
     - protocol: TCP
       port: 8080
 
-  - ports:
-    - port: 53
-      protocol: UDP
-    - port: 53
-      protocol: TCP
 
 
 ```
