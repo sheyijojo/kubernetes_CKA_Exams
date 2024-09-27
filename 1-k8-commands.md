@@ -2460,8 +2460,7 @@ k get pod webapp -o yaml > sample.yaml
 
 k replace -f sample.yaml --force
 
-
- k get pv,pvc
+k get pv,pvc
 
 
 
@@ -2494,6 +2493,9 @@ metadata:
   resourceVersion: ""
 
 ```
+
+## Labs on persistent volume 
+
 
 
 
