@@ -2495,8 +2495,30 @@ metadata:
 ```
 
 ## Labs on persistent volume 
+```yaml
+
+```
+
+## Storage classes
+
+```yaml
+## Static prvisioning
+
+gcloud beta compute disks create \
+   --size 1GB
+   --REGION US-EAST-1
+   pd-disk
 
 
+## Dynamic provisioning 
+## create a storgae class object
 
+ k get storageclasses
+
+## note
+info
+The Storage Class called local-storage makes use of VolumeBindingMode set to WaitForFirstConsumer.
+This will delay the binding and provisioning of a PersistentVolume until a Pod using the PersistentVolumeClaim is created.
+```
 
 
