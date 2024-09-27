@@ -2230,3 +2230,47 @@ kubens –
 ```
 
 ## STORAGE
+
+```yaml
+## Understand docker file system
+## dockwe default location for file, images , volumes, containers
+/var/lib/docker
+
+## after writing dockerfile and building the file
+## when u run docker run, docker creates a final writeable container layer
+
+## The layer exist as long as the container exist, it dies if the container dies
+
+## what if the want top persist data from a database
+
+docker volume create data_volume
+
+## mount the volume to the default location whre nysql stores data 
+
+docker run -v data_volume:/var/lib/mysql mysql
+
+## bind mounting - external host(docker host) has a data location  /data/mysql
+
+docker run -v /data/mysql:/var/libmysql mysql
+
+## new way under docker
+docker run \ --mount type=bind,source=/data/mysql,target=/var/lib/mysql mysql
+
+docker uses strogge drivers to drive all these ops
+
+Storage drivers help manage storage on images and containers
+
+Volume drivers: Volumes are managed by volume driver pluggins : the default vol driver plugin is local
+
+─ docker volume inspect buildx_buildkit_devops-builder0_state                                              ─╯
+[
+    {
+        "CreatedAt": "2024-08-07T16:45:54Z",
+        "Driver": "local",
+        "Labels": null,
+        "Mountpoint": "/var/lib/docker/volumes/buildx_buildkit_devops-builder0_state/_data",
+        "Name": "buildx_buildkit_devops-builder0_state",
+        "Options": null,
+        "Scope": "local"
+    } 
+```
