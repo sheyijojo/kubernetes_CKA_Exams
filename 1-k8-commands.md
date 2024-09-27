@@ -2395,7 +2395,66 @@ k create -f .yaml
 
 k get persistentvolumeclaim
 
-k delete persistentvolumecmaim myclaim 
+k delete persistentvolumecmaim myclaim
+
+
+## 
+Create a Persistent Volume with the given specification.
+
+
+
+Volume Name: pv-log
+
+Storage: 100Mi
+
+Access Modes: ReadWriteMany
+
+Host Path: /pv/log
+
+Reclaim Policy: Retain
+
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: pv-log
+spec:
+  accessModes:
+     - ReadWriteMany
+  capacity:
+     storage: 100Mi
+  hostPath:
+        path: /pv/log
+
+  persistentVolumeReclaimPolicy: Retain
+
+
+### Let us claim some of that storage for our application. Create a Persistent Volume Claim with the given specification.
+
+Volume Name: claim-log-1
+
+
+Storage Request: 50Mi
+
+
+Access Modes: ReadWriteOnce
+
+
+##
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: claim-log-1
+spec:
+  accessModes:
+    - ReadWriteOnce
+  volumeMode: Filesystem
+  resources:
+    requests:
+      storage: 50Mi
+
+
+
+kubectl exec webapp -- cat /log/app.log
 ```
 
 
