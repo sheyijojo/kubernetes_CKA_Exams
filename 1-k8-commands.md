@@ -2455,6 +2455,44 @@ spec:
 
 
 kubectl exec webapp -- cat /log/app.log
+
+k get pod webapp -o yaml > sample.yaml
+
+k replace -f sample.yaml --force
+
+
+ k get pv,pvc
+
+
+
+##  Update the Access Mode on the claim to bind it to the PV.
+
+apiVersion: v1
+items:
+- apiVersion: v1
+  kind: PersistentVolumeClaim
+  metadata:
+    creationTimestamp: "2024-09-27T17:22:41Z"
+    finalizers:
+    - kubernetes.io/pvc-protection
+    name: claim-log-1
+    namespace: default
+    resourceVersion: "1769"
+    uid: 2235d2ea-9f46-4c78-ad16-d25ccac2154f
+  spec:
+    accessModes:
+    - ReadWriteMany
+    resources:
+      requests:
+        storage: 50Mi
+    volumeMode: Filesystem
+    volumeName: pv-log
+  status:
+    phase: Bound
+kind: List
+metadata:
+  resourceVersion: ""
+
 ```
 
 
