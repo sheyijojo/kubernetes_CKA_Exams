@@ -2262,6 +2262,16 @@ Storage drivers help manage storage on images and containers
 
 Volume drivers: Volumes are managed by volume driver pluggins : the default vol driver plugin is local
 
+
+## other examples
+Local| Azure File Storgae | Convoy | DigitalOcean Block Storgae | Flocker | gce-docker
+
+| Nteapp | Rexray | Portwoex | Vmarew vphere
+
+## storage drivers - Dependent on OS
+AUFS | ZFS | BTRFS | DEVICE MAPPER | OVERLAY
+
+## example of volumes on my local computer
 ─ docker volume inspect buildx_buildkit_devops-builder0_state                                              ─╯
 [
     {
@@ -2272,5 +2282,122 @@ Volume drivers: Volumes are managed by volume driver pluggins : the default vol 
         "Name": "buildx_buildkit_devops-builder0_state",
         "Options": null,
         "Scope": "local"
-    } 
+    }
+
+## using rexray volume driver to provision ebs volume from was in the cloud
+//when container exit, data is saved in the cloud
+
+docker run -it \
+  --name mysql
+  --volume-driver rexray/ebs
+  --mount src=ebs-vol,target=/var/lib/mysql mysql 
 ```
+## Now Kubernetes Volume 
+
+```yaml
+CRI - Container Runtime Interface
+CNI - Container Networking Interface
+CSI - Container Storage Interface
+
+With CSI, you can develop your driver for your own storage to work with k8
+e.g Amazon EBS, DELL EMC, GlusterFS all have CSI drivers
+
+## Volumes in Kubernetes
+To persist data in kubernetes, attach volume to the pod
+
+## volume and mounts
+
+- A volume needs a storage
+- Use a dir in the host location for example
+- Evry file created in the volume would be stroed in the dir data on my node 
+spec:
+  containers
+  volumes:
+  - name: data-volume
+    hostPath:
+       path: /data
+       type: Directory
+
+## to access the volume from a container uding volume mount
+spec:
+  containers
+  - image: alpine
+     volumeMounts:
+     - mountPath: /opt
+       name: data-volume 
+   
+
+  volumes:
+  - name: data-volume
+    hostPath:
+       path: /data
+       type: Directory
+
+Not recommeded on production level
+
+Support of diff types of strogae solutions
+
+- NFS,glusterFS, Flocker, ceph, scaleio, aws, Azure disk
+
+  volumes:
+  - name: data-volume
+    awsElasticBlockStore:
+       volumeID: <volume-id>
+       fstype: ext4
+
+
+
+## Persistent volume
+voulmes are above is only bound to pod definition file
+
+Need more centraly managed and user can carve out vols as needed
+
+PV is a cluster wide pool of storage volumes configured bub an admin to be used by users deploying volume on the cluster using PVC
+
+## example
+kubectl create -f pvifule.yaml
+
+k get persistentvolume
+
+## Persistent volume
+
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+   name: pv-vol1
+spec:
+   accessModes:
+       - ReadWriteOnce
+   capacity:
+      storage: 1Gi
+   awsElasticBlockStore:
+      volumeID: <volume-id>
+      fstype: ext4
+
+## Persistent Claims
+Make a storage available to a node
+user creates a set of PVCs to use for storage
+- k8 binds PV to PVC - One-to-One
+
+
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+   name: myclaim
+spec:
+  accessModes:
+     - ReadWriteOnce
+  resources:
+     requests:
+       storage: 500Mi 
+
+k create -f .yaml
+
+k get persistentvolumeclaim
+
+k delete persistentvolumecmaim myclaim 
+```
+
+
+
+
