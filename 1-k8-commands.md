@@ -2508,11 +2508,6 @@ metadata:
 
 ```
 
-## Labs on persistent volume 
-```yaml
-
-```
-
 ## Storage classes
 
 ```yaml
