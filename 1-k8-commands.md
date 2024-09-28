@@ -2310,10 +2310,12 @@ e.g Amazon EBS, DELL EMC, GlusterFS all have CSI drivers
 To persist data in kubernetes, attach volume to the pod
 
 ## volume and mounts
-
+- volume is spec level
 - A volume needs a storage
 - Use a dir in the host location for example
-- Evry file created in the volume would be stroed in the dir data on my node 
+- Every file created in the volume would be stored in the dir data on my node
+- After specificing the vol and storage,  to access it from the container,mount it to  ..
+- a dir inside the container 
 spec:
   containers
   volumes:
@@ -2323,6 +2325,7 @@ spec:
        type: Directory
 
 ## to access the volume from a container uding volume mount
+- volume mount is spec.container level 
 spec:
   containers
   - image: alpine
@@ -2331,7 +2334,7 @@ spec:
        name: data-volume 
    
 
-  volumes:
+volumes:
   - name: data-volume
     hostPath:
        path: /data
@@ -2352,14 +2355,14 @@ Support of diff types of strogae solutions
 
 
 ## Persistent volume
-voulmes are above is only bound to pod definition file
+- volumes stated above is only bound to pod definition file
 
-Need more centraly managed and user can carve out vols as needed
+- Need more centrally managed and user can carve out vols as needed
 
-PV is a cluster wide pool of storage volumes configured bub an admin to be used by users deploying volume on the cluster using PVC
+- PV is a cluster wide pool of storage volumes configured by an admin to be used by users deploying volume on the cluster using PVC
 
 ## example
-kubectl create -f pvifule.yaml
+kubectl create -f pvi-file.yaml
 
 k get persistentvolume
 
@@ -2512,14 +2515,14 @@ gcloud beta compute disks create \
 
 
 ## Dynamic provisioning 
-## create a storgae class object
+- create a storgae class object
 
- k get storageclasses
+ kubectl get storageclasses
 
-## note
+## notes
 info
-The Storage Class called local-storage makes use of VolumeBindingMode set to WaitForFirstConsumer.
-This will delay the binding and provisioning of a PersistentVolume until a Pod using the PersistentVolumeClaim is created.
+- The Storage Class called local-storage makes use of VolumeBindingMode set to WaitForFirstConsumer.
+- This will delay the binding and provisioning of a PersistentVolume until a Pod using the PersistentVolumeClaim is created.
 ```
 
 
