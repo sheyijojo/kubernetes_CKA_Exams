@@ -2293,7 +2293,11 @@ docker run -it \
   --mount src=ebs-vol,target=/var/lib/mysql mysql 
 ```
 ## Now Kubernetes Volume 
-
+Key Difference:
+- Volumes are ephemeral and scoped within a Pod’s lifecycle unless backed by a persistent solution.
+- Storage, especially through PVs and PVCs, is a more permanent solution and can outlive the Pod or be reused by different Pods.
+- So, volumes are more about how data is mounted and accessed in running containers,
+-  while storage often refers to the broader, persistent, and external data storage mechanisms.
 ```yaml
 CRI - Container Runtime Interface
 CNI - Container Networking Interface
