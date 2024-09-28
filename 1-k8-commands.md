@@ -2245,7 +2245,7 @@ kubens –
 
 docker volume create data_volume
 
-## mount the volume to the default location whre nysql stores data 
+## mount the volume to the default location where mysql stores data 
 
 docker run -v data_volume:/var/lib/mysql mysql
 
@@ -2398,20 +2398,17 @@ k get persistentvolumeclaim
 k delete persistentvolumecmaim myclaim
 
 
-## 
+## persistent volume
 Create a Persistent Volume with the given specification.
 
 
 
 Volume Name: pv-log
 
-Storage: 100Mi
-
-Access Modes: ReadWriteMany
-
-Host Path: /pv/log
-
-Reclaim Policy: Retain
+- Storage: 100Mi
+- Access Modes: ReadWriteMany
+- Host Path: /pv/log
+- Reclaim Policy: Retain
 
 apiVersion: v1
 kind: PersistentVolume
