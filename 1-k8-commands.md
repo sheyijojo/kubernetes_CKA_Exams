@@ -2430,16 +2430,26 @@ spec:
         path: /pv/log
 
   persistentVolumeReclaimPolicy: Retain
-
-
+```
+## persistentvolumeclaim - make a storage available to a node
+```yaml
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: myclaim
+spec:
+  accessModes:
+    - ReadWriteOnce
+ # volumeMode: Filesystem
+  resources:
+    requests:
+      storage: 8Gi
+```
+```yaml
 ### Let us claim some of that storage for our application. Create a Persistent Volume Claim with the given specification.
 
 Volume Name: claim-log-1
-
-
 Storage Request: 50Mi
-
-
 Access Modes: ReadWriteOnce
 
 
