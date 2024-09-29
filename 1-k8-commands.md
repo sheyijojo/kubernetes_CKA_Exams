@@ -2538,4 +2538,145 @@ info
 - This will delay the binding and provisioning of a PersistentVolume until a Pod using the PersistentVolumeClaim is created.
 ```
 
+## Networking in Linux
+```yaml
+## In Linux
+## list and modify interfaces on the host
+ip link
 
+## see the ip addrs assigned to those interfaces ip addr 
+ip addr 
+
+
+## set ip addrs to those interfaces
+
+ip addr add 192.168.1.10/24 dev eth0
+
+## persist this changes
+edit in the /etc/network/interfaces file.
+
+## view the routes
+ip route
+
+## add entry into the routing table
+ip route add 192.168.1.0/24 via 192.168.2.1
+
+## check if ip forwarding is enabled, must be set to 1
+
+cat  /proc/sys/net/ipv4/ip_forward
+
+```
+## DNS configuration in Linux Host
+```yaml
+## host A wanna ping system B with a host name db - name resolution
+- on host A
+cat >> /etc/hosts
+2323.232.2323.232  db
+
+## managing can be hard
+- move entries into a DNS server to manage the hosts
+- every host has a `dns resolution file ` `/etc/resolv.conf`
+- add an entry into to it and specufy the addr of the dns server
+- namserver 192.168.1.100
+- dont need entry anymore in /etc/hosts
+- if both local and dns server have the same entry, it ist looks at the local
+- order is configured at cat /etc/nsswitch.conf
+
+## shorthand for long Domain name such as web for web.mycompany.com
+/etc/resolv.conf
+search     mycompany.com
+
+ping web
+
+## test dns resolution
+ping
+## doesnt consider /ect/host file , only dns server
+nslookup www.google.com
+dig www.google.com
+
+## can configure your computer as a DNS server using coredns solution 
+
+
+https://coredns.io/plugins/kubernetes/
+https://github.com/kubernetes/dns/blob/master/docs/specification.md
+```
+
+## Network Namspaces in Linux
+
+```yaml
+## To create a network namespace on a linux host
+
+ip netns add red
+ip netns add blue
+
+## list the network namespaces 
+ip netns 
+
+## run inside the ns
+ip netns exec red ip link
+ip -n red link
+
+## connect two namespaces
+- use a virtual ethernet pair 
+
+ip link add veth-red type veth peer name veth-blue
+
+## attach each virtual ethernet to ns respectively
+ip link set veth-red netns red
+
+ip link set veth-blue netns blue
+
+
+## can assign ip addr to each ns
+ip -n red addr add 192.168.15.1 dev veth-red
+
+ip -n blue addr add 192.168.15.1 dev veth-blue
+
+## bring up the interfaces
+ip -n red link set veth-red up
+ip -n blue link set veth-blue up
+
+
+## ping from red ns to blue ns
+
+ip netns exec red ping 192.168.15.2
+
+## check the arp table
+
+ip netns exec red arp
+
+## connect all/multiple namespaces from the host
+- the host is not aware of these namespaces created earlier
+- so we need a switch for this, just another namespace
+
+on the host - using the linux bridge virtual switch
+
+ip link add v-net-0 type brigde
+
+ip link
+
+ip link set dev v-net-0 up
+- it is more like an interface for the host
+- and switch for the namespace they can connect to
+
+## connect the ns to the bridge networl
+- connect all ns to the briddge
+
+## delete the virtual link to the ns created earlier
+
+ip -n red lnk del veth-red
+
+## connect to the bridge network
+
+ip link add veth-red type veth peer name veth-red-br
+
+ip link add veth-blue type veth peer name veth-blue-br
+
+## connect the cretaed veth-red-br and veth-blue-br to their ns
+
+ip link set veth-red netns red
+
+## the other end veth-red-br to bdrige network
+
+ip link set veth-red-br master v-net-0 
+```
