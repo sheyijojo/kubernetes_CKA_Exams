@@ -2509,7 +2509,8 @@ metadata:
 ```
 
 ## Storage classes
-
+- eliminate the need for a pv
+- create a storage class and reference it in a PVC
 ```yaml
 ## Static prvisioning
 
@@ -2520,10 +2521,17 @@ gcloud beta compute disks create \
 
 
 ## Dynamic provisioning 
-- create a storgae class object
+- create a storage class object
 
  kubectl get storageclasses
 
+## STEPS
+- Create a storage class object
+- storage class creates pv automatically
+- pvc reference the storage class at the spec level
+spec:
+  storageClassName: google-storage
+- reference the PVC in the volumes of pod at the spec level 
 ## notes
 info
 - The Storage Class called local-storage makes use of VolumeBindingMode set to WaitForFirstConsumer.
