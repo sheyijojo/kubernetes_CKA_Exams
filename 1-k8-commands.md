@@ -2800,4 +2800,45 @@ ip -n red addr add 192.168.1.10/24 dev veth-red Another thing to check is Firewa
 Either add rules to IP Tables to allow traffic from one namespace to another. Or disable IP Tables all together (Only in a learning environment).
 ```
 
+## Docker Networking
+
+```yaml
+## 1 no network - docker cannot nreach the outisde world and vice-versa 
+docker run --network none nginx 
+
+
+## 2 host network
+- container is attached to the host network
+- if you deploy a web app on port 80, then the app is available on port 80 on the host
+
+docker run --network host nginx 
+
+## if you try and rerun because it wont work, two process cannot share the same port at the same time
+
+## 3 Bridge network - An internal private network whuhc the docker host and container attach to
+
+docker network ls
+bridge
+
+// but on the host, same bridge network is refereed to as docker0
+ip link
+
+## get the ns of the container 
+docker inspect <networkid>
+
+## on host 
+ip link
+
+ip -n <ns id/container network id> link
+
+## external users need ton access the docker container
+- use port mapping
+- users can access port 80 of the container through the port 8080 on the host 
+docker run -p 8080:80 nginx
+
+curl http://192.168.1.10:8080
+
+
+iptables -nvL -t nat 
+```
 
