@@ -2605,6 +2605,7 @@ https://github.com/kubernetes/dns/blob/master/docs/specification.md
 
 ```yaml
 ## To create a network namespace on a linux host
+## In general, containers too have a ns to isolate itself from the host
 
 ip netns add red
 ip netns add blue
@@ -2612,16 +2613,18 @@ ip netns add blue
 ## list the network namespaces 
 ip netns 
 
-## run inside the ns
+## run inside the ns to check for interfaces, syou can run for host too
+## this network ns do not have interface yet and no network connnectivity 
 ip netns exec red ip link
 ip -n red link
 
-## connect two namespaces
+## connect two namespaces using a virtual internet pair/cable
 - use a virtual ethernet pair 
 
 ip link add veth-red type veth peer name veth-blue
 
-## attach each virtual ethernet to ns respectively
+## attach each virtual interface to ns respectively
+- so each ns get a networ interfce
 ip link set veth-red netns red
 
 ip link set veth-blue netns blue
@@ -2630,7 +2633,7 @@ ip link set veth-blue netns blue
 ## can assign ip addr to each ns
 ip -n red addr add 192.168.15.1 dev veth-red
 
-ip -n blue addr add 192.168.15.1 dev veth-blue
+ip -n blue addr add 192.168.15.2 dev veth-blue
 
 ## bring up the interfaces
 ip -n red link set veth-red up
