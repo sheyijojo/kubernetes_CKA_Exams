@@ -2749,6 +2749,41 @@ ip netns exec blue route to find the network
 
 ip netns exec blue ip route add 192.168.1.0/24 via 192.168.15.5
 
-## try and ping the LAN network but no error EXCEPT NO response back
-ip netns exec blue ping 192
+## try and ping the LAN network host but no error EXCEPT NO response back
+ip netns exec blue ping 192.168.1.3
+
+
+## Need NAT enabled on the host, to send a message to the LAN
+- Mask the ip addr coping from source network with the host add 
+
+iptable -t nat -A POSTROUTING -s 192.168.15.0/24 -j MASQUERADE
+
+## If you ping now, you will be able to reach the outside world
+ip netns exec blue ping 192.168.1.3
+
+
+## make NS to reach internet from the LAN
+- It will be unreacheable
+- since the ns can reach any network with host
+- add a default gateway
+
+ip netns exec blue ip route add default via 192.168.15.5
+
+ip netns exec blue ping 8.8.8.8  - good!
+
+## outside world to ns
+
+ping 192.168.15.2
+- not reacheable
+
+## solution
+ Two options
+- port forwarding roles 
+- expose the private addr identity of the ns to the host route table
+
+ist option is the right way
+
+## any traffic coming on port 80 on the local host to be forwarded to port 80 of the ns
+iptables -t nat -A PREPOUTING --dport 80 --to-destination 192.168.15.2:80 -j DNAT 
+
 ```
