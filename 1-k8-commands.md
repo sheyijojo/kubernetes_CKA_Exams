@@ -2845,7 +2845,18 @@ iptables -nvL -t nat
 ## Cluster Networking 
 
 ```yaml
-An important tip about deploying Network Addons in a Kubernetes cluster.
+
+## Important cammnds
+
+netstat --help
+
+##  search for numeruc, programs, listening, -i - not case sensitive 
+
+netstat -npl | grep -i scheduler
+
+netstat -npa | grep -i etcd | grep -i 2379 | wc -1
+
+## An important tip about deploying Network Addons in a Kubernetes cluster.
 
 In the upcoming labs, we will work with Network Addons. This includes installing a network plugin in the cluster. While we have used weave-net as an example, please bear in mind that you can use any of the plugins which are described here:
 
@@ -2861,4 +2872,37 @@ The links above redirect to third-party/ vendor sites or GitHub repositories, wh
 
 Note: In the official exam, all essential CNI deployment details will be provided
 
+
+## exercise
+
+## Question
+
+- What is the network interface configured for cluster connectivity on the controlplane node?
+
+- node-to-node communication
+
+ip a | grep -B2 192.23.97.3
+controlplane:~# ip a | grep -B2 192.23.97.3
+25556: eth0@if25557: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1450 qdisc noqueue state UP group default 
+    link/ether 02:42:c0:17:61:03 brd ff:ff:ff:ff:ff:ff link-netnsid 0
+    inet 192.23.97.3/24 brd 192.23.97.255 scope global eth0
+
+
+- ip show route default 
+
+## What is the port the kube-scheduler is listening on in the controlplane node?
+netstat -nplt
+
+
+## Notice that ETCD is listening on two ports. Which of these have more client connections established?
+
+netstat -anp | grep etcd | grep 2380 | wc -l
+
+
+## show ip of an interface
+ip address show eth0
+
+## show all the bridge interface
+
+ip address show type bridge 
 ```
