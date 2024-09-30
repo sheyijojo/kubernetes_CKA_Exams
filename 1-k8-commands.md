@@ -2786,4 +2786,18 @@ ist option is the right way
 ## any traffic coming on port 80 on the local host to be forwarded to port 80 of the ns
 iptables -t nat -A PREPOUTING --dport 80 --to-destination 192.168.15.2:80 -j DNAT 
 
+
+
+
+
+
+
+While testing the Network Namespaces, if you come across issues
+where you can't ping one namespace from the other, make sure you set the NETMASK while setting IP Address. ie: 192.168.1.10/24
+
+ip -n red addr add 192.168.1.10/24 dev veth-red Another thing to check is FirewallD/IP Table rules.
+
+Either add rules to IP Tables to allow traffic from one namespace to another. Or disable IP Tables all together (Only in a learning environment).
 ```
+
+
