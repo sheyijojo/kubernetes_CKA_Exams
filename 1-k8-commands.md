@@ -2650,36 +2650,105 @@ ip netns exec red arp
 
 ## connect all/multiple namespaces from the host
 - the host is not aware of these namespaces created earlier
-- so we need a switch for this, just another namespace
+- so we need a virtual switch for this, just another namespace
 
-on the host - using the linux bridge virtual switch
+- on the host - using the linux bridge virtual switch
+## create a bridge, which is more like an interface
 
-ip link add v-net-0 type brigde
+- ip link add v-net-0 type brigde
 
+## check the newly created virtual interface
 ip link
 
+## turn up the virtual network switch  
 ip link set dev v-net-0 up
+
 - it is more like an interface for the host
 - and switch for the namespace they can connect to
 
-## connect the ns to the bridge networl
+## connect the ns to the bridge network
+
+
 - connect all ns to the briddge
 
-## delete the virtual link to the ns created earlier
+## delete the virtual cablelinks to the ns created earlier
+- the veth-blue deletes automatically
 
-ip -n red lnk del veth-red
+ip -n red link del veth-red
+
 
 ## connect to the bridge network
+- first create a virtual link
+- Remember this - `ip link add veth-red type veth peer name veth-blue`
 
+## create a red virtual interface and pair with veth-red-br
 ip link add veth-red type veth peer name veth-red-br
 
+
+## create a blue virtual interface and pair veth-blue-0
 ip link add veth-blue type veth peer name veth-blue-br
 
-## connect the cretaed veth-red-br and veth-blue-br to their ns
+## connect the created one-end interface veth-red and veth-blue to their ns
 
 ip link set veth-red netns red
 
-## the other end veth-red-br to bdrige network
+ip link set veth-blue netns blue
 
-ip link set veth-red-br master v-net-0 
+## the other end veth-red-br and veth-blue-br to the bridge network v-net-0
+
+ip link set veth-red-br master v-net-0
+ip link set veth-blue-br master v-net-0
+
+## Those interfaces need IP addr
+ip -n red addr add 192.168.15.1 dev veth-red
+
+ip -n blue addr add 192.168.15.1 dev veth-blue
+
+## turn the 4 interfaces up to connect to the bridge network 
+ip -n red link set  veth-red up
+
+ip -n red link set  veth-red up
+
+
+## host to ns connectivity
+
+- add ip to brigde network
+- remember the interfaces connected to the 192.168.15.0 network
+ip addr add 192.168.15.5/24 dev v-net-0
+
+## then try ping ns
+
+ping 192.168.15.1
+
+## reach outisde word through the ethernet port on the host
+- Lets say the host would love to connect to a LAN network 192.168.1.0 with host addr 192.168.1.3
+- it wont go through
+- lets try the blue ns
+
+ip netns exec blue ping 192.168.1.3
+
+//of course unreacheable
+
+//debug and check the route table
+
+ip netns exec blue route to find the network
+
+//no info about other network aside 192.168.15.0
+
+
+
+## add an entry to the routing table to create a gateway/door  to the LAN
+
+## localhost is the gateway that connects the two networks together
+- i.e the network ninterface v-net-0 and the eth0(192.168.1.2) to the LAN network(192.168.1.0) -- LAN host(192.168.1.3
+
+
+## in the blue namespace, add traffic in the route table
+
+## make blue ns connect to 192.168.1.0/24 via host network 192.168.15.5
+
+ip netns exec blue ip route add 192.168.1.0/24 via 192.168.15.5
+
+## try and ping the LAN network but no error EXCEPT NO response back
+ip netns exec blue ping 192
 ```
