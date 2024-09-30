@@ -2882,8 +2882,8 @@ Note: In the official exam, all essential CNI deployment details will be provide
 - node-to-node communication
 
 ip a | grep -B2 192.23.97.3
-controlplane:~# ip a | grep -B2 192.23.97.3
-25556: eth0@if25557: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1450 qdisc noqueue state UP group default 
+ip a | grep -B2 192.23.97.3
+eth0@if25557: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1450 qdisc noqueue state UP group default 
     link/ether 02:42:c0:17:61:03 brd ff:ff:ff:ff:ff:ff link-netnsid 0
     inet 192.23.97.3/24 brd 192.23.97.255 scope global eth0
 
