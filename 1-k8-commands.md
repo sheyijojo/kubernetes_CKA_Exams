@@ -2955,7 +2955,7 @@ ip nets
 ls /opt/cni/bin
 
 - which plugin to be used is stored here
-/opt/cni/net.d 
+/etc/cni/net.d/ 
 ```
 
 ## CNI Weave
@@ -2976,4 +2976,9 @@ kubectl apply -f https://github.com/weaveworks/weave/releases/download/v2.8.1/we
 kubectl get pods -n kube-system
 
 kubectl logs weave-net-59cmb waeve -n kube-system
+
+## questions
+
+## Inspect the kubelet service and identify the container runtime endpoint value is set for Kubernetes.
+ps aux | grep kubelet | grep containerd
 ```
