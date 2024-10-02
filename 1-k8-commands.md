@@ -2854,10 +2854,12 @@ iptables -nvL -t nat
 - ip route add 192.168.1.0/24 via 192.168.2.1
 - cat /proc/sys/net/ipv4/ip_forward
 - arp
-- netstat -plnt 
+- netstat -plnt
+-netstat --help
 
-netstat --help
-
+## K8 consist of master and worker nodes
+- Each nodes should have at least one interface connected to a network  with IP addr
+- The host should have ubique histname set and a unique mac address 
 ##  search for numeruc, programs, listening, -i - not case sensitive 
 
 netstat -npl | grep -i scheduler
