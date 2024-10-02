@@ -2893,6 +2893,9 @@ Note: In the official exam, all essential CNI deployment details will be provide
 
 ip a | grep -B2 192.23.97.3
 
+- ip a lists all network interfaces and their IP addresses.
+- grep -B2 searches for the string 192.23.97.3 and displays 2 lines before the match.
+
 eth0@if25557: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1450 qdisc noqueue state UP group default 
     link/ether 02:42:c0:17:61:03 brd ff:ff:ff:ff:ff:ff link-netnsid 0
     inet 192.23.97.3/24 brd 192.23.97.255 scope global eth0
@@ -2914,5 +2917,16 @@ ip address show eth0
 
 ## show all the bridge interface
 
-ip address show type bridge 
+ip address show type bridge
+
+## Ques: We use Containerd as our container runtime. What is the interface/bridge created by Containerd on the controlplane node?
+- When using Containerd as the container runtime on a Kubernetes control plane node,
+- the default interface/bridge created by Containerd is typically called cni0.
+- This bridge is managed by the Container Network Interface (CNI) plugins, which Containerd relies on for network connectivity.
+
+- The cni0 bridge connects the various containers running on the node,
+- allowing them to communicate with each other and with external networks,
+- based on the CNI plugin configuration you're using (e.g., Calico, Flannel).
+## Check for CNI bridge using network namespaces
+ip nets
 ```
