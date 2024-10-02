@@ -2962,6 +2962,8 @@ ls /opt/cni/bin
 - Solution based on CNI Weaveworks
 ```yaml
 kubectl apply -f https://github.com/weaveworks/weave/releases/download/v2.8.1/weave-daemonset-k8s.yaml
+
+
 - so CNI plugin is deployed on the cluster
 - It deploys an gent or service on each node
 -The communcate with each other to exchange information.
@@ -2980,5 +2982,7 @@ kubectl logs weave-net-59cmb waeve -n kube-system
 ## questions
 
 ## Inspect the kubelet service and identify the container runtime endpoint value is set for Kubernetes.
-ps aux | grep kubelet | grep containerd
+ps aux | grep -i kubelet | grep containerd
+
+ps aux | grep -i kubelet | grep container-runtime 
 ```
