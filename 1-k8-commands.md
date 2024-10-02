@@ -2938,6 +2938,22 @@ ip nets
 - Every pod should have an IP Address
 - Every pod should be able to talk with every other pod in the same node
 - Every pod should be able to talk with every other Pod on other nodes without NAT
- 
 
+## CNI
+- CNI helps run script on each pod created automatically
+- E.g a cript that helps add IP addr and ns , and connects pods to the route network 
+
+## Container Runtime
+- A container runtime on each nodes is responbisible for  creating container
+- Container runtime then looks at the CNI configuration and looks for the script I created
+- /etc/cni/net.d/net-script.conflist
+- Then looks at the bin directory /opt/cni/bin/net-script.sh , and esecutes the script  
+```
+## CNI in Kubernetes 
+```yaml
+- In k8, the container plugins are stored in :
+/opt/cni/bin
+
+- which plugin to suse is stored here
+/opt/cni/net.d 
 ```
