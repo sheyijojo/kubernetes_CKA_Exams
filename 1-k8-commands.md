@@ -2930,3 +2930,14 @@ ip address show type bridge
 ## Check for CNI bridge using network namespaces
 ip nets
 ```
+## Pod Networking 
+
+
+```yaml
+## k8 Networking Model
+- Every pod should have an IP Address
+- Every pod should be able to talk with every other pod in the same node
+- Every pod should be able to talk with every other Pod on other nodes without NAT
+ 
+
+```
