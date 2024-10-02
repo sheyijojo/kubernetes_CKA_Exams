@@ -2815,7 +2815,7 @@ docker run --network host nginx
 
 ## if you try and rerun because it wont work, two process cannot share the same port at the same time
 
-## 3 Bridge network - An internal private network whuhc the docker host and container attach to
+## 3 Bridge network - An internal private network which the docker host and container attach to
 
 docker network ls
 bridge
@@ -2846,7 +2846,15 @@ iptables -nvL -t nat
 
 ```yaml
 
-## Important cammnds
+## Important commands
+- ip link
+- ip addr
+- ip addr add 192.168.1.0/24 dev eth0
+- ip route
+- ip route add 192.168.1.0/24 via 192.168.2.1
+- cat /proc/sys/net/ipv4/ip_forward
+- arp
+- netstat -plnt 
 
 netstat --help
 
@@ -2882,7 +2890,7 @@ Note: In the official exam, all essential CNI deployment details will be provide
 - node-to-node communication
 
 ip a | grep -B2 192.23.97.3
-ip a | grep -B2 192.23.97.3
+
 eth0@if25557: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1450 qdisc noqueue state UP group default 
     link/ether 02:42:c0:17:61:03 brd ff:ff:ff:ff:ff:ff link-netnsid 0
     inet 192.23.97.3/24 brd 192.23.97.255 scope global eth0
