@@ -2971,7 +2971,7 @@ kubectl apply -f https://github.com/weaveworks/weave/releases/download/v2.8.1/we
 - The agent takes of other PODS 
 
 
-## DEPLOYING WEAVES ON A CLUSYTER
+## DEPLOYING WEAVES ON A CLUSTER
 
 - WEAVE and weave peeers can be deployed as services or daemons on each node in d cluster mannaully or deploy as pods in cluster
 
@@ -2985,4 +2985,20 @@ kubectl logs weave-net-59cmb waeve -n kube-system
 ps aux | grep -i kubelet | grep containerd
 
 ps aux | grep -i kubelet | grep container-runtime 
+```
+
+## Plugin for IP Management - IPAM
+```yaml
+## CNI outsourced IP management to DHCP and host-local
+
+
+## questions
+
+## What is the default gateway configured on the PODs scheduled on node01?
+
+Try scheduling a pod on node01 and check ip route output
+
+ssh node01
+
+ip route
 ```
