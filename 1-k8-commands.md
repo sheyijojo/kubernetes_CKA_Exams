@@ -2951,9 +2951,29 @@ ip nets
 ```
 ## CNI in Kubernetes 
 ```yaml
-- In k8, the container plugins are stored in :
-/opt/cni/bin
+- In k8, the container plugins are installed  in :
+ls /opt/cni/bin
 
-- which plugin to suse is stored here
+- which plugin to be used is stored here
 /opt/cni/net.d 
+```
+
+## CNI Weave
+- Solution based on CNI Weaveworks
+```yaml
+kubectl apply -f https://github.com/weaveworks/weave/releases/download/v2.8.1/weave-daemonset-k8s.yaml
+- so CNI plugin is deployed on the cluster
+- It deploys an gent or service on each node
+-The communcate with each other to exchange information.
+- Waeve makes ure PODS have the correct route configured to reach the agent
+- The agent takes of other PODS 
+
+
+## DEPLOYING WEAVES ON A CLUSYTER
+
+- WEAVE and weave peeers can be deployed as services or daemons on each node in d cluster mannaully or deploy as pods in cluster
+
+kubectl get pods -n kube-system
+
+kubectl logs weave-net-59cmb waeve -n kube-system
 ```
