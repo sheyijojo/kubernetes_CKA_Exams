@@ -2996,9 +2996,24 @@ ps aux | grep -i kubelet | grep container-runtime
 
 ## What is the default gateway configured on the PODs scheduled on node01?
 
-Try scheduling a pod on node01 and check ip route output
+- Try scheduling a pod on node01 and check ip route output
 
 ssh node01
 
 ip route
+
+- on control plane
+- spec
+    nodeName: node01
+kubectl run busybox --dry-run=client -o yaml -- sleep 1000 > busybox.yaml
+## What POD OP addr range configured on weave
+
+- check the pod logs of the weave agent
+- look for ipalloc
+
+kubcetl logs -n kube-system weave-nt-mknr5
+
+kubectl exec busybox -- ip route 
 ```
+
+## Service Networking 
