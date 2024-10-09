@@ -3020,6 +3020,9 @@ kubectl exec busybox -- ip route
 ```YAML
 ## When a service is created, it is accessible on all pods on the cluster
 - a service is nhosted accross a cluster
-- a serice accesible within the cluster is known as clusterIP
+- a serice accesible within the cluster is known as clusterIp
+
+## Nodeport service
+- can expose app on a pods on all nodes on the portal. 
 ```
 
