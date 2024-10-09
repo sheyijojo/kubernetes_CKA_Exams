@@ -3023,6 +3023,24 @@ kubectl exec busybox -- ip route
 - a serice accesible within the cluster is known as clusterIp
 
 ## Nodeport service
-- can expose app on a pods on all nodes on the portal. 
-```
+- can expose app on a pods on all nodes on the portal.
 
+## set kube proxy mode
+
+kube-proxy --proxy-mode [userspace | iptables | ipvs] ...
+
+kubectl get service
+
+##  get the service cluster ip range
+
+kube-api-server --service-cluster-ip-range ipNet
+
+ps aux | grep kube-api-server
+
+a pod and a service ip should not overlap
+
+iptables -L -t nat | grep db-service
+
+
+cat /var/log/kube-proxy.log 
+```
