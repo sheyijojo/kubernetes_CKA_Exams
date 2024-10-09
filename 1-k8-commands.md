@@ -3017,4 +3017,9 @@ kubectl exec busybox -- ip route
 ```
 
 ## Service Networking 
+```YAML
+## When a service is created, it is accessible on all pods on the cluster
+- a service is nhosted accross a cluster
+- a serice accesible within the cluster is known as clusterIP
+```
 
