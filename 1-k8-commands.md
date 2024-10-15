@@ -3053,10 +3053,24 @@ kube-api-server --service-cluster-ip-range ipNet
 
 ps aux | grep kube-api-server
 
-## See the rukes created by kube-proxy
+## See the rules created by kube-proxy
 
 iptables -L -t nat | grep db-service
 
 ## See these rules also in kube-proxy logs 
-cat /var/log/kube-proxy.log 
+cat /var/log/kube-proxy.log
+
+## What network range are the nodes in the cluster part of?''
+- one way to do this is to make use of the ipcalc utility. If it is not installed, you can install it by running:
+- apt update and the apt install ipcalc
+-  ip a | grep eth0
+- ipcalc -b 10.33.39.8
+
+
+
+## What is the range of IP addresses configured for PODs on this cluster?
+
+
+The network is configured with weave. Check the weave pods logs using the command kubectl logs <weave-pod-name> weave -n kube-system and look for ipalloc-range.
+
 ```
