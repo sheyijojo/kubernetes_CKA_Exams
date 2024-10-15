@@ -3119,6 +3119,8 @@ k8 replaces the ip wuth dashes
 ```
 
 ## CORE DNS in Kubernetes
+Every time a pod or service is created it adds a record for it in its database
+
 ```yaml
 DNS server maps IP address to services but not the same approach to PODs
 
@@ -3126,5 +3128,15 @@ DNS server maps IP address to services but not the same approach to PODs
 10-244-2-5   10.244.2.5
 
 Recommended DNS server is CoreDNS
+- The coreDNS server is deployed as a pod in the kube-system namespace in the k8 kluster - Deployed as two pods for redundancy,
+
+as part of a replicaset.
+- This POD runs the coredns EXECUTABLE.
+- k8 uses a file called corefile  `cat /etc/coredns/corefile`, which has a number of plugins configured
+- the corefile is passed into the pod has a configMap object. 
+
+##  How does pod point to the dns SERVER, what address does the pod use to point to 
+- when the dns is deployed, it also creates a service to make it available to other components within a cluster
+- The service is known as kube-dns by default. Ip addr of this service is configured as the nameserver on pods automatically by k8- kubelet
 
 ```
