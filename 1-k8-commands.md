@@ -3139,4 +3139,20 @@ as part of a replicaset.
 - when the dns is deployed, it also creates a service to make it available to other components within a cluster
 - The service is known as kube-dns by default. Ip addr of this service is configured as the nameserver on pods automatically by k8- kubelet
 
+## What is the name of the ConfigMap object created for Corefile?
+
+k get configmaps -n kube-system
+
+ans - coredns
+
+root domain - cluster.local
+
+
+## What name can be used to access the hr web server from the test Application?
+## You can execute a curl command on the test pod to test.
+## Alternatively, the test Application also has a UI. Access it using the tab at the top of your terminal named test-app.
+
+k get svc
+k describe
+- check for the Selector that indicates hr 
 ```
