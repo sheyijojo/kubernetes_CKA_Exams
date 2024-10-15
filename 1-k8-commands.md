@@ -3117,3 +3117,14 @@ curl http://web-service.apps.svc.cluster.local
 ## for pods
 k8 replaces the ip wuth dashes
 ```
+
+## CORE DNS in Kubernetes
+```yaml
+DNS server maps IP address to services but not the same approach to PODs
+
+- For pods it forms hostname by replacing the dots in IP with dashes. it maps ip with pp-dashes
+10-244-2-5   10.244.2.5
+
+Recommended DNS server is CoreDNS
+
+```
