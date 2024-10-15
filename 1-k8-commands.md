@@ -3020,28 +3020,43 @@ kubectl exec busybox -- ip route
 ```YAML
 - You will rarely configutre pods to talk with each other, you will usualyy use a service. 
 ## When a service is created, it is accessible on all pods on the cluster
-- a service is nhosted accross a cluster
-- a serice accesible within the cluster is known as clusterIp
+- a service is hosted accross a cluster, not bound to a specific node
+
+- a service accesible ONLY within the cluster is known as clusterIp, gets an IP addr
 
 ## Nodeport service
-- can expose app on a pods on all nodes on the portal.
+- can expose app on a pods on all nodes on the cluster, gets an IP Addr
 
-## set kube proxy mode
+
+## How is the service made available to external users through a port on each node
+- Generally, we know every node run a kunelet process which is responsible for creating PODS.
+- Same kubelet invokes CNI plugging to configure networking for that POD.
+- Each node also runs another component known as kube-proxy which gets into action wheneneve a service is created.
+- services are not created on each node or assigned to each node, they are a cluster-wide concept.
+- Service is just a virtual object
+
+
+## set kube proxy mode - ways in which kubue-proxy creates forwarding rules to forward requests from service to pods 
 
 kube-proxy --proxy-mode [userspace | iptables | ipvs] ...
 
 kubectl get service
 
-##  get the service cluster ip range
+
+## overlapping of IPS
+
+- Make sure a pod and a service IP should not overlap
+
+##  get the service cluster ip range assigned to service when created.
 
 kube-api-server --service-cluster-ip-range ipNet
 
 ps aux | grep kube-api-server
 
-a pod and a service ip should not overlap
+## See the rukes created by kube-proxy
 
 iptables -L -t nat | grep db-service
 
-
+## See these rules also in kube-proxy logs 
 cat /var/log/kube-proxy.log 
 ```
