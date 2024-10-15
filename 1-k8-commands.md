@@ -3060,7 +3060,7 @@ iptables -L -t nat | grep db-service
 ## See these rules also in kube-proxy logs 
 cat /var/log/kube-proxy.log
 
-## What network range are the nodes in the cluster part of?''
+## What network range are the nodes in the cluster part of?
 - one way to do this is to make use of the ipcalc utility. If it is not installed, you can install it by running:
 - apt update and the apt install ipcalc
 -  ip a | grep eth0
@@ -3071,6 +3071,21 @@ cat /var/log/kube-proxy.log
 ## What is the range of IP addresses configured for PODs on this cluster?
 
 
-The network is configured with weave. Check the weave pods logs using the command kubectl logs <weave-pod-name> weave -n kube-system and look for ipalloc-range.
+The network is configured with weave. Check the weave pods logs using the command
+-  kubectl logs <weave-pod-name> weave -n kube-system and look for ipalloc-range.
+-  k logs -n kube-system weave-net-lfq2s | ipalloc-range
+
+## What is the IP Range configured for the services within the cluster?
+cat /etc/kubernetes/manifests/kube-apiserver.yaml   | grep cluster-ip-range
+
+## What type of proxy is the kube-proxy configured to use?
+
+Check the logs of the kube-proxy pods. Run the command: kubectl logs <kube-proxy-pod-name> -n kube-system
+
+k logs kube-proxy-ltbmp  -n kube-system | grep kube-proxy
+
+## General commands
+
+kubectl get all --all-namespaces 
 
 ```
