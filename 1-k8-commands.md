@@ -3089,3 +3089,31 @@ k logs kube-proxy-ltbmp  -n kube-system | grep kube-proxy
 kubectl get all --all-namespaces 
 
 ```
+
+## DNS in Kubernetes 
+- k8 deploys a built-in DNS server by default when you set up the cluster 
+- If you set it up manaully, then you have to build it yourself
+- How DNS help Pods resolve each other
+- Focus is purely on PODs and services within the cluster.
+- Whenever the service is created, DNS creates a record and mapping its ip to the DNS
+  
+```yaml
+## can reach a webserver from a pod within the same namespace
+curl http://web-service
+
+## Different namespace for the service called apps(lets assume),
+curl http://web-service.apps
+
+## all services are further grouped together into another subdomain called svc created by DNS
+curl http://web-service.apps.svc
+
+
+## How services are resolved within the cluster
+
+## FQDN for svc- all services and PODS are groupeed togther into a troot domain for the cluster, which is cluster.local by default 
+curl http://web-service.apps.svc.cluster.local
+
+
+## for pods
+k8 replaces the ip wuth dashes
+```
