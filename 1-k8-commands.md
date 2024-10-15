@@ -3018,6 +3018,7 @@ kubectl exec busybox -- ip route
 
 ## Service Networking 
 ```YAML
+- You will rarely configutre pods to talk with each other, you will usualyy use a service. 
 ## When a service is created, it is accessible on all pods on the cluster
 - a service is nhosted accross a cluster
 - a serice accesible within the cluster is known as clusterIp
