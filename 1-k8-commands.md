@@ -3185,12 +3185,11 @@ k edit deploy webapp
 
 ## You could configure this withougt Ingress
 cOULD USE REVERSE PROXY SUCH AS NGINX, haproxy, TRAEFIK, GCP HTTP(S) Load balancer (GCE), Contour, Istio
+
 ## They are also the Ingress controller
 - ingress does this in a similar way, with a supported solution like above
-
-solution doeloyed is known as ingress controller
-
-Set of Rules you configure  is known as inGRESS RESOURCES, done by using a deifnition file
+- solution doeloyed is known as ingress controller
+- Set of Rules you configure  is known as inGRESS RESOURCES, done by using a deifnition file
 
 - k8 cluster does not come with INgress controller by default
 
@@ -3201,8 +3200,18 @@ Set of Rules you configure  is known as inGRESS RESOURCES, done by using a deifn
 - create config map
 - Cretae service account role and rolebinding  to access all these objects
 - create a service of e.g Nodeport
-## create INgress resource
-- More about routing traffic and whateview
 
+## create INgress resource
+- More about routing traffic and whataview
+
+## Use rules when you wanna route traffic on diff conditions
+- host field difeerentiate a yaml file with multuple domain names and a single domain name 
+So there are two opaths
+1. Splitting traffic by urls with one rule, and split the traffic in two paths
+2. Splitting traffic by hostname, use two rules and one path
 
 ```
+## Ingress Resource
+
+
+<img src="https://github.com/sheyijojo/kubernetes_CKA_Exams/blob/main/pdfs/network-1.png?raw=true" alt="Description" width="800">
