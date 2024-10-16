@@ -3194,4 +3194,15 @@ Set of Rules you configure  is known as inGRESS RESOURCES, done by using a deifn
 
 - k8 cluster does not come with INgress controller by default
 
+## decouples configuration using config map when using example NGINX controller 
+
+## steps
+- create ingress controller
+- create config map
+- Cretae service account role and rolebinding  to access all these objects
+- create a service of e.g Nodeport
+## create INgress resource
+- More about routing traffic and whateview
+
+
 ```
