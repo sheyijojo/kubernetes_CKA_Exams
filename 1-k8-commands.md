@@ -3162,4 +3162,13 @@ k describe
 
 ## Where is the configuration file located for configuring the CoreDNS service?
  kubectl -n kube-system describe deployments.apps coredns | grep -A2 Args | grep Corefile
+
+
+## edit and deploy 
+k edit deploy webapp
+
+
+## From the hr pod nslookup the mysql service and redirect the output to a file /root/CKA/nslookup.out
+
+ k exec -it hr -- nslookup mysql.payroll > /root/CKA/nslookup.out
 ```
