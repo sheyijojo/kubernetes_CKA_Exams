@@ -3122,6 +3122,7 @@ k8 replaces the ip wuth dashes
 Every time a pod or service is created it adds a record for it in its database
 
 ```yaml
+- Get Information on the root domain of the cluster in the ConfigMap object 
 DNS server maps IP address to services but not the same approach to PODs
 
 - For pods it forms hostname by replacing the dots in IP with dashes. it maps ip with pp-dashes
@@ -3154,5 +3155,11 @@ root domain - cluster.local
 
 k get svc
 k describe
-- check for the Selector that indicates hr 
+- check for the Selector that indicates hr
+
+
+
+
+## Where is the configuration file located for configuring the CoreDNS service?
+ kubectl -n kube-system describe deployments.apps coredns | grep -A2 Args | grep Corefile
 ```
