@@ -3214,4 +3214,4 @@ So there are two opaths
 ## Ingress Resource
 
 
-<img src="https://github.com/sheyijojo/kubernetes_CKA_Exams/blob/main/pdfs/network-1.png?raw=true" alt="Description" width="800">
+<img src="https://github.com/sheyijojo/kubernetes_CKA_Exams/blob/main/pdfs/ingress-resource.png?raw=true" alt="Description" width="800">
