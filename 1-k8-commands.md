@@ -3172,3 +3172,26 @@ k edit deploy webapp
 
  k exec -it hr -- nslookup mysql.payroll > /root/CKA/nslookup.out
 ```
+## Ingress in Kubernetes 
+```yaml
+## You have load balancers provisioned on google cloud
+- load balancer is sitting in front of your servcies
+- How do you direct traffic from different load balancers, manage ssl certs, firewall rules
+- What service does that? A configuration in k8 that manages
+- INGRESS is the solution
+- Ingress helps users access app using a signe externaly url
+- More like a layer7 Load Balancer that can configured using k8 objects
+- Need to publish ingress as a service such as nodepotrt. oNE TIME configuration
+
+## You could configure this withougt Ingress
+cOULD USE REVERSE PROXY SUCH AS NGINX, haproxy, TRAEFIK, GCP HTTP(S) Load balancer (GCE), Contour, Istio
+## They are also the Ingress controller
+- ingress does this in a similar way, with a supported solution like above
+
+solution doeloyed is known as ingress controller
+
+Set of Rules you configure  is known as inGRESS RESOURCES, done by using a deifnition file
+
+- k8 cluster does not come with INgress controller by default
+
+```
