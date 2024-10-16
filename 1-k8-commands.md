@@ -3215,3 +3215,12 @@ So there are two opaths
 
 
 <img src="https://github.com/sheyijojo/kubernetes_CKA_Exams/blob/main/pdfs/ingress-resource.png?raw=true" alt="Description" width="800">
+
+```yaml
+
+Format - kubectl create ingress  --rule="host/path=service:port"**
+
+kubectl create ingress ingress-test --rule="wear.my-online-store.com/wear*=wear-service:80"**
+
+```
+
