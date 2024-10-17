@@ -3308,5 +3308,21 @@ spec:
 ## Questions 
 ```
 ## Which namespace is the Ingress Resource deployed in?
+```yaml
+
 kubectl get ingress --all-namespaces
 
+## Ingress resources documentation
+https://kubernetes.github.io/ingress-nginx/examples/rewrite/
+
+
+k get pods -A
+
+## create an in  gress
+kubectl create ingress myingress -n critical-space --rule="/pay=pay-service:8282"
+
+k get ingress -n critical-space
+
+k logs <podname> -n namespace
+
+```
