@@ -3352,5 +3352,5 @@ k create serviceaccount nginx-admission -n ingress-nginx
 
 ## We have created the Roles, RoleBindings, ClusterRoles, and ClusterRoleBindings for the ServiceAccount. Check it out!!
 
-k get roles -n nameofsapce
+k get roles -n <namespacename>
 ```
