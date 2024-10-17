@@ -3218,10 +3218,39 @@ So there are two paths
 
 ```yaml
 
-Format - kubectl create ingress  --rule="host/path=service:port"**
+## Format 
+kubectl create ingress  --rule="host/path=service:port"**
 
 kubectl create ingress ingress-test --rule="wear.my-online-store.com/wear*=wear-service:80"**
 
+```
+**Different Controllers Options**
+- Different ingress controllers have different options that can be used to customise the way it works. 
+- NGINX Ingress controller has many options that can be seen here.
+
+```yaml
+- In another example given here, this could also be:
+
+- replace("/something(/|$)(.*)", "/$2")
+
+
+
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /$2
+  name: rewrite
+  namespace: default
+spec:
+  rules:
+  - host: rewrite.bar.com
+    http:
+      paths:
+      - backend:
+          serviceName: http-svc
+          servicePort: 80
+        path: /something(/|$)(.*)
 ```
 
 
