@@ -3323,6 +3323,28 @@ kubectl create ingress myingress -n critical-space --rule="/pay=pay-service:8282
 
 k get ingress -n critical-space
 
-k logs <podname> -n namespace
+k logs <podname> -n <namespace-name>
+
+
+## namespace
+kubectl create namespace my-namespace
+
+##
+The NGINX Ingress Controller requires a ConfigMap object.
+
+## Create a ConfigMap object with name ingress-nginx-controller in the ingress-nginx namespace.
+
+k create configmap ingress-nginx-controller -n ingress-nginx
+
+## The NGINX Ingress Controller requires two ServiceAccounts.
+## Create both ServiceAccount with name ingress-nginx and ingress-nginx-admission in the ingress-nginx namespace.
+
+
+k create serviceaccount ingress-nginx -n ingress-nginx
+
+k create serviceaccount nginx-admission -n ingress-nginx
+
+## We have created the Roles, RoleBindings, ClusterRoles, and ClusterRoleBindings for the ServiceAccount. Check it out!!
+
 
 ```
