@@ -3312,7 +3312,7 @@ spec:
 
 <img src="https://github.com/sheyijojo/kubernetes_CKA_Exams/blob/main/pdfs/ingress-steps.png?raw=true" alt="Description" width="800">
 
-
+```yaml
 ## Which namespace is the Ingress Resource deployed in?
 
 
@@ -3353,4 +3353,4 @@ k create serviceaccount nginx-admission -n ingress-nginx
 ## We have created the Roles, RoleBindings, ClusterRoles, and ClusterRoleBindings for the ServiceAccount. Check it out!!
 
 k get roles -n nameofsapce
-
+```
