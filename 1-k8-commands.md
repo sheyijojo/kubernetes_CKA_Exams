@@ -3018,14 +3018,14 @@ kubectl exec busybox -- ip route
 
 ## Service Networking 
 ```YAML
-- You will rarely configutre pods to talk with each other, you will usualyy use a service. 
-## When a service is created, it is accessible on all pods on the cluster
+- You will rarely configure pods to talk with each other, you will usually use a SERVICE. 
+##When a service is created, it is accessible on all pods on the cluster
 - a service is hosted accross a cluster, not bound to a specific node
 
-- a service accesible ONLY within the cluster is known as clusterIp, gets an IP addr
+- a service accesible ONLY within the cluster is known as clusterIp, gets an IP addr attached to it
 
 ## Nodeport service
-- can expose app on a pods on all nodes on the cluster, gets an IP Addr
+- can expose app on a pods externally on all nodes on the cluster, gets an IP Addr
 
 
 ## How is the service made available to external users through a port on each node
@@ -3036,7 +3036,7 @@ kubectl exec busybox -- ip route
 - Service is just a virtual object
 
 
-## set kube proxy mode - ways in which kubue-proxy creates forwarding rules to forward requests from service to pods 
+## set kube proxy mode - ways in which kube-proxy creates forwarding rules to forward requests from service to pods..
 
 kube-proxy --proxy-mode [userspace | iptables | ipvs] ...
 
@@ -3223,4 +3223,6 @@ Format - kubectl create ingress  --rule="host/path=service:port"**
 kubectl create ingress ingress-test --rule="wear.my-online-store.com/wear*=wear-service:80"**
 
 ```
+
+
 
