@@ -3092,10 +3092,10 @@ kubectl get all --all-namespaces
 
 ## DNS in Kubernetes 
 - k8 deploys a built-in DNS server by default when you set up the cluster 
-- If you set it up manaully, then you have to build it yourself
+- If you set it up manually, then you have to build it yourself
 - How DNS help Pods resolve each other
 - Focus is purely on PODs and services within the cluster.
-- Whenever the service is created, DNS creates a record and mapping its ip to the DNS
+- Whenever the service is created, DNS creates a record and mapping its IP to the DNS
   
 ```yaml
 ## can reach a webserver from a pod within the same namespace
@@ -3177,9 +3177,9 @@ k edit deploy webapp
 ## You have load balancers provisioned on google cloud
 - load balancer is sitting in front of your servcies
 - How do you direct traffic from different load balancers, manage ssl certs, firewall rules
-- What service does that? A configuration in k8 that manages
+- What service does that? A configuration in k8 that manages all the configurations mentioned and many more
 - INGRESS is the solution
-- Ingress helps users access app using a signe externaly url
+- Ingress helps users access app using a sigle externaly url
 - More like a layer7 Load Balancer that can configured using k8 objects
 - Need to publish ingress as a service such as nodepotrt. oNE TIME configuration
 
@@ -3201,12 +3201,12 @@ cOULD USE REVERSE PROXY SUCH AS NGINX, haproxy, TRAEFIK, GCP HTTP(S) Load balanc
 - Cretae service account role and rolebinding  to access all these objects
 - create a service of e.g Nodeport
 
-## create INgress resource
+## create INGRESS resource
 - More about routing traffic and whataview
 
 ## Use rules when you wanna route traffic on diff conditions
-- host field difeerentiate a yaml file with multuple domain names and a single domain name 
-So there are two opaths
+- host field diffentiates a yaml file with multiple domain names and a single domain name 
+So there are two paths
 1. Splitting traffic by urls with one rule, and split the traffic in two paths
 2. Splitting traffic by hostname, use two rules and one path
 
