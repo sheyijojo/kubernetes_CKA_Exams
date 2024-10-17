@@ -3246,11 +3246,15 @@ Two apps - watch and wear app displays at http://:/
 - http://:/wear –> http://:/wear
 
 
-Notice watch and wear at the end of the target URLs. The target applications are not configured with /watch or /wear paths. They are different applications built specifically for their purpose, so they don’t expect /watch or /wear in the URLs. And as such the requests would fail and throw a 404 not found error.
+- Notice watch and wear at the end of the target URLs. The target applications are not configured with /watch or /wear paths.
+- They are different applications built specifically for their purpose,
+- so they don’t expect /watch or /wear in the URLs.
+- And as such the requests would fail and throw a 404 not found error.
 
 To fix that we want to “ReWrite” the URL when the request is passed on to the watch or wear applications.
  We don’t want to pass in the same path that user typed in. So we specify the rewrite-target option.
-This rewrites the URL by replacing whatever is under rules->http->paths->path which happens to be /pay in this case with the value in rewrite-target. This works just like a search and replace function.
+This rewrites the URL by replacing whatever is under rules->http->paths->path
+which happens to be /pay in this case with the value in rewrite-target. This works just like a search and replace function.
 
 ##
 
@@ -3301,5 +3305,8 @@ spec:
           servicePort: 80
         path: /something(/|$)(.*)
 ``
-
+## Questions 
+```
+## Which namespace is the Ingress Resource deployed in?
+kubectl get ingress --all-namespaces
 
