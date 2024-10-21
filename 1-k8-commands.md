@@ -3353,5 +3353,22 @@ k create serviceaccount nginx-admission -n ingress-nginx
 ## We have created the Roles, RoleBindings, ClusterRoles, and ClusterRoleBindings for the ServiceAccount. Check it out!!
 
 k get roles -n <namespacename>
+
+## Create a service to make ingress available to external users
+
+- Name: ingress
+- Type: Nodeport
+- Port: 80
+- TargetPort: 30080
+- Namespace: ingress-space
+- Use the right selector
+
+k expose deploy ingress-controller -n ingress-nginx --name ingress --port=80 --target-port=80 --type NodePort
+
+k get svc -n ingress-nginx
+
+k edit svc ingress -n ingress-nginx
+- edit the NodePort port to 30080
+
 ```
 
