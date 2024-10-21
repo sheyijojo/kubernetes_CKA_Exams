@@ -3179,7 +3179,7 @@ k edit deploy webapp
 - How do you direct traffic from different load balancers, manage ssl certs, firewall rules
 - What service does that? A configuration in k8 that manages all the configurations mentioned and many more
 - INGRESS is the solution
-- Ingress helps users access app using a sigle externaly url
+- Ingress helps users access app using a single externaly url
 - More like a layer7 Load Balancer that can configured using k8 objects
 - Need to publish ingress as a service such as nodepotrt. oNE TIME configuration
 
@@ -3354,3 +3354,4 @@ k create serviceaccount nginx-admission -n ingress-nginx
 
 k get roles -n <namespacename>
 ```
+
