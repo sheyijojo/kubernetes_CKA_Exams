@@ -3370,5 +3370,14 @@ k get svc -n ingress-nginx
 k edit svc ingress -n ingress-nginx
 - edit the NodePort port to 30080
 
+## create the ingress resource to make the applications vailable at /wear and /watch om the ingress service
+
+## create the ingress in the app-space ns
+- configure correct backend servive for /wear
+- configure correct backend service for /watch
+- configure backend port for /wear service
+- configure backend port for /watch service
+
+k create ingress ingress-wear-watch -n app-space --rule="/wear=wear-service:8080" --rule="/watch=video-service:8080"
 ```
 
