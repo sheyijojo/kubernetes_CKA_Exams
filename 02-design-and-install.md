@@ -144,4 +144,6 @@ etcdctl get / --prefix --keys-only
 
 The GIT Repo for this tutorial can be found here:` https://github.com/mmumshad/kubernetes-the-hard-way`
 
-
+- Follow the instructions to install
+- Virtual box
+- Vagrant 
