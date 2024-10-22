@@ -70,7 +70,7 @@
 - Consideer mnltiple master nodes in PROD
 - Consider that for the controleplane componets as well.
 - In HA the components must run in active-stanby mode and not in parallel
-- Leader election process sma e for scheduler and controller manager 
+- Leader election process same for scheduler and controller manager 
 - e.g `kuber-controller-manager --leader-elect true ` - This is set by default.
 
 ```yaml
@@ -96,4 +96,43 @@ kube-controller-manager --leader-elect tue
 - ETCD is a distribyted systems
 
 ## ETCD in HA 
-- 
+RAFT Protocol for distributed concensus
+
+Advised to have an odd number 
+- Only one of the instances nodes is responsible for processing the WRITE
+- You can read from any of the instance
+- One node becomes the leader
+- Majority(Quorum) = N/2 + 1
+- Quorum is the min number of nodes for the cluster to func properly or maje a successful wright
+- Quorom of 3 is 2
+- quorum of 5 is 3
+- Recommended of having a min of 3 node sin a ETCD cluster
+
+
+## To install ETCD on a cluster
+
+```yaml
+wget -q --https-only \ "https://github.com/coreos/etcd/releases/download/v3.3.9/etcd-v3.3.9-linux-amd64.tar.gz
+
+tar -xvf etcd-v3.3.9-linux-amd64.tar.gz
+
+mv etcd-v3.3.9-linux-amd64/etcd* /usr/local/bin
+
+mkdir -p /etc/etcd /var/lib/etcd
+
+cp ca.pem kubernetes-key.pem kubernetes.pem /etc/etcd/
+
+configure the etcd.service
+
+## note this - where ETCD SERVICE KNOWS THAT IS part of a cluster and where its peer are.
+--initial-clusteer perr1=https://${PEER1_IP}:2380,peer-2=https://${PEER2_IP}:2380 \\
+
+## use etcdctl utitliy for interaction
+
+export ETCDCTL_API=3
+etcdctl put name john
+
+etcdctl get name
+
+etcdctl get / --prefix --keys-only 
+```
