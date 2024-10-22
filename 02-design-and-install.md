@@ -69,3 +69,28 @@
 ## High Availablity in cluster 
 - Consideer mnltiple master nodes in PROD
 - Consider that for the controleplane componets as well.
+- In HA the components must run in active-stanby mode and not in parallel
+- Leader election process sma e for scheduler and controller manager 
+- e.g `kuber-controller-manager --leader-elect true ` - This is set by default.
+
+```yaml
+kube-controller-manager --leader-elect tue
+                        --leader-elect-lease-duration 15s
+                         --leader-elect-renew-deadline 10s 
+```
+
+## What are the controlplane components 
+- API Server
+- ETCD
+- Controller Manager
+- Scheduler
+
+## Stacked Topology 
+- when etcd is part of the master nodes
+
+## External ETCD topology
+- Seperate
+- The API server is the only component that talks to the ETCD
+- Make sure in the API server, in  `/etc/sysemd/system/kube-apiserver.service` is pointing to the righ etcd address
+- `--etcd-servers=https://10.240.0.10:2379,https://10.240.0.11:2379`
+- ETCD is a distribyted systems 
