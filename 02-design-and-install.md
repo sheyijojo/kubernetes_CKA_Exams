@@ -43,4 +43,29 @@
        - uSE SCRIPTS TO DEPLOY CLUSTER
        - Maintain VMs yourself
        - E.g Kuubernetes on AWS using KOPS
-     
+  - managed/Hosted  solutions
+       - kubernetes-As-A-Service
+       - Porvider provisions VMs
+       - Provider installs kubernetes
+       - provider maintains VMS
+       - E.g Google Container Enginer, AWS EKS
+   
+- **TURNKEY SOLUTIONS** - More like on-premises solutions
+    - Openshift - On prem kubernetes platfrom
+    - cloud foundry container runtime using tool called BOSH
+    - vmWARE CLOUD pks
+    - vAGRANT HELPS with useful scripts to deploy kubernetes cluster on diff cloud service
+
+- **Hosted Solutions**
+   - GKE
+   - Openshift Online
+   - Azure Kubernetes Service
+   - AWS EKS 
+    
+## for the practice use Virtual Box 
+- One master, two workers using virtual box
+
+
+## High Availablity in cluster 
+- Consideer mnltiple master nodes in PROD
+- Consider that for the controleplane componets as well.
