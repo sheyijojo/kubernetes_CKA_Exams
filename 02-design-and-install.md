@@ -146,4 +146,9 @@ The GIT Repo for this tutorial can be found here:` https://github.com/mmumshad/k
 
 - Follow the instructions to install
 - Virtual box
-- Vagrant 
+- Vagrant
+
+## Installing using kubeadm - the less hard way 
+https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/install-kubeadm/
+
+https://github.com/kodekloudhub/certified-kubernetes-administrator-course
