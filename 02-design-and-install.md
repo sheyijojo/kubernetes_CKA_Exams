@@ -22,4 +22,25 @@
 - Virtual or Physical Machines
 - Mininum of 4 Node Cluster(Size based on workload)
 - Master vs Worker Nodes
-- Lunux X86_64 Architecture 
+- Lunux X86_64 Architecture
+
+
+## ETCD
+- It is advisable to seperate the ETCD cluster from the master nodes to its own cluster nodes 
+
+## Chooding akubernetes clusters
+- On windows there no binaries to install k8, must rely on Vmware or Hyper-V workstation or VirtualBox to create linux VMs to run kubernetes
+
+## Solutions for minimal deployment on local computer: single node cluster 
+- minikube
+- kubeadm(single/multiple nodes)" requires VMS to be ready
+
+- **production**
+- Turnkey solutions or hosted or managed solutions 
+   - turnkey solutions:
+       - You provision VMSS
+       - CONFIGURE vms
+       - uSE SCRIPTS TO DEPLOY CLUSTER
+       - Maintain VMs yourself
+       - E.g Kuubernetes on AWS using KOPS
+     
