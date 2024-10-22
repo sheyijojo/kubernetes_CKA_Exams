@@ -93,4 +93,7 @@ kube-controller-manager --leader-elect tue
 - The API server is the only component that talks to the ETCD
 - Make sure in the API server, in  `/etc/sysemd/system/kube-apiserver.service` is pointing to the righ etcd address
 - `--etcd-servers=https://10.240.0.10:2379,https://10.240.0.11:2379`
-- ETCD is a distribyted systems 
+- ETCD is a distribyted systems
+
+## ETCD in HA 
+- 
