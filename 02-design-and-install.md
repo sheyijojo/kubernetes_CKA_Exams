@@ -17,3 +17,9 @@
 - GKE for GCP
 - Kops for AWS
 - Azure Kubernetes Service for Azure 
+
+## Nodes
+- Virtual or Physical Machines
+- Mininum of 4 Node Cluster(Size based on workload)
+- Master vs Worker Nodes
+- Lunux X86_64 Architecture 
