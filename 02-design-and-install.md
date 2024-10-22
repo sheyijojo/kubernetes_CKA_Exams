@@ -136,3 +136,12 @@ etcdctl get name
 
 etcdctl get / --prefix --keys-only 
 ```
+
+## Installing Kubernetes the hard way
+
+`https://www.youtube.com/watch?v=uUupRagM7m0&list=PL2We04F3Y_41jYdadX55fdJplDvgNGENo`
+
+
+The GIT Repo for this tutorial can be found here:` https://github.com/mmumshad/kubernetes-the-hard-way`
+
+
