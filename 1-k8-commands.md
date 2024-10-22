@@ -1877,6 +1877,8 @@ rules:
 
 ## Service Accounts in Kubernetes 
 Every namespace has a default service account 
+
+A service account in Kubernetes is a non-human identity that provides a way for applications to authenticate to a Kubernetes cluster's API server
 ```yaml
 ## There are two kinds of accounts -
 - service account - used by machines like jenkins, prometheus
