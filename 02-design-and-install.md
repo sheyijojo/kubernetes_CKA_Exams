@@ -199,4 +199,25 @@ ps -p 1
 ## configuring the systemd to cgroup driver
 for all nodes
 
+## on master
+sudo kubeadm init --pod-network-cidr=10.244.0.0/16 --apiserver-advertise-address=192.168.56.2 
+
+
+## admin.conf file
+sudo chown &(id -u)"(id -g) $Home/.kube/config
+
+##check the networking addons
+install weave netw  on master node
+
+## make sure you set the IPALLOC on weavenet pod deamonset
+
+## join the worker nodes
+## go back to master node s
+
+kubectl get nodes
+
+
+## verify everything is working
+
+kubectl run nginx --image=nginx 
 ```
