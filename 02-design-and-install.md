@@ -173,5 +173,8 @@ https://github.com/kodekloudhub/certified-kubernetes-administrator-course
 ## vagrant file
 https://github.com/kodekloudhub/certified-kubernetes-administrator-course/blob/master/kubeadm-clusters/virtualbox/Vagrantfile
 
+## installing kubeadm documentation
+
+https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/install-kubeadm/
 
 ```
