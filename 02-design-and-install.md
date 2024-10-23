@@ -177,4 +177,19 @@ https://github.com/kodekloudhub/certified-kubernetes-administrator-course/blob/m
 
 https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/install-kubeadm/
 
+- vagrant status
+- vagrant up
+
+- vagrant ssh kubemaster
+
+- logout 
+
+uptime
+
+## read more on Cgroup drivers
+cGROUP DRIVERS ARE good for resource management
+
+kubelet and container runtime need to interact with a cgroup
+
+you need a cgriup driver for a container-d runtime 
 ```
