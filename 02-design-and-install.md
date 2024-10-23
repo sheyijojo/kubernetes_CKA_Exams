@@ -191,5 +191,12 @@ cGROUP DRIVERS ARE good for resource management
 
 kubelet and container runtime need to interact with a cgroup
 
-you need a cgriup driver for a container-d runtime 
+you need a cgriup driver for a container-d runtime
+
+## check which init - like systemd
+ps -p 1
+
+## configuring the systemd to cgroup driver
+for all nodes
+
 ```
