@@ -152,3 +152,26 @@ The GIT Repo for this tutorial can be found here:` https://github.com/mmumshad/k
 https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/install-kubeadm/
 
 https://github.com/kodekloudhub/certified-kubernetes-administrator-course
+
+## Introduction to Deployment with kubeadm 
+
+```md
+## kubeadm takes care of many task s
+- couple of nodes physical or virtual machines
+- one for master and the rest for worker  odes
+- install container runtime containerd on all the nodes
+- install kudeam tool on all the nodes for boostraping the k8 solution in  the right order
+- initialize the master server
+- Ensure network preresuite are met like the pod network
+- Then worker nodes join the master nodes 
+
+```
+
+## Using Kubedam tools
+
+```yaml
+## vagrant file
+https://github.com/kodekloudhub/certified-kubernetes-administrator-course/blob/master/kubeadm-clusters/virtualbox/Vagrantfile
+
+
+```
