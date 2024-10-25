@@ -255,4 +255,22 @@ sudo apt-cache madison kubeadm
 sudo apt-get install -y kubelet=1.31.0-1.1 kubeadm=1.31.0-1.1 kubectl=1.31.0-1.1
 
 sudo apt-mark hold kubelet kubeadm kubectl
+
+
+## Questions
+
+- Initialize Control Plane Node (Master Node). Use the following options:
+- apiserver-advertise-address - Use the IP address allocated to eth0 on the controlplane node
+- apiserver-cert-extra-sans - Set it to controlplane
+- pod-network-cidr - Set to 10.244.0.0/16
+Once done, set up the default kubeconfig file and wait for node to be part of the cluster
+
+## working on it
+
+## Ques: - apiserver-advertise-address - Use the IP address allocated to eth0 on the controlplane node
+kubeadm init --apiserver-advertise-address 192.123.323.23
+## Ques: - apiserver-cert-extra-sans - Set it to controlplane
+ans:
+kubeadm init --apiserver-cert-extra-sans=controlplane --apiserver-advertise-address 192.133.43.3 --pod-network-cidr=10.244.0.0/16
+
 ```
