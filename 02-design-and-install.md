@@ -269,8 +269,31 @@ Once done, set up the default kubeconfig file and wait for node to be part of th
 
 ## Ques: - apiserver-advertise-address - Use the IP address allocated to eth0 on the controlplane node
 kubeadm init --apiserver-advertise-address 192.123.323.23
+//ip addr of eth0 - the first ip
 ## Ques: - apiserver-cert-extra-sans - Set it to controlplane
 ans:
 kubeadm init --apiserver-cert-extra-sans=controlplane --apiserver-advertise-address 192.133.43.3 --pod-network-cidr=10.244.0.0/16
 
+
+## To install a network plugin, we will go with Flannel as the default choice. For inter-host communication, we will utilize the eth0 interface.
+
+
+Please ensure that the Flannel manifest includes the appropriate options for this configuration.
+
+
+Refer to the official documentation for the procedure.
+
+curl -LO https://raw.githubusercontent.com/flannel-io/flannel/v0.20.2/Documentation/kube-flannel.yml
+
+Open the kube-flannel.yml file using a text editor.
+
+Locate the args section within the kube-flannel container definition. It should look like this:
+  args:
+  - --ip-masq
+  - --kube-subnet-mgr
+
+Add the additional argument - --iface=eth0 to the existing list of arguments.
+
+Now apply the modified manifest kube-flannel.yml file using kubectl:
+kubectl apply -f kube-flannel.yml
 ```
