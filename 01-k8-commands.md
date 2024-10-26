@@ -3393,6 +3393,7 @@ k create ingress ingress-wear-watch -n app-space --rule="/wear=wear-service:8080
 < steps
 1. Start with the webapp frontend
    - curl http://web-service-ip:node-port
+   -  curl http://10.43.224.12:8080
 2. check the service
    - kubectl describe service web-service 
 3. if the service endpoint is not discored
@@ -3410,4 +3411,14 @@ watch logs of previous pod
 5. check the status of the DB service
 6. check the DB Pod
 7. check the logs of the pod
+```
+
+## task
+
+```yaml
+## create a service
+kubectl create service clusterip redis-service --tcp=6379:6379
+
+k create service clusterip  mysql-service -n alpha --tcp=3306
+
 ```
