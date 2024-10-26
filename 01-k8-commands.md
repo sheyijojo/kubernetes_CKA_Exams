@@ -3387,7 +3387,27 @@ k create ingress ingress-wear-watch -n app-space --rule="/wear=wear-service:8080
 - Worker Node Failure
 - Networking
   
+> It is a good idea to write down the flow of your app and check every object in the map to find the root cause 
 ```yaml
-
-
+## if users complain about accessing the app
+< steps
+1. Start with the webapp frontend
+   - curl http://web-service-ip:node-port
+2. check the service
+   - kubectl describe service web-service 
+3. if the service endpoint is not discored
+   - kubectl describe service web-service
+   -  check the Selector to Endpoints(which is ip) configured on the pod
+Notes: So in the web-service, there is a selector that references the Pod label name and they must match
+4. check the pod itself and ensure it is in a running state
+   - kubectl get pod
+   - kubectl describe pod
+   - kubectl logs web
+# Watch the container to fail if fails are not produced immediately
+  - kubectl logs web -f
+watch logs of previous pod
+  - kubectl logs web -f --previous
+5. check the status of the DB service
+6. check the DB Pod
+7. check the logs of the pod
 ```
