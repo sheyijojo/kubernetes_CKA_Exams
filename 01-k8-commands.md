@@ -3422,3 +3422,30 @@ kubectl create service clusterip redis-service --tcp=6379:6379
 k create service clusterip  mysql-service -n alpha --tcp=3306
 
 ```
+
+## Question
+```yaml
+Troubleshooting Test 1: A simple 2 tier application is deployed in the alpha namespace. It must display a green web page on success. Click on the App tab at the top of your terminal to view your application. It is currently failed. Troubleshoot and fix the issue.
+
+
+Stick to the given architecture. Use the same names and port numbers as given in the below architecture diagram. Feel free to edit, delete or recreate objects as necessary.
+## answer
+The service name used for the MySQL Pod is incorrect. According to the Architecture diagram, it should be mysql-service.
+
+To fix this, first delete the current service: kubectl -n alpha delete svc mysql
+
+Then create a new service with the following YAML file (or use imperative command):
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: mysql-service
+  namespace: alpha
+spec:
+    ports:
+    - port: 3306
+      targetPort: 3306
+    selector:
+      name: mysql
+
+```
