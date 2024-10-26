@@ -3379,6 +3379,15 @@ k edit svc ingress -n ingress-nginx
 
 k create ingress ingress-wear-watch -n app-space --rule="/wear=wear-service:8080" --rule="/watch=video-service:8080"
 
-## Troubleshooting in kubernetes
-```
 
+```
+## Troubleshooting in kubernetes
+- Apllication Failure
+- Control Plane Failure
+- Worker Node Failure
+- Networking
+  
+```yaml
+
+
+```
