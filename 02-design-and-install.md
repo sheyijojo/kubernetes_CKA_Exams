@@ -103,10 +103,10 @@ Advised to have an odd number
 - You can read from any of the instance
 - One node becomes the leader
 - Majority(Quorum) = N/2 + 1
-- Quorum is the min number of nodes for the cluster to func properly or maje a successful wright
+- Quorum is the min number of nodes for the cluster to func properly or make a successful write
 - Quorom of 3 is 2
-- quorum of 5 is 3
-- Recommended of having a min of 3 node sin a ETCD cluster
+- Quorum of 5 is 3
+- Recommended  having a min of 3 nodes in a ETCD cluster
 
 
 ## To install ETCD on a cluster
@@ -125,7 +125,7 @@ cp ca.pem kubernetes-key.pem kubernetes.pem /etc/etcd/
 configure the etcd.service
 
 ## note this - where ETCD SERVICE KNOWS THAT IS part of a cluster and where its peer are.
---initial-clusteer perr1=https://${PEER1_IP}:2380,peer-2=https://${PEER2_IP}:2380 \\
+--initial-clusteer peer1=https://${PEER1_IP}:2380,peer-2=https://${PEER2_IP}:2380 \\
 
 ## use etcdctl utitliy for interaction
 
@@ -158,9 +158,9 @@ https://github.com/kodekloudhub/certified-kubernetes-administrator-course
 ```md
 ## kubeadm takes care of many task s
 - couple of nodes physical or virtual machines
-- one for master and the rest for worker  odes
+- one for master and the rest for worker  nodes
 - install container runtime containerd on all the nodes
-- install kudeam tool on all the nodes for boostraping the k8 solution in  the right order
+- install kudeadm tool on all the nodes for boostraping the k8 solution in  the right order
 - initialize the master server
 - Ensure network preresuite are met like the pod network
 - Then worker nodes join the master nodes 
@@ -187,11 +187,11 @@ https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/install-ku
 uptime
 
 ## read more on Cgroup drivers
-cGROUP DRIVERS ARE good for resource management
+- cGROUP DRIVERS ARE good for resource management
 
-kubelet and container runtime need to interact with a cgroup
+- kubelet and container runtime need to interact with a cgroup
 
-you need a cgriup driver for a container-d runtime
+- you need a cgroup driver for a container-d runtime
 
 ## check which init - like systemd
 ps -p 1
@@ -212,7 +212,8 @@ install weave netw  on master node
 ## make sure you set the IPALLOC on weavenet pod deamonset
 
 ## join the worker nodes
-## go back to master node s
+- the token to join is found when you run kubeadm init
+## go back to master nodes
 
 kubectl get nodes
 
