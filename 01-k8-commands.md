@@ -3378,5 +3378,7 @@ k edit svc ingress -n ingress-nginx
 - configure backend port for /watch service
 
 k create ingress ingress-wear-watch -n app-space --rule="/wear=wear-service:8080" --rule="/watch=video-service:8080"
+
+## Troubleshooting in kubernetes
 ```
 
