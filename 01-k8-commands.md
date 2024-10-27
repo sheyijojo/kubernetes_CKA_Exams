@@ -3456,5 +3456,44 @@ kubectl config set-context --current --namespace=alpha
 
 k descibe deploy webapp-mysql
 
-k replace --force -f /tmp/kubectl-edit04287356731.yaml 
+k replace --force -f /tmp/kubectl-edit04287356731.yaml
+
+## note
+- a more complicated use case will have a conifg map associated to the service/pod
+```
+
+## control plane failures 
+
+```yaml
+## steps
+1. Check status of the nodes
+kubectl get nods
+
+2. check status of the pods running in the cluster
+kubectl get pods
+
+3. if deployed with kubeadm
+kubectl ge pods -n kube-system
+
+4. if deployed as a service, check the master node
+
+service kube-apiserver status
+
+service kube-controller-manager status
+
+service kube-scheduler status
+
+## on the worker nodes
+
+service kubelet status
+
+service kube-proxy status
+
+## check the logs on the control plane if kubeadm
+
+kubectl logs kube-apiserver-master -n kube-system
+
+## for native service
+
+sudo journalctl -u kube-apiserver 
 ```
