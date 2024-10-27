@@ -3454,6 +3454,7 @@ spec:
 k config --help
 kubectl config set-context --current --namespace=alpha 
 
-k descibe deploy webapp-mysql 
+k descibe deploy webapp-mysql
 
+k replace --force -f /tmp/kubectl-edit04287356731.yaml 
 ```
