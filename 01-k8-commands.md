@@ -3448,4 +3448,12 @@ spec:
     selector:
       name: mysql
 
+## task questions
+
+## use a particular namespace
+k config --help
+kubectl config set-context --current --namespace=alpha 
+
+k descibe deploy webapp-mysql 
+
 ```
