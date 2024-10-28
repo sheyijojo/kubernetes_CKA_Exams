@@ -3466,16 +3466,16 @@ k replace --force -f /tmp/kubectl-edit04287356731.yaml
 
 ```yaml
 ## steps
-1. Check status of the nodes
+## 1. Check status of the nodes
 kubectl get nods
 
-2. check status of the pods running in the cluster
+## 2. check status of the pods running in the cluster
 kubectl get pods
 
-3. if deployed with kubeadm
+## 3. if deployed with kubeadm
 kubectl ge pods -n kube-system
 
-4. if deployed as a service, check the master node
+## 4. if deployed as a service, check the master node
 
 service kube-apiserver status
 
