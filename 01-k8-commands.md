@@ -3473,7 +3473,7 @@ kubectl get nods
 kubectl get pods
 
 ## 3. if deployed with kubeadm
-kubectl ge pods -n kube-system
+kubectl get pods -n kube-system
 
 ## 4. if deployed as a service, check the master node
 
