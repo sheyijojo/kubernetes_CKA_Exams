@@ -3497,3 +3497,9 @@ kubectl logs kube-apiserver-master -n kube-system
 
 sudo journalctl -u kube-apiserver 
 ```
+
+## solution
+```yaml
+kubectl config set-context --current --namespace=alpha
+
+```
