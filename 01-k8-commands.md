@@ -3523,3 +3523,26 @@ kubectl get pods -n kube-system --watch
 
 The controller manager has its cert on the host and use vol mount to mount the dir to access it 
 ```
+
+## Worker Nodes Failure 
+```yaml
+kubectl get nodes
+
+kubectl describe node worker-1
+
+unknown flag is when it is not communiting with master
+
+top
+
+
+df -h
+
+service kubelet status
+
+journalctl -u kubelet
+
+## check the certificate
+
+openssl x509 -in /var/lib/kubelet/worker-1.crt -text 
+
+```
