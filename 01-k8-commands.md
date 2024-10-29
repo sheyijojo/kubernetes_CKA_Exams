@@ -3545,11 +3545,11 @@ journalctl -u kubelet
 
 openssl x509 -in /var/lib/kubelet/worker-1.crt -text 
 
-## condition types
+## condition types - Flags
 
 OutOfDisk - False
 MemoryPressure - False
 DiskPressure - False
-PIDPressure - False
+PIDPressure - False (too many processes)
 Ready - True
 ```
