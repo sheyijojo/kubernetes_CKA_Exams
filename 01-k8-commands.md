@@ -3512,9 +3512,14 @@ kubectl config set-context --current --namespace=alpha
 
 ```yaml
 ## trouble shooting the control plane components
+
 - ## you know is a static pod if has controlplane appended at the end
 
 - Then look for the manifest file at /etc/kubernetes/manifest
 
 kubectl scale deploy app --replicas=2
+
+kubectl get pods -n kube-system --watch
+
+The controller manager has its cert on the host and use vol mount to mount the dir to access it 
 ```
