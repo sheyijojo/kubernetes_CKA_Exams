@@ -3530,7 +3530,7 @@ kubectl get nodes
 
 kubectl describe node worker-1
 
-unknown flag is when it is not communiting with master
+unknown flag is when it is not communicating with master node
 
 top
 
