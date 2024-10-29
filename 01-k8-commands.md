@@ -3503,3 +3503,17 @@ sudo journalctl -u kube-apiserver
 kubectl config set-context --current --namespace=alpha
 
 ```
+
+## Dont forget this command 
+
+`kubectl replace --force -f /tmp/kubectl-edit-2623.yaml`
+
+## 
+
+```yaml
+## trouble shooting the control plane components
+- ## you know is a static pod if has controlplane appended at the end
+
+- Then look for the manifest file at /etc/kubernetes/manifest
+
+```
