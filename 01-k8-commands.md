@@ -3516,4 +3516,5 @@ kubectl config set-context --current --namespace=alpha
 
 - Then look for the manifest file at /etc/kubernetes/manifest
 
+kubectl scale deploy app --replicas=2
 ```
