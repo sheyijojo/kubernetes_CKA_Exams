@@ -3584,6 +3584,8 @@ kubectl get nodes -o=jsonpath='{ .tems[*].status.nodeInfo.architecture }{"\"}{ .
 
 {end}'
 
+kubectl get nodes -o=jsonpath='{.items[*].metadata.name}{"\n"}{.items[*].status.capacity.cpu}'
+
 ## Sudo code for this 
 FOR EACH NODE
   PRINT NODE NAME \t PRINT CPU COUNT \n
