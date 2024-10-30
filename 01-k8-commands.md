@@ -3552,8 +3552,17 @@ MemoryPressure - False
 DiskPressure - False
 PIDPressure - False (too many processes)
 Ready - True
+
 ```
+
+## json
+- k get nodes -o json## json
+- k get nodes -o json
+
+  
 ## JSON PATH - Nice to Have
+
+
 ```yaml
 kubectl get nodes -o wide
 
@@ -3607,4 +3616,13 @@ kubectl get nodes -o=custom-columns=NODE:.metadata.name,CPU:.status.capactiy.cpu
 kubectl get nodes --sort-by= .metadata.name
 
 kubectl get nodes --sort-by= .status.capacity.cpu
+
+## execise
+Use JSON PATH query to fetch node names and store them in /opt/outputs/node_names.txt.
+Remember the file should only have node names.
+
+## because nodes are in list
+
+k get nodes -o=jsonpath='{ .items[0, 1].metadata.name}'
+kubectl get nodes -o=jsonpath='{.items[*].metadata.name}' > /opt/outputs/node_names.txt
 ```
