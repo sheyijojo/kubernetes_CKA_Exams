@@ -3554,13 +3554,13 @@ PIDPressure - False (too many processes)
 Ready - True
 ```
 ## JSON PATH
-```json
+```yaml
 kubectl get nodes -o wide
 
 kubectl get nodes -o json
 
 ## json path query
-     ## - $ not neccessary with kubectl, it does it for you
+## - $ not neccessary with kubectl, it does it for you
 .tems[0].spec.containers[0].image
 
 
