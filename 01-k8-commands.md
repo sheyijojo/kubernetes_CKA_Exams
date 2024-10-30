@@ -3559,6 +3559,10 @@ kubectl get nodes -o wide
 
 kubectl get nodes -o json
 
-## $ not neccessary with kubectl, it does it for you
+## json path query
+     ## - $ not neccessary with kubectl, it does it for you
 .tems[0].spec.containers[0].image
+
+
+kubectl get pods -o=jsonpath='{  .tems[0].spec.containers[0].image    }'
 ```
