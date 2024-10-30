@@ -3565,4 +3565,13 @@ kubectl get nodes -o json
 
 
 kubectl get pods -o=jsonpath='{  .tems[0].spec.containers[0].image    }'
+
+kubectl get pods -o=jsonpath='{  .tems[*].metadata.name   }'
+
+kubectl get pods -o=jsonpath='{ .tems[*].status.nodeInfo.architecture }'
+
+kubectl get pods -o=jsonpath='{ .tems[*].status.capacity.cpu }'
+
+## combine bothe commands 
+kubectl get nodes -o=jsonpath='{ .tems[*].status.nodeInfo.architecture } { .tems[*].status.capacity.cpu }'
 ```
