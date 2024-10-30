@@ -3625,4 +3625,11 @@ Remember the file should only have node names.
 
 k get nodes -o=jsonpath='{ .items[0, 1].metadata.name}'
 kubectl get nodes -o=jsonpath='{.items[*].metadata.name}' > /opt/outputs/node_names.txt
+
+
+
+kubectl config view --kubeconfig=/root/my-kube-config -o=json
+
+
+ k config view --kubeconfig=/root/my-kube-config -o=jsonpath='{ .users[*].names  }'
 ```
