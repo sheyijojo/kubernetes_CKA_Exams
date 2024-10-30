@@ -3576,6 +3576,9 @@ kubectl get pods -o=jsonpath='{ .tems[*].status.capacity.cpu }'
 kubectl get nodes -o=jsonpath='{ .tems[*].status.nodeInfo.architecture }{"\"}{ .tems[*].status.capacity.cpu }'
 
 
+kubectl get nodes -o=jsonpath='{.items[*].metadata.name}{"\n"}{.items[*].status.capacity.cpu}'
+
+
 ## using loops
 
 `{range  .items[*]}
@@ -3584,7 +3587,10 @@ kubectl get nodes -o=jsonpath='{ .tems[*].status.nodeInfo.architecture }{"\"}{ .
 
 {end}'
 
-kubectl get nodes -o=jsonpath='{.items[*].metadata.name}{"\n"}{.items[*].status.capacity.cpu}'
+kubectl get nodes -o=jsonpath='{range  .items[*]}{.metadata.name} {"\t"} {.status.capacity.cpu}{"\n"}
+
+{end}'
+
 
 ## Sudo code for this 
 FOR EACH NODE
@@ -3592,8 +3598,13 @@ FOR EACH NODE
 
 END FOR
 `
+## using json path for printing custom columns: Option to using loop
 
-kubectl get nodes -o=custom-columns=NODE:.metadata.name, CPU:.status.capactiy.cpu
+kubectl get nodes -o=custom-columns=<COLUMN NAME>:<JSON PATH>
 
-kubectl get nodes --sort-by= .metadata.name 
+kubectl get nodes -o=custom-columns=NODE:.metadata.name,CPU:.status.capactiy.cpu
+
+kubectl get nodes --sort-by= .metadata.name
+
+kubectl get nodes --sort-by= .status.capacity.cpu
 ```
