@@ -3553,3 +3553,12 @@ DiskPressure - False
 PIDPressure - False (too many processes)
 Ready - True
 ```
+## JSON PATH
+```json
+kubectl get nodes -o wide
+
+kubectl get nodes -o json
+
+## $ not neccessary with kubectl, it does it for you
+.tems[0].spec.containers[0].image
+```
