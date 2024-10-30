@@ -3632,4 +3632,13 @@ kubectl config view --kubeconfig=/root/my-kube-config -o=json
 
 
  k config view --kubeconfig=/root/my-kube-config -o=jsonpath='{ .users[*].names  }'
+
+
+## Use JSON PATH query to retrieve the osImages of all the nodes and store it in a file /opt/outputs/nodes_os.txt.
+
+## The osImage is under the nodeInfo section under status of each node.Use JSON PATH query to retrieve the osImages of all the nodes and store it in a file /opt/outputs/nodes_os.txt.
+
+## The osImage is under the nodeInfo section under status of each node.
+
+kubectl get nodes -o=jsonpath='{.items[*].status.nodeInfo.osImage}'
 ```
