@@ -3592,4 +3592,8 @@ FOR EACH NODE
 
 END FOR
 `
+
+kubectl get nodes -o=custom-columns=NODE:.metadata.name, CPU:.status.capactiy.cpu
+
+kubectl get nodes --sort-by= .metadata.name 
 ```
