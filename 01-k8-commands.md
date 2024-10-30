@@ -3553,7 +3553,7 @@ DiskPressure - False
 PIDPressure - False (too many processes)
 Ready - True
 ```
-## JSON PATH
+## JSON PATH - Nice to Have
 ```yaml
 kubectl get nodes -o wide
 
@@ -3573,5 +3573,21 @@ kubectl get pods -o=jsonpath='{ .tems[*].status.nodeInfo.architecture }'
 kubectl get pods -o=jsonpath='{ .tems[*].status.capacity.cpu }'
 
 ## combine bothe commands 
-kubectl get nodes -o=jsonpath='{ .tems[*].status.nodeInfo.architecture } { .tems[*].status.capacity.cpu }'
+kubectl get nodes -o=jsonpath='{ .tems[*].status.nodeInfo.architecture }{"\"}{ .tems[*].status.capacity.cpu }'
+
+
+## using loops
+
+`{range  .items[*]}
+
+{.metadata.name} {"\t"} {.status.capacity.cpu}{"\n"}
+
+{end}'
+
+## Sudo code for this 
+FOR EACH NODE
+  PRINT NODE NAME \t PRINT CPU COUNT \n
+
+END FOR
+`
 ```
