@@ -3686,3 +3686,22 @@ ls /etc/kubernetes/manifest
 - config file location
 vim /var/lib/kubelet/config.yaml 
 ```
+## Network Trouble shooting 
+```yaml
+## Network Plugin in Kubernetes
+——————–
+
+There are several plugins available, and these are some.
+
+1. Weave Net:
+
+To install,
+
+kubectl apply -f
+https://github.com/weaveworks/weave/releases/download/v2.8.1/weave-daemonset-k8s.yaml
+
+##vYou can find details about the network plugins in the following documentation :
+
+https://kubernetes.io/docs/concepts/cluster-administration/addons/#networking-and-network-policy
+
+```
