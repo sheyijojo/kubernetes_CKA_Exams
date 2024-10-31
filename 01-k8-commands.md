@@ -11,6 +11,8 @@
 
 
 `https://kubernetes.io/docs/reference/kubectl/conventions/`
+
+
 ```yaml
 ## Create an NGINX Pod
 
