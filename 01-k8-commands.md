@@ -3640,5 +3640,25 @@ kubectl config view --kubeconfig=/root/my-kube-config -o=json
 
 ## The osImage is under the nodeInfo section under status of each node.
 
-kubectl get nodes -o=jsonpath='{.items[*].status.nodeInfo.osImage}'
+## kubectl get nodes -o=jsonpath='{.items[*].status.nodeInfo.osImage}'
+
+
+## A set of Persistent Volumes are available. Sort them based on their capacity and store the result in the file /opt/outputs/storage-capacity-sorted.txt.
+
+
+
+That was good, but we don't need all the extra details. Retrieve just the first 2 columns of output and store it in /opt/outputs/pv-and-capacity-sorted.txt.
+
+
+The columns should be named NAME and CAPACITY. Use the custom-columns option and remember, it should still be sorted as in the previous question.
+
+kubectl get pv --sort-by=.spec.capacity.storage -o=custom-columns=NAME:.metadata.name,CAPACITY:.spec.capacity.storage > /opt/outputs/pv-and-capacity-sorted.txt
+
+
+kubectl get pv --sort-by=.spec.capacity.storage > /opt/outputs/storage-capacity-sorted.txt
+
+
+Use a JSON PATH query to identify the context configured for the aws-user in the my-kube-config context file and store the result in /opt/outputs/aws-context-name.
+
+kubectl config view --kubeconfig=my-kube-config -o jsonpath="{.contexts[?(@.context.user=='aws-user')].name}" > /opt/outputs/aws-context-name
 ```
