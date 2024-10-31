@@ -3534,8 +3534,10 @@ kubectl describe node worker-1
 
 unknown flag is when it is not communicating with master node
 
-top
+##
+journalctl -u | grep fail
 
+top
 
 df -h
 
@@ -3663,4 +3665,24 @@ kubectl get pv --sort-by=.spec.capacity.storage > /opt/outputs/storage-capacity-
 Use a JSON PATH query to identify the context configured for the aws-user in the my-kube-config context file and store the result in /opt/outputs/aws-context-name.
 
 kubectl config view --kubeconfig=my-kube-config -o jsonpath="{.contexts[?(@.context.user=='aws-user')].name}" > /opt/outputs/aws-context-name
+```
+## 
+
+```yaml
+## working with services
+journalct -u kubelet
+
+service kubelet status
+
+service kubelet start
+
+## static pod kubelet
+
+- ca location
+ls /etc/kubernetes/pki/
+
+ls /etc/kubernetes/manifest
+
+- config file location
+vim /var/lib/kubelet/config.yaml 
 ```
