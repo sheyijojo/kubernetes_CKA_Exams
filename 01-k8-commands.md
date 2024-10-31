@@ -3730,16 +3730,18 @@ Kubernetes uses CoreDNS. CoreDNS is a flexible, extensible DNS server that can s
 
 Memory and Pods
 
-In large scale Kubernetes clusters, CoreDNS’s memory usage is predominantly affected by the number of Pods and Services in the cluster. Other factors include the size of the filled DNS answer cache and the rate of queries received (QPS) per CoreDNS instance.
+In large scale Kubernetes clusters, CoreDNS’s memory usage is predominantly affected by the number of Pods and Services in the cluster.
+Other factors include the size of the filled DNS answer cache and the rate of queries received (QPS) per CoreDNS instance.
 
 Kubernetes resources for coreDNS are:
 
-a service account named coredns,
-cluster-roles named coredns and kube-dns
-clusterrolebindings named coredns and kube-dns, 
-a deployment named coredns,
-a configmap named coredns and a
-service named kube-dns.
+1. a service account named coredns,
+2. cluster-roles named coredns and kube-dns
+3. clusterrolebindings named coredns and kube-dns, 
+4. a deployment named coredns,
+5. a configmap named coredns and a
+6. service named kube-dns.
+
 While analyzing the coreDNS deployment, you can see that the Corefile plugin consists of an important configuration, which is defined as a configmap.
 
 Port 53 is used for DNS resolution.
