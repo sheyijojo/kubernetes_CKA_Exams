@@ -7,7 +7,7 @@
 
 - **Use the below set of commands and try the previous practice tests again, but this time, try to use the below commands instead of YAML files. Try to use these as much as you can going forward in all exercises.**
 
-- ** Reference (Bookmark this page for the exam. It will be very handy):**
+- **Reference (Bookmark this page for the exam. It will be very handy):**
 
 
 `https://kubernetes.io/docs/reference/kubectl/conventions/`
