@@ -2,7 +2,7 @@
 
 https://learn.kodekloud.com/user/courses/cka-certification-course-certified-kubernetes-administrator/module/cd124bdf-9911-4cc1-8177-f2d8b6dfd2a0/lesson/5bdc8a34-7b5a-4437-9a06-2d921598ea62
 
-Remember, you CANNOT edit specifications of an existing POD other than the below.
+> Remember, you CANNOT edit specifications of an existing POD other than the below.
 
 spec.containers[*].image
 spec.initContainers[*].image
