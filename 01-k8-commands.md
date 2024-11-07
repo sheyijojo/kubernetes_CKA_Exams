@@ -196,14 +196,44 @@ Kubelet in the k8 worker nodes:
 
 install kubelet:
 kubeadm tool: It does not deploy the kubelt:
-Haven to install it mannaully installed on worker nodes :
+Have to install it mannaully installed on worker nodes :
 
-same with scratch
+same with it from scratch:
 
-can be bootsrapted 
-
-
+can be bootstraped 
 ```
+
+## KubeProxy
+
+```yaml
+Every pod can reach other pod because of a networking solution:
+
+- pod network is an internal network that span accross all the nodes in the cluster:
+    - To which all pods connect to 
+
+- Services are used for communication amoong pods
+   - it is not a container, it is virtual components in the k8 memeory
+   - It uses kube-proxy:
+kube proxy is a process that runs on each node in a cluster:
+  - looks for new services
+  - creates rules on each nodes to forward traffic to svcs to backend port
+  - uses ip table rules
+
+installation
+kubeadm:
+  - runs a pod in the kube-system ns:
+  - Infact runs a Daemonset, A single pod is always deployed on each node in the cluster 
+service:
+  - download the binaries
+
+kubectl get daemonset -n kube-system
+
+
+Done with the highlevel Master Components:
+```
+
+
+
 ## Kubectl client commands 
 ```yaml
 Create an NGINX Pod:
