@@ -284,7 +284,7 @@ kubectl create deployment --image=nginx nginx --replicas=4 --dry-run=client -o y
 
 ## ReplicaSet
 ```yaml
-
+We have the ReplicationController 
 
 ```
 ## Create a service 
