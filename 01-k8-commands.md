@@ -148,7 +148,7 @@ Controllers:
 
 All these processes are packages inside the kube-controller-manager:
 - run as a service if installing from scratch
-- you add the --node-monitor-period=5s options and the rest
+- you can add the --node-monitor-period=5s options and the rest
 
 You can also add the --controllers flag to activate which controllers to use:
 - IF controllers have proble, this is where to look
@@ -159,10 +159,51 @@ kubeadm and Non-Kubeadm setup:
 
 - non-kubeadm-setup: /etc/systemd/system/kube-controller-manager.service 
 
+```
+## Kube Scheduler 
+
+```yaml
+- Responsible for scheduling pods on nodes:
+- Decides which pods goes on which nodes:
+- It does not actually place the pods on the nodes, thats a KUBELET JOB: 
+- kubelet is the captain of the ship 
+
+There are many ships with diff sizes, and containers have different workload requirements:
+
+It is important to know what nodes can the pods be scheduled for its destination:
+
+Uses a priority function to see which resources are left like cpu  when the pods has been placed on them 
+
+components in kube scheduler
+- Resource Requirements and Limits
+- Taints and tolerations 
+- Node Selectors/Affinity 
+```
+## Kubelet 
+
+kubescheduler <<  apiserver << kubelet 
+```yaml
+Captain of the ship:
+- They lead all activities on a ship
+- Sole point of contact fro the master ship
+- They load and unload containers on the nodes as instructed by kuubescheduler:
+
+Kubelet in the k8 worker nodes:
+- registers the node with the k8 cluster
+- kubelet talks to the cointainer enginer to pull an image
+- kubelet monitors the state of the pods
+- reports it to the kube-api server on a timely basis
+
+install kubelet:
+kubeadm tool: It does not deploy the kubelt:
+Haven to install it mannaully installed on worker nodes :
+
+same with scratch
+
+can be bootsrapted 
+
 
 ```
-
-
 ## Kubectl client commands 
 ```yaml
 Create an NGINX Pod:
@@ -197,6 +238,8 @@ kubectl create -f nginx-deployment.yaml
 kubectl create deployment httpd-frontend --image=httpd:2.4-alpine --replicas=3
 ```
 **OR**
+
+
 ```yaml
 
 In k8s version 1.19+, we can specify the –replicas option to create a deployment with 4 replicas.
