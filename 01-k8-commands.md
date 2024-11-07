@@ -73,7 +73,7 @@ resgistry has these under it
 
 ```
 
-## ETCD Server API aND etcd cli
+## ETCD Server API and ETCD cli
 
 ```yaml
 ## Additional information about ETCDCTL UtilityETCDCTL is the CLI tool used to interact with ETCD:
@@ -91,7 +91,21 @@ resgistry has these under it
 
 kubectl exec etcd-controlplane -n kube-system -- sh -c "ETCDCTL_API=3 etcdctl get / --prefix --keys-only --limit=10 --cacert /etc/kubernetes/pki/etcd/ca.crt --cert /etc/kubernetes/pki/etcd/server.crt --key /etc/kubernetes/pki/etcd/server.key"
 
+kubeapiserver connects witht the etcd server:
 
+--etcd-servers=https://127.0.0.1:2379 \\
+
+
+If the kube-api server is bootstrapped using kubeadm:
+find it at :
+cat /etc/kubernetes/manifests/kube-apiserver.yaml
+
+
+Non-kubeadm set up , find the kubeapi server at the:
+
+cat /etc/systemd/system/kube-apiserver.service
+
+ps -aux | grep kube-apiserver 
 ```
 ## Kube-API Server
 ```yaml
