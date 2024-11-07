@@ -144,7 +144,21 @@ Controllers:
 - Replication controller 
 - Namespace controller
 - Deployment controller
-- stateful-set and many more 
+- stateful-set and many more
+
+All these processes are packages inside the kube-controller-manager:
+- run as a service if installing from scratch
+- you add the --node-monitor-period=5s options and the rest
+
+You can also add the --controllers flag to activate which controllers to use:
+- IF controllers have proble, this is where to look
+
+
+kubeadm and Non-Kubeadm setup:
+- kubeadm setup : /etc/kubernetes/manifests/kube-controller-manager
+
+- non-kubeadm-setup: /etc/systemd/system/kube-controller-manager.service 
+
 
 ```
 
