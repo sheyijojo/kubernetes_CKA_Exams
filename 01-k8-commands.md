@@ -127,7 +127,7 @@ specifying auth for etcd and kubelet within the kubeapiserver:
 --kubelet-https=true \\
 ```
 ```yaml
-## Create an NGINX Pod
+Create an NGINX Pod:
 
 kubectl run nginx --image=nginx
 
@@ -136,22 +136,22 @@ Generate POD Manifest YAML file (-o yaml). Don’t create it(–dry-run)
 kubectl run nginx --image=nginx --dry-run=client -o yaml
 
 
-## Create a deployment
+Create a deployment:
 
 kubectl create deployment --image=nginx nginx
 
 
-## Generate Deployment YAML file (-o yaml). Don’t create it(–dry-run)
+Generate Deployment YAML file (-o yaml). Don’t create it(–dry-run):
 
 kubectl create deployment --image=nginx nginx --dry-run=client -o yaml
 
 
-## Generate Deployment YAML file (-o yaml). Don’t create it(–dry-run) and save it to a file.
+Generate Deployment YAML file (-o yaml). Don’t create it(–dry-run) and save it to a file:
 
 kubectl create deployment --image=nginx nginx --dry-run=client -o yaml > nginx-deployment.yaml
 
 
-## Make necessary changes to the file (for example, adding more replicas) and then create the deployment.
+Make necessary changes to the file (for example, adding more replicas) and then create the deployment:
 
 kubectl create -f nginx-deployment.yaml
 
