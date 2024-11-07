@@ -346,6 +346,19 @@ Comes higher in the heriarachy
 
 similar to the ReplicaSet definition file:
 Deployment produces replicases from its specification in the name of the deployments:
+Deplyment also produces pods in the name of the deployment
+
+
+kubectl run nginx --image=nginx --dry-run=client -o yaml  :
+
+kubectl create deployment --image=nginx nginx :
+
+
+kubectl create deployment --image=nginx nginx --dry-run=client -o yaml :
+
+kubectl create deployment --image=nginx nginx --dry-run=client -o yaml > nginx-deployment.yaml  :
+
+
 ```
 ## Create a service 
 
