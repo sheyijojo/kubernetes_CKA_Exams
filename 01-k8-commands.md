@@ -234,7 +234,7 @@ Done with the highlevel Master Components:
 
 
 
-## Kubectl client commands 
+## Kubectl Pods 
 ```yaml
 Create an NGINX Pod:
 
