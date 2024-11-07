@@ -333,6 +333,20 @@ spec:
 
 
 ```
+
+
+## Deployments
+
+```yaml
+Deploying in a production env :
+Comes higher in the heriarachy 
+- Upgrade instances seamlessly:
+   - Rolling updates
+   - Blue-Green:?
+
+similar to the ReplicaSet definition file:
+Deployment produces replicases from its specification in the name of the deployments:
+```
 ## Create a service 
 
 ```
