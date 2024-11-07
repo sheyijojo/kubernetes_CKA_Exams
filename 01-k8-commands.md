@@ -309,6 +309,28 @@ kubectl replace -f replicaset-definition.yaml
 ## run scale, but the num of replicas remain the same inside the file
 kubectl scale --replicas=6 -f replicaset-definition.yaml 
 ```
+```yaml
+apiVersion: apps/v1
+kind: ReplicaSet
+metadata:
+  name: replicaset-2
+  
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      tier: nginx
+  template:
+    metadata:
+      labels:
+        tier: nginx
+    spec:
+      containers:
+      - name: nginx
+        image: nginx
+
+
+```
 ## Create a service 
 
 ```
