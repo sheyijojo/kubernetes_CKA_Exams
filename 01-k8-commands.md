@@ -34,6 +34,64 @@ export ETCDCTL_API=3
 ## ./etcdctl get key1
 key1
 value1
+
+## If you deployed ETCD yourself from scractch
+- Take note of this option passed in the etcd.service:
+
+## This is the address the etcd listens to, Ip of the master node 
+--advertise-client-urls https://${INTERNAL_IP} \\
+
+- You need the url configured in the kube-api server when it tries to reach the etcd server
+
+## If you use kubeadm to deploy your cluster
+- kubeadm deploys the ETCD server for you as a POD in the kubesystem NS
+
+
+
+## list all keys in the etcd server o the master node 
+
+kubectl exec etcd-master -n kuube-system etcdctl get / --prefix -keys-only
+
+## The k8 way of storing data in a dir structure
+root dir - registry
+
+resgistry has these under it
+   - minions/nodes
+   - pods
+   - replicasets
+   - deployments
+   - roles
+   - secrets 
+
+/registry/apiregistration.k8s.io/apiservices/v1.
+
+## In PROD, Etcd is in HA
+- ETCD instances must know how to talk with each other across multiple master nodes
+- specify the diff instances in the:
+
+--initial-cluster controller-0=https://${CONTROLLER0_IP},controller-1=https://${CONTROLLER1_IP}:2380 \\
+
+```
+
+## ETCD Server API aND etcd cli
+
+```yaml
+## Additional information about ETCDCTL UtilityETCDCTL is the CLI tool used to interact with ETCD.
+
+- ETCDCTL can interact with ETCD Server using 2 API versions – Version 2 and Version 3.
+
+## ETCD AUTH  
+- you must also specify the path to certificate files so that ETCDCTL can authenticate to the ETCD API Server.
+-  The certificate files are available in the etcd-master at the following path.
+
+--cacert /etc/kubernetes/pki/etcd/ca.crt
+--cert /etc/kubernetes/pki/etcd/server.crt
+--key /etc/kubernetes/pki/etcd/server.key
+
+
+kubectl exec etcd-controlplane -n kube-system -- sh -c "ETCDCTL_API=3 etcdctl get / --prefix --keys-only --limit=10 --cacert /etc/kubernetes/pki/etcd/ca.crt --cert /etc/kubernetes/pki/etcd/server.crt --key /etc/kubernetes/pki/etcd/server.key"
+
+
 ```
 
 ```yaml
