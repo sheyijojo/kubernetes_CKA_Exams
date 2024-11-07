@@ -100,7 +100,8 @@ kubectl exec etcd-controlplane -n kube-system -- sh -c "ETCDCTL_API=3 etcdctl ge
 - You do not need in
 ## But you do if have to set it up from scratch
 
-## know this options
+know this options:
+specifying auth for etcd and kubelet within the kubeapiserver:
 
 --etcd-cafile=/var/lib/kubernetes/ca.pem  \\
 --etcd-certfile=/var/lib/kuberntes/kubernetes.pem \\
