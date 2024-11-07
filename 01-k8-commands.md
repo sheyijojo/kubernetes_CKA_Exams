@@ -307,7 +307,9 @@ scaling a replica from 3 to 6:
 kubectl replace -f replicaset-definition.yaml
 
 ## run scale, but the num of replicas remain the same inside the file
-kubectl scale --replicas=6 -f replicaset-definition.yaml 
+kubectl scale --replicas=6 -f replicaset-definition.yaml
+
+k scale --replicas=5 replicaset new-replica-set
 ```
 ```yaml
 apiVersion: apps/v1
