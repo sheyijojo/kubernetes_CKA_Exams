@@ -284,8 +284,30 @@ kubectl create deployment --image=nginx nginx --replicas=4 --dry-run=client -o y
 
 ## ReplicaSet
 ```yaml
-We have the ReplicationController 
 
+Replicaset is the older tech, Replicaset is a little different.
+Role of ReplicaSet is to create multiple instances of a pod
+We have the ReplicationController and Replicaset:
+- Multiple pods to share the loads among them
+- Ensures a number of pods are available
+- RC spans across multiple nodes in the cluster 
+
+RC- v1
+ReplicaSet - apps/v1
+Spec:
+  replicas: 3
+  selector:
+     matchLables:
+         type: front-end  ## gotten from Replicaset metadata
+
+scaling a replica from 3 to 6:
+- edit the replica-definnition-file
+- edit the replicas to 6
+
+kubectl replace -f replicaset-definition.yaml
+
+## run scale, but the num of replicas remain the same inside the file
+kubectl scale --replicas=6 -f replicaset-definition.yaml 
 ```
 ## Create a service 
 
