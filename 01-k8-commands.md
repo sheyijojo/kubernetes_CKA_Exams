@@ -126,6 +126,30 @@ specifying auth for etcd and kubelet within the kubeapiserver:
 --kubelet-client-key=/var/lib/kubernetes/kubernetes-key.pem \\
 --kubelet-https=true \\
 ```
+
+## Kube- controller manager 
+
+
+```yaml
+watches for the components in the system, and brings the sys to the desired fucntioning state
+- managers different controllers:
+- watch Status on ships:
+- Remediate situation
+
+Controllers:
+- Node controller - checks node status for every 5secs
+   - Node Monitor Period = 5s
+   - Node monitor Grace Period = 40s
+   - POD Eviction Timeout = 5m 
+- Replication controller 
+- Namespace controller
+- Deployment controller
+- stateful-set and many more 
+
+```
+
+
+## Kubectl client commands 
 ```yaml
 Create an NGINX Pod:
 
