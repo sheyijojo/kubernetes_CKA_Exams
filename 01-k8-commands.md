@@ -93,7 +93,24 @@ kubectl exec etcd-controlplane -n kube-system -- sh -c "ETCDCTL_API=3 etcdctl ge
 
 
 ```
+## Kube-API Server
+```yaml
 
+## Information on kubeapi is not needed when using kubeadm to bootstrap the installation 
+- You do not need in
+## But you do if have to set it up from scratch
+
+## know this options
+
+--etcd-cafile=/var/lib/kubernetes/ca.pem  \\
+--etcd-certfile=/var/lib/kuberntes/kubernetes.pem \\
+--etcd=keyfile=/var/lib/kubernetes/kubernetes-key.pem
+
+--kubelet-certifcate-authority=/var/lib/kubernetes/ca.pem
+--kubelet-client-certificate=/var/lib/kubernetes/kubernetes.pem \\
+--kubelet-client-key=/var/lib/kubernetes/kubernetes-key.pem \\
+--kubelet-https=true \\
+```
 ```yaml
 ## Create an NGINX Pod
 
