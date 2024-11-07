@@ -370,6 +370,7 @@ kubectl create service nodeport my-service --tcp=80:80 -o yaml > service-definit
 
 kubectl create service nodeport webapp-service --tcp=30080:8080 -o yaml > service-definition-1.yaml
 
+kubectl create deployment --image=nginx nginx --replicas=4 --dry-run=client -o yaml > nginx-deployment.yaml
 
 ```
 ## notice there is no labels in this configuration. Labels is what is used to associate a specific template.
