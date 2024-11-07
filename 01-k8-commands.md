@@ -15,9 +15,9 @@
 ## ETCD 
 
 ```yaml
-- ETCD binaries is downloaded and is stored on port 2379 by default
-- ETCD is a distributed reliable key-value store that is simple, secure and fast 
-- ETCD is a key-value pair form of database
+- ETCD binaries is downloaded and is stored on port 2379 by default:
+- ETCD is a distributed reliable key-value store that is simple, secure and fast: 
+- ETCD is a key-value pair form of database:
 
 The default client is the .etcdctl 
 ./etcdctl
