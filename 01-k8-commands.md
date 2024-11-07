@@ -76,7 +76,7 @@ resgistry has these under it
 ## ETCD Server API aND etcd cli
 
 ```yaml
-## Additional information about ETCDCTL UtilityETCDCTL is the CLI tool used to interact with ETCD.
+## Additional information about ETCDCTL UtilityETCDCTL is the CLI tool used to interact with ETCD:
 
 - ETCDCTL can interact with ETCD Server using 2 API versions – Version 2 and Version 3.
 
