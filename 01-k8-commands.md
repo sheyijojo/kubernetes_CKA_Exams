@@ -411,6 +411,14 @@ spec:
 
 ```
 
+## ClusterIP
+
+```yaml
+
+
+
+```
+
 
 ## Namespaces
 
