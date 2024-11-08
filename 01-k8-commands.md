@@ -365,7 +365,7 @@ kubectl create deployment --image=nginx nginx --dry-run=client -o yaml > nginx-d
 - k8 services Helps us connect apps together with other apps or users:
 - services enable loose coupling between microservices in our app:
 - k8 svc is just an object just like pod or rs
-- Nodeport liatens to a port on the node forwards requests to the pods
+- Nodeport listens to a port on the node forwards requests to the pods
  
 
 Create a service:
@@ -401,6 +401,7 @@ metadata:
   name: webapp-service
   namespace: default
 spec:
+  type: Nodeport
   ports:
   - targetPort: 80
     port: 80
@@ -411,23 +412,6 @@ spec:
 
 ```
 
-```yaml
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: webapp-service
-  namespace: default
-spec:
-  ports:
-  - nodePort: 30080
-    port: 8080
-    targetPort: 8080
-  selector:
-    name: simple-webapp
-  type: NodePort
-
-```
 
 
 ```yaml
