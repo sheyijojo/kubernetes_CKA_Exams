@@ -362,7 +362,7 @@ kubectl create deployment --image=nginx nginx --dry-run=client -o yaml > nginx-d
 ```
 ## Kubernetes services 
 
-```
+```yaml
 - k8 services Helps us connect apps together with other apps or users:
 - services enable loose coupling between microservices in our app:
 - k8 svc is just an object just like pod or rs
