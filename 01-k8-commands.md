@@ -372,7 +372,6 @@ Create a service
 
 kubectl create service nodeport <service-name> --tcp=<port>:<target-port> -o yaml > service-definition-1.yaml 
 
-
 kubectl create service nodeport my-service --tcp=80:80 -o yaml > service-definition-1.yaml 
 
 kubectl create service nodeport webapp-service --tcp=30080:8080 -o yaml > service-definition-1.yaml 
