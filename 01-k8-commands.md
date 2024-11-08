@@ -353,7 +353,6 @@ kubectl run nginx --image=nginx --dry-run=client -o yaml  :
 
 kubectl create deployment --image=nginx nginx :
 
-
 kubectl create deployment --image=nginx nginx --dry-run=client -o yaml :
 
 kubectl create deployment --image=nginx nginx --dry-run=client -o yaml > nginx-deployment.yaml  :
@@ -366,9 +365,10 @@ kubectl create deployment --image=nginx nginx --dry-run=client -o yaml > nginx-d
 - k8 services Helps us connect apps together with other apps or users:
 - services enable loose coupling between microservices in our app:
 - k8 svc is just an object just like pod or rs
-- Nodeport 
+- Nodeport liatens to a port on the node forwards requests to the pods
+ 
 
-Create a service
+Create a service:
 
 kubectl create service nodeport <service-name> --tcp=<port>:<target-port> -o yaml > service-definition-1.yaml 
 
@@ -378,10 +378,38 @@ kubectl create service nodeport webapp-service --tcp=30080:8080 -o yaml > servic
 
 kubectl create deployment --image=nginx nginx --replicas=4 --dry-run=client -o yaml > nginx-deployment.yaml 
 
+
+Target port:
+- port on the Pod
+
+Port:
+- Port of the service
+
+NodePort: 30000 - 32767 
+- Port on the node 
+
 ```
 ## notice there is no labels in this configuration. Labels is what is used to associate a specific template.
 
-### sample with declarative mode
+## sample with declarative model 
+
+
+```yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: webapp-service
+  namespace: default
+spec:
+  ports:
+  - targetPort: 80
+    port: 80
+    nodePort: 30008
+  selector:
+    app: myapp
+    type: front-end 
+
+```
 
 ```yaml
 ---
@@ -400,6 +428,7 @@ spec:
   type: NodePort
 
 ```
+
 
 ```yaml
 apiVersion: v1
