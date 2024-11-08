@@ -166,7 +166,7 @@ kubeadm and Non-Kubeadm setup:
 - Responsible for scheduling pods on nodes:
 - Decides which pods goes on which nodes:
 - It does not actually place the pods on the nodes, thats a KUBELET JOB: 
-- kubelet is the captain of the ship 
+- kubelet is the captain of the ship :
 
 There are many ships with diff sizes, and containers have different workload requirements:
 
@@ -370,14 +370,14 @@ kubectl create deployment --image=nginx nginx --dry-run=client -o yaml > nginx-d
 
 Create a service
 
-kubectl create service nodeport <service-name> --tcp=<port>:<target-port> -o yaml > service-definition-1.yaml :
+kubectl create service nodeport <service-name> --tcp=<port>:<target-port> -o yaml > service-definition-1.yaml 
 
 
-kubectl create service nodeport my-service --tcp=80:80 -o yaml > service-definition-1.yaml :
+kubectl create service nodeport my-service --tcp=80:80 -o yaml > service-definition-1.yaml 
 
-kubectl create service nodeport webapp-service --tcp=30080:8080 -o yaml > service-definition-1.yaml :
+kubectl create service nodeport webapp-service --tcp=30080:8080 -o yaml > service-definition-1.yaml 
 
-kubectl create deployment --image=nginx nginx --replicas=4 --dry-run=client -o yaml > nginx-deployment.yaml :
+kubectl create deployment --image=nginx nginx --replicas=4 --dry-run=client -o yaml > nginx-deployment.yaml 
 
 ```
 ## notice there is no labels in this configuration. Labels is what is used to associate a specific template.
