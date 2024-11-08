@@ -389,9 +389,8 @@ NodePort: 30000 - 32767
 - Port on the node 
 
 ```
-## notice there is no labels in this configuration. Labels is what is used to associate a specific template.
 
-## sample with declarative model 
+## sample service with declarative model 
 
 
 ```yaml
@@ -412,41 +411,6 @@ spec:
 
 ```
 
-
-
-```yaml
-apiVersion: v1
-kind: Service
-metadata:
-  name: webapp-service
-  creationTimestamp: "2024-08-27T16:19:59Z"
-
-  namespace: default
-  resourceVersion: "1329"
-  uid: 048927bc-7419-4225-9be6-0e9fc71a93b3
-spec:
-  clusterIP: 10.43.130.130
-  clusterIPs:
-  - 10.43.130.130
-  externalTrafficPolicy: Cluster
-  internalTrafficPolicy: Cluster
-  ipFamilies:
-  - IPv4
-  ipFamilyPolicy: SingleStack
-  ports:
-  - name: 8080-8080
-    nodePort: 30080
-    port: 8080
-    protocol: TCP
-    targetPort: 8080
-  selector:
-    name: simple-webapp
-  sessionAffinity: None
-  type: NodePort
-status:
-  loadBalancer: {}
-
-```
 
 ## Namespaces
 
