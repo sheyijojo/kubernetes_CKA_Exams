@@ -440,7 +440,12 @@ spec:
 ## port - where the service is exposed 
 ```
 
+## LoadBalancer Service 
 
+```yaml
+- Need a loadbalancer service to be configured for only supported cloud platform load balancers 
+
+```
 ## Namespaces
 
 ```yaml
