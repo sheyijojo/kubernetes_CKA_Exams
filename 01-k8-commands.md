@@ -414,9 +414,30 @@ spec:
 ## ClusterIP
 
 ```yaml
+- Services or tiers of apps need to establish connectivity:
+- pods have ip addr but are not static:
+- frontend app might need to coonect to multiple backend redis:
+- A svc is needed for an interface to grp these grp of pods of the backend:
+- This is known as a cluster IP:
 
+Use a definition file with kind: Service
 
+apiVersion: v1
+kind: Service
+metadata
+   name: back-end
+spec:
+   type: ClusterIP
+   ports:
+     - targetPort: 80
+       port: 80
+   selector:
+     app: myapp
+     type: back-end
 
+## targetPort - port where the backend is exposed
+
+## port - where the service is exposed 
 ```
 
 
