@@ -449,6 +449,11 @@ spec:
 ## Namespaces
 
 ```yaml
+
+set the context of a ns
+- kubectl config set-context $(kubectl config current-context) --namespace=dev
+
+specify ns:
 kubectl run redis --image=redis --namespace=finance
 
 kubectl get pods --namespace=research
@@ -461,6 +466,7 @@ kubectl get pods -A
 
 kubectl run redis --image=redis:alpine --labels=tier=db
 
+create clusterip service:
 kubectl create service clusterip redis-service --tcp=6379:6379
 
 
@@ -479,7 +485,7 @@ kubectl create ns dev-ns
 ## Create a new deployment called redis-deploy in the dev-ns namespace with the redis image. It should have 2 replicas.
 
 
-Use imperative commands.
+Use imperative commands:.
 
 `kubectl create deployment redis-deploy --image=redis --replicas=2 --namespace=dev-ns
 
