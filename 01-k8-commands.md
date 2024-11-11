@@ -506,6 +506,16 @@ spec:
      requests.memory: 5Gi
      limits.cpu: "10"
      limits.memory: 10Gi
+
+
+Commands under lab tasks:
+
+kubectl get ns --no-headers | wc -l
+OR:
+
+kubectl get ns | tail -n +2 | grep "" | wc -l
+
+k get pods -n research --no-headers | wc -l 
 ```
 
 ```yaml
