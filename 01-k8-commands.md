@@ -437,7 +437,15 @@ spec:
 
 ## targetPort - port where the backend is exposed
 
-## port - where the service is exposed 
+## port - where the service is exposed
+
+
+create clusterip service:
+kubectl create service clusterip redis-service --tcp=6379:6379
+
+kubectl create service clusterip redis-service --tcp=6379
+
+kubectl run custom-nginx --image=nginx --port=8080
 ```
 
 ## LoadBalancer Service 
@@ -482,19 +490,22 @@ kubectl get pods -A
 
 kubectl run redis --image=redis:alpine --labels=tier=db
 
-create clusterip service:
-kubectl create service clusterip redis-service --tcp=6379:6379
-
-
-
-kubectl create service clusterip redis-service --tcp=6379
-
-
-
-kubectl run custom-nginx --image=nginx --port=8080
-
-
+create namespace(ns):
 kubectl create ns dev-ns
+
+Limit Resource in a ns:
+- create a resource quot in yaml file under spec
+kind: ResourceQuota
+metadata:
+   name: compute-quota
+   namespace: dev
+spec:
+   hard:
+     pods: "10"
+     requests.cpu: "4"
+     requests.memory: 5Gi
+     limits.cpu: "10"
+     limits.memory: 10Gi
 ```
 
 ```yaml
