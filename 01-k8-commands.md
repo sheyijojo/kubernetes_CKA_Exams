@@ -463,12 +463,13 @@ DNS:
 cluster.local: domain
 svc : service
 dev : Namespace
-db-service - Service Name 
+db-service : Service Name 
 
 set the context of a ns:
 - kubectl config set-context $(kubectl config current-context) --namespace=dev
 
-specify ns:
+Namespace Operations:
+Can specify Namespace under the metada scetion: name: dev
 kubectl run redis --image=redis --namespace=finance
 
 kubectl get pods --namespace=research
