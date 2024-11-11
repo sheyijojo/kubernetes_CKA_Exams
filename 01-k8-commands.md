@@ -35,7 +35,7 @@ export ETCDCTL_API=3
 key1
 value1
 
-## If you deployed ETCD yourself from scractch
+## If you deployed ETCD yourself from scratch
 - Take note of this option passed in the etcd.service:
 
 ## This is the address the etcd listens to, Ip of the master node 
@@ -453,6 +453,17 @@ spec:
 - Names of resources need to be unique within a namespace, but not across namespaces:
 -  Namespace-based scoping is applicable only for namespaced objects:
 - (e.g. Deployments, Services, etc.) and not for cluster-wide objects (e.g. StorageClass, Nodes, PersistentVolumes, etc.):
+
+Connect to a sb-service in a ns caalled "dev"
+- mysql.connect("db-service")
+
+DNS:
+- mysql.connect("db-service.dev.svc.cluster.local")
+
+cluster.local: domain
+svc : service
+dev : Namespace
+db-service - Service Name 
 
 set the context of a ns:
 - kubectl config set-context $(kubectl config current-context) --namespace=dev
