@@ -449,8 +449,12 @@ spec:
 ## Namespaces
 
 ```yaml
+- In Kubernetes, namespaces provide a mechanism for isolating groups of resources within a single cluster:
+- Names of resources need to be unique within a namespace, but not across namespaces:
+-  Namespace-based scoping is applicable only for namespaced objects:
+- (e.g. Deployments, Services, etc.) and not for cluster-wide objects (e.g. StorageClass, Nodes, PersistentVolumes, etc.):
 
-set the context of a ns
+set the context of a ns:
 - kubectl config set-context $(kubectl config current-context) --namespace=dev
 
 specify ns:
