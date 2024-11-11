@@ -1,6 +1,7 @@
 > While you would be working mostly the declarative way – using definition files:
 imperative commands can help in getting one-time tasks done quickly, as well as generate a definition template easily:
 This would help save a considerable amount of time during your exams:
+--dry-run
 
 Before we begin, familiarize yourself with the two options that can come in handy while working with the below commands:
 
