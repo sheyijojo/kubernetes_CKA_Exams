@@ -572,6 +572,9 @@ kubectl expose pod httpd --port 80
 ## Scheduling
 
 ```yaml
+You do not want to rely on the built-in scheduler:
+
+nodeName is added by default in pods:
 
 ```
 ## nodeport for manual scheduling 
