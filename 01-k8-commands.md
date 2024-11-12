@@ -538,8 +538,16 @@ make sure the object exist:
 
 kubectl replace --force -f nginx.yaml
 
-
+Deploy a redis pod using the redis:alpine image with the labels set to tier=db:
 k run redis --image=redis:alpine --labels=tier=db
+
+Create a service redis-service to expose the redis application within the cluster on port 6379
+k expose pod redis --port=6379 --name redis-service
+
+
+Create a pod called httpd using the image httpd:alpine in the default namespace. Next, create a service of type ClusterIP by the same name (httpd). The target port for the service should be 80:
+
+kubectl run httpd --image=httpd:alpine --port=80 --expose
 
 ```
 ## Declarative
