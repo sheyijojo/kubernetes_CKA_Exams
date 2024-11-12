@@ -537,8 +537,18 @@ completely delete and force changes:
 make sure the object exist:
 
 kubectl replace --force -f nginx.yaml
-```
 
+
+k run redis --image=redis:alpine --labels=tier=db
+
+```
+## Declarative
+```yaml
+create an object if it doesnt exist:
+Best approach:
+
+kubectl apply -f nginx.yaml 
+```
 ```yaml
 ## Create a new deployment called redis-deploy in the dev-ns namespace with the redis image. It should have 2 replicas.
 
