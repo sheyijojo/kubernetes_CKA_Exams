@@ -517,6 +517,27 @@ kubectl get ns | tail -n +2 | grep "" | wc -l
 
 k get pods -n research --no-headers | wc -l 
 ```
+## Imperative commands
+
+```yaml
+kubectl create deployment nginx --port 80
+kubectl edit deployment nginx
+
+kubectl scale deployment nginx --replicas=5
+
+kubectl set image deployment nginx nginx=nginx:1.18
+
+kubectl replace -f nginx.yaml
+
+To track changes of local yaml file use this:
+
+kubectl replace -f nginx.yaml
+
+completely delete and force changes:
+make sure the object exist:
+
+kubectl replace --force -f nginx.yaml
+```
 
 ```yaml
 ## Create a new deployment called redis-deploy in the dev-ns namespace with the redis image. It should have 2 replicas.
@@ -527,6 +548,8 @@ Use imperative commands:.
 `kubectl create deployment redis-deploy --image=redis --replicas=2 --namespace=dev-ns
 
 kubectl expose pod httpd --port 80
+
+
 ```
 
 ## nodeport for manual scheduling 
