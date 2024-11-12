@@ -3,7 +3,7 @@ imperative commands can help in getting one-time tasks done quickly, as well as 
 This would help save a considerable amount of time during your exams:
 --dry-run
 
-Before we begin, familiarize yourself with the two options that can come in handy while working with the below commands:
+### Before we begin, familiarize yourself with the two options that can come in handy while working with the below commands:
 
 `--dry-run` 
 By default as soon as the command is run, the resource will be created. 
