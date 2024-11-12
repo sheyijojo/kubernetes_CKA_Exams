@@ -569,7 +569,11 @@ kubectl expose pod httpd --port 80
 
 
 ```
+## Scheduling
 
+```yaml
+
+```
 ## nodeport for manual scheduling 
 ```yaml
 apiVersion: v1
