@@ -589,16 +589,45 @@ spec:
   nodeName: node01  # Replace with the name of the node you want to schedule the pod on
 
 ```
+## Labels and Selectors
+```yaml
+Labels and selectors are standard ways to group things together :
 
-## check if the scheduler is runnig in namesystem
-`kubectl get pods -n kube-system`
+apiVersion: v1
+kind: Pod
+metadata:
+   name: simple-app
+   labels:
+      app: App1
+      function: Front-end
 
-## Instead of deleting a pod, you can replace 
-`kubectl replace --force -f nginx.yaml`
+select the pods with the label:
 
-`kubectl get pods --watch`
+kubectl get pods --selector app=App1
 
-## get a pod name with the selector to get the label
+
+can also match this in a Replicaset:
+
+apiVersion: apps/v1
+kind: ReplicaSet
+metadata:
+   name: simple-webapp
+   labels:
+     app: App1
+     function: Front-end
+
+properties attached to each item is by labels :
+check if the scheduler is runnig in namesystem:
+selectors help you filter:
+
+kubectl get pods -n kube-system
+
+Instead of deleting a pod, you can replace:
+kubectl replace --force -f nginx.yaml
+
+kubectl get pods --watch
+
+get a pod name with the selector to get the label:
 
 `kubectl get pods --selector app=App1`
 `kubectl get pods --selector app=App1  --no-headers | wc -l`
@@ -645,9 +674,8 @@ Tains are ste on Nodes, tolerance are set on pods.
 
 `kubectl label nodes node-1 size=Large`
 
-
 `kubectl label nodes node01 color=blue`
-
+```
 ## specify node selector in the pod-sefintion file
 ```yaml
 
