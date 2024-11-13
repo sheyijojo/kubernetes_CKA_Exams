@@ -682,9 +682,12 @@ kubectl get all --selector env=prod,bu=finance,tier=frontend
 ## Taints and Tolerance
 
 ```yaml
-## Taints and Tolerance
-Tains are ste on Nodes, tolerance are set on pods. 
-- `kubectl taint nodes node-name key=value:taint-effect`
+Taints and Tolerance:
+Taints are set on Nodes,
+
+tolerance are set on pods.
+
+- kubectl taint nodes node-name key=value:taint-effect
 
 - `kubectl taint nodes node1 app=blue:NoSchedule`
 `NoSchedule | PreferNoSchedule | NoExecute`
