@@ -607,6 +607,9 @@ kubectl get pods --selector app=App1
 
 
 can also match this in a Replicaset:
+    - to connect the replicaset to the pod:
+    - configure the selector field under the replicaset to match the labels defined on the Pod:
+    -  could use single labels or mutliple:
 
 apiVersion: apps/v1
 kind: ReplicaSet
@@ -615,15 +618,15 @@ metadata:
    labels:
      app: App1
      function: Front-end
-
+   ## can add annotations as well 
+   annotations:
+      buildversion: 1.34
 spec:
    replicas: 3
    selector:
      matchLabels:
         app: App1
-## to connect the replicaset to the pod
-## configure the selector field under the replicaset to match the labels defined on the Pod
-## could use single labels or mutliple 
+
    template:
      metadata:
        labels:
