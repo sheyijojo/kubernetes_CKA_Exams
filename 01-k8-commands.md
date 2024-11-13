@@ -591,7 +591,7 @@ spec:
 ```
 ## Labels and Selectors
 ```yaml
-Labels and selectors are standard ways to group things together :
+Labels and selectors are standard ways to group things together like objects, pods, etc. :
 
 apiVersion: v1
 kind: Pod
@@ -646,7 +646,6 @@ kubectl replace --force -f nginx.yaml
 kubectl get pods --watch
 
 
-
 If I do not know the label name:
 k get pods --show-labels=True
 
@@ -658,11 +657,12 @@ kubectl get pods --selector app=App1
 k get pods --selector env=dev | wc -l
 
 
-`kubectl get pods --selector app=App1`
-`kubectl get pods --selector app=App1  --no-headers | wc -l`
-`kubectl get pods --selector env=dev`
+kubectl get pods --selector app=App1
+kubectl get pods --selector app=App1  --no-headers | wc -l
+kubectl get pods --selector env=dev
 
 get all objects in an env:
+
 kubectl get all --selector env=prod
 k get all --selector env=prod --no-headers | wc -l
 
@@ -670,7 +670,7 @@ k get all --selector env=prod --no-headers | wc -l
 get all pods in different env:
 `kubectl get pods -l 'env in (prod,finance,frontend)`
 
-## Identify the POD which is part of the prod environment, the finance BU and of frontend tier?
+Identify the POD which is part of the prod environment, the finance BU and of frontend tier?:
 kubectl get pods -l env=prod,bu=finance,tier=frontend
 
 OR
@@ -683,45 +683,48 @@ kubectl get all --selector env=prod,bu=finance,tier=frontend
 
 ```yaml
 Taints and Tolerance:
-Taints are set on Nodes,
+- This is a pod to node relationship, what pods can be placed on the node:
+    - Taints are set on Nodes:
+    - Tolerance are set on pods:
 
-tolerance are set on pods.
+kubectl taint nodes node-name key=value:taint-effect
 
-- kubectl taint nodes node-name key=value:taint-effect
+kubectl taint nodes node1 app=blue:NoSchedule
 
-- `kubectl taint nodes node1 app=blue:NoSchedule`
-`NoSchedule | PreferNoSchedule | NoExecute`
+NoSchedule | PreferNoSchedule | NoExecute
 
-## check the taint deployed automatically on master node 
 
-`kubectl describe node kubemaster | grep Taint`
+check the taint deployed automatically on master node:
+kubectl describe node kubemaster | grep Taint
 
-## Remove taint from a node
-`kubectl taint nodes controlplane example-key:NoSchedule-`
+Remove taint from a node:
+kubectl taint nodes controlplane example-key:NoSchedule-
 
-`kubectl taint nodes controlplane node-role.kubernetes.io/control-plane:NoSchedule-`
+kubectl taint nodes controlplane node-role.kubernetes.io/control-plane:NoSchedule-
 
-## Create a pod in yaml but do not run
-`kubectl run nginx --image=nginx --dry-run=client -o yaml > bee.yaml`
+Create a pod in yaml but do not run:
+kubectl run nginx --image=nginx --dry-run=client -o yaml > bee.yaml
 
-## get more inforation like nodes from this command 
-`kubectl get pods -o wide`
+get more inforation like nodes from this command:
+kubectl get pods -o wide
 
-## Label a Node for NodeSelector section
-`kubectl label nodes <node-name> <label-key>=<label-value>`
 
-`kubectl label nodes node-1 size=Large`
+Label a Node for NodeSelector section:
+kubectl label nodes <node-name> <label-key>=<label-value>
 
-`kubectl label nodes node01 color=blue`
+kubectl label nodes node-1 size=Large
+
+kubectl label nodes node01 color=blue
 ```
-## specify node selector in the pod-sefintion file
+## specify node selector in the pod-defintion file
 ```yaml
 
 spec:
   nodeSelector:
     size: Large
-```yaml
-## Node Affinity and Antiffinity is better and address complex needs, spec affinit should be under pods not Deployment
+
+Node Affinity and Antiffinity is better and address complex needs, spec affinit should be under pods not Deployment:
+
 ```yaml
 apiVersion: v1
 kind: Pod
@@ -744,13 +747,12 @@ spec:
     imagePullPolicy: IfNotPresent
 ```
 
-## sample task 
-`kubectl create deployment red --replicas=2 --image=nginx -o yaml > sample.yaml`
 
 ## Dry run
 ```yaml
 kubectl create deployment red --replicas=2 --image=nginx --dry-run=client -o yaml > sample.yaml
 
+kubectl create deployment red --replicas=2 --image=nginx -o yaml > sample.yaml
 ```
 
 ## Create Deployment with Affinity to a Label on controlnode
