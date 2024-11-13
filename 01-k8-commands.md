@@ -616,6 +616,24 @@ metadata:
      app: App1
      function: Front-end
 
+spec:
+   replicas: 3
+   selector:
+     matchLabels:
+        app: App1
+## to connect the replicaset to the pod
+## configure the selector field under the replicaset to match the labels defined on the Pod
+## could use single labels or mutliple 
+   template:
+     metadata:
+       labels:
+         app: App1
+         function: Front-end
+     spec:
+       containers:
+       - name: simple-webapp
+         image: simple-webapp
+
 properties attached to each item is by labels :
 check if the scheduler is runnig in namesystem:
 selectors help you filter:
