@@ -601,9 +601,6 @@ metadata:
       app: App1
       function: Front-end
 
-select the pods with the label:
-
-kubectl get pods --selector app=App1
 
 
 can also match this in a Replicaset:
@@ -648,26 +645,43 @@ kubectl replace --force -f nginx.yaml
 
 kubectl get pods --watch
 
+
+
+If I do not know the label name:
+k get pods --show-labels=True
+
+
 get a pod name with the selector to get the label:
+select the pods with the label:
+
+kubectl get pods --selector app=App1
+k get pods --selector env=dev | wc -l
+
 
 `kubectl get pods --selector app=App1`
 `kubectl get pods --selector app=App1  --no-headers | wc -l`
 `kubectl get pods --selector env=dev`
 
-## get all objects in an env
-`kubectl get all --selector env=prod`
+get all objects in an env:
+kubectl get all --selector env=prod
+k get all --selector env=prod --no-headers | wc -l
 
 
-## get all pods in different env 
+get all pods in different env:
 `kubectl get pods -l 'env in (prod,finance,frontend)`
 
 ## Identify the POD which is part of the prod environment, the finance BU and of frontend tier?
-`kubectl get pods -l env=prod,bu=finance,tier=frontend`
+kubectl get pods -l env=prod,bu=finance,tier=frontend
 
 OR
 
-`kubectl get all --selector env=prod,bu=finance,tier=frontend`
+kubectl get all --selector env=prod,bu=finance,tier=frontend
 
+```
+
+## Taints and Tolerance
+
+```yaml
 ## Taints and Tolerance
 Tains are ste on Nodes, tolerance are set on pods. 
 - `kubectl taint nodes node-name key=value:taint-effect`
