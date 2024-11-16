@@ -738,6 +738,16 @@ kubectl get pods -o wide
 ## Node Selector
 
 ```yaml
+Different kind of workloads run in my cluster, would like to dedicated pods to that node:
+1. Set limitation on the pod:
+   -  You must have first labelled your nodes 
+spec:
+   containers:
+   - name: data-processor
+     image: data-processor
+   nodeSelector:
+     size: Large 
+       
 Label a Node for NodeSelector section:
 kubectl label nodes <node-name> <label-key>=<label-value>
 
@@ -746,21 +756,20 @@ kubectl label nodes node-1 size=Large
 kubectl label nodes node01 color=blue
 
 ```
-## specify node selector in the pod-defintion file
+
+## Node Affinity 
 ```yaml
+Node Affinity and Antiffinity is better and address complex needs, spec affinity should be under pods not Deployment:
 
-spec:
-  nodeSelector:
-    size: Large
 
-Node Affinity and Antiffinity is better and address complex needs, spec affinit should be under pods not Deployment:
-
-```yaml
 apiVersion: v1
 kind: Pod
 metadata:
   name: nginx
 spec:
+  containers:
+  - name: data-processor
+    image: data-processor 
   affinity:
     nodeAffinity:
       requiredDuringSchedulingIgnoredDuringExecution:
@@ -775,6 +784,20 @@ spec:
   - name: nginx
     image: nginx
     imagePullPolicy: IfNotPresent
+
+
+## Node Affinity Types
+What if someone chagnes the label on the node, and the pod does not have a node to be scheduled on
+- requiredDuringSchedulingIgnoredDuringExecution:
+- preferredDuringSchedulingRequiredDuringExecution:
+
+There are two stages when considering Node Affinity:
+- DuringScheduling -  state where a pod does not exist, is creating the first time
+                      - if required during scheduling, and the node label is missing, pod will not be scheduled
+                      - if preffered, and label is missing, scheduler will ignore node affinity rule, and place it on node anywhere
+
+- DuringExecution -  state pod is running and a change is made in the env that affects node affinity
+By default, DuringExecution is set to default. 
 ```
 
 
