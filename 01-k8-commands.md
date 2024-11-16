@@ -786,7 +786,8 @@ spec:
     imagePullPolicy: IfNotPresent
 
 
-## Node Affinity Types
+Node Affinity Types:
+
 What if someone chagnes the label on the node, and the pod does not have a node to be scheduled on
 - requiredDuringSchedulingIgnoredDuringExecution:
 - preferredDuringSchedulingRequiredDuringExecution:
