@@ -845,6 +845,11 @@ spec:
         name: nginx
         resources: {}
 status: {}
+
+A combination of NodeAffinity and Taints & Toleration:
+Use taint & tolerations to prevent other pods to be placed on a node:
+Use Node Affinity to prevent our pods from being placed on their node 
+
 ```
 
 ## Resource and Request 
@@ -883,6 +888,11 @@ spec:
       limits:
         memory: "128Mi"
         cpu: "500m"
+
+
+A container cannot use more cpu above its limits:
+
+This is not the same as memory, the pod will be terminated if it overshoots OOM:
 
 ```
 
