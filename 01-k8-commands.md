@@ -682,16 +682,40 @@ kubectl get all --selector env=prod,bu=finance,tier=frontend
 ## Taints and Tolerance
 
 ```yaml
-Taints and Tolerance:
+Taints and toleration are used to set restrictions on what pods can be scheduled on a node:
+
+Prevent a pods from being placed on a node by placing a taint on the Node. e.g taint=blue:
+
+Allow a pod to be placed on a node by allowing a toleration on the pod:
+
+Taints and Toleration:
 - This is a pod to node relationship, what pods can be placed on the node:
     - Taints are set on Nodes:
-    - Tolerance are set on pods:
+    - Tolerarion are set on pods:
 
 kubectl taint nodes node-name key=value:taint-effect
 
 kubectl taint nodes node1 app=blue:NoSchedule
 
+There are three taint-effect:
 NoSchedule | PreferNoSchedule | NoExecute
+
+Tolerations are added to pods in the pod definition file:
+spec:
+   containers"
+   - name: nginx-container
+     image: nginx
+   tolerations:
+   - key: "app"
+     operator: "Equal"
+     value: "blue"
+     effect: "NoSchedule"
+
+## Notes on pods
+There is another concept called Node Affinity- Discussed lated:
+  - Pods can still be placed on Nodes without any taint even the pods has a toleration
+  - Node Affinity is what sticks the pod to specific nodes and cannot be placed on any other node
+
 
 
 check the taint deployed automatically on master node:
