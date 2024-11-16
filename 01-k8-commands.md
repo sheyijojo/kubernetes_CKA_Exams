@@ -19,7 +19,7 @@
 - ETCD is a distributed reliable key-value store that is simple, secure and fast: 
 - ETCD is a key-value pair form of database:
 
-The default client is the .etcdctl 
+The default client is the .etcdctl:
 ./etcdctl
 
 ## check version with version 3 or 2
