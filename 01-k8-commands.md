@@ -733,12 +733,18 @@ get more inforation like nodes from this command:
 kubectl get pods -o wide
 
 
+```
+
+## Node Selector
+
+```yaml
 Label a Node for NodeSelector section:
 kubectl label nodes <node-name> <label-key>=<label-value>
 
 kubectl label nodes node-1 size=Large
 
 kubectl label nodes node01 color=blue
+
 ```
 ## specify node selector in the pod-defintion file
 ```yaml
