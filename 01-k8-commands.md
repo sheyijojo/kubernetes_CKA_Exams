@@ -895,26 +895,25 @@ A container cannot use more cpu above its limits:
 This is not the same as memory, the pod will be terminated if it overshoots OOM:
 
 ```
+```yaml
+Daemonsets:
+kubectl get daemonsets
 
-## Daemonsets
-`kubectl get daemonsets`
-
-## get in all namespace
+get in all namespace:
 `kubectl get daemonsets -A`
 
-## Namespace continued
+Namespace continued:
 `kubectl describe daemonsets kube-proxy -n kube-system`
 
-## Daemonsets shortcut
+Daemonsets shortcut:
 `kubectl describe ds kube-flannel-ds -n kube-system`
 
-## copy from the documentation or use deployment dry run and change it 
-`kubectl create deployment elasticsearch -n kube-system --image=aaas --dry-run=client -o yaml`
+copy from the documentation or use deployment dry run and change it:
+kubectl create deployment elasticsearch -n kube-system --image=aaas --dry-run=client -o yaml
 
-```yaml
 ## No replicas
 ## change the image name
-##
+
 kubectl create -f fluendt.yaml
 
 kubectly get ds -n kube-system
