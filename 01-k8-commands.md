@@ -895,18 +895,32 @@ A container cannot use more cpu above its limits:
 This is not the same as memory, the pod will be terminated if it overshoots OOM:
 
 ```
+
+## Daemonsets
 ```yaml
+Daemonsets are like replicasets, but it runs one copy of your pod on each node in your cluste:
+
+Whenever a new node is added to the cluster a replica of the pod is automatically added to that node:
+
+Use cases:
+
+1. Monitoring solution
+2. Logs viewer
+3. Kube Proxy
+4. weave-net
+
+
 Daemonsets:
 kubectl get daemonsets
 
 get in all namespace:
-`kubectl get daemonsets -A`
+kubectl get daemonsets -A
 
 Namespace continued:
-`kubectl describe daemonsets kube-proxy -n kube-system`
+kubectl describe daemonsets kube-proxy -n kube-system
 
 Daemonsets shortcut:
-`kubectl describe ds kube-flannel-ds -n kube-system`
+kubectl describe ds kube-flannel-ds -n kube-system
 
 copy from the documentation or use deployment dry run and change it:
 kubectl create deployment elasticsearch -n kube-system --image=aaas --dry-run=client -o yaml
@@ -918,19 +932,29 @@ kubectl create -f fluendt.yaml
 
 kubectly get ds -n kube-system
 ```
+```yaml
+Static pods are pods that are created by the kubelet on its own without the intervention from the API server
 
-## get static pods
+The kubelet creates a static pod using the commands `--pod-manifest-path=/etc/kubernetes/manifests` in the kubelet.service:
+
+`Can also use --config=kubeconfig.yaml`
+
+kubeconfig.yaml:
+`staticPodPath:  /etc/kubernetes/manifest`
+
+
+get static pods:
 - static pods usually have node name appended to their name, clue to know them
 - check for the owner reference session, check the kind and name. The kind should be like a Node. otherwise could be Relicaset, or any other object 
 
 ## another way of getting pod yaml from a running pod
-`kubectl get pod name-of-pod -n kube-system -o yaml`
-`kubectl get nodes`
+kubectl get pod name-of-pod -n kube-system -o yaml
+kubectl get nodes
 
 
 ## find config files in linux 
-`find /etc -type f -name "*.conf"`
-```yaml
+find /etc -type f -name "*.conf"
+
 ## How many static pods exist in this cluster in all namespaces 
 kubectl get pods -A
 
