@@ -932,16 +932,23 @@ kubectl create -f fluendt.yaml
 
 kubectly get ds -n kube-system
 ```
+
+## static pods contd
 ```yaml
 Static pods are pods that are created by the kubelet on its own without the intervention from the API server
 
-The kubelet creates a static pod using the commands `--pod-manifest-path=/etc/kubernetes/manifests` in the kubelet.service:
+The kubelet creates a static pod using the commands:
 
-`Can also use --config=kubeconfig.yaml`
+ --pod-manifest-path=/etc/kubernetes/manifests` in the kubelet.service:
+
+Can also use --config=kubeconfig.yaml
 
 kubeconfig.yaml:
-`staticPodPath:  /etc/kubernetes/manifest`
+staticPodPath:  /etc/kubernetes/manifest
 
+check for the static pods using:
+
+docker ps 
 
 get static pods:
 - static pods usually have node name appended to their name, clue to know them
@@ -984,19 +991,19 @@ ssh internalipaddr
 
 ls /etc/kubernetes/manifests/
 
-## check the kuubelet config
+check the kubelet config:
 cat /var/lib/kubelet
 ```
 
 ## Debug schedulers
 
 ```yaml
-`kubectl get events -o wide`
+kubectl get events -o wide
 
-## schedulers logs
-  - kubectl logs my-custom-scheduler --name-space=kube-system
+schedulers logs :
+  kubectl logs my-custom-scheduler --name-space=kube-system
 
-## find an image witing  a pod
+find an image witing  a pod:
 kubectl describe pod pod-name -n kube-system | grep Image
 
 ```
