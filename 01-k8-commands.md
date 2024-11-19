@@ -1039,6 +1039,8 @@ spec:
      my-scheduler
 
 ```
+
+```yaml
 ## kubectl logs
 `kubectl logs podname`
 
@@ -1077,7 +1079,7 @@ or
 
 `k describe deploy frontend`
 
-
+```
 
 ## Application Lifecycle 
 
