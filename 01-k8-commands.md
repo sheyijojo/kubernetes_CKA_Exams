@@ -1124,6 +1124,16 @@ spec:
 ## Application Lifecycle 
 
 ```yaml
+
+Configuring applications comprises understanding the following concepts:
+
+- Configuring Commands and Arguments on applications
+
+- Configuring Environment Variables
+
+- Configuring Secrets
+
+
 ## docker
 CMD
 
@@ -1145,14 +1155,14 @@ docker run ubuntu-sleeper
 
 docker run ubuntu-sleeper 10
 
-## ADD ENTRYPOINT IN THE DOCKERFILE, to append additional CLI inout
+ADD ENTRYPOINT IN THE DOCKERFILE, to append additional CLI inout:
 FROM Ubuntu
 
 ENTRYPOINT["sleep"]
 
 docker run ubuntu-sleeper 10
 
-## Add default value like 5 even if you forget on command line
+Add default value like 5 even if you forget on command line:
 
 FROM Ubuuntu
 
@@ -1162,18 +1172,18 @@ CMD["5"]
 
 docker run ubuntu-sleeper 10
 
-## In Kubernetes Pod
+In Kubernetes Pod:
 Anything appended to the command goes to the args property in K8
 
 
-## for example
+for example:
 
 docker run --name ubuntu-sleeper ubuntu-sleeper 10
 
-entrypoiit for dockerfile is sleep
+entrypoint for dockerfile is sleep
 CMD in Dockerfile == ARGS in Kubernetes
 
-to overwrite ENTRPOINT will be command in Kubernetes
+to overwrite ENTRYPOINT will be command in Kubernetes
 
 apiVersion: v1
 kind: Pod
