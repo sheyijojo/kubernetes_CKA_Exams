@@ -982,8 +982,19 @@ cp static-busybox.yaml  /etc/kubernetes/manifests/
 ## watch while your pods get deployed 
 `kubectl get pods --watch`
 
-## to get nodes in manifest file in another nodes
+## To get nodes in manifest file in another nodes
 ```yaml
+Logging in kubernetes:
+
+You need a monitoring server tobe deployed :
+kubectl apply -f https://github.com/kubernetes-sigs/metrics-server/releases/latest/download/components.yaml
+
+kubectl top node 
+
+kubectl top pod
+
+kubectl logs -f event-simulator-pod event-simulator
+
 ## ssh into the nodes
 kubectl get nodes -o wide
 
