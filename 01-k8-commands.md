@@ -1052,43 +1052,72 @@ spec:
 ```
 
 ```yaml
-## kubectl logs
-`kubectl logs podname`
+kubectl logs:
+kubectl logs podname
 
-## See status of deployment 
-`kubectl rollout status deployment/myapp-deployment`
-
-## see history of deployment 
-
-`kubectl rollout history deployment/myapp-deployment`
-
-## Undo a deployment rollout 
-`kubectl rollout undo deployment/myapp-deployment`
-
-## create deployments
-
-`kubectl create -f deployment-definiition.yaml`
-## Get Depployment
-`kubectl get deployments`
-
-## update - be careful, it creates a new config
-`kubectl apply -f deployment-definition.yaml`
-
-## deployment status - Deployment files will have diff configs
-`kubectl set image deployment/myapp-deployment nginx=nginx:1.9.1`
-
-## Edit 
-`kubectl edit deployment frontend`
-
-or
-
-`k set image deployment frontend simple-webapp=kodkloud/webapp-clor:v2`
+Rollout and versioning in a deployment:
+- A first deployment triggers a rollout, a new rollout tiggers a new revision 
 
 
-`kubectl get deployments frontend  --watch`
-`k get deploy`
+See status of deployment(rollout):
+kubectl rollout status deployment/myapp-deployment
 
-`k describe deploy frontend`
+see history of deployment:
+kubectl rollout history deployment/myapp-deployment
+
+Undo a deployment rollout:
+kubectl rollout undo deployment/myapp-deployment
+
+create deployments:
+kubectl create -f deployment-definiition.yaml
+
+Get Depployment:
+kubectl get deployments
+
+update - be careful, it creates a new config:
+kubectl apply -f deployment-definition.yaml
+
+deployment status - Deployment files will have diff configs:
+kubectl set image deployment/myapp-deployment nginx=nginx:1.9.1
+
+Edit:
+kubectl edit deployment frontend
+
+or:
+
+k set image deployment frontend simple-webapp=kodkloud/webapp-clor:v2
+
+
+kubectl get deployments frontend  --watch
+
+k get deploy
+
+k describe deploy frontend
+
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: frontend
+  namespace: default
+spec:
+  replicas: 4
+  selector:
+    matchLabels:
+      name: webapp
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        name: webapp
+    spec:
+      containers:
+      - image: kodekloud/webapp-color:v2
+        name: simple-webapp
+        ports:
+        - containerPort: 8080
+          protocol: TCP
 
 ```
 
@@ -1098,7 +1127,7 @@ or
 ## docker
 CMD
 
-## SPECIFY DIFFERENT cmd to satrt a docker
+## SPECIFY DIFFERENT cmd to start a docker
 
 docker run ubuntu [COMMAND]
 docker run ubuntu sleep 5
