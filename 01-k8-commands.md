@@ -1216,11 +1216,38 @@ spec:
 
 ## Approach for editing 
 ```yaml
-`kuubectl edit pod name-of-the-pod`
+kuubectl edit pod name-of-the-pod
 
-`kubectl replace --force -f /tmp/kuubectl-edit-2623.yaml`  
+kubectl replace --force -f /tmp/kuubectl-edit-2623.yaml
 
-`kubectl run nginx --image=nginx -- <arg1> <arg2> ... <argN> `
+kubectl run nginx --image=nginx -- <arg1> <arg2> ... <argN>
+
+k run webapp-green --image=kodekloud/webapp-color --  --color=green
+
+Configure environment variable:
+- env is in array
+
+containers:
+- name: simpleapp
+  image: simpleimage
+  ports:
+    - containerPort: 8080
+  env:
+    - name: APP_COLOR
+      value: pink
+
+Other ways are configmap
+   env:
+    - name: APP_COLOR
+      valueFrom:
+          configMapKeyRef:
+
+secrets:
+   env:
+    - name: APP_COLOR
+      valueFrom:
+          secretKeyRef:
+   
 ```
 ## Config Map
 
