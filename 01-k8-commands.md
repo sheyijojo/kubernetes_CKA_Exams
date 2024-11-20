@@ -1252,6 +1252,11 @@ secrets:
 ## Config Map
 
 ```yaml
+
+steps:
+- create configmap and inject into the pods:
+
+
 kubectl create configmap  <config-name> --from-literal=<key>=<value> 
 
 
@@ -1262,6 +1267,27 @@ kubectl create configmap  app-config --from-literal=APP_COLOR=blue \
 kubectl create configmap <config-name> --from-file=<path-to-file>
 
 kubectl get configmaps
+
+Injecting ConfigMap different ways into pods:
+
+1. ## env
+envFrom:
+  - configMapRef:
+          name: app-config 
+2. ##single env
+
+env:
+  - name: APP_COLOR
+    valueFrom:
+       configMapKeyRef:
+           name: app-config
+           key: APP_COLOR
+
+3. ## Volumes
+volumes
+- name: app-config-volume
+  configMap
+    name: app-config 
 ```
 
 ## Secrets
