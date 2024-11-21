@@ -1293,6 +1293,8 @@ volumes
 ## Secrets
 
 ```yaml
+Secrets are stored in encoded format:
+-  Create secret and inject it into pod 
 
 kubectl create secret generic db-secret --from-literal=DB_Host=sql01  --from-literal=DB_User=root  --from-literal=DB_password=passw
 ord123
