@@ -1389,6 +1389,95 @@ volumes:
 
 ```
 
+## Encrypting a Secret
+
+```yaml
+create a generic secret:
+kubectl create secret generic my-secret --from-literal=key1=supersecret
+
+get encoded value:
+k get secret my-secret -o yaml
+
+decode the secret:
+echo "dsvfasrwefees" | base64 --decode
+
+Focus here in this demo is the data stored in the etcd server:
+
+How secrets are stored in etcd and get the value encrypted :
+
+ETCDCTL_API=3 etcdctl \
+   --cacert=/etc/kubernetes/pki/etcd/ca.crt   \
+   --cert=/etc/kubernetes/pki/etcd/server.crt \
+   --key=/etc/kubernetes/pki/etcd/server.key  \
+   get /registry/secrets/default/my-secret | hexdump -C
+
+
+install the etcd client to query:
+apt-get install etcd-client
+
+check if enryption at rest is configured:
+ - done by checking the encryption-provider-config:
+
+ps -aux | grep kube-api | grep "encryption-provider-config"
+
+Also check the kube-apiserver.yaml at /etc/kuberntes/manifest:
+
+
+Activate encryption:
+- Create a config file and pass the encryption-provider-config option
+vi enc.yaml
+apiVersion: apiserver.config.k8s.io/v1
+kind: EncryptionConfiguration
+resources:
+  - resources:
+      - secrets
+    providers:
+      - aescbc:
+          keys:
+            - name: key1
+              # See the following text for more details about the secret value
+              secret: sd24309wnassadasd==
+
+
+
+
+--------
+create a Base 64 encoded secret
+head -c 32 /dev/urandon | base66
+
+output: sd24309wnassadasd==
+
+mkdir /etc/kubernetes/enc:
+
+mv enc.yaml /etc/kubernetes/enc
+
+cd /etc/kubernetes/manifest/kube-api-server.yaml
+
+add this line:
+
+--encryption-provider-config=/etc/kubernetes/enc/enc.yaml  # add this line
+
+In the volume mount section of kubeapi-server
+    volumeMounts:
+    - name: enc                           # add this line
+      mountPath: /etc/kubernetes/enc      # add this line
+      readOnly: true  
+
+In the volume section:
+  volumes:
+
+  - name: enc                             # add this line
+    hostPath:                             # add this line
+      path: /etc/kubernetes/enc           # add this line
+      type: DirectoryOrCreate
+
+# check if encrypted provider is present
+
+ps aux | grep kube-api| grep encryp
+
+create another secret file literal:
+```
+
 ## Creating a Multi Container Pod
 ```yaml
 kubectl run yellow --image=busybox --dry-run=client -o yaml --command -- sleep 1000 > mysample.yaml
@@ -1397,9 +1486,10 @@ k get pods -n elastic-stack
 
 k -n elastic-stack logs kibana
 
-## Edit the pod in the elastic-stack namespace to add a sidecar container to send logs to Elastic Search. Mount the log volume to the sidecar container.
+Edit the pod in the elastic-stack namespace to add a sidecar container to send logs to Elastic Search.
+ Mount the log volume to the sidecar container:.
 
-https://kubernetes.io/docs/tasks/access-application-cluster/communicate-containers-same-pod-shared-volume/
+https://kubernetes.io/docs/tasks/access-application-cluster/communicate-containers-same-pod-shared-volume/:
 
 ## can exec into a runing pod
 
