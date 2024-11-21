@@ -1321,11 +1321,11 @@ declarivative:
 
 encrypt ETCD data at rest
 
-**on linux**
+on linux:
 
 - echo -n 'mysql' | base64
 
-kubectl get secreats
+kubectl get secrets
 
 kubectl describe secrets
 
@@ -1333,10 +1333,9 @@ get the encoded value:
 kubectl get secret app-secret -o yaml
 
 
-https://www.youtube.com/watch?v=MTnQW9MxnRI
+https://www.youtube.com/watch?v=MTnQW9MxnRI:
 
 decode secrets:
-  
 echo -n "bXlzcWw' | base64 --decode
 
 logs:
@@ -1345,7 +1344,20 @@ kubectl -n elastic-stack  logs kibana
 exec into a pod container:
 kubectl -n elastic-stack exec -it app -- cat /log/app.log
 
+passing env into pod:
+containers:
+   envFrom:
+     - secretRef:
+            name: app-secret
 
+can also mount as volume
+    volumes:
+    - name: app-secret-volume
+      secret:
+         secretName: app-secret
+
+Do not check in your secret objects to SCM:
+Secrets are not encrypted at rest by default in ETCD:
 ```
 
 
