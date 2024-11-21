@@ -1311,13 +1311,13 @@ kubectl create secret generic <secret-name> --from-file=<path-to-file>
 kubectl create secret generic \ app-secret --from-file=app_secret.properties  
 
 
-**declarivative**
+declarivative:
 
 - kubectl create -f secret-data.yaml
 
-- The data must be in encoded form in secrets. Screts are encoded but not encrypyted
+- The data must be in encoded form in secrets. Screts are encoded but not encrypyted:
 
-- Do not check in secret objects to SCM along the code 
+- Do not check in secret objects to SCM along the code:
 
 encrypt ETCD data at rest
 
@@ -1325,24 +1325,29 @@ encrypt ETCD data at rest
 
 - echo -n 'mysql' | base64
 
-- kubectl get secreats
+kubectl get secreats
 
-- kubectl describe secrets
+kubectl describe secrets
 
-- kubectl get secret app-secret -o yaml
+get the encoded value:
+kubectl get secret app-secret -o yaml
 
 
 https://www.youtube.com/watch?v=MTnQW9MxnRI
 
-```
-**decode secrets**
+decode secrets:
   
-`echo -n "bXlzcWw' | base64 --decode`
-## logs 
-`kubectl -n elastic-stack  logs kibana`
+echo -n "bXlzcWw' | base64 --decode
 
-## exec into a pod container 
-`kubectl -n elastic-stack exec -it app -- cat /log/app.log`
+logs:
+kubectl -n elastic-stack  logs kibana
+
+exec into a pod container:
+kubectl -n elastic-stack exec -it app -- cat /log/app.log
+
+
+```
+
 
 ```yaml
 spec:
@@ -1359,7 +1364,7 @@ spec:
 ## single env
 env:
  - name: DB_Password
-   vakueFrom:
+   valueFrom:
      secretkeyRef:
        name: app-secret
        key: DB_Password
@@ -1395,7 +1400,7 @@ k edit pod app -n elastic-stack
 
 ## Error - pods not valid after editing a pod
 
-Run this 
+Run this:
 
 `k edit pod app -n elastic-stack`
 
