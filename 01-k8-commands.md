@@ -1476,6 +1476,11 @@ In the volume section:
 ps aux | grep kube-api| grep encryp
 
 create another secret file literal:
+
+ensure all secrets are ecrypted:
+The command reads all Secrets and then updates them to apply server side encryption 
+
+kubectl get secrets --al-namsepaces -o json | kubectl replace -f -
 ```
 
 ## Creating a Multi Container Pod
