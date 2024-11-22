@@ -966,7 +966,7 @@ find /etc -type f -name "*.conf"
 kubectl get pods -A
 
 ## path to directory for the static pod
-check the kubelt conf
+check the kubelet conf
 cat /var/lib/kubelet/config.yaml   ##for any given static pod config
 ## check for static pod path
 
