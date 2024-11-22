@@ -1555,28 +1555,35 @@ This will delete the pod and recreate a new one
 
 ## An app wuth inti:CrashLoopBackoff
 
-check the logs of pod
+check the logs of pod:
 
 k logs orange
 
-## check the logs of the inti container
+check the logs of the inti container:
+
 k logs orange -c init-myservcie
 ```
 ## Os Updates
 
-When working with workloads on a node
+> When working with workloads on a node
 ```yaml
-## drain workloads to move to another node
+Scenario is when working on the nodes for patches, os updates and so on:
+
+If a pod is not part of a replicaSet it does not come back on:
+
+
+
+drain workloads of a node to move them to another node:
 kubectl drain node-1
 
-pods are gracefully terminated, no pods can be schedules on this node
+pods are gracefully terminated , and recreated on another , no pods can be scheduled on this drained node:
 
-## The kubectl uncordon command is used to mark a Kubernetes node as schedulable again after it was previously cordone
+The kubectl uncordon command is used to mark a Kubernetes node as schedulable again after it was previously cordone:
 
+mark a node schedulable:
 kubectl uncordon node-1
 
-## The kubectl cordon command is used to mark a Kubernetes node as unschedulable. 
-
+The kubectl cordon command is used to mark a Kubernetes node as unschedulable.:
 kubectl cordon node-01
 
 
