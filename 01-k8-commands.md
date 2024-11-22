@@ -1575,6 +1575,11 @@ If a pod is not part of a replicaSet it does not come back on:
 
 drain workloads of a node to move them to another node:
 kubectl drain node-1
+k drain --ignore-daemonsets node01
+
+if a pod is not part of a Repliset: lost forever:
+k drain node01 --force --ignore-daemonsets 
+
 
 pods are gracefully terminated , and recreated on another , no pods can be scheduled on this drained node:
 
@@ -1595,6 +1600,24 @@ k describe nodes
 
 ## Kubernetes Releases and K8 CLuster Upgrade 
 ```yaml
+
+When we install a kubernetes cluster, we install a specific version of k8:
+check the version:
+k get nodes
+
+major version was v1.0 - 2015
+v1.2.0 - 2016 minor
+v1.10.0 - 2018
+v1.13.0 - 2018
+
+So some controlplane components have the same version while some dont:
+
+kube-apiserver  controller-manager kube-scheduler kubelet kube-proxy kubectl: v1.13.4 - same version
+
+ETCD CLUSTER: - v3.2.18  COREDNS: - v1.1.3 - different version
+
+
+
 https://kubernetes.io/docs/concepts/overview/kubernetes-api/
 
 Here is a link to Kubernetes documentation if you want to learn more about this topic (You don’t need it for the exam, though):
@@ -1608,8 +1631,8 @@ https://github.com/kubernetes/community/blob/master/contributors/devel/sig-archi
 ```
 ```yaml
 
-## Using kubeadm tool, kubeadm does not install or upgrade kubelets.
-## check the current local version of kubeadm tool, also check the remote version
+Using kubeadm tool, kubeadm does not install or upgrade kubelets:
+check the current local version of kubeadm tool, also check the remote version:
 
 vim /etc/apt/sources.list.d/kubernetes.list
 
