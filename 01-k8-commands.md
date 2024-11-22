@@ -1491,21 +1491,21 @@ k get pods -n elastic-stack
 
 k -n elastic-stack logs kibana
 
-Edit the pod in the elastic-stack namespace to add a sidecar container to send logs to Elastic Search.
+Edit the pod in the elastic-stack namespace to add a sidecar container to send logs to Elastic Search:
  Mount the log volume to the sidecar container:.
 
 https://kubernetes.io/docs/tasks/access-application-cluster/communicate-containers-same-pod-shared-volume/:
 
-## can exec into a runing pod
+can exec into a runing pod:
 
 k -n elastic-stack exec -it app -- cat /log/app.log
 
-## edit pod in a namespace
+edit pod in a namespace:
 k edit pod app -n elastic-stack
 
 ```
 
-## Error - pods not valid after editing a pod
+Error - pods not valid after editing a pod:
 
 Run this:
 
