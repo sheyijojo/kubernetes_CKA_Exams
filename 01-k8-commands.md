@@ -1533,7 +1533,7 @@ spec:
     command: ['sh', '-c', 'git clone  ;']
 
 
-You can configure multiple such initContainers as well,
+You can configure multiple such initContainers as well:
 like how we did for multi-containers pod. In that case, each init container is run one at a time in sequential order.:
 
 
