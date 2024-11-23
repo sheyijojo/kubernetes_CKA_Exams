@@ -1610,11 +1610,11 @@ v1.2.0 - 2016 minor
 v1.10.0 - 2018
 v1.13.0 - 2018
 
-So some controlplane components have the same version while some dont:
+So some controlplane components have the same version, while some dont:
 
 kube-apiserver  controller-manager kube-scheduler kubelet kube-proxy kubectl: v1.13.4 - same version
 
-ETCD CLUSTER: - v3.2.18  COREDNS: - v1.1.3 - different version
+ETCD CLUSTER: - v3.2.18  COREDNS: - v1.1.3 - different versions
 
 
 Ideally, None of the components should be at an higher version than the kubeapi server: X
@@ -1625,7 +1625,7 @@ but.......:
 controller manager amd kube-scheduler can be at one version lower: X-1
 kubelet and kube-proxy can be at two version lower: X-2
 
-Howeber, kubectl: X+1 Can be at one versino higher than the kube-apiserver 
+However, kubectl: X+1 Can be at one version higher than the kube-apiserver 
 
 
 
@@ -1638,7 +1638,7 @@ https://github.com/kubernetes/community/blob/master/contributors/devel/sig-archi
 https://github.com/kubernetes/community/blob/master/contributors/devel/sig-architecture/api_changes.md
 
 
-k8 supports only last supports the last 3 minor releases e.g v.13, v.12, v.11:
+k8 supports only the last e last 3 minor releases e.g v.13, v.12, v.11:
 
 Upgrade one version at a time:
 
@@ -1656,46 +1656,47 @@ check the current local version of kubeadm tool, also check the remote version:
 
 vim /etc/apt/sources.list.d/kubernetes.list
 
-check the latest version available for an upgrade with the current version of the kubeadm tool installed?:
+1. check the latest version available for an upgrade with the current version of the kubeadm tool installed?:
 kubeadm upgrade plan 
 
-Notes: to upgrade the cluster, upgrade the kubeadm tool first:
-apt-get upgrade -y kubeadm=1.12.0-00
+2.Notes: to upgrade the cluster, upgrade the kubeadm tool first:
 
-kubeadm upgrade apply v1.12.0
 
-you still see masternodes at v1.11:
+kubeadm upgrade apply v1.31.0
+
+3. you still see masternodes at v1.11:
 kubectl get nodes 
 
 This is because, d output of this command, it shows the versions of kubelets on each of these nodes registered:
 with the apiserver and not the version of the apiserver itself:
 
-Upgrade the kubelet on the master node:
+4.Upgrade the kubelet on the master node:
 apt-get upgrade -y kubelet=1.12.0-00
 systemctl restart kubelet
 
-Upgrade the worker nodes: one at a time:
+apt-get install kubelet=1.31.0-1.1
+5.Upgrade the worker nodes: one at a time:
 k drain node01
 apt-get upgrade -y kubeadm=1.12.0-00
 apt-get upgrade -y kubelet=1.12.0-00
 kubeadm upgrade node config --kubelet-version v1.12.0
 systemctl restart kubelet 
 
-make the node schedulable:
-kubuectl uncordon node01
+6.make the node schedulable:
+kubectl uncordon node01
 
 
-drain the controleplane node:
+7.drain the controleplane node:
 k drain controlplane --ignore-daemonsets
 
 
 upgrade the control plane components:
 check the docs for admin with kubeadm:
 
-install the binaries firs: on cp and worker nodes:
+8. install the binaries first: on cp and worker nodes:
 https://kubernetes.io/blog/2023/08/15/pkgs-k8s-io-introduction/
 
-then follow the rest of the instruction here:
+9.then follow the rest of the instruction here:
 
 https://v1-30.docs.kubernetes.io/docs/tasks/administer-cluster/kubeadm/kubeadm-upgrade/
 
@@ -1712,36 +1713,36 @@ Use any text editor you prefer to open the file that defines the Kubernetes apt 
 
 vim /etc/apt/sources.list.d/kubernetes.list
 
-## Update the version in the URL to the next available minor release, i.e v1.30.
+Update the version in the URL to the next available minor release, i.e v1.30:
 deb [signed-by=/etc/apt/keyrings/kubernetes-apt-keyring.gpg] https://pkgs.k8s.io/core:/stable:/v1.30/deb/ /
 
 
-## install and upgrade the kubeadm
+install and upgrade the kubeadm:
 apt update
 apt-get upgrade -y kubeadm=1.12.0-00
 
-## Find the latest 1.30 version in the list.
-## It should look like 1.30.x-*, where x is the latest patch.
+Find the latest 1.30 version in the list:
+It should look like 1.30.x-*, where x is the latest patch:
 apt-cache madison kubeadm
 sudo apt-mark unhold kubeadm && \
 sudo apt-get update && sudo apt-get install -y kubeadm='1.30.x-*' && \
 sudo apt-mark hold kubeadm
 
-## example I used
+example I used:
 sudo apt-mark unhold kubeadm && sudo apt-get update && sudo apt-get install -y kubeadm='1.30.0-1.1' && sudo apt-mark hold kubeadm
 
 //e.g  sudo apt-get update && sudo apt-get install -y kubeadm='1.30.0-0' && \
-## now, update all the control components
+now, update all the control components:
 
-drain the master node first 1
+drain the master node first 1:
 kubectl drain controlplane
 
 kubeadm upgrade apply 1.12.0
 
-## Check for the new plan with the update 
+Check for the new plan with the update:
 kubeadm upgrade plan
 
-## upgrade the kubelet if on master nodes
+upgrade the kubelet if on master nodes:
 
 sudo apt-mark unhold kubelet kubectl && \
 sudo apt-get update && sudo apt-get install -y kubelet='1.30.0-1.1' kubectl='1.30.0-1.1' && \
@@ -1757,17 +1758,23 @@ apt-get install kubelet=1.30.0-1.1
 systemctl restart kubelet
 
 k get nodes 
-## workers node not updated yet
+workers node not updated yet:
 
-## update them one after the other 
+update them one after the other:
 kubectl drain node-1
 
 apt-get install kubeadm=1.30.0-1.1
 
-# Upgrade the node 
+Upgrade the node:
 kubeadm upgrade node
 
-## Now, upgrade the version and restart Kubelet.
+
+check the version to be upgraded available:
+sudo apt-get update
+apt-cache madison kubeadm
+apt-cache policy kubeadm
+
+Now, upgrade the version and restart Kubelet.:
 
 apt-get install kubelet=1.30.0-1.1
 
@@ -1775,9 +1782,8 @@ systemctl daemon-reload
 
 systemctl restart kubelet
 
-systemctl restart kubelet
 
-## make the node schedulable
+make the node schedulable:
 
 kubectl uncordon node-1
 ```
