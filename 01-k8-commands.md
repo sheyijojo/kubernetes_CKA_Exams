@@ -1617,6 +1617,17 @@ kube-apiserver  controller-manager kube-scheduler kubelet kube-proxy kubectl: v1
 ETCD CLUSTER: - v3.2.18  COREDNS: - v1.1.3 - different version
 
 
+Ideally, None of the components should be at an higher version than the kubeapi server: X
+
+but.......:
+
+
+controller manager amd kube-scheduler can be at one version lower: X-1
+kubelet and kube-proxy can be at two version lower: X-2
+
+Howeber, kubectl: X+1 Can be at one versino higher than the kube-apiserver 
+
+
 
 https://kubernetes.io/docs/concepts/overview/kubernetes-api/
 
@@ -1626,29 +1637,58 @@ https://github.com/kubernetes/community/blob/master/contributors/devel/sig-archi
 
 https://github.com/kubernetes/community/blob/master/contributors/devel/sig-architecture/api_changes.md
 
-## cluster Update Process
+
+k8 supports only last supports the last 3 minor releases e.g v.13, v.12, v.11:
+
+Upgrade one version at a time:
+
 
 ```
+## Cluster Updgrade Process
 ```yaml
+
+steps:
+- Upgrade the masternodes and components first:
+- Upgrade the worker node:
 
 Using kubeadm tool, kubeadm does not install or upgrade kubelets:
 check the current local version of kubeadm tool, also check the remote version:
 
 vim /etc/apt/sources.list.d/kubernetes.list
 
-## What is the latest version available for an upgrade with the current version of the kubeadm tool installed?
+check the latest version available for an upgrade with the current version of the kubeadm tool installed?:
 kubeadm upgrade plan 
 
-## Notes: to upgrade the cluster, upgrade the kubeadm tool first
+Notes: to upgrade the cluster, upgrade the kubeadm tool first:
+apt-get upgrade -y kubeadm=1.12.0-00
 
-## lets say we will upgrade the MASTER NODE first, actually upgrade the controlplane first 
+kubeadm upgrade apply v1.12.0
 
-## drain the controleplane node
+you still see masternodes at v1.11:
+kubectl get nodes 
+
+This is because, d output of this command, it shows the versions of kubelets on each of these nodes registered:
+with the apiserver and not the version of the apiserver itself:
+
+Upgrade the kubelet on the master node:
+apt-get upgrade -y kubelet=1.12.0-00
+systemctl restart kubelet
+
+Upgrade the worker nodes: one at a time:
+k drain node01
+apt-get upgrade -y kubeadm=1.12.0-00
+apt-get upgrade -y kubelet=1.12.0-00
+kubeadm upgrade node config --kubelet-version v1.12.0
+systemctl restart kubelet 
+
+lets say we will upgrade the MASTER NODE first, actually upgrade the controlplane first:
+
+drain the controleplane node:
 k drain controlplane --ignore-daemonsets
 
 
-## upgrade the control plane components
-## check the docs for admin with kubeadm
+upgrade the control plane components:
+check the docs for admin with kubeadm:
 
 https://v1-30.docs.kubernetes.io/docs/tasks/administer-cluster/kubeadm/kubeadm-upgrade/
 
