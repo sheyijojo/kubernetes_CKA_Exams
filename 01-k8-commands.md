@@ -1800,7 +1800,7 @@ Do not need to stress, ark(Now Velero can help with the backup):
 
 We can backup the sates in ETCD  and it brings all our data back:
 
-data storage location can be found in the etcd.service
+data storage location can be found in the etcd.service:
 --data-dir-/var/lib/etcd
 
 can take snapshot of the ETCD server:
