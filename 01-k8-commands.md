@@ -1681,7 +1681,9 @@ apt-get upgrade -y kubelet=1.12.0-00
 kubeadm upgrade node config --kubelet-version v1.12.0
 systemctl restart kubelet 
 
-lets say we will upgrade the MASTER NODE first, actually upgrade the controlplane first:
+make the node schedulable:
+kubuectl uncordon node01
+
 
 drain the controleplane node:
 k drain controlplane --ignore-daemonsets
@@ -1690,12 +1692,19 @@ k drain controlplane --ignore-daemonsets
 upgrade the control plane components:
 check the docs for admin with kubeadm:
 
+install the binaries firs: on cp and worker nodes:
+https://kubernetes.io/blog/2023/08/15/pkgs-k8s-io-introduction/
+
+then follow the rest of the instruction here:
+
 https://v1-30.docs.kubernetes.io/docs/tasks/administer-cluster/kubeadm/kubeadm-upgrade/
 
-## kubeadm ---> master components -----> kubelets --------> workernodes
 
-apt update
-## first 
+
+
+kubeadm ---> master components -----> kubelets --------> workernodes:
+
+
 
 On the controlplane node:
 Use any text editor you prefer to open the file that defines the Kubernetes apt repository.
