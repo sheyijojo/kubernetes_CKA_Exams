@@ -1786,39 +1786,39 @@ systemctl restart kubelet
 make the node schedulable:
 
 kubectl uncordon node-1
-```
-
+``` 
 ## Backup - Resource configs
 
 ```yaml
 
-## example of using the imperative way
+example of using the imperative way:
 `kubectl get all -all-namespaces -o yaml > all-deploy-services.yaml`
 
 `k get pods --all-namespaces `
 
-## Do not need to stress, ark(Now Velero can help with the backup)
+Do not need to stress, ark(Now Velero can help with the backup):
 
-## We can backup the sates in ETCD  and it brings all our data back
+We can backup the sates in ETCD  and it brings all our data back:
 
 data storage location can be found in the etcd.service
 --data-dir-/var/lib/etcd
 
-## can take snapshot of the ETCD server
+can take snapshot of the ETCD server:
 ETCDCLT_API=3 etcdctl \ snapshot save snapshot.db
 
-## status of the snapshot
+status of the snapshot:
 ETCDCLT_API=3 etcdctl \ snapshot status snapshot.db
 
-## restore the dcluster from this backup at a later point in time
+restore the dcluster from this backup at a later point in time:
 
-- Stop the kube api server, because the etcd will be restarted and kubeapi depends on it 
+Stop the kube api server, because the etcd will be restarted and kubeapi depends on it :
 service kube=apiserver stop
 
-## Then restore
+Then restore:
 ETCDCTL_API=3 etcdctl \ snapshot restore snapshot.db \ --data-dir /var/lib/etcd-from-backup
 
-## then configure etcd.service to use the new data dir
+
+then configure etcd.service to use the new data dir:
 --data-dir=/var/lib/etcd-from-backup
 
 systemctl daemon-reload
@@ -1828,7 +1828,7 @@ service etcd restart
 service kube-apiserver start
 
 export ETCDCTL_API=3
-## remember to specify the additional flaga
+remember to specify the additional flag:
 
 ETCDCTL_API=3 etcdctl --endpoints=https://[127.0.0.1]:2379 \
 --cacert=/etc/kubernetes/pki/etcd/ca.crt \
@@ -1838,9 +1838,8 @@ snapshot save /opt/snapshot-pre-boot.db
 
 
 
-## Know the services running
+Know the services running:
 kubectl get services
-##
 
 k describe service <service-name>
 
