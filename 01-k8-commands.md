@@ -2107,27 +2107,33 @@ https://github.com/etcd-io/website/blob/main/content/en/docs/v3.5/op-guide/recov
 ## Security in Kubernetes 
 
 ```yaml
-Acess to the host must be very secured, if that is compromised everything is compromised.
+Acess to the host must be very secured, if that is compromised everything is compromised:
 
-control access to the APISERVER, that is the first line of defense
+control access to the APISERVER, that is the first line of defense:
 
-Auth - RBAC, ABAC , Node Aith
+Auth - RBAC, ABAC , Node Auth:
 
-Network policy to restrict communciation between components
+Network policy to restrict communcation between components:
 
-## AUTH
 
-You cannot create users but you can create service account
+
+AUTH:
+
+- You cannot create users but you can create service account:
 
 k create serviceaccount sa1
 
 k get serviceaccount
 
-## if using a satic toke
+if using text-file to authenticate users: NOT Recommended
+--basic-auth-file=user-details.csv
 
+curl -v -k https://master-node-ip:6443/api/v1/pods
+
+if using a static token in the kube-apiserver.service: Not recommended
 --token-auth-file=user-token-details.csv
 
-## then pass the token as an authorization bearer
+then pass the token as an authorization bearer:
 
 curl -v -k https://master-node-ip:6443/api/v1/pods --header "Authorization: Bearer nlnklnavlanaknslnkoanrgoan"
 
@@ -2135,10 +2141,10 @@ curl -v -k https://master-node-ip:6443/api/v1/pods --header "Authorization: Bear
 - consider volume mount while providing the auth file in a kubeadm setup
 - setup RBA for the new users
 
-## loction of the key in a company's server
+location of the key in a company's server:
 cat ~/.ssh/authorized_keys
 
-## Assymetric using openssl to generate pub and private key pair on the server, server can have private key securely
+Assymetric using openssl to generate pub and private key pair on the server, server can have private key securely:
 
 openssl genrsa -out my-bank.key 1024
 
