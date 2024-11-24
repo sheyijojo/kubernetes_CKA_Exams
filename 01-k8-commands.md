@@ -1809,7 +1809,7 @@ ETCDCLT_API=3 etcdctl \ snapshot save snapshot.db
 status of the snapshot:
 ETCDCLT_API=3 etcdctl \ snapshot status snapshot.db
 
-restore the dcluster from this backup at a later point in time:
+restore the d cluster from this backup at a later point in time:
 
 Stop the kube api server, because the etcd will be restarted and kubeapi depends on it :
 service kube=apiserver stop
@@ -2184,7 +2184,7 @@ client-key.pem
 
 ```yaml
 ##  server components that need certs
-kuube-api
+kube-api
 etcd server
 kubelet server
 
