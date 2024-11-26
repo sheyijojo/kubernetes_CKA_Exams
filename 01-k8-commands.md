@@ -2369,13 +2369,17 @@ Kubernetes has a certificate buit-in API
 once a new admin generates its key and sent to KA8Admin
 He creates a certificate signing object
 
+jane-scr.yaml
+apiVersion: certificates.k8s.io/v1
+kind: CertificateSigninRequest
+
 converts the admin key to base64
 
 cat jane.csr | base64
 
-place the encoded object in the request filed in the object
+place the encoded object in the request field in the object
 
-## check all siginin requests
+check all siginin requests:
 kubectl get csr
 
 ## approve the reuest
@@ -2385,15 +2389,15 @@ kubectl certifcate approve jane
 
 ## get certifcate in yaml format
 
-kubectl get csr jane -o yank
+kubectl get csr jane -o yaml
 
 ## to decode it
 
 echo "a0qahqbqdqh0ndqd-qnasqwdnm" | base64 --decode
 
-who does this - controller manager
+who does this for us - controller manager:
 
-Anyone who needs to sign certifcate need the CA server root certificcate and provet key
+Anyone who needs to sign certifcate need the CA server root certificcate and private key:
 
 /etc/kubernetes/manifests/kube-controller-manager.yaml
 
