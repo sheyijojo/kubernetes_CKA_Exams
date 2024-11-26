@@ -2144,6 +2144,9 @@ curl -v -k https://master-node-ip:6443/api/v1/pods --header "Authorization: Bear
 location of the key in a company's server:
 cat ~/.ssh/authorized_keys
 
+
+Certificate Authority (CA):
+
 Assymetric using openssl to generate pub and private key pair on the server, server can have private key securely:
 
 openssl genrsa -out my-bank.key 1024
@@ -2154,9 +2157,9 @@ openssl genrsa -out my-bank.key 1024
 This is different from ssh-keygen
 
 
-## All this comm between browser CA and server known as PKI(Public key Infrastructure )
+All this comm between browser CA and server known as PKI(Public key Infrastructure ):
 
-## naming convention for public key
+naming convention for public key:
 *.crt *.pem
 
 server.crt
@@ -2164,7 +2167,7 @@ server.pem
 client.crt
 client.pem
 
-## private key
+private key:
 
 *.key  *-key.pem
 server.key
@@ -2172,7 +2175,10 @@ server-key.pem
 client.key
 client-key.pem
 
-## flow of PKI
+Server certificates are for servers:
+Client certificates are for clients:
+
+flow of PKI:
 - users need https access to a server
 - first server sends a certificate signing request(CSR) to CA
 - CA uses its private key to sign CSR - you know all users have a copy of the CA public key
