@@ -2415,6 +2415,8 @@ Anyone who needs to sign certifcate need the CA server root certificcate and pri
 
 ## Answer
 
+cat akshay.csr | base64 -w 0
+
 cat <<EOF | kubectl apply -f -
 apiVersion: certificates.k8s.io/v1
 kind: CertificateSigningRequest
