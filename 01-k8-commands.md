@@ -2179,29 +2179,29 @@ Server certificates are for servers:
 Client certificates are for clients:
 
 flow of PKI:
-- users need https access to a server
-- first server sends a certificate signing request(CSR) to CA
-- CA uses its private key to sign CSR - you know all users have a copy of the CA public key
-- Signed certifcate is sent back to the server
-- server configures the web app with the signed certificate
-- users need access, server first sends the certicate with its public key
-- users browser reads the certifcate and uses the CA's public key to validate and retrieve the server's public key
-- Borwser then generates a symmetric key it uses for communication going forward for all communication.
-- The symmetric key is encrypted using the server as public key and sent back to the server
-- server uses its private key to decrpyt the message and retrieve the symmetric key
-- symmetric key is used for communication going forward
+- users need https access to a server:
+- first server sends a certificate signing request(CSR) to CA:
+- CA uses its private key to sign CSR - you know all users have a copy of the CA public key:
+- Signed certifcate is sent back to the server:
+- server configures the web app with the signed certificate:
+- users need access, server first sends the certicate with its public key:
+- users browser reads the certifcate and uses the CA's public key to validate and retrieve the server's public key:
+- Borwser then generates a symmetric key it uses for communication going forward for all communication.:
+- The symmetric key is encrypted using the server as public key and sent back to the server:
+- server uses its private key to decrpyt the message and retrieve the symmetric key:
+- symmetric key is used for communication going forward:
 ```
 
 ## Root cert, Client cert, Server Cert 
 
 ```yaml
-##  server components that need certs
+server components that need certs:
 kube-api
 etcd server
 kubelet server
 
-## client components through REST to Kube-Api server
-Admin - admin.crt admin.key
+client components through REST to Kube-Api server:
+Admin(us) - admin.crt admin.key
 scheduler - schedular.crt scheduler.key
 kube controller manager
 kubeproxy 
@@ -2210,75 +2210,79 @@ kubeproxy
 
 ## Generate Certificate for the cluster 
 
+Must have at least one certificate authority that to sign this certificate
 ```yaml
-## tools
+certificate tools:
 EASYRSA OPENSSL CFSSL
 
-## FIRST generate the CA cert
+FIRST generate the CA cert:
 openssl genrsa -out ca.key 2048
 
-## generate a certifcate signing request
-
-// CN -COMMON NAME
+generate a certificate signing request:
+CN -COMMON NAME:
+- more like all of our details without a signature.:
 openssl req -new -key ca.key -subj "/CN=KUBERNETES-CA" -out ca.csr
 
-//SIGN USING THE OPENSSL
+SIGN USING THE OPENSSL with the private key ca key pair:
 openssl x509 -req -in ca.csr -signkey ca.key -out ca.crt
 
 
 
-## Follow same process for the client but with little tweak by signing with the CA
+Follow same process for the client but with little tweak by signing with the CA:
 
-## Generate cert for Admin user and group /O
+Generate cert for Admin user and group /O:
 
 openssl genrsa -out admin.key 2048
-admin.key
+admin.key:
 
-//gen a signing in request
+gen a signing in request:
 openssl req -new -key admin.key -subj \ "/CN=kube-admin" -out admin.csr
-admin.csr
+admin.csr:
 
-// signing request with an exiting sysems group group in cluster
+signing request with an exiting sysems group group in cluster:
 openssl req -new -key admin.key -subj \ "/CN=kube-admin/O=system:masters" -out admin.csr
-admin.csr
+admin.csr:
 
-## generate a signed public certifcate, this time, specify the ca CERT AND CA key
-## we are signing the cert with CA, making it a valid certicate within your cluster
+generate a signed public certifcate, this time, specify the CA CERT AND CA key:
+we are signing the cert with CA, making it a valid certicate within your cluster:
 
 openssl x509 -req -in admin.csr -CA ca.crt -CAkey ca.key -out admin.crt
 
-## for system components like kube-scehduler
+for system components like kube-scehduler:
 
-prefix the name with the keyword system
+prefix the name with the keyword system:
 
-## what do you do with cert
+what do you do with cert:
 
-can run a curl to kube  api-server
+can run a curl to kube  api-server:
 
-curl https://kube-api-server:6443/api/v1/pods --key admun.key --cert admin.crt --cacert ca.crt
+curl https://kube-api-server:6443/api/v1/pods --key admin.key --cert admin.crt --cacert ca.crt
 
 
-## can use it withing a kube-config.yaml
+can use it within a kube-config.yaml:
 
-## every c;ients need the root CA in their configuration
+every clients need the root CA in their configuration:
 
-## ETCD deployed as a cluster across multple servers
+ETCD deployed as a cluster across multple servers:
 
 needs an additional peer-cert for secure communication btw diff members in the cluster
-peer.key
-peer-trusted-ca-file ca.crt
-etcdpeer1.crt
-truated-ca-file ca.crt
+-- peer.key:
+-- peer-trusted-ca-file ca.crt:
+-- etcdpeer1.crt:
+-- trusted-ca-file ca.crt:
 
-## kubapi-server
+kubapi-server:
 
 you need the name specified in creating the key
 
-opnessl.cnf file
+opnessl.cnf file:
 
 openssl req -new -key apiserver.key -subj\ "/cn=KUBE=APISERVER" -OUT APISERVER.CSR --config openssl.cnf
 
-openssl.cnf file
+To generate alternate names for apiserver, use an openssl.cnf file:
+
+openssl.cnf file:
+
 [req]
 req_extensions = v3_req
 distinguished_name = req_distinguished_name
@@ -2293,24 +2297,25 @@ dns.3 = kubernetes.default.svc
 DNS.4 = KUBERNETES.DEFAULT.SVC.CLUSTER.LOCAL
 1P.1 = 10.96.0.1
 
+sign the certificate:
+OPENSSL X509 -req -in apiserver.csr -CA ca.crt -CAkey ca.key -cacreateserial -out apiserver.crt -extensions v3_req -extfile openssl.cnf -days 1000 
 
-OPNESSL X509 -req -in apiserver.csr -CA ca.crt -CAkey ca.key -cacreateserial -out apiserver.crt -extensions v3_req -extfile openssl.cnf -days 1000 
+apiserver.crt:
 
-
-## pass the value to usr/local/bin/kube-apiserver 
+pass the value to usr/local/bin/kube-apiserver:
 ```
 
 ## kubernetes- view certificate details 
 
 ```yaml
-## The hard way - from scratch
+The hard way - from scratch:
 
 journalctl -u etcd.service -1
 
 
 cat /etc/systemd/system/kube-apiserver.service
 
-## The automated way - kubeadm
+The automated way - kubeadm:
 
 cat /etc/kubernetes/manifests/kube-apiserver.yaml
 
