@@ -2436,8 +2436,9 @@ kubectl get scr
 
 kubectl certificate approve akshay
 
-kubectl delete csr agent-smith 
+kubectl delete csr agent-smith -o yaml
 
+k certificate deny agent-smith
 
 ```
 
@@ -2459,8 +2460,12 @@ kubectl config use-context prod-user@production
 ## To know the current context, run the command:
 kubectl config --kubeconfig=/root/my-kube-config current-context
 
+ k config --kubeconfig=/root/my-kube-config use-context research
+
 
 ## sample config file with users, context
+You leave the file as is:
+You do not need to create any object:
 
 k config view --kubeconfig my-kube-config
 
@@ -2470,7 +2475,8 @@ kind: Config
 clusters:
 - name: production
   cluster:
-    certificate-authority: /etc/kubernetes/pki/ca.crt
+    certificate-authority: /etc/kubernetes/pki/ca.crt  
+   ## certificate-authority-data: encoded base64 
     server: https://controlplane:6443
 
 - name: development
@@ -2493,6 +2499,7 @@ contexts:
   context:
     cluster: development
     user: test-user
+    namespace: finance
 
 - name: aws-user@kubernetes-on-aws
   context:
@@ -2529,11 +2536,14 @@ preferences: {}
 
 Error in configuration: context was not found for specified context: dev-user@research
 
+
+
+
 ```
 
 ## API Groups 
 ```yaml
-## Core API and Named API Groups 
+Core API and Named API Groups:
 
 ## list available groups from your cluster
 
