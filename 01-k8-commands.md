@@ -2446,14 +2446,14 @@ k certificate deny agent-smith
 
 ```yaml
 
-## Use a context with a different file name and location
+Use a context with a different file name and location:
 
 kubectl config use-context research --kubeconfig /root/my-kube-config 
 
-$HOME/.kube/config 
+$HOME/.kube/config:
 kubectl config view
 
-## change the context to access production cluster based on the configuration in the cofig file
+change the context to access production cluster based on the configuration in the cofig file:
 
 kubectl config use-context prod-user@production
 
@@ -2463,7 +2463,7 @@ kubectl config --kubeconfig=/root/my-kube-config current-context
  k config --kubeconfig=/root/my-kube-config use-context research
 
 
-## sample config file with users, context
+sample config file with users, context:
 You leave the file as is:
 You do not need to create any object:
 
@@ -2545,15 +2545,15 @@ Error in configuration: context was not found for specified context: dev-user@re
 ```yaml
 Core API and Named API Groups:
 
-## list available groups from your cluster
+list available groups from your cluster:
 
 curl http:/localhost:6443 -k
 
-## list groups on the named api group
+list groups on the named api group:
 
 curl http://localhost:6443/apis -k | grep "name"
 
-## you need auth for more return from the api
+you need auth for more return from the api:
 
 curl http"//localhost:6443 -k
       --key admin.key
@@ -2561,54 +2561,73 @@ curl http"//localhost:6443 -k
       --cacert ca.crt
 
 ## another option is to start a proxy client
-- kubectl procy uses cred and certs from your kubeconfig file to access the cluster - port 8002
+- kubectl proxy uses cred and certs from your kubeconfig file to access the cluster - port 8002
 kubectl proxy
 
 ## after the service has started
 curl http://locahost:8001 -k
 
-kube proxy is not equal kubectl proxy 
+kube proxy is not equal to kubectl proxy 
 ```
 
 ## Authorization 
 
 ```yaml
-## using namespaces to partiction users and service account
-Auth supported by kubernetes
+using namespaces to partition users and service account:
+
+Auth mechanisms supported by kubernetes:
 - Node Auth
 - ABAC(Attribute Based Auth)
-- RBAC (Resource Based Auth)
+- RBAC (Role Based Authorization)
 - Webhook
 
+ABAC: Associate a user or a group of user with a set of permissions
 
-## Authorization Mode
+Authorization Mode:
 
 Always Allow
 
-Alwyas Deny
+Always Deny
 
-## check the mdoe in the /usr/local/bin/kube-apiserver
+check the mdoe in the /usr/local/bin/kube-apiserver:
 - By default 
 --authorization-mode=AlwyasAllow
 
-## you can set MUTLIPLE node Auth
-- It is done in sequence 
+you can set MUTLIPLE node Auth:
+- It is processed in sequence 
 --authorization-mode=Node,RBAC,Webhook
 
 
 
-## RBAC
-
+RBAC:
 kubectl create role developer --verb=list,create,delete --resource=pods 
 
+RBAC:
+- Can also create a yaml file with rbac.authorization.k8s.io/v1
 
 kind: Role
 - Create a role with a yaml file
 
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  namespace: default
+  name: developer
+rules:
+- apiGroups: [""] # "" indicates the core API group
+  resources: ["pods"]
+  verbs: ["get", "watch", "list"]
+
+- apiGroups: [""] # "" indicates the core API group
+  resources: ["ConfigMap"]
+  verbs: ["get", "watch", "list"]
+
+
+
 kubectl create -f developer-group.yaml
 
-## link a user to the role object  using ROLE BINDING object
-
+link a user to the role object using ROLE BINDING object:
 kubectl create rolebinding dev-user-binding --role=developer --user=dev-user 
 
 
@@ -2617,7 +2636,7 @@ Kind: RoleBinding
 kubectl create -f devuser-developer-binding.yaml
 
 
-## Get roles
+Get roles:
 kubectl get roles
 kubectl get roles -A
 
@@ -2627,19 +2646,19 @@ k get roles kube-proxy -n kube-system -o yaml
 
 kubectl get rolebinding
 
-## Check your auth as a user
+Check your authorization as a user:
 kubectl auth can-i create deployments
 
 kubectl auth can-i delete nodes
 
-## Test users auth as an Admin without authenticating
+Test users auth as an Admin without authenticating:
 kubectl can-i  create depolyments --as dev-user
 kubectl can-i  create depolyments --as dev-user -n test
 
 kubectl edit role developer -n blue
 
 
-## Which account is the kube-proxy role assigned to?
+Which account is the kube-proxy role assigned to?:
 
 kubectl describe rolebinding kube-proxy -n kube-system
 
