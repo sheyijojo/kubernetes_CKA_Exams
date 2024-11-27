@@ -1661,21 +1661,22 @@ kubeadm upgrade plan
 
 2.Notes: to upgrade the cluster, upgrade the kubeadm tool first:
 
-
 kubeadm upgrade apply v1.31.0
 
 3. you still see masternodes at v1.11:
 kubectl get nodes 
 
-This is because, d output of this command, it shows the versions of kubelets on each of these nodes registered:
-with the apiserver and not the version of the apiserver itself:
+- This is because, d output of this command, it shows the versions of kubelets on each of these nodes registered:
+- with the apiserver and not the version of the apiserver itself:
 
 4.Upgrade the kubelet on the master node:
 apt-get upgrade -y kubelet=1.12.0-00
 systemctl restart kubelet
-
 apt-get install kubelet=1.31.0-1.1
+
+
 5.Upgrade the worker nodes: one at a time:
+
 k drain node01
 apt-get upgrade -y kubeadm=1.12.0-00
 apt-get upgrade -y kubelet=1.12.0-00
@@ -1685,10 +1686,8 @@ systemctl restart kubelet
 6.make the node schedulable:
 kubectl uncordon node01
 
-
 7.drain the controleplane node:
 k drain controlplane --ignore-daemonsets
-
 
 upgrade the control plane components:
 check the docs for admin with kubeadm:
@@ -1697,21 +1696,16 @@ check the docs for admin with kubeadm:
 https://kubernetes.io/blog/2023/08/15/pkgs-k8s-io-introduction/
 
 9.then follow the rest of the instruction here:
-
 https://v1-30.docs.kubernetes.io/docs/tasks/administer-cluster/kubeadm/kubeadm-upgrade/
-
 
 
 
 kubeadm ---> master components -----> kubelets --------> workernodes:
 
-
-
 On the controlplane node:
 Use any text editor you prefer to open the file that defines the Kubernetes apt repository.
 
-
-vim /etc/apt/sources.list.d/kubernetes.list
+vim /etc/apt/sources.list.d/kubernetes.list:
 
 Update the version in the URL to the next available minor release, i.e v1.30:
 deb [signed-by=/etc/apt/keyrings/kubernetes-apt-keyring.gpg] https://pkgs.k8s.io/core:/stable:/v1.30/deb/ /
