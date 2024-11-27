@@ -2728,7 +2728,7 @@ roleRef:
   apiGroup: rbac.authorization.k8s.io
 
 
-## another example
+another example:
 
 Add a new rule in the existing role developer to grant the dev-user permissions to create deployments in the blue namespace.
 
@@ -2770,14 +2770,14 @@ rules:
 ```yaml
 
 cluster scope resources 
-## get resources in a namsepace
+get resources in a namsepace:
 kubectl api-resources --namespaced=true
 
-## cluster-scoped roles 
+cluster-scoped roles:
 
 kubectl api-resources --namespaced=false
 
-## Get cluster role
+Get cluster role:
 k get clusterroles --no-headers | wc -l
 
 kubectl get clusterroles --no-headers  -o json | jq '.items | length'
@@ -2849,27 +2849,30 @@ Every namespace has a default service account
 
 A service account in Kubernetes is a non-human identity that provides a way for applications to authenticate to a Kubernetes cluster's API server
 ```yaml
-## There are two kinds of accounts -
+There are two kinds of accounts -:
 - service account - used by machines like jenkins, prometheus
 - user account - e.g admin user
 
-## create a service account
+create a service account:
 
 kubectl create serviceaccount dashboard-sa
 
 kubectl get serviceaccount
-## service account create token stored as a secret object
+
+service account create token stored as a secret object:
+The token is used by the app to authenticate to the k8 api:
+The secret obj is then linked to the service account: 
 
 kubectl describe secret <secret-name>
 
 curl https:49u34u34/spi -insecure --header "Authroization: Bearer sdssdmdsdmdmsdmsdm"
 
-## Default service account with secret token is automatically mounted as volume mount in a pod by default
-## a vol is automtaiclaly creaeted for the service acount
+Default service account with secret token is automatically mounted as volume mount in a pod by default:
+a vol is automatically created for the service acount:
 
 kubectl exec -it my-dashboard -- ls /var/run/secrets/kubernetes.io/serviceaccount
 
-## The flow
+The flow:
 - create service account
 kuubectl create serviceaccounts logging-dash
 
@@ -2878,7 +2881,7 @@ kubectl create token logging-dash
 
 
 
-## You shouldn't have to copy and paste the token each time. The Dashboard application is programmed to read token from the secret mount location.
+You shouldn't have to copy and paste the token each time. The Dashboard application is programmed to read token from the secret mount location.:
 However currently, the default service account is mounted. Update the deployment to use the newly created ServiceAccount
 
 
