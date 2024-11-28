@@ -3086,7 +3086,7 @@ Use the spec given below. You might want to enable ingress traffic to the pod to
 
 Also, ensure that you allow egress traffic to DNS ports TCP and UDP (port 53) to enable DNS resolution from the internal pod.
 
-## My note
+My note:
 So this is allowing internal app to allow traffic out only to DB and payroll and not the external app
 
 - Policy Name: internal-policy
