@@ -2859,7 +2859,7 @@ The secret obj is then linked to the service account:
 
 kubectl describe secret <secret-name>
 
-curl https:49u34u34/spi -insecure --header "Authroization: Bearer sdssdmdsdmdmsdmsdm"
+curl https:49u34u34/api -insecure --header "Authroization: Bearer sdssdmdsdmdmsdmsdm"
 
 Default service account with secret token is automatically mounted as volume mount in a pod by default:
 a vol is automatically created for the service acount:
@@ -2875,18 +2875,19 @@ kubectl create token logging-dash
 
 
 You shouldn't have to copy and paste the token each time. The Dashboard application is programmed to read token from the secret mount location.:
-However currently, the default service account is mounted. Update the deployment to use the newly created ServiceAccount
+However currently, the default service account is mounted. Update the deployment to use the newly created ServiceAccount:
 
 
-Edit the deployment to change ServiceAccount from default to dashboard-sa.
+Edit the deployment to change ServiceAccount from default to dashboard-sa:
 
-or edit the deployment and add serviceAccountName
+or edit the deployment and add serviceAccountName:
 
 kubectl set serviceaccount deploy/web-dashboard dashboard-sa
 
 
 
-## make sure is inside the container spec
+make sure is inside the container spec:
+
     spec:
       containers:
       - env:
@@ -2919,20 +2920,20 @@ docker login private-registry.io
 
 docker run private-registry.io/apps/internal-app
 
-## use image on pods on the worker nodes from private registry
+use image on pods on the worker nodes from private registry:
 - hOW DO WE IMPLEMENT THE AUTH
 
-docker create secret docker-registry --help
-
-## CREATE A SECRET object  called docker-registry with the credentials in it 
+docker create secret docker-registry --help:
 kubectl create secret docker-registry <secret-name>  \
 --docker-server=  \
 --docker-username=  \
 --docker-email=    \
 
 
-## on the pod
+on the pod:
 spec:
+  imagePullSecrets:
+  - name: <secret-name>
   containers:
   imagePullSecrets:
   - name: <secret-name>
@@ -2950,13 +2951,13 @@ secret/private-reg-cred created
 ## DOCKER SECURITY 
 
 ```yaml
-## advisable to speicifi user to run processes in a container
+advisable to specify user to run processes in a container:
 
 USER 1000
 
 docker run --user=1001 ubuntu sleep 3600
 
-## Check what users can do in linux
+Check what users can do in linux:
 
 /usr/include/linux/capability.h
 
