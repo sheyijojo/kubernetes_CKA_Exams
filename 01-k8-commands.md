@@ -2963,29 +2963,30 @@ Check what users can do in linux:
 
 root user in container does not have has much capabikity as that of linux HOST
 
-## CONTROL CAPBILITY TO A USER
+CONTROL CAPBILITY TO A USER:
 
 docker run --cap-add MAC_ADMIN ubuntu
 docker run --cap-drop KILL ubuntu
 
-## run with all priviledges
+run with all priviledges:
 
 docker run --privileged ubuntu 
 ```
 
 ## Security Context 
 ```yaml
-## security context on the spec/kubernetes level 
+security context on the spec/kubernetes level:
 spec:
  securityContext:
     runAsUser: 1000
  containers:
    - name: ubuntu
      image: ubuntu
-     comannd: ["sleep", "3600"]
+     command: ["sleep", "3600"]
 
 
-## security context on the container level 
+security context on the container level:
+
 spec:
  containers:
    - name: ubuntu
@@ -2999,7 +3000,7 @@ spec:
 //CAPABILTIES ARE ONLY SUPPORTED A THE CONTAINER LEVEL 
 
 
-## check which user is running processes on a pod
+check which user is running processes on a pod:
 
 kubectl exec ubuntu-sleeper -- whoami 
 
