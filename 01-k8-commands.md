@@ -3130,7 +3130,7 @@ spec:
       port: 8080
 
 ```
-##kubectx
+## kubectx
 ```yaml
 https://github.com/ahmetb/kubectx
 
@@ -3198,28 +3198,27 @@ kubens –
 ## STORAGE
 
 ```yaml
-## Understand docker file system
-## dockwe default location for file, images , volumes, containers
+Understand docker file system:
+docker default location for file, images , volumes, containers:
 /var/lib/docker
 
-## after writing dockerfile and building the file
-## when u run docker run, docker creates a final writeable container layer
+after writing dockerfile and building the file:
+when u run docker run, docker creates a final writeable container layer:
 
-## The layer exist as long as the container exist, it dies if the container dies
-
-## what if the want top persist data from a database
+The layer exist as long as the container exist, it dies if the container dies:
+what if the want top persist data from a database:
 
 docker volume create data_volume
 
-## mount the volume to the default location where mysql stores data 
+mount the volume to the default location where mysql stores data:
 
 docker run -v data_volume:/var/lib/mysql mysql
 
-## bind mounting - external host(docker host) has a data location  /data/mysql
+bind mounting - external host(docker host) has a data location  /data/mysql:
 
 docker run -v /data/mysql:/var/libmysql mysql
 
-## new way under docker
+new way under docker:
 docker run \ --mount type=bind,source=/data/mysql,target=/var/lib/mysql mysql
 
 docker uses strogge drivers to drive all these ops
@@ -3229,15 +3228,15 @@ Storage drivers help manage storage on images and containers
 Volume drivers: Volumes are managed by volume driver pluggins : the default vol driver plugin is local
 
 
-## other examples
+other examples:
 Local| Azure File Storgae | Convoy | DigitalOcean Block Storgae | Flocker | gce-docker
 
 | Nteapp | Rexray | Portwoex | Vmarew vphere
 
-## storage drivers - Dependent on OS
+storage drivers - Dependent on OS:
 AUFS | ZFS | BTRFS | DEVICE MAPPER | OVERLAY
 
-## example of volumes on my local computer
+example of volumes on my local computer:
 ─ docker volume inspect buildx_buildkit_devops-builder0_state                                              ─╯
 [
     {
@@ -3250,7 +3249,7 @@ AUFS | ZFS | BTRFS | DEVICE MAPPER | OVERLAY
         "Scope": "local"
     }
 
-## using rexray volume driver to provision ebs volume from was in the cloud
+using rexray volume driver to provision ebs volume from was in the cloud:
 //when container exit, data is saved in the cloud
 
 docker run -it \
@@ -3258,6 +3257,7 @@ docker run -it \
   --volume-driver rexray/ebs
   --mount src=ebs-vol,target=/var/lib/mysql mysql 
 ```
+
 ## Now Kubernetes Volume 
 Key Difference:
 - Volumes are ephemeral and scoped within a Pod’s lifecycle unless backed by a persistent solution.
@@ -3272,10 +3272,10 @@ CSI - Container Storage Interface
 With CSI, you can develop your driver for your own storage to work with k8
 e.g Amazon EBS, DELL EMC, GlusterFS all have CSI drivers
 
-## Volumes in Kubernetes
+## Volumes in Kubernetes:
 To persist data in kubernetes, attach volume to the pod
 
-## volume and mounts
+## volume and mounts:
 - volume is spec level
 - A volume needs a storage
 - Use a dir in the host location for example
@@ -3290,7 +3290,7 @@ spec:
        path: /data
        type: Directory
 
-## to access the volume from a container uding volume mount
+## to access the volume from a container uding volume mount:
 - volume mount is spec.container level 
 spec:
   containers
@@ -3320,19 +3320,19 @@ Support of diff types of strogae solutions
 
 
 
-## Persistent volume
+## Persistent volume:
 - volumes stated above is only bound to pod definition file
 
 - Need more centrally managed and user can carve out vols as needed
 
 - PV is a cluster wide pool of storage volumes configured by an admin to be used by users deploying volume on the cluster using PVC
 
-## example
+## example:
 kubectl create -f pvi-file.yaml
 
 k get persistentvolume
 
-## Persistent volume
+## Persistent volume:
 
 apiVersion: v1
 kind: PersistentVolume
@@ -3347,7 +3347,7 @@ spec:
       volumeID: <volume-id>
       fstype: ext4
 
-## Persistent Claims
+## Persistent Claims:
 Make a storage available to a node
 user creates a set of PVCs to use for storage
 - k8 binds PV to PVC - One-to-One
@@ -3371,7 +3371,7 @@ k get persistentvolumeclaim
 k delete persistentvolumecmaim myclaim
 
 
-## persistent volume
+## persistent volume:
 Create a Persistent Volume with the given specification.
 
 
@@ -3412,7 +3412,7 @@ spec:
       storage: 8Gi
 ```
 ```yaml
-### Let us claim some of that storage for our application. Create a Persistent Volume Claim with the given specification.
+### Let us claim some of that storage for our application. Create a Persistent Volume Claim with the given specification:
 
 Volume Name: claim-log-1
 Storage Request: 50Mi
@@ -3444,7 +3444,7 @@ k get pv,pvc
 
 
 
-##  Update the Access Mode on the claim to bind it to the PV.
+Update the Access Mode on the claim to bind it to the PV.:
 
 apiVersion: v1
 items:
@@ -3478,7 +3478,7 @@ metadata:
 - eliminate the need for a pv
 - create a storage class and reference it in a PVC
 ```yaml
-## Static prvisioning
+## Static prvisioning:
 
 gcloud beta compute disks create \
    --size 1GB
@@ -3486,7 +3486,7 @@ gcloud beta compute disks create \
    pd-disk
 
 
-## Dynamic provisioning 
+## Dynamic provisioning:
 - create a storage class object
 
  kubectl get storageclasses
@@ -3498,7 +3498,8 @@ gcloud beta compute disks create \
 spec:
   storageClassName: google-storage
 - reference the PVC in the volumes of pod at the spec level 
-## notes
+
+## notes:
 info
 - The Storage Class called local-storage makes use of VolumeBindingMode set to WaitForFirstConsumer.
 - This will delay the binding and provisioning of a PersistentVolume until a Pod using the PersistentVolumeClaim is created.
