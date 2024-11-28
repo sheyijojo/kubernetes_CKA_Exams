@@ -3037,10 +3037,10 @@ spec:
      PORT: 3306 
 
   
-## add external ip not part of the cluster , see abobe
+add external ip not part of the cluster , see above:
 
 
-## EGRESS: what if nrtwork egress from the DB to the backup server
+EGRESS: what if network egress from the DB to the backup server:
 
 apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
@@ -3076,10 +3076,10 @@ spec:
 ```
 
 ```yaml
-## Networking contd
-kuubectl get networkpolicies
+Networking contd:
+kubectl get networkpolicies
 
-Create a network policy to allow traffic from the Internal application only to the payroll-service and db-service.
+Create a network policy to allow traffic from the Internal application only to the payroll-service and db-service.:
 
 
 Use the spec given below. You might want to enable ingress traffic to the pod to test your rules in the UI.
