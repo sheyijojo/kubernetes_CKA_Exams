@@ -3219,9 +3219,9 @@ bind mounting - external host(docker host) has a data location  /data/mysql:
 docker run -v /data/mysql:/var/libmysql mysql
 
 new way under docker:
-docker run \ --mount type=bind,source=/data/mysql,target=/var/lib/mysql mysql
+docker run \--mount type=bind,source=/data/mysql,target=/var/lib/mysql mysql
 
-docker uses strogge drivers to drive all these ops
+docker uses storage drivers to drive all these ops
 
 Storage drivers help manage storage on images and containers
 
@@ -3229,7 +3229,7 @@ Volume drivers: Volumes are managed by volume driver pluggins : the default vol 
 
 
 other examples:
-Local| Azure File Storgae | Convoy | DigitalOcean Block Storgae | Flocker | gce-docker
+Local| Azure File Storage | Convoy | DigitalOcean Block Storgae | Flocker | gce-docker
 
 | Nteapp | Rexray | Portwoex | Vmarew vphere
 
@@ -3237,7 +3237,7 @@ storage drivers - Dependent on OS:
 AUFS | ZFS | BTRFS | DEVICE MAPPER | OVERLAY
 
 example of volumes on my local computer:
-─ docker volume inspect buildx_buildkit_devops-builder0_state                                              ─╯
+─ docker volume inspect buildx_buildkit_devops-builder0_state                                              
 [
     {
         "CreatedAt": "2024-08-07T16:45:54Z",
@@ -3272,10 +3272,10 @@ CSI - Container Storage Interface
 With CSI, you can develop your driver for your own storage to work with k8
 e.g Amazon EBS, DELL EMC, GlusterFS all have CSI drivers
 
-## Volumes in Kubernetes:
+Volumes in Kubernetes:
 To persist data in kubernetes, attach volume to the pod
 
-## volume and mounts:
+volume and mounts:
 - volume is spec level
 - A volume needs a storage
 - Use a dir in the host location for example
@@ -3283,15 +3283,15 @@ To persist data in kubernetes, attach volume to the pod
 - After specificing the vol and storage,  to access it from the container,mount it to  ..
 - a dir inside the container 
 spec:
-  containers
+  containers:
   volumes:
   - name: data-volume
     hostPath:
        path: /data
        type: Directory
 
-## to access the volume from a container uding volume mount:
-- volume mount is spec.container level 
+to access the volume from a container using volume mount:
+- volumemount is spec.container level 
 spec:
   containers
   - image: alpine
@@ -3306,9 +3306,9 @@ volumes:
        path: /data
        type: Directory
 
-Not recommeded on production level
+Not recommeded on production level:
 
-Support of diff types of strogae solutions
+Support of diff types of strogae solutions:
 
 - NFS,glusterFS, Flocker, ceph, scaleio, aws, Azure disk
 
@@ -3320,19 +3320,19 @@ Support of diff types of strogae solutions
 
 
 
-## Persistent volume:
+Persistent volume:
 - volumes stated above is only bound to pod definition file
 
 - Need more centrally managed and user can carve out vols as needed
 
 - PV is a cluster wide pool of storage volumes configured by an admin to be used by users deploying volume on the cluster using PVC
 
-## example:
+example:
 kubectl create -f pvi-file.yaml
 
 k get persistentvolume
 
-## Persistent volume:
+Persistent volume:
 
 apiVersion: v1
 kind: PersistentVolume
@@ -3347,10 +3347,12 @@ spec:
       volumeID: <volume-id>
       fstype: ext4
 
-## Persistent Claims:
+
+Persistent Volume Claims:
 Make a storage available to a node
 user creates a set of PVCs to use for storage
 - k8 binds PV to PVC - One-to-One
+- The accessModes for pv and pvc must match:
 
 
 apiVersion: v1
@@ -3371,7 +3373,7 @@ k get persistentvolumeclaim
 k delete persistentvolumecmaim myclaim
 
 
-## persistent volume:
+persistent volume:
 Create a Persistent Volume with the given specification.
 
 
@@ -3412,7 +3414,7 @@ spec:
       storage: 8Gi
 ```
 ```yaml
-### Let us claim some of that storage for our application. Create a Persistent Volume Claim with the given specification:
+Let us claim some of that storage for our application. Create a Persistent Volume Claim with the given specification:
 
 Volume Name: claim-log-1
 Storage Request: 50Mi
