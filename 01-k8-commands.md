@@ -3421,7 +3421,8 @@ Storage Request: 50Mi
 Access Modes: ReadWriteOnce
 
 
-##
+pvc:
+
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
@@ -3450,7 +3451,7 @@ Update the Access Mode on the claim to bind it to the PV.:
 
 apiVersion: v1
 items:
-- apiVersion: v1
+  apiVersion: v1
   kind: PersistentVolumeClaim
   metadata:
     creationTimestamp: "2024-09-27T17:22:41Z"
@@ -3480,7 +3481,7 @@ metadata:
 - eliminate the need for a pv
 - create a storage class and reference it in a PVC
 ```yaml
-## Static prvisioning:
+Static prvisioning volume:
 
 gcloud beta compute disks create \
    --size 1GB
@@ -3488,12 +3489,12 @@ gcloud beta compute disks create \
    pd-disk
 
 
-## Dynamic provisioning:
+Dynamic provisioning:
 - create a storage class object
 
  kubectl get storageclasses
 
-## STEPS
+STEPS:
 - Create a storage class object
 - storage class creates pv automatically
 - pvc reference the storage class at the spec level
@@ -3501,10 +3502,61 @@ spec:
   storageClassName: google-storage
 - reference the PVC in the volumes of pod at the spec level 
 
-## notes:
+notes:
 info
-- The Storage Class called local-storage makes use of VolumeBindingMode set to WaitForFirstConsumer.
-- This will delay the binding and provisioning of a PersistentVolume until a Pod using the PersistentVolumeClaim is created.
+- The Storage Class called local-storage makes use of VolumeBindingMode set to WaitForFirstConsumer:
+- This will delay the binding and provisioning of a PersistentVolume until a Pod using the PersistentVolumeClaim is created:
+
+step1:
+ - create a google storage class for dynamic volume provisioning
+ 
+storageclass.yaml:
+
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: google-storage
+provisioner: kubernetes.io/gce-pd
+parameters:
+  type: pd-standard
+replication-type: none
+
+
+step2:
+- claim part of the storage dynamically
+pvc-definition.yaml
+
+- apiVersion: v1
+  kind: PersistentVolumeClaim
+  metadata:
+    name: my-claim
+    namespace: default
+  spec:
+    accessModes:
+    - ReadWriteMany
+    storageClassName: google-storage
+    resources:
+      requests:
+        storage: 500Mi
+
+
+step3:
+- reference the claim in the pod volume section
+apiVersion: v1
+kind: Pod
+metadata:
+  name: task-pv-pod
+spec:
+  volumes:
+    - name: task-pv-storage
+      persistentVolumeClaim:
+        claimName: myclaim
+  containers:
+    - name: task-pv-container
+      image: nginx
+      ports:
+        - containerPort: 80
+          name: "http-server"
 ```
 
 ## Networking in Linux
