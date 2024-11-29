@@ -3630,27 +3630,29 @@ In general, containers too have a ns to isolate itself from the host:
 ip netns add red
 ip netns add blue
 
-## list the network namespaces 
+list the network namespaces:
 ip netns 
 
-## run inside the ns to check for interfaces, syou can run for host too
-## this network ns do not have interface yet and no network connnectivity 
+run inside the ns to check for interfaces, syou can run for host too:
+this network ns do not have interface yet and no network connnectivity: 
 ip netns exec red ip link
 ip -n red link
+ip -n red arp
 
-## connect two namespaces using a virtual internet pair/cable
+
+connect two namespaces using a virtual internet pair/cable:
 - use a virtual ethernet pair 
 
 ip link add veth-red type veth peer name veth-blue
 
-## attach each virtual interface to ns respectively
+attach each virtual interface to ns respectively:
 - so each ns get a networ interfce
 ip link set veth-red netns red
 
 ip link set veth-blue netns blue
 
 
-## can assign ip addr to each ns
+can assign ip addr to each ns:
 ip -n red addr add 192.168.15.1 dev veth-red
 
 ip -n blue addr add 192.168.15.2 dev veth-blue
@@ -3686,7 +3688,7 @@ ip link set dev v-net-0 up
 - it is more like an interface for the host
 - and switch for the namespace they can connect to
 
-## connect the ns to the bridge network
+connect the ns to the bridge network:
 
 
 - connect all ns to the briddge
@@ -3823,35 +3825,36 @@ Either add rules to IP Tables to allow traffic from one namespace to another. Or
 ## Docker Networking
 
 ```yaml
-## 1 no network - docker cannot nreach the outisde world and vice-versa 
+1 no network - docker cannot nreach the outisde world and vice-versa :
 docker run --network none nginx 
 
 
-## 2 host network
+2 host network:
 - container is attached to the host network
 - if you deploy a web app on port 80, then the app is available on port 80 on the host
 
 docker run --network host nginx 
 
-## if you try and rerun because it wont work, two process cannot share the same port at the same time
+if you try and rerun because it wont work, two process cannot share the same port at the same time:
 
-## 3 Bridge network - An internal private network which the docker host and container attach to
+
+3. Bridge network - An internal private network which the docker host and container attach to:
 
 docker network ls
 bridge
 
-// but on the host, same bridge network is refereed to as docker0
+// but on the host, same bridge network is referred to as docker0
 ip link
 
-## get the ns of the container 
+et the ns of the container:
 docker inspect <networkid>
 
-## on host 
+on host:
 ip link
 
 ip -n <ns id/container network id> link
 
-## external users need ton access the docker container
+external users need ton access the docker container:
 - use port mapping
 - users can access port 80 of the container through the port 8080 on the host 
 docker run -p 8080:80 nginx
@@ -3866,7 +3869,7 @@ iptables -nvL -t nat
 
 ```yaml
 
-## Important commands
+Important commands:
 - ip link
 - ip addr
 - ip addr add 192.168.1.0/24 dev eth0
@@ -3877,16 +3880,17 @@ iptables -nvL -t nat
 - netstat -plnt
 -netstat --help
 
-## K8 consist of master and worker nodes
+K8 consist of master and worker nodes:
 - Each nodes should have at least one interface connected to a network  with IP addr
 - The host should have ubique histname set and a unique mac address 
-##  search for numeruc, programs, listening, -i - not case sensitive 
+
+search for numeruc, programs, listening, -i - not case sensitive:
 
 netstat -npl | grep -i scheduler
 
 netstat -npa | grep -i etcd | grep -i 2379 | wc -1
 
-## An important tip about deploying Network Addons in a Kubernetes cluster.
+An important tip about deploying Network Addons in a Kubernetes cluster:
 
 In the upcoming labs, we will work with Network Addons. This includes installing a network plugin in the cluster. While we have used weave-net as an example, please bear in mind that you can use any of the plugins which are described here:
 
@@ -3894,11 +3898,11 @@ https://kubernetes.io/docs/concepts/cluster-administration/addons/
 
 https://kubernetes.io/docs/concepts/cluster-administration/networking/#how-to-implement-the-kubernetes-networking-model
 
-In the CKA exam, for a question that requires you to deploy a network addon, unless specifically directed, you may use any of the solutions described in the link above.
+In the CKA exam, for a question that requires you to deploy a network addon, unless specifically directed, you may use any of the solutions described in the link above:
 
-However, the documentation currently does not contain a direct reference to the exact command to be used to deploy a third-party network addon.
+However, the documentation currently does not contain a direct reference to the exact command to be used to deploy a third-party network addon:
 
-The links above redirect to third-party/ vendor sites or GitHub repositories, which cannot be used in the exam. This has been intentionally done to keep the content in the Kubernetes documentation vendor-neutral.
+The links above redirect to third-party/ vendor sites or GitHub repositories, which cannot be used in the exam. This has been intentionally done to keep the content in the Kubernetes documentation vendor-neutral:
 
 Note: In the official exam, all essential CNI deployment details will be provided
 
@@ -3922,24 +3926,24 @@ eth0@if25557: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1450 qdisc noqueue state UP 
 
 
 - ip show route default 
-
-## What is the port the kube-scheduler is listening on in the controlplane node?
+ What is the port the kube-scheduler is listening on in the controlplane node?:
 netstat -nplt
 
+netstat -npl | grep -i scheduler 
 
-## Notice that ETCD is listening on two ports. Which of these have more client connections established?
+Notice that ETCD is listening on two ports. Which of these have more client connections established?:
 
 netstat -anp | grep etcd | grep 2380 | wc -l
 
 
-## show ip of an interface
+show ip of an interface:
 ip address show eth0
 
-## show all the bridge interface
+show all the bridge interface:
 
 ip address show type bridge
 
-## Ques: We use Containerd as our container runtime. What is the interface/bridge created by Containerd on the controlplane node?
+Ques: We use Containerd as our container runtime. What is the interface/bridge created by Containerd on the controlplane node?:
 - When using Containerd as the container runtime on a Kubernetes control plane node,
 - the default interface/bridge created by Containerd is typically called cni0.
 - This bridge is managed by the Container Network Interface (CNI) plugins, which Containerd relies on for network connectivity.
@@ -3947,34 +3951,36 @@ ip address show type bridge
 - The cni0 bridge connects the various containers running on the node,
 - allowing them to communicate with each other and with external networks,
 - based on the CNI plugin configuration you're using (e.g., Calico, Flannel).
-## Check for CNI bridge using network namespaces
+
+
+Check for CNI bridge using network namespaces:
 ip nets
 ```
 ## Pod Networking 
 <img src="https://github.com/sheyijojo/kubernetes_CKA_Exams/blob/main/pdfs/network-1.png?raw=true" alt="Description" width="800">
 
 ```yaml
-## k8 Networking Model
+k8 Networking Model:
 - Every pod should have an IP Address
 - Every pod should be able to talk with every other pod in the same node
 - Every pod should be able to talk with every other Pod on other nodes without NAT
 
-## CNI
+CNI:
 - CNI helps run script on each pod created automatically
-- E.g a cript that helps add IP addr and ns , and connects pods to the route network 
+- E.g a script that helps add IP addr and ns , and connects pods to the route network 
 
-## Container Runtime
+Container Runtime:
 - A container runtime on each nodes is responbisible for  creating container
 - Container runtime then looks at the CNI configuration and looks for the script I created
 - /etc/cni/net.d/net-script.conflist
-- Then looks at the bin directory /opt/cni/bin/net-script.sh , and esecutes the script  
+- Then looks at the bin directory /opt/cni/bin/net-script.sh , and executes the script  
 ```
 ## CNI in Kubernetes 
 ```yaml
 - In k8, the container plugins are installed  in :
 ls /opt/cni/bin
 
-- which plugin to be used is stored here
+- which plugin to be used is stored here:
 /etc/cni/net.d/ 
 ```
 
