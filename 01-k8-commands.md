@@ -4107,6 +4107,7 @@ cat /var/log/kube-proxy.log
 
 What network range are the nodes in the cluster part of?:
 - one way to do this is to make use of the ipcalc utility. If it is not installed, you can install it by running:
+- check the eth0
 - apt update and the apt install ipcalc
 -  ip a | grep eth0
 - ipcalc -b 10.33.39.8
