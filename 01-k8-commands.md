@@ -4163,7 +4163,8 @@ curl http://web-service.apps.svc.cluster.local
 
 
 ## for pods
-k8 replaces the ip wuth dashes
+k8 replaces the ip with dashes:
+curl http://10-244-2-5.apps.pod.cluster.local
 ```
 
 ## CORE DNS in Kubernetes
@@ -4176,7 +4177,7 @@ DNS server maps IP address to services but not the same approach to PODs
 - For pods it forms hostname by replacing the dots in IP with dashes. it maps ip with pp-dashes
 10-244-2-5   10.244.2.5
 
-Recommended DNS server is CoreDNS
+Recommended DNS server is CoreDNS:
 - The coreDNS server is deployed as a pod in the kube-system namespace in the k8 kluster - Deployed as two pods for redundancy,
 
 as part of a replicaset.
@@ -4184,11 +4185,11 @@ as part of a replicaset.
 - k8 uses a file called corefile  `cat /etc/coredns/corefile`, which has a number of plugins configured
 - the corefile is passed into the pod has a configMap object. 
 
-##  How does pod point to the dns SERVER, what address does the pod use to point to 
+How does pod point to the dns SERVER, what address does the pod use to point to:
 - when the dns is deployed, it also creates a service to make it available to other components within a cluster
 - The service is known as kube-dns by default. Ip addr of this service is configured as the nameserver on pods automatically by k8- kubelet
 
-## What is the name of the ConfigMap object created for Corefile?
+What is the name of the ConfigMap object created for Corefile?:
 
 k get configmaps -n kube-system
 
@@ -4208,21 +4209,21 @@ k describe
 
 
 
-## Where is the configuration file located for configuring the CoreDNS service?
+Where is the configuration file located for configuring the CoreDNS service?:
  kubectl -n kube-system describe deployments.apps coredns | grep -A2 Args | grep Corefile
 
 
-## edit and deploy 
+edit and deploy :
 k edit deploy webapp
 
 
-## From the hr pod nslookup the mysql service and redirect the output to a file /root/CKA/nslookup.out
+From the hr pod nslookup the mysql service and redirect the output to a file /root/CKA/nslookup.out:
 
  k exec -it hr -- nslookup mysql.payroll > /root/CKA/nslookup.out
 ```
 ## Ingress in Kubernetes 
 ```yaml
-## You have load balancers provisioned on google cloud
+You have load balancers provisioned on google cloud:
 - load balancer is sitting in front of your servcies
 - How do you direct traffic from different load balancers, manage ssl certs, firewall rules
 - What service does that? A configuration in k8 that manages all the configurations mentioned and many more
@@ -4231,7 +4232,7 @@ k edit deploy webapp
 - More like a layer7 Load Balancer that can configured using k8 objects
 - Need to publish ingress as a service such as nodepotrt. oNE TIME configuration
 
-## You could configure this withougt Ingress
+You could configure this withougt Ingress:
 cOULD USE REVERSE PROXY SUCH AS NGINX, haproxy, TRAEFIK, GCP HTTP(S) Load balancer (GCE), Contour, Istio
 
 ## They are also the Ingress controller
