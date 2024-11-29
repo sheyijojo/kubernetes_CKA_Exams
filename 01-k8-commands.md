@@ -3561,62 +3561,61 @@ spec:
 
 ## Networking in Linux
 ```yaml
-## In Linux
-## list and modify interfaces on the host
+In Linux:
+list and modify interfaces on the host:
 ip link
 
-## see the ip addrs assigned to those interfaces ip addr 
+see the ip addrs assigned to those interfaces ip addr:
 ip addr 
 
 
-## set ip addrs to those interfaces
-
+set ip addrs to those interfaces:
 ip addr add 192.168.1.10/24 dev eth0
 
-## persist this changes
+persist this changes:
 edit in the /etc/network/interfaces file.
 
-## view the routes
+view the routes/ routing table:
 ip route
 
-## add entry into the routing table
+add entry into the routing table:
 ip route add 192.168.1.0/24 via 192.168.2.1
 
-## check if ip forwarding is enabled, must be set to 1
-
+check if ip forwarding is enabled, must be set to 1:
 cat  /proc/sys/net/ipv4/ip_forward
 
 ```
 ## DNS configuration in Linux Host
 ```yaml
-## host A wanna ping system B with a host name db - name resolution
+host A wanna ping system B with a host name db - name resolution:
 - on host A
 cat >> /etc/hosts
 2323.232.2323.232  db
 
-## managing can be hard
+managing can be hard:
 - move entries into a DNS server to manage the hosts
-- every host has a `dns resolution file ` `/etc/resolv.conf`
-- add an entry into to it and specufy the addr of the dns server
+- every host has a `dns resolution file  `/etc/resolv.conf`
+- add an entry into to it and specify the addr of the dns server
 - namserver 192.168.1.100
 - dont need entry anymore in /etc/hosts
 - if both local and dns server have the same entry, it ist looks at the local
 - order is configured at cat /etc/nsswitch.conf
 
-## shorthand for long Domain name such as web for web.mycompany.com
+shorthand for long Domain name such as web for web.mycompany.com:
 /etc/resolv.conf
 search     mycompany.com
 
 ping web
 
-## test dns resolution
+test dns resolution:
 ping
-## doesnt consider /ect/host file , only dns server
+
+doesnt consider /ect/host file , only dns server:
 nslookup www.google.com
 dig www.google.com
 
-## can configure your computer as a DNS server using coredns solution 
 
+can configure your computer as a DNS server using coredns solution:
 
 https://coredns.io/plugins/kubernetes/
 https://github.com/kubernetes/dns/blob/master/docs/specification.md
@@ -3625,8 +3624,8 @@ https://github.com/kubernetes/dns/blob/master/docs/specification.md
 ## Network Namspaces in Linux
 
 ```yaml
-## To create a network namespace on a linux host
-## In general, containers too have a ns to isolate itself from the host
+To create a network namespace on a linux host:
+In general, containers too have a ns to isolate itself from the host:
 
 ip netns add red
 ip netns add blue
