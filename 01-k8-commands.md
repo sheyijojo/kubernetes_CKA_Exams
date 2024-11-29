@@ -4222,40 +4222,42 @@ From the hr pod nslookup the mysql service and redirect the output to a file /ro
  k exec -it hr -- nslookup mysql.payroll > /root/CKA/nslookup.out
 ```
 ## Ingress in Kubernetes 
+
+
 ```yaml
 You have load balancers provisioned on google cloud:
 - load balancer is sitting in front of your servcies
 - How do you direct traffic from different load balancers, manage ssl certs, firewall rules
-- What service does that? A configuration in k8 that manages all the configurations mentioned and many more
+- What service does that? A configuration in k8 that manages all the configurations mentioned and many more.
 - INGRESS is the solution
 - Ingress helps users access app using a single externaly url
-- More like a layer7 Load Balancer that can configured using k8 objects
-- Need to publish ingress as a service such as nodepotrt. oNE TIME configuration
+- More like a layer7 Load Balancer that can be configured using k8 objects
+- Need to publish ingress as a service such as nodeport. A one-time configuration
 
 You could configure this withougt Ingress:
 cOULD USE REVERSE PROXY SUCH AS NGINX, haproxy, TRAEFIK, GCP HTTP(S) Load balancer (GCE), Contour, Istio
 
-## They are also the Ingress controller
+They are also the Ingress controller:
 - ingress does this in a similar way, with a supported solution like above
-- solution doeloyed is known as ingress controller
-- Set of Rules you configure  is known as inGRESS RESOURCES, done by using a deifnition file
+- solution deployed is known as ingress controller
+- Set of Rules you configure  is known as INGRESS RESOURCES, done by using a definition file
 
 - k8 cluster does not come with INgress controller by default
 
-## decouples configuration using config map when using example NGINX controller 
+decouples configuration using config map when using example NGINX controller :
 
-## steps
+steps:
 - create ingress controller
 - create config map
-- Cretae service account role and rolebinding  to access all these objects
+- Createservice account role and rolebinding  to access all these objects
 - create a service of e.g Nodeport
 
-## create INGRESS resource
+create INGRESS resource:
 - More about routing traffic and whataview
 
-## Use rules when you wanna route traffic on diff conditions
+Use rules when you wanna route traffic on diff conditions:
 - host field diffentiates a yaml file with multiple domain names and a single domain name 
-So there are two paths
+So there are two paths:
 1. Splitting traffic by urls with one rule, and split the traffic in two paths
 2. Splitting traffic by hostname, use two rules and one path
 
@@ -4267,7 +4269,7 @@ So there are two paths
 
 ```yaml
 
-## Format 
+Format:
 kubectl create ingress  --rule="host/path=service:port"**
 
 kubectl create ingress ingress-test --rule="wear.my-online-store.com/wear*=wear-service:80"**
