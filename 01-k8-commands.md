@@ -3997,7 +3997,7 @@ kubectl apply -f https://github.com/weaveworks/weave/releases/download/v2.8.1/we
 - The agent takes of other PODS 
 
 
-## DEPLOYING WEAVES ON A CLUSTER
+DEPLOYING WEAVES ON A CLUSTER:
 
 - WEAVE and weave peeers can be deployed as services or daemons on each node in d cluster mannaully or deploy as pods in cluster
 
@@ -4005,9 +4005,9 @@ kubectl get pods -n kube-system
 
 kubectl logs weave-net-59cmb waeve -n kube-system
 
-## questions
+questions:
 
-## Inspect the kubelet service and identify the container runtime endpoint value is set for Kubernetes.
+Inspect the kubelet service and identify the container runtime endpoint value is set for Kubernetes.:
 ps aux | grep -i kubelet | grep containerd
 
 ps aux | grep -i kubelet | grep container-runtime 
@@ -4015,14 +4015,14 @@ ps aux | grep -i kubelet | grep container-runtime
 
 ## Plugin for IP Management - IPAM
 ```yaml
-## CNI outsourced IP management to DHCP and host-local
+CNI outsourced IP management to DHCP and host-local:
 
 
-## questions
+questions:
 
-## What is the default gateway configured on the PODs scheduled on node01?
+What is the default gateway configured on the PODs scheduled on node01?:
 
-- Try scheduling a pod on node01 and check ip route output
+- Try scheduling a pod on node01 and check ip route output:
 
 ssh node01
 
@@ -4030,14 +4030,31 @@ ip route
 
 - on control plane
 - spec
-    nodeName: node01
-kubectl run busybox --dry-run=client -o yaml -- sleep 1000 > busybox.yaml
-## What POD OP addr range configured on weave
 
-- check the pod logs of the weave agent
-- look for ipalloc
 
-kubcetl logs -n kube-system weave-nt-mknr5
+nodeName: node01
+kubectl run busybox --image=busybox --dry-run=client -o yaml -- sleep 1000 > busybox.yaml
+
+
+apiVersion: v1
+kind: Pod
+metadata:
+  name: nginx
+spec:
+  nodeName: node01
+  containers:
+  - name: nginx
+    image: nginx:1.14.2
+    ports:
+    - containerPort: 80
+
+
+What POD OR addr range configured on weave:
+
+- check the pod logs of the weave agent:
+- look for ipalloc:
+
+kubctl logs -n kube-system weave-nt-mknr5
 
 kubectl exec busybox -- ip route 
 ```
@@ -4045,48 +4062,50 @@ kubectl exec busybox -- ip route
 ## Service Networking 
 ```YAML
 - You will rarely configure pods to talk with each other, you will usually use a SERVICE. 
-##When a service is created, it is accessible on all pods on the cluster
-- a service is hosted accross a cluster, not bound to a specific node
+When a service is created, it is accessible on all pods on the cluster:
 
-- a service accesible ONLY within the cluster is known as clusterIp, gets an IP addr attached to it
+- a service is hosted accross a cluster, not bound to a specific node:
+- a service accesible ONLY within the cluster is known as clusterIp, gets an IP addr attached to it:
 
-## Nodeport service
+Nodeport service:
 - can expose app on a pods externally on all nodes on the cluster, gets an IP Addr
 
 
-## How is the service made available to external users through a port on each node
-- Generally, we know every node run a kunelet process which is responsible for creating PODS.
+ How is the service made available to external users through a port on each node:
+- Generally, we know every node run a kubelet process which is responsible for creating PODS.
 - Same kubelet invokes CNI plugging to configure networking for that POD.
-- Each node also runs another component known as kube-proxy which gets into action wheneneve a service is created.
+- Each node also runs another component known as kube-proxy which gets into action whenever a service is created.
 - services are not created on each node or assigned to each node, they are a cluster-wide concept.
 - Service is just a virtual object
+- kubeproxy gets the ip addr from the service and creates forwarding rules on each node in the cluster
+- Saying any traffic to this IP to go the IP of the pod.
 
-
-## set kube proxy mode - ways in which kube-proxy creates forwarding rules to forward requests from service to pods..
-
+ set kube proxy mode - ways in which kube-proxy creates forwarding rules to forward requests from service to pods..:
+defaults to iptables
 kube-proxy --proxy-mode [userspace | iptables | ipvs] ...
 
 kubectl get service
 
 
-## overlapping of IPS
+overlapping of IPS:
 
 - Make sure a pod and a service IP should not overlap
 
-##  get the service cluster ip range assigned to service when created.
+get the service cluster ip range assigned to service when created.:
 
 kube-api-server --service-cluster-ip-range ipNet
+default - 10.0.0.0/24
 
 ps aux | grep kube-api-server
 
-## See the rules created by kube-proxy
+ See the rules created by kube-proxy:
 
 iptables -L -t nat | grep db-service
 
-## See these rules also in kube-proxy logs 
+ See these rules also in kube-proxy logs :
 cat /var/log/kube-proxy.log
 
-## What network range are the nodes in the cluster part of?
+What network range are the nodes in the cluster part of?:
 - one way to do this is to make use of the ipcalc utility. If it is not installed, you can install it by running:
 - apt update and the apt install ipcalc
 -  ip a | grep eth0
@@ -4094,23 +4113,25 @@ cat /var/log/kube-proxy.log
 
 
 
-## What is the range of IP addresses configured for PODs on this cluster?
+What is the range of IP addresses configured for PODs on this cluster?:
 
 
 The network is configured with weave. Check the weave pods logs using the command
 -  kubectl logs <weave-pod-name> weave -n kube-system and look for ipalloc-range.
 -  k logs -n kube-system weave-net-lfq2s | ipalloc-range
 
-## What is the IP Range configured for the services within the cluster?
+What is the IP Range configured for the services within the cluster?:
 cat /etc/kubernetes/manifests/kube-apiserver.yaml   | grep cluster-ip-range
 
-## What type of proxy is the kube-proxy configured to use?
+What type of proxy is the kube-proxy configured to use?:
 
-Check the logs of the kube-proxy pods. Run the command: kubectl logs <kube-proxy-pod-name> -n kube-system
+Check the logs of the kube-proxy pods.:
+
+Run the command: kubectl logs <kube-proxy-pod-name> -n kube-system
 
 k logs kube-proxy-ltbmp  -n kube-system | grep kube-proxy
 
-## General commands
+General commands:
 
 kubectl get all --all-namespaces 
 
