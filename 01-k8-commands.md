@@ -1677,7 +1677,7 @@ kubectl drain controlplane --ignore --daemonset
 
 
 sudo apt-mark unhold kubelet kubectl && \
-sudo apt-get update && sudo apt-get install -y kubelet='1.31.3-1.1*' kubectl='1.31.3-1.1' && \
+sudo apt-get update && sudo apt-get install -y kubelet='1.31.3-1.1' kubectl='1.31.3-1.1' && \
 sudo apt-mark hold kubelet kubectl
 
 
@@ -1690,6 +1690,32 @@ kubectl get node
 kubectl uncordone controleplane
 
 
+upgrading worker nodes:
+https://kubernetes.io/docs/tasks/administer-cluster/kubeadm/upgrading-linux-nodes/
+
+change the package repo like above 
+
+# replace x in 1.31.x-* with the latest patch version
+sudo apt-mark unhold kubeadm && \
+sudo apt-get update && sudo apt-get install -y kubeadm='1.31.x-*' && \
+sudo apt-mark hold kubeadm
+
+sudo kubeadm upgrade node
+
+update the kubelet:
+kubectl drain controlplane --ignore --daemonset
+
+sudo apt-mark unhold kubelet kubectl && \
+sudo apt-get update && sudo apt-get install -y kubelet='1.31.3-1.1' kubectl='1.31.3-1.1' && \
+sudo apt-mark hold kubelet kubectl
+
+sudo systemctl daemon-reload
+sudo systemctl restart kubelet
+
+
+kubectl uncordone node01
+
+kubectl get node
 ```
 
 
