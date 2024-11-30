@@ -4881,9 +4881,9 @@ kubectl config set-context --current --namespace=alpha
 ## 
 
 ```yaml
-## trouble shooting the control plane components
+trouble shooting the control plane components:
 
-- ## you know is a static pod if has controlplane appended at the end
+-you know is a static pod if has controlplane appended at the end:
 
 - Then look for the manifest file at /etc/kubernetes/manifest
 
