@@ -1642,8 +1642,94 @@ k8 supports only the last e last 3 minor releases e.g v.13, v.12, v.11:
 
 Upgrade one version at a time:
 
+## cluster version 1 - demp
+
+```yml
+controlplane:
+https://kubernetes.io/blog/2023/08/15/pkgs-k8s-io-introduction/
+
+Need to install the write package repos:
+
+echo "deb [signed-by=/etc/apt/keyrings/kubernetes-apt-keyring.gpg] https://pkgs.k8s.io/core:/stable:/v1.31/deb/ /" | sudo tee /etc/apt/sources.list.d/kubernetes.list
+
+curl -fsSL https://pkgs.k8s.io/core:/stable:/v1.28/deb/Release.key | sudo gpg --dearmor -o /etc/apt/keyrings/kubernetes-apt-keyring.gpg
+
+
+sudo apt-get update
+
+sudo apt update
+sudo apt-cache madison kubeadm
+
+
+sudo apt-mark unhold kubeadm && \
+sudo apt-get update && sudo apt-get install -y kubeadm='1.31.3-1.1*' && \
+sudo apt-mark hold kubeadm
+
+kubeadm version
+
+sudo kubeadm upgrade plan
+
+replace x with the patch version you picked for this upgrade:
+sudo kubeadm upgrade apply v1.31.0
+
+update the kubelet:
+kubectl drain controlplane --ignore --daemonset
+
+
+sudo apt-mark unhold kubelet kubectl && \
+sudo apt-get update && sudo apt-get install -y kubelet='1.31.3-1.1*' kubectl='1.31.3-1.1' && \
+sudo apt-mark hold kubelet kubectl
+
+
+sudo systemctl daemon-reload
+sudo systemctl restart kubelet
+
+kubectl get node
+- node is unscheduled
+
+kubectl uncordone controleplane
+
 
 ```
+
+
+
+## Cluster Upgrade Version 2
+
+```yaml
+kubectl get nodes
+
+kubeadm upgrade plan
+
+upgrade one version at a time:
+upgrade kubeadm from 11 to 13:, start with to 12 first:
+apt-get upgrade -y kubeadm=1.12.0-00
+
+upgrade cluster:
+kubeadm upgrade apply v1.12.0
+
+upgrade kubelet:
+apt-get upgrade -y kubelet=1.12.0-00
+
+systemctl restart kubelet
+
+worker nodes:
+kubectl drain node-1
+
+apt-get upgrade -y kubeadm=1.12.0-00
+
+kubeadm upgrade node config --kubelet-version v1.12.0
+
+systemctl restart kubelet
+
+
+```
+
+
+
+
+
+
 ## Cluster Updgrade Process
 ```yaml
 
@@ -4221,6 +4307,7 @@ From the hr pod nslookup the mysql service and redirect the output to a file /ro
 
  k exec -it hr -- nslookup mysql.payroll > /root/CKA/nslookup.out
 ```
+
 ## Ingress in Kubernetes 
 
 
@@ -4252,7 +4339,131 @@ steps:
 - Createservice account role and rolebinding  to access all these objects
 - create a service of e.g Nodeport
 
-create INGRESS resource:
+
+You need an Ingress Controller for Ingress Resource:
+Apparently configured as a deployment 
+
+```yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-ingress-controller
+  namespace: kube-system
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      name: nginx-ingress
+  template:
+    metadata:
+      labels:
+        name: nginx-ingress
+    spec:
+      containers:
+      - name: nginx-ingress-controller
+        image: quay.io/kubernetes-ingress-controller/nginx-ingress-controller:0.30.0
+        args:
+        - /nginx-ingress-controller
+        - --configmap=$(POD_NAMESPACE)/nginx-configuration
+        #- --tcp-services-configmap=$(POD_NAMESPACE)/tcp-services
+        #- --udp-services-configmap=$(POD_NAMESPACE)/udp-services
+        env:
+        - name: POD_NAME
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.name
+        - name: POD_NAMESPACE
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.namespace
+        ports:
+        - name: http
+          containerPort: 80
+        - name: https
+          containerPort: 443
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: nginx-ingress
+  namespace: kube-system
+spec:
+  type: NodePort
+  ports:
+  - port: 80
+    targetPort: 80
+    protocol: TCP
+    name: http
+  - port: 443
+    targetPort: 443
+    protocol: TCP
+    name: https
+  selector:
+    app: nginx-ingress
+
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: nginx-ingress-serviceaccount
+  namespace: kube-system
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: nginx-ingress-role
+  namespace: kube-system
+rules:
+- apiGroups: [""]
+  resources: ["configmaps", "endpoints", "nodes", "pods", "secrets", "services"]
+  verbs: ["get", "list", "watch"]
+- apiGroups: [""]
+  resources: ["nodes"]
+  verbs: ["get"]
+- apiGroups: ["extensions", "networking.k8s.io"]
+  resources: ["ingresses"]
+  verbs: ["get", "list", "watch"]
+- apiGroups: ["extensions", "networking.k8s.io"]
+  resources: ["ingresses/status"]
+  verbs: ["update"]
+- apiGroups: [""]
+  resources: ["events"]
+  verbs: ["create", "patch"]
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: nginx-ingress-rolebinding
+  namespace: kube-system
+subjects:
+- kind: ServiceAccount
+  name: nginx-ingress-serviceaccount
+  namespace: kube-system
+roleRef:
+  kind: Role
+  name: nginx-ingress-role
+  apiGroup: rbac.authorization.k8s.io
+
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: nginx-configuration
+  namespace: kube-system
+data:
+  proxy-connect-timeout: "30"
+  proxy-read-timeout: "120"
+  use-proxy-protocol: "false"
+  worker-processes: "2"
+
+
+```
+
+
+## create INGRESS resource:
+```yaml
 - More about routing traffic and whataview
 
 Use rules when you wanna route traffic on diff conditions:
@@ -4286,28 +4497,32 @@ Two apps - watch and wear app displays at http://:/
    - http://:/watch -> http://:/
    - http://:/wear -> http://:/
 
-- When user visits the url on /watch, /wear jis request should be forwarded internally to the http://:/
-- /watch and /waer path are what is configured on the ingress controller
+- When user visits the url on /watch, /wear is request should be forwarded internally to the http://:/
+- /watch and /wear path are what is configured on the ingress controller
 - so that we can forward users to the appropriate app in the backend. The app doesnt  have this url/path configured on them.
 
-  without the rewrite-tareg option, this is what happens:
+  without the rewrite-target option, this is what happens:
 
 - http://:/watch –> http://:/watch
 
 - http://:/wear –> http://:/wear
 
 
-- Notice watch and wear at the end of the target URLs. The target applications are not configured with /watch or /wear paths.
+- Notice watch and wear are at the end of the target URLs. The target applications are not configured with /watch or /wear paths.
 - They are different applications built specifically for their purpose,
 - so they don’t expect /watch or /wear in the URLs.
 - And as such the requests would fail and throw a 404 not found error.
 
 To fix that we want to “ReWrite” the URL when the request is passed on to the watch or wear applications.
- We don’t want to pass in the same path that user typed in. So we specify the rewrite-target option.
+
+ We don’t want to pass in the same path that user typed in.
+
+ So we specify the rewrite-target option.
+
 This rewrites the URL by replacing whatever is under rules->http->paths->path
 which happens to be /pay in this case with the value in rewrite-target. This works just like a search and replace function.
 
-##
+example:
 
 apiVersion: extensions/v1beta1
 kind: Ingress
@@ -4334,7 +4549,7 @@ spec:
 
 
 
-## In another example given here, this could also be:
+In another example given here, this could also be:
 - replace("/something(/|$)(.*)", "/$2")
 
 
@@ -4375,7 +4590,7 @@ https://kubernetes.github.io/ingress-nginx/examples/rewrite/
 
 k get pods -A
 
-## create an in  gress
+## create an ingress
 kubectl create ingress myingress -n critical-space --rule="/pay=pay-service:8282"
 
 k get ingress -n critical-space
@@ -4383,7 +4598,7 @@ k get ingress -n critical-space
 k logs <podname> -n <namespace-name>
 
 
-## namespace
+namespace:
 kubectl create namespace my-namespace
 
 ##
@@ -4423,7 +4638,7 @@ k edit svc ingress -n ingress-nginx
 
 ## create the ingress resource to make the applications vailable at /wear and /watch om the ingress service
 
-## create the ingress in the app-space ns
+create the ingress in the app-space ns:
 - configure correct backend servive for /wear
 - configure correct backend service for /watch
 - configure backend port for /wear service
@@ -4432,16 +4647,90 @@ k edit svc ingress -n ingress-nginx
 k create ingress ingress-wear-watch -n app-space --rule="/wear=wear-service:8080" --rule="/watch=video-service:8080"
 
 
+
+
+```
+
+Installing on Kubeadm
+
+```yaml
+
+set net.bridge.bridge-nf-call-iptables to 1:
+
+cat <<EOF | sudo tee /etc/modules-load.d/k8s.conf
+br_netfilter
+EOF
+
+cat <<EOF | sudo tee /etc/sysctl.d/k8s.conf
+net.bridge.bridge-nf-call-ip6tables = 1
+net.bridge.bridge-nf-call-iptables = 1
+EOF
+
+sudo sysctl --system
+
+The container runtime has already been installed on both nodes, so you may skip this step.
+Install kubeadm, kubectl and kubelet on all nodes:
+
+sudo apt-get update
+
+sudo apt-get install -y apt-transport-https ca-certificates curl
+
+curl -fsSL https://pkgs.k8s.io/core:/stable:/v1.31/deb/Release.key | sudo gpg --dearmor -o /etc/apt/keyrings/kubernetes-apt-keyring.gpg
+
+echo 'deb [signed-by=/etc/apt/keyrings/kubernetes-apt-keyring.gpg] https://pkgs.k8s.io/core:/stable:/v1.31/deb/ /' | sudo tee /etc/apt/sources.list.d/kubernetes.list
+
+sudo apt-get update
+
+# To see the new version labels
+sudo apt-cache madison kubeadm
+
+sudo apt-get install -y kubelet=1.31.0-1.1 kubeadm=1.31.0-1.1 kubectl=1.31.0-1.1
+
+sudo apt-mark hold kubelet kubeadm kubectl
+
+
+Bootstrap the cluster with kubeadm:
+
+kubeadm init --apiserver-advertise-address=192.4.83.6 --apiserver-cert-extra-sans=controlplane --
+pod-network-cidr=10.244.0.0/16
+
+
+mkdir -p $HOME/.kube
+sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
+sudo chown $(id -u):$(id -g) $HOME/.kube/config
+
+
+
+Applying network:
+
+To install a network plugin, we will go with Flannel as the default choice. For inter-host communication, we will utilize the eth0 interface.
+
+
+Please ensure that the Flannel manifest includes the appropriate options for this configuration.
+
+
+Refer to the official documentation for the procedure.
+
+curl -LO https://github.com/flannel-io/flannel/releases/latest/download/kube-flannel.yml
+
+  args:
+  - --ip-masq
+  - --kube-subnet-mgr
+
+Add the additional argument - --iface=eth0 to the existing list of arguments.
+
+Now apply the modified manifest kube-flannel.yml file using kubectl:
+
 ```
 ## Troubleshooting in kubernetes
-- Apllication Failure
+- Aplication Failure
 - Control Plane Failure
 - Worker Node Failure
 - Networking
   
 > It is a good idea to write down the flow of your app and check every object in the map to find the root cause 
 ```yaml
-## if users complain about accessing the app
+if users complain about accessing the app:
 < steps
 1. Start with the webapp frontend
    - curl http://web-service-ip:node-port
@@ -4456,10 +4745,12 @@ Notes: So in the web-service, there is a selector that references the Pod label 
    - kubectl get pod
    - kubectl describe pod
    - kubectl logs web
-# Watch the container to fail if fails are not produced immediately
-  - kubectl logs web -f
-watch logs of previous pod
-  - kubectl logs web -f --previous
+   
+Watch the container to fail if fails are not produced immediately:
+kubectl logs web -f
+watch logs of previous pod:
+kubectl logs web -f --previous
+
 5. check the status of the DB service
 6. check the DB Pod
 7. check the logs of the pod
@@ -4468,7 +4759,7 @@ watch logs of previous pod
 ## task
 
 ```yaml
-## create a service
+create a service:
 kubectl create service clusterip redis-service --tcp=6379:6379
 
 k create service clusterip  mysql-service -n alpha --tcp=3306
@@ -4481,7 +4772,8 @@ Troubleshooting Test 1: A simple 2 tier application is deployed in the alpha nam
 
 
 Stick to the given architecture. Use the same names and port numbers as given in the below architecture diagram. Feel free to edit, delete or recreate objects as necessary.
-## answer
+
+answer:
 The service name used for the MySQL Pod is incorrect. According to the Architecture diagram, it should be mysql-service.
 
 To fix this, first delete the current service: kubectl -n alpha delete svc mysql
