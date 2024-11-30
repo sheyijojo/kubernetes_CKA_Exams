@@ -4912,6 +4912,7 @@ df -h
 
 service kubelet status
 
+check kubeket logs:
 journalctl -u kubelet
 
 ## check the certificate
@@ -5038,7 +5039,7 @@ kubectl config view --kubeconfig=my-kube-config -o jsonpath="{.contexts[?(@.cont
 ## 
 
 ```yaml
-## working with services
+working with services:
 journalct -u kubelet
 
 service kubelet status
