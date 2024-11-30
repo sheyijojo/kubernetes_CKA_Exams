@@ -5076,14 +5076,14 @@ https://kubernetes.io/docs/concepts/cluster-administration/addons/#networking-an
 
 2. Flannel :
 
-## To install,
+To install:
 
 kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/2140ac876ef134e0ed5af15c65e414cf26827915/Documentation/kube-flannel.yml
 Note: As of now, flannel does not support Kubernetes network policies.
 
 3. Calico :
 
-## To install,
+To install:
 
 curl https://docs.projectcalico.org/manifests/calico.yaml -O
 
