@@ -4755,9 +4755,10 @@ Now apply the modified manifest kube-flannel.yml file using kubectl:
 - Networking
   
 > It is a good idea to write down the flow of your app and check every object in the map to find the root cause 
+
 ```yaml
 if users complain about accessing the app:
-< steps
+ steps:
 1. Start with the webapp frontend
    - curl http://web-service-ip:node-port
    -  curl http://10.43.224.12:8080
@@ -4836,16 +4837,16 @@ k replace --force -f /tmp/kubectl-edit04287356731.yaml
 
 ```yaml
 ## steps
-## 1. Check status of the nodes
-kubectl get nods
+ 1. Check status of the nodes:
+kubectl get nodes
 
-## 2. check status of the pods running in the cluster
+ 2. check status of the pods running in the cluster:
 kubectl get pods
 
-## 3. if deployed with kubeadm
+ 3. if deployed with kubeadm:
 kubectl get pods -n kube-system
 
-## 4. if deployed as a service, check the master node
+4. if deployed as a service, check the master node:
 
 service kube-apiserver status
 
@@ -4853,17 +4854,17 @@ service kube-controller-manager status
 
 service kube-scheduler status
 
-## on the worker nodes
+on the worker nodes:
 
 service kubelet status
 
 service kube-proxy status
 
-## check the logs on the control plane if kubeadm
+check the logs on the control plane if kubeadm:
 
 kubectl logs kube-apiserver-master -n kube-system
 
-## for native service
+for native service:
 
 sudo journalctl -u kube-apiserver 
 ```
