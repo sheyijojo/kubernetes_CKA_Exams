@@ -4942,8 +4942,8 @@ kubectl get nodes -o wide
 
 kubectl get nodes -o json
 
-## json path query
-## - $ not neccessary with kubectl, it does it for you
+json path query:
+- $ not neccessary with kubectl, it does it for you:
 .tems[0].spec.containers[0].image
 
 
@@ -4955,14 +4955,15 @@ kubectl get pods -o=jsonpath='{ .tems[*].status.nodeInfo.architecture }'
 
 kubectl get pods -o=jsonpath='{ .tems[*].status.capacity.cpu }'
 
-## combine bothe commands 
+combine bothe commands:
+
 kubectl get nodes -o=jsonpath='{ .tems[*].status.nodeInfo.architecture }{"\"}{ .tems[*].status.capacity.cpu }'
 
 
 kubectl get nodes -o=jsonpath='{.items[*].metadata.name}{"\n"}{.items[*].status.capacity.cpu}'
 
 
-## using loops
+using loops:
 
 `{range  .items[*]}
 
@@ -4975,12 +4976,17 @@ kubectl get nodes -o=jsonpath='{range  .items[*]}{.metadata.name} {"\t"} {.statu
 {end}'
 
 
-## Sudo code for this 
+Sudo code for this: 
+
 FOR EACH NODE
   PRINT NODE NAME \t PRINT CPU COUNT \n
 
 END FOR
 `
+
+```
+
+```yaml
 ## using json path for printing custom columns: Option to using loop
 
 kubectl get nodes -o=custom-columns=<COLUMN NAME>:<JSON PATH>
@@ -4991,7 +4997,7 @@ kubectl get nodes --sort-by= .metadata.name
 
 kubectl get nodes --sort-by= .status.capacity.cpu
 
-## execise
+execise:
 Use JSON PATH query to fetch node names and store them in /opt/outputs/node_names.txt.
 Remember the file should only have node names.
 
@@ -5008,23 +5014,24 @@ kubectl config view --kubeconfig=/root/my-kube-config -o=json
  k config view --kubeconfig=/root/my-kube-config -o=jsonpath='{ .users[*].names  }'
 
 
-## Use JSON PATH query to retrieve the osImages of all the nodes and store it in a file /opt/outputs/nodes_os.txt.
+Use JSON PATH query to retrieve the osImages of all the nodes and store it in a file /opt/outputs/nodes_os.txt.:
 
-## The osImage is under the nodeInfo section under status of each node.Use JSON PATH query to retrieve the osImages of all the nodes and store it in a file /opt/outputs/nodes_os.txt.
+The osImage is under the nodeInfo section under status of each node.Use JSON PATH query to retrieve the osImages of all the nodes and store it in a file /opt/outputs/nodes_os.txt.:
 
-## The osImage is under the nodeInfo section under status of each node.
+The osImage is under the nodeInfo section under status of each node.:
 
-## kubectl get nodes -o=jsonpath='{.items[*].status.nodeInfo.osImage}'
-
-
-## A set of Persistent Volumes are available. Sort them based on their capacity and store the result in the file /opt/outputs/storage-capacity-sorted.txt.
+kubectl get nodes -o=jsonpath='{.items[*].status.nodeInfo.osImage}':
 
 
+A set of Persistent Volumes are available. Sort them based on their capacity and store the result in the file /opt/outputs/storage-capacity-sorted.txt.:
 
-That was good, but we don't need all the extra details. Retrieve just the first 2 columns of output and store it in /opt/outputs/pv-and-capacity-sorted.txt.
+```
+
+```yaml
+That was good, but we don't need all the extra details. Retrieve just the first 2 columns of output and store it in /opt/outputs/pv-and-capacity-sorted.txt.:
 
 
-The columns should be named NAME and CAPACITY. Use the custom-columns option and remember, it should still be sorted as in the previous question.
+The columns should be named NAME and CAPACITY. Use the custom-columns option and remember, it should still be sorted as in the previous question.:
 
 kubectl get pv --sort-by=.spec.capacity.storage -o=custom-columns=NAME:.metadata.name,CAPACITY:.spec.capacity.storage > /opt/outputs/pv-and-capacity-sorted.txt
 
@@ -5032,11 +5039,11 @@ kubectl get pv --sort-by=.spec.capacity.storage -o=custom-columns=NAME:.metadata
 kubectl get pv --sort-by=.spec.capacity.storage > /opt/outputs/storage-capacity-sorted.txt
 
 
-Use a JSON PATH query to identify the context configured for the aws-user in the my-kube-config context file and store the result in /opt/outputs/aws-context-name.
+Use a JSON PATH query to identify the context configured for the aws-user in the my-kube-config context file and store the result in /opt/outputs/aws-context-name.:
 
-kubectl config view --kubeconfig=my-kube-config -o jsonpath="{.contexts[?(@.context.user=='aws-user')].name}" > /opt/outputs/aws-context-name
+kubectl config view --kubeconfig=my-kube-config -o jsonpath="{.contexts[?(@.context.user=='aws-user')].name}" > /opt/outputs/aws-context-name:
 ```
-## 
+## kubelet
 
 ```yaml
 working with services:
@@ -5046,7 +5053,7 @@ service kubelet status
 
 service kubelet start
 
-## static pod kubelet
+static pod kubelet:
 
 - ca location
 ls /etc/kubernetes/pki/
