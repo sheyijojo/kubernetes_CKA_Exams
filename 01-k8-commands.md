@@ -4915,11 +4915,11 @@ service kubelet status
 check kubeket logs:
 journalctl -u kubelet
 
-## check the certificate
+check the certificate:
 
 openssl x509 -in /var/lib/kubelet/worker-1.crt -text 
 
-## condition types - Flags
+condition types - Flags:
 
 OutOfDisk - False
 MemoryPressure - False
@@ -5124,7 +5124,7 @@ kubernetes cluster.local in-addr.arpa ip6.arpa {
 `
 
 
-This is the backend to k8s for cluster. local and reverse domains.
+This is the backend to k8s for cluster. local and reverse domains.:
 
 `proxy . /etc/resolv.conf`
 
@@ -5155,7 +5155,7 @@ Disable the local DNS cache on host nodes, and restore /etc/resolv.conf to the o
 
 A quick fix is to edit your Corefile, replacing forward . /etc/resolv.conf with the IP address of your upstream DNS, for example forward . 8.8.8.8. But this only fixes the issue for CoreDNS, kubelet will continue to forward the invalid resolv.conf to all default dnsPolicy Pods, leaving them unable to resolve DNS.
 
-3. If CoreDNS pods and the kube-dns service is working fine, check the kube-dns service has valid endpoints.
+3. If CoreDNS pods and the kube-dns service is working fine, check the kube-dns service has valid endpoints.:
 
 kubectl -n kube-system get ep kube-dns
 
@@ -5176,6 +5176,8 @@ Command:
   /usr/local/bin/kube-proxy
   --config=/var/lib/kube-proxy/config.conf
   --hostname-override=$(NODE\_NAME)
+
+
 So it fetches the configuration from a configuration file i.e., /var/lib/kube-proxy/config.conf and we can override the hostname with the node name at which the pod is running.
 
 In the config file, we define the clusterCIDR, kubeproxy mode, ipvs, iptables, bindaddress, kube-config etc.
@@ -5191,7 +5193,7 @@ Troubleshooting issues related to kube-proxy
 
 5. check kube-proxy is running inside the container
 
-# netstat -plan | grep kube-proxy tcp 0 0 0.0.0.0:30081 0.0.0.0:* LISTEN 1/kube-proxy tcp 0 0 127.0.0.1:10249 0.0.0.0:* LISTEN 1/kube-proxy tcp 0 0 172.17.0.12:33706 172.17.0.12:6443 ESTABLISHED 1/kube-proxy tcp6 0 0 :::10256 :::* LISTEN 1/kube-proxy
+ netstat -plan | grep kube-proxy tcp 0 0 0.0.0.0:30081 0.0.0.0:* LISTEN 1/kube-proxy tcp 0 0 127.0.0.1:10249 0.0.0.0:* LISTEN 1/kube-proxy tcp 0 0 172.17.0.12:33706 172.17.0.12:6443 ESTABLISHED 1/kube-proxy tcp6 0 0 :::10256 :::* LISTEN 1/kube-proxy:
 
 References:
 
