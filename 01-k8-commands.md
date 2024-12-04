@@ -5495,6 +5495,9 @@ Write the result to the file /opt/admin2406_data.
 
 kubectl -n admin2406 get deployment -o custom-columns=DEPLOYMENT:.metadata.name,CONTAINER_IMAGE:.spec.template.spec.containers[].image,READY_REPLICAS:.status.readyReplicas,NAMESPACE:.metadata.namespace --sort-by=.metadata.name > /opt/admin2406_data
 
+my solution:
+k get deployments.apps -n admin2406 -o=custom-columns=DEPLOYMENT:.metadata.name,CONTAINER_IMAGE:.spec.template.spec.containers[].image,READY_REPLICAS:.status.readyReplicas,NAMESPACE:.metadata.namespace --sort-by=.metadata.name 
+
 
 2. A kubeconfig file called admin.kubeconfig has been created in /root/CKA. There is something wrong with the configuration. Troubleshoot and fix it.
 
@@ -5538,7 +5541,7 @@ Use the command kubectl run to create a pod definition file. Add secret volume a
 
 Alternatively, run the following command:
 
-kubectl run secret-1401 -n admin1401 --image=busybox --dry-run=client -oyaml --command -- sleep 4800 > admin.yaml
+kubectl run secret-1401 -n admin1401 --image=busybox --dry-run=client -o yaml --command -- sleep 4800 > admin.yaml
 
 
 ---
@@ -5562,12 +5565,10 @@ spec:
     - "4800"
     image: busybox
     name: secret-admin
-    # volumes' mount path
+    #volumes' mount path
     volumeMounts:
     - name: secret-volume
       readOnly: true
       mountPath: "/etc/secret-volume"
-
-
 
 ```
