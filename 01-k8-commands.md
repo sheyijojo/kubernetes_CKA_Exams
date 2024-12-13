@@ -5447,11 +5447,10 @@ kubectl run nginx-critical --image=nginx --dry-run=client -o yaml > static.yaml
 
 Copy the contents of this file or use scp command to transfer this file from controlplane to node01 node.
 
-root@controlplane:~# scp static.yaml node01:/root/
+scp static.yaml node01:/root/
+ kubectl get nodes -o wide
 
-root@controlplane:~# kubectl get nodes -o wide
-
-# Perform SSH
+Perform SSH:
 root@controlplane:~# ssh node01
 OR
 root@controlplane:~# ssh <IP of node01>
@@ -5571,4 +5570,15 @@ spec:
       readOnly: true
       mountPath: "/etc/secret-volume"
 
+```
+## exam part 3
+
+```yml
+kubectl get nodes -o json | jq -c 'paths'
+
+kubectl get nodes -o json | jq -c 'paths | grep type | grep -v condition
+
+kubectl get nodes -o jsonpath='{ .items}' | jq
+
+kubectl get nodes -o jsonpath='{ .items[*].status.addresses[?(@.type=="InternalIP)].addresses}'
 ```
