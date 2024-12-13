@@ -4948,7 +4948,7 @@ json path query:
 .tems[0].spec.containers[0].image
 
 
-kubectl get pods -o=jsonpath='{  .tems[0].spec.containers[0].image    }'
+kubectl get pods -o=jsonpath='{ .tems[0].spec.containers[0].image  }'
 
 kubectl get pods -o=jsonpath='{  .tems[*].metadata.name   }'
 
@@ -5002,7 +5002,7 @@ execise:
 Use JSON PATH query to fetch node names and store them in /opt/outputs/node_names.txt.
 Remember the file should only have node names.
 
-## because nodes are in list
+because nodes are in list:
 
 k get nodes -o=jsonpath='{ .items[0, 1].metadata.name}'
 kubectl get nodes -o=jsonpath='{.items[*].metadata.name}' > /opt/outputs/node_names.txt
