@@ -1,23 +1,21 @@
-
 ## Here’s a tip!
 
 - **As you might have seen already, creating and editing YAML files is a bit difficult, especially in the CLI.**
 - **During the exam, you might find it difficult to copy and paste YAML files from the browser to the terminal.**
-- **Using the kubectl run command can help in generating a YAML template. And sometimes, you can even get away with just the kubectl run command without having to create a YAML file at all.** 
+- **Using the kubectl run command can help in generating a YAML template. And sometimes, you can even get away with just the kubectl run command without having to create a YAML file at all.**
 - **For example, if you were asked to create a pod or deployment with a specific name and image, you can simply run the kubectl run command.**
 
 - **Use the below set of commands and try the previous practice tests again, but this time, try to use the below commands instead of YAML files. Try to use these as much as you can going forward in all exercises.**
 
 - **Reference (Bookmark this page for the exam. It will be very handy):**
 
-
 `https://kubernetes.io/docs/reference/kubectl/conventions/`
 
-## ETCD 
+## ETCD
 
 ```yaml
 - ETCD binaries is downloaded and is stored on port 2379 by default:
-- ETCD is a distributed reliable key-value store that is simple, secure and fast: 
+- ETCD is a distributed reliable key-value store that is simple, secure and fast:
 - ETCD is a key-value pair form of database:
 
 The default client is the .etcdctl:
@@ -39,7 +37,7 @@ value1
 ## If you deployed ETCD yourself from scratch
 - Take note of this option passed in the etcd.service:
 
-## This is the address the etcd listens to, Ip of the master node 
+## This is the address the etcd listens to, Ip of the master node
 --advertise-client-urls https://${INTERNAL_IP} \\
 
 - You need the url configured in the kube-api server when it tries to reach the etcd server
@@ -49,7 +47,7 @@ value1
 
 
 
-## list all keys in the etcd server o the master node 
+## list all keys in the etcd server o the master node
 
 kubectl exec etcd-master -n kube-system etcdctl get / --prefix -keys-only
 
@@ -62,7 +60,7 @@ registry has these under it:
    - replicasets
    - deployments
    - roles
-   - secrets 
+   - secrets
 
 /registry/apiregistration.k8s.io/apiservices/v1.
 
@@ -81,9 +79,15 @@ In PROD, Etcd is in HA:
 
 - ETCDCTL can interact with ETCD Server using 2 API versions – Version 2 and Version 3.
 
+<<<<<<< Updated upstream
 ETCD AUTH :
 - you must also specify the path to certificate files so that ETCDCTL can authenticate to the ETCD API Server.:
 -  The certificate files are available in the etcd-master at the following path.:
+=======
+## ETCD AUTH
+- you must also specify the path to certificate files so that ETCDCTL can authenticate to the ETCD API Server.
+-  The certificate files are available in the etcd-master at the following path.
+>>>>>>> Stashed changes
 
 --cacert /etc/kubernetes/pki/etcd/ca.crt
 --cert /etc/kubernetes/pki/etcd/server.crt
@@ -106,12 +110,18 @@ Non-kubeadm set up , find the kubeapi server at the:
 
 cat /etc/systemd/system/kube-apiserver.service
 
-ps -aux | grep kube-apiserver 
+ps -aux | grep kube-apiserver
 ```
+
 ## Kube-API Server
+
 ```yaml
 
+<<<<<<< Updated upstream
 Information on kubeapi is not needed when using kubeadm to bootstrap the installation:
+=======
+## Information on kubeapi is not needed when using kubeadm to bootstrap the installation
+>>>>>>> Stashed changes
 - You do not need in
 ## But you do if have to set it up from scratch:
 
@@ -128,8 +138,7 @@ specifying auth for etcd and kubelet within the kubeapiserver:
 --kubelet-https=true \\
 ```
 
-## Kube- controller manager 
-
+## Kube- controller manager
 
 ```yaml
 watches for the components in the system, and brings the system to the desired fucntioning state
@@ -141,8 +150,8 @@ Controllers:
 - Node controller - checks node status for every 5secs
    - Node Monitor Period = 5s
    - Node monitor Grace Period = 40s
-   - POD Eviction Timeout = 5m 
-- Replication controller 
+   - POD Eviction Timeout = 5m
+- Replication controller
 - Namespace controller
 - Deployment controller
 - stateful-set and many more
@@ -158,31 +167,34 @@ You can also add the --controllers flag to activate which controllers to use:
 kubeadm and Non-Kubeadm setup:
 - kubeadm setup : /etc/kubernetes/manifests/kube-controller-manager
 
-- non-kubeadm-setup: /etc/systemd/system/kube-controller-manager.service 
+- non-kubeadm-setup: /etc/systemd/system/kube-controller-manager.service
 
 ```
-## Kube Scheduler 
+
+## Kube Scheduler
 
 ```yaml
 - Responsible for scheduling pods on nodes:
 - Decides which pods goes on which nodes:
-- It does not actually place the pods on the nodes, thats a KUBELET JOB: 
+- It does not actually place the pods on the nodes, thats a KUBELET JOB:
 - kubelet is the captain of the ship :
 
 There are many ships with diff sizes, and containers have different workload requirements:
 
 It is important to know what nodes can the pods be scheduled for its destination:
 
-Uses a priority function to see which resources are left like cpu  when the pods has been placed on them 
+Uses a priority function to see which resources are left like cpu  when the pods has been placed on them
 
 components in kube scheduler
 - Resource Requirements and Limits
-- Taints and tolerations 
-- Node Selectors/Affinity 
+- Taints and tolerations
+- Node Selectors/Affinity
 ```
-## Kubelet 
 
-kubescheduler <<  apiserver << kubelet 
+## Kubelet
+
+kubescheduler << apiserver << kubelet
+
 ```yaml
 Captain of the ship:
 - They lead all activities on a ship
@@ -201,7 +213,7 @@ Have to install it mannaully installed on worker nodes :
 
 same with it from scratch:
 
-can be bootstraped 
+can be bootstraped
 ```
 
 ## KubeProxy
@@ -210,7 +222,7 @@ can be bootstraped
 Every pod can reach other pod because of a networking solution:
 
 - pod network is an internal network that span accross all the nodes in the cluster:
-    - To which all pods connect to 
+    - To which all pods connect to
 
 - Services are used for communication amoong pods
    - it is not a container, it is virtual components in the k8 memeory
@@ -223,7 +235,7 @@ kube proxy is a process that runs on each node in a cluster:
 installation
 kubeadm:
   - runs a pod in the kube-system ns:
-  - Infact runs a Daemonset, A single pod is always deployed on each node in the cluster 
+  - Infact runs a Daemonset, A single pod is always deployed on each node in the cluster
 service:
   - download the binaries
 
@@ -233,9 +245,8 @@ kubectl get daemonset -n kube-system
 Done with the highlevel Master Components:
 ```
 
+## Kubectl Pods
 
-
-## Kubectl Pods 
 ```yaml
 Create an NGINX Pod:
 
@@ -248,7 +259,7 @@ kubectl run nginx --image=nginx --dry-run=client -o yaml
 
 kubectl apply -f pod.yaml
 
-kuubectl create -f pod.yaml 
+kuubectl create -f pod.yaml
 
 Create a deployment:
 
@@ -272,8 +283,8 @@ kubectl create -f nginx-deployment.yaml
 
 kubectl create deployment httpd-frontend --image=httpd:2.4-alpine --replicas=3
 ```
-**OR**
 
+**OR**
 
 ```yaml
 
@@ -282,8 +293,8 @@ In k8s version 1.19+, we can specify the –replicas option to create a deployme
 kubectl create deployment --image=nginx nginx --replicas=4 --dry-run=client -o yaml > nginx-deployment.yaml
 ```
 
-
 ## ReplicaSet
+
 ```yaml
 
 Replicaset is the older tech, Replicaset is a little different.
@@ -291,7 +302,7 @@ Role of ReplicaSet is to create multiple instances of a pod
 We have the ReplicationController and Replicaset:
 - Multiple pods to share the loads among them
 - Ensures a number of pods are available
-- RC spans across multiple nodes in the cluster 
+- RC spans across multiple nodes in the cluster
 
 RC- v1
 ReplicaSet - apps/v1
@@ -312,12 +323,13 @@ kubectl scale --replicas=6 -f replicaset-definition.yaml
 
 k scale --replicas=5 replicaset new-replica-set
 ```
+
 ```yaml
 apiVersion: apps/v1
 kind: ReplicaSet
 metadata:
   name: replicaset-2
-  
+
 spec:
   replicas: 2
   selector:
@@ -329,18 +341,15 @@ spec:
         tier: nginx
     spec:
       containers:
-      - name: nginx
-        image: nginx
-
-
+        - name: nginx
+          image: nginx
 ```
-
 
 ## Deployments
 
 ```yaml
 Deploying in a production env :
-Comes higher in the heriarachy 
+Comes higher in the heriarachy
 - Upgrade instances seamlessly:
    - Rolling updates
    - Blue-Green:?
@@ -360,24 +369,25 @@ kubectl create deployment --image=nginx nginx --dry-run=client -o yaml > nginx-d
 
 
 ```
-## Kubernetes services 
+
+## Kubernetes services
 
 ```yaml
 - k8 services Helps us connect apps together with other apps or users:
 - services enable loose coupling between microservices in our app:
 - k8 svc is just an object just like pod or rs
 - Nodeport listens to a port on the node forwards requests to the pods
- 
+
 
 Create a service:
 
-kubectl create service nodeport <service-name> --tcp=<port>:<target-port> -o yaml > service-definition-1.yaml 
+kubectl create service nodeport <service-name> --tcp=<port>:<target-port> -o yaml > service-definition-1.yaml
 
-kubectl create service nodeport my-service --tcp=80:80 -o yaml > service-definition-1.yaml 
+kubectl create service nodeport my-service --tcp=80:80 -o yaml > service-definition-1.yaml
 
-kubectl create service nodeport webapp-service --tcp=30080:8080 -o yaml > service-definition-1.yaml 
+kubectl create service nodeport webapp-service --tcp=30080:8080 -o yaml > service-definition-1.yaml
 
-kubectl create deployment --image=nginx nginx --replicas=4 --dry-run=client -o yaml > nginx-deployment.yaml 
+kubectl create deployment --image=nginx nginx --replicas=4 --dry-run=client -o yaml > nginx-deployment.yaml
 
 
 Target port:
@@ -386,13 +396,12 @@ Target port:
 Port:
 - Port of the service
 
-NodePort: 30000 - 32767 
-- Port on the node 
+NodePort: 30000 - 32767
+- Port on the node
 
 ```
 
-## sample service with declarative model 
-
+## sample service with declarative model
 
 ```yaml
 apiVersion: v1
@@ -403,13 +412,12 @@ metadata:
 spec:
   type: Nodeport
   ports:
-  - targetPort: 80
-    port: 80
-    nodePort: 30008
+    - targetPort: 80
+      port: 80
+      nodePort: 30008
   selector:
     app: myapp
-    type: front-end 
-
+    type: front-end
 ```
 
 ## ClusterIP
@@ -449,12 +457,12 @@ kubectl create service clusterip redis-service --tcp=6379
 kubectl run custom-nginx --image=nginx --port=8080
 ```
 
-## LoadBalancer Service 
+## LoadBalancer Service
 
 ```yaml
-- Need a loadbalancer service to be configured for only supported cloud platform load balancers 
-
+- Need a loadbalancer service to be configured for only supported cloud platform load balancers
 ```
+
 ## Namespaces
 
 ```yaml
@@ -472,7 +480,7 @@ DNS:
 cluster.local: domain
 svc : service
 dev : Namespace
-db-service : Service Name 
+db-service : Service Name
 
 set the context of a ns:
 - kubectl config set-context $(kubectl config current-context) --namespace=dev
@@ -516,8 +524,9 @@ OR:
 
 kubectl get ns | tail -n +2 | grep "" | wc -l
 
-k get pods -n research --no-headers | wc -l 
+k get pods -n research --no-headers | wc -l
 ```
+
 ## Imperative commands
 
 ```yaml
@@ -551,33 +560,32 @@ Create a pod called httpd using the image httpd:alpine in the default namespace.
 kubectl run httpd --image=httpd:alpine --port=80 --expose
 
 ```
+
 ## Declarative
+
 ```yaml
 create an object if it doesnt exist:
 Best approach:
 
-kubectl apply -f nginx.yaml 
+kubectl apply -f nginx.yaml
 ```
+
 ```yaml
 ## Create a new deployment called redis-deploy in the dev-ns namespace with the redis image. It should have 2 replicas.
-
 
 Use imperative commands:.
 
 `kubectl create deployment redis-deploy --image=redis --replicas=2 --namespace=dev-ns
 
 kubectl expose pod httpd --port 80
-
-
 ```
 
-## Scheduling: nodeport for manual scheduling 
-```yaml
+## Scheduling: nodeport for manual scheduling
 
+```yaml
 You do not want to rely on the built-in scheduler:
 
 nodeName is added by default in pods:
-
 
 apiVersion: v1
 kind: Pod
@@ -585,12 +593,13 @@ metadata:
   name: nginx
 spec:
   containers:
-  - image: nginx
-    name: nginx
-  nodeName: node01  # Replace with the name of the node you want to schedule the pod on
-
+    - image: nginx
+      name: nginx
+  nodeName: node01 # Replace with the name of the node you want to schedule the pod on
 ```
+
 ## Labels and Selectors
+
 ```yaml
 Labels and selectors are standard ways to group things together like objects, pods, etc. :
 
@@ -616,7 +625,7 @@ metadata:
    labels:
      app: App1
      function: Front-end
-   ## can add annotations as well 
+   ## can add annotations as well
    annotations:
       buildversion: 1.34
 spec:
@@ -741,14 +750,18 @@ kubectl get pods -o wide
 ```yaml
 Different kind of workloads run in my cluster, would like to dedicate pods to that node:
 1. Set limitation on the pod:
+<<<<<<< Updated upstream
    -  You must have first label your nodes 
+=======
+   -  You must have first labelled your nodes
+>>>>>>> Stashed changes
 spec:
    containers:
    - name: data-processor
      image: data-processor
    nodeSelector:
-     size: Large 
-       
+     size: Large
+
 Label a Node for NodeSelector section:
 kubectl label nodes <node-name> <label-key>=<label-value>
 
@@ -758,7 +771,8 @@ kubectl label nodes node01 color=blue
 
 ```
 
-## Node Affinity 
+## Node Affinity
+
 ```yaml
 Node Affinity and Antiffinity is better and address complex needs, spec affinity should be under pods not Deployment:
 
@@ -770,7 +784,7 @@ metadata:
 spec:
   containers:
   - name: data-processor
-    image: data-processor 
+    image: data-processor
   affinity:
     nodeAffinity:
       requiredDuringSchedulingIgnoredDuringExecution:
@@ -780,7 +794,7 @@ spec:
             operator: In  ##NotIn ##exist
             values:
             -  Large   ##ssd
-            -  Medium          
+            -  Medium
   containers:
   - name: nginx
     image: nginx
@@ -799,11 +813,11 @@ There are two stages when considering Node Affinity:
                       - if preffered, and label is missing, scheduler will ignore node affinity rule, and place it on node anywhere
 
 - DuringExecution -  state pod is running and a change is made in the env that affects node affinity
-By default, DuringExecution is set to default. 
+By default, DuringExecution is set to default.
 ```
 
-
 ## Dry run
+
 ```yaml
 kubectl create deployment red --replicas=2 --image=nginx --dry-run=client -o yaml > sample.yaml
 
@@ -811,6 +825,7 @@ kubectl create deployment red --replicas=2 --image=nginx -o yaml > sample.yaml
 ```
 
 ## Create Deployment with Affinity to a Label on controlnode
+
 ```yaml
 apiVersion: apps/v1
 kind: Deployment
@@ -849,12 +864,14 @@ status: {}
 
 A combination of NodeAffinity and Taints & Toleration:
 Use taint & tolerations to prevent other pods to be placed on a node:
-Use Node Affinity to prevent our pods from being placed on their node 
+Use Node Affinity to prevent our pods from being placed on their node
 
 ```
 
-## Resource and Request 
+## Resource and Request
+
 - specified in the spec container
+
 ```yaml
 spec.containers[].resources.limits.cpu
 spec.containers[].resources.limits.memory
@@ -863,7 +880,9 @@ spec.containers[].resources.requests.cpu
 spec.containers[].resources.requests.memory
 spec.containers[].resources.requests.hugepages-<size>
 ```
+
 ## Resource example
+
 ```yaml
 apiVersion: v1
 kind: Pod
@@ -871,33 +890,32 @@ metadata:
   name: frontend
 spec:
   containers:
-  - name: app
-    image: images.my-company.example/app:v4
-    resources:
-      requests:
-        memory: "64Mi"
-        cpu: "250m"
-      limits:
-        memory: "128Mi"
-        cpu: "500m"
-  - name: log-aggregator
-    image: images.my-company.example/log-aggregator:v6
-    resources:
-      requests:
-        memory: "64Mi"
-        cpu: "250m"
-      limits:
-        memory: "128Mi"
-        cpu: "500m"
-
+    - name: app
+      image: images.my-company.example/app:v4
+      resources:
+        requests:
+          memory: "64Mi"
+          cpu: "250m"
+        limits:
+          memory: "128Mi"
+          cpu: "500m"
+    - name: log-aggregator
+      image: images.my-company.example/log-aggregator:v6
+      resources:
+        requests:
+          memory: "64Mi"
+          cpu: "250m"
+        limits:
+          memory: "128Mi"
+          cpu: "500m"
 
 A container cannot use more cpu above its limits:
 
 This is not the same as memory, the pod will be terminated if it overshoots OOM:
-
 ```
 
 ## Daemonsets
+
 ```yaml
 Daemonsets are like replicasets, but it runs one copy of your pod on each node in your cluste:
 
@@ -935,6 +953,7 @@ kubectly get ds -n kube-system
 ```
 
 ## static pods contd
+
 ```yaml
 Static pods are pods that are created by the kubelet on its own without the intervention from the API server
 
@@ -949,21 +968,21 @@ staticPodPath:  /etc/kubernetes/manifest
 
 check for the static pods using:
 
-docker ps 
+docker ps
 
 get static pods:
 - static pods usually have node name appended to their name, clue to know them
-- check for the owner reference session, check the kind and name. The kind should be like a Node. otherwise could be Relicaset, or any other object 
+- check for the owner reference session, check the kind and name. The kind should be like a Node. otherwise could be Relicaset, or any other object
 
 ## another way of getting pod yaml from a running pod
 kubectl get pod name-of-pod -n kube-system -o yaml
 kubectl get nodes
 
 
-## find config files in linux 
+## find config files in linux
 find /etc -type f -name "*.conf"
 
-## How many static pods exist in this cluster in all namespaces 
+## How many static pods exist in this cluster in all namespaces
 kubectl get pods -A
 
 ## path to directory for the static pod
@@ -976,21 +995,23 @@ cat /var/lib/kubelet/config.yaml   ##for any given static pod config
 ## create a static pod name static-busybox that uses the busy-box image and the command sleep 1000
 
 ```yaml
-kubectl run static-busybox --image=busybox --dry-run=client -o yaml --command -- sleep 1000 > static-busybox.yaml 
+kubectl run static-busybox --image=busybox --dry-run=client -o yaml --command -- sleep 1000 > static-busybox.yaml
 cp static-busybox.yaml  /etc/kubernetes/manifests/
 ```
 
-## watch while your pods get deployed 
+## watch while your pods get deployed
+
 `kubectl get pods --watch`
 
 ## To get nodes in manifest file in another nodes
+
 ```yaml
 Logging in kubernetes:
 
 You need a monitoring server tobe deployed :
 kubectl apply -f https://github.com/kubernetes-sigs/metrics-server/releases/latest/download/components.yaml
 
-kubectl top node 
+kubectl top node
 
 kubectl top pod
 
@@ -1019,7 +1040,9 @@ find an image witing  a pod:
 kubectl describe pod pod-name -n kube-system | grep Image
 
 ```
+
 ## configmap sample
+
 ```yaml
 apiVersion: v1
 data:
@@ -1035,19 +1058,20 @@ metadata:
   creationTimestamp: null
   name: my-scheduler-config
   namespace: kube-system
+```
+
+## custom scheduler.
 
 ```
-## custom scheduler.
-```
 apiVersion: v1
-kind: Pod 
+kind: Pod
 metadata:
   name: nginx
 spec:
   containers:
   - image: nginx
     name: nginx
-  schedulerName: 
+  schedulerName:
      my-scheduler
 
 ```
@@ -1057,7 +1081,7 @@ kubectl logs:
 kubectl logs podname
 
 Rollout and versioning in a deployment:
-- A first deployment triggers a rollout, a new rollout tiggers a new revision 
+- A first deployment triggers a rollout, a new rollout tiggers a new revision
 
 
 See status of deployment(rollout):
@@ -1122,7 +1146,7 @@ spec:
 
 ```
 
-## Application Lifecycle 
+## Application Lifecycle
 
 ```yaml
 
@@ -1195,27 +1219,28 @@ spec:
      - name: ubuntu-sleeper
        image: ubuntu-sleeper
        command: ["sleep2.0"]
-       args: ["10"] 
+       args: ["10"]
 
 ```
 
-## Another options for command 
+## Another options for command
 
 ```yaml
-apiVersion: v1 
-kind: Pod 
+apiVersion: v1
+kind: Pod
 metadata:
-  name: ubuntu-sleeper-3 
+  name: ubuntu-sleeper-3
 spec:
   containers:
-  - name: ubuntu
-    image: ubuntu
-    command:
-      -  "sleep"
-      -  "1200"
+    - name: ubuntu
+      image: ubuntu
+      command:
+        - "sleep"
+        - "1200"
 ```
 
-## Approach for editing 
+## Approach for editing
+
 ```yaml
 kuubectl edit pod name-of-the-pod
 
@@ -1248,8 +1273,9 @@ secrets:
     - name: APP_COLOR
       valueFrom:
           secretKeyRef:
-   
+
 ```
+
 ## Config Map
 
 ```yaml
@@ -1258,7 +1284,7 @@ steps:
 - create configmap and inject into the pods:
 
 
-kubectl create configmap  <config-name> --from-literal=<key>=<value> 
+kubectl create configmap  <config-name> --from-literal=<key>=<value>
 
 
 kubectl create configmap  app-config --from-literal=APP_COLOR=blue \
@@ -1274,7 +1300,7 @@ Injecting ConfigMap different ways into pods:
 1. ## env
 envFrom:
   - configMapRef:
-          name: app-config 
+          name: app-config
 2. ##single env
 
 env:
@@ -1288,28 +1314,28 @@ env:
 volumes
 - name: app-config-volume
   configMap
-    name: app-config 
+    name: app-config
 ```
 
 ## Secrets
 
 ```yaml
 Secrets are stored in encoded format:
--  Create secret and inject it into pod 
+-  Create secret and inject it into pod
 
 kubectl create secret generic db-secret --from-literal=DB_Host=sql01  --from-literal=DB_User=root  --from-literal=DB_password=passw
 ord123
 
 kubectl create secret generic
 
-kubectl create secret generic \ 
+kubectl create secret generic \
 app-secret --from-literal=DB_HOST=mysql \
            --from-literal=DB_HOST=root  \
            --from-literal=DB_password=passwrd
 
 kubectl create secret generic <secret-name> --from-file=<path-to-file>
 
-kubectl create secret generic \ app-secret --from-file=app_secret.properties  
+kubectl create secret generic \ app-secret --from-file=app_secret.properties
 
 
 declarivative:
@@ -1361,33 +1387,30 @@ Do not check in your secret objects to SCM:
 Secrets are not encrypted at rest by default in ETCD:
 ```
 
-
 ```yaml
 spec:
   containers:
-   - name : simpleapp
-     image: simpleapp
-     ports:
-       - containerPort: 8080
-     envFrom:
-       - secretRef:
+    - name: simpleapp
+      image: simpleapp
+      ports:
+        - containerPort: 8080
+      envFrom:
+        - secretRef:
             name: app-secret
-
 
 ## single env
 env:
- - name: DB_Password
-   valueFrom:
-     secretkeyRef:
-       name: app-secret
-       key: DB_Password
+  - name: DB_Password
+    valueFrom:
+      secretkeyRef:
+        name: app-secret
+        key: DB_Password
 
 ## volumes
 volumes:
-- name: app-secret-volume
-  secret:
-    secretName: app-secret
-
+  - name: app-secret-volume
+    secret:
+      secretName: app-secret
 ```
 
 ## Encrypting a Secret
@@ -1462,7 +1485,7 @@ In the volume mount section of kubeapi-server
     volumeMounts:
     - name: enc                           # add this line
       mountPath: /etc/kubernetes/enc      # add this line
-      readOnly: true  
+      readOnly: true
 
 In the volume section:
   volumes:
@@ -1479,12 +1502,13 @@ ps aux | grep kube-api| grep encryp
 create another secret file literal:
 
 ensure all secrets are ecrypted:
-The command reads all Secrets and then updates them to apply server side encryption 
+The command reads all Secrets and then updates them to apply server side encryption
 
 kubectl get secrets --al-namsepaces -o json | kubectl replace -f -
 ```
 
 ## Creating a Multi Container Pod
+
 ```yaml
 kubectl run yellow --image=busybox --dry-run=client -o yaml --command -- sleep 1000 > mysample.yaml
 
@@ -1505,7 +1529,9 @@ edit pod in a namespace:
 k edit pod app -n elastic-stack
 
 ```
+
 ## Init containers
+
 ```yaml
 The process running in the log agent container is expected to stay alive as long as the web application is running:
 If any of them fail, the POD restarts:
@@ -1513,9 +1539,7 @@ If any of them fail, the POD restarts:
 But at times you may want to run a process that runs to completion in a container.:
 For example, a process that pulls a code or binary from a repository that will be used by the main web application.:
 
-
 That's where initContainers comes in. An initContainer is configured in a pod-like all other containers, except that it is specified inside a initContainers section, like this:
-
 
 apiVersion: v1
 kind: Pod
@@ -1525,22 +1549,20 @@ metadata:
     app: myapp
 spec:
   containers:
-  - name: myapp-container
-    image: busybox:1.28
-    command: ['sh', '-c', 'echo The app is running! && sleep 3600']
+    - name: myapp-container
+      image: busybox:1.28
+      command: ["sh", "-c", "echo The app is running! && sleep 3600"]
   initContainers:
-  - name: init-myservice
-    image: busybox
-    command: ['sh', '-c', 'git clone  ;']
-
+    - name: init-myservice
+      image: busybox
+      command: ["sh", "-c", "git clone  ;"]
 
 You can configure multiple such initContainers as well:
 like how we did for multi-containers pod. In that case, each init container is run one at a time in sequential order.:
-
-
 ```
 
 ## Error - pods not valid after editing a pod
+
 ```yaml
 Run this:
 
@@ -1548,7 +1570,7 @@ Run this:
 
 `k replace --force -f /tmp/kubectl-edit2222323.yaml`
 
-This will delete the pod and recreate a new one 
+This will delete the pod and recreate a new one
 
 ## Get all information on all pods
 
@@ -1564,9 +1586,11 @@ check the logs of the inti container:
 
 k logs orange -c init-myservcie
 ```
+
 ## Os Updates
 
 > When working with workloads on a node
+
 ```yaml
 Scenario is when working on the nodes for patches, os updates and so on:
 
@@ -1579,7 +1603,7 @@ kubectl drain node-1
 k drain --ignore-daemonsets node01
 
 if a pod is not part of a Repliset: lost forever:
-k drain node01 --force --ignore-daemonsets 
+k drain node01 --force --ignore-daemonsets
 
 
 pods are gracefully terminated , and recreated on another , no pods can be scheduled on this drained node:
@@ -1595,12 +1619,13 @@ kubectl cordon node-01
 
 k describe nodes
 
-## Get pods with node details 
+## Get pods with node details
  k get pods -o wide
 ```
 
-## Kubernetes Releases and K8 CLuster Upgrade 
-```yaml
+## Kubernetes Releases and K8 CLuster Upgrade
+
+````yaml
 
 When we install a kubernetes cluster, we install a specific version of k8:
 check the version:
@@ -1626,7 +1651,7 @@ but.......:
 controller manager amd kube-scheduler can be at one version lower: X-1
 kubelet and kube-proxy can be at two version lower: X-2
 
-However, kubectl: X+1 Can be at one version higher than the kube-apiserver 
+However, kubectl: X+1 Can be at one version higher than the kube-apiserver
 
 
 
@@ -1694,7 +1719,7 @@ kubectl uncordone controleplane
 upgrading worker nodes:
 https://kubernetes.io/docs/tasks/administer-cluster/kubeadm/upgrading-linux-nodes/
 
-change the package repo like above 
+change the package repo like above
 
 # replace x in 1.31.x-* with the latest patch version
 sudo apt-mark unhold kubeadm && \
@@ -1717,9 +1742,7 @@ sudo systemctl restart kubelet
 kubectl uncordone node01
 
 kubectl get node
-```
-
-
+````
 
 ## Cluster Upgrade Version 2
 
@@ -1752,12 +1775,8 @@ systemctl restart kubelet
 
 ```
 
-
-
-
-
-
 ## Cluster Updgrade Process
+
 ```yaml
 
 steps:
@@ -1770,14 +1789,14 @@ check the current local version of kubeadm tool, also check the remote version:
 vim /etc/apt/sources.list.d/kubernetes.list
 
 1. check the latest version available for an upgrade with the current version of the kubeadm tool installed?:
-kubeadm upgrade plan 
+kubeadm upgrade plan
 
 2.Notes: to upgrade the cluster, upgrade the kubeadm tool first:
 
 kubeadm upgrade apply v1.31.0
 
 3. you still see masternodes at v1.11:
-kubectl get nodes 
+kubectl get nodes
 
 - This is because, d output of this command, it shows the versions of kubelets on each of these nodes registered:
 - with the apiserver and not the version of the apiserver itself:
@@ -1794,7 +1813,7 @@ k drain node01
 apt-get upgrade -y kubeadm=1.12.0-00
 apt-get upgrade -y kubelet=1.12.0-00
 kubeadm upgrade node config --kubelet-version v1.12.0
-systemctl restart kubelet 
+systemctl restart kubelet
 
 6.make the node schedulable:
 kubectl uncordon node01
@@ -1864,7 +1883,7 @@ apt-get upgrade -y kubelet=1.12.0-00
 apt-get install kubelet=1.30.0-1.1
 systemctl restart kubelet
 
-k get nodes 
+k get nodes
 workers node not updated yet:
 
 update them one after the other:
@@ -1893,7 +1912,8 @@ systemctl restart kubelet
 make the node schedulable:
 
 kubectl uncordon node-1
-``` 
+```
+
 ## Backup - Resource configs
 
 ```yaml
@@ -1997,7 +2017,6 @@ snapshot save /opt/snapshot-pre-boot.db
 
 ```
 
-
 ## Restore a backup
 
 ```yaml
@@ -2012,7 +2031,7 @@ Note: In this case, we are restoring the snapshot to a different directory but i
 As a result, the only required option for the restore command is the --data-dir.
 
 
-## update the k8 dir 
+## update the k8 dir
 Next, update the
 vim  /etc/kubernetes/manifests/etcd.yaml:
 
@@ -2047,11 +2066,11 @@ make sure that the volumeMounts for etcd-data is updated as well,
 with the mountPath pointing to /var/lib/etcd-from-backup (THIS COMPLETE STEP IS OPTIONAL AND NEED NOT BE DONE FOR COMPLETING THE RESTORE)
 ```
 
-## working with multiple k8 clusters 
+## working with multiple k8 clusters
 
 ```yaml
 ## get the all clusters
-k config get-clusters 
+k config get-clusters
 k config get-context
 
 # How many nodes (both controlplane and worker) are part of cluster1?
@@ -2093,14 +2112,16 @@ ls /etc/kubernetes/manifests/ | grep -i etcd
 
 ## You can see the same information by inspecting the kube-apiserver pod (which runs as a static pod in the kube-system namespace):
 ## The kubeapi server needs the etcd datastore and as such why we reference it.
-kubectl -n kube-system describe pod kube-apiserver-cluster2-controlplane 
+kubectl -n kube-system describe pod kube-apiserver-cluster2-controlplane
 
 ```
 
-## external server 
+## external server
+
 How many nodes are part of the ETCD cluster that etcd-server is a part of?
 
-ssh into etcd server 
+ssh into etcd server
+
 ```yaml
 ETCDCTL_API=3
 
@@ -2111,7 +2132,7 @@ ber list
 ## Take a backup of etcd on cluster1 and save it on the student-node at the path /opt/cluster1.db
 Next, inspect the endpoints and certificates used by the etcd pod. We will make use of these to take the backup.
 
-Remember it is a static pod 
+Remember it is a static pod
 
 kubectl describe  pods -n kube-system etcd-cluster1-controlplane  | grep advertise-client-urls
       --advertise-client-urls=https://192.160.244.10:2379
@@ -2200,7 +2221,7 @@ etcd-server /var/lib ➜  ls -ld /var/lib/etcd-data-new/
 
 Step 5: Finally, reload and restart the etcd service.
 
-etcd-server ~ ➜  systemctl daemon-reload 
+etcd-server ~ ➜  systemctl daemon-reload
 etcd-server ~ ➜  systemctl restart etcd
 
 
@@ -2211,7 +2232,7 @@ Step 6 (optional): It is recommended to restart controlplane components (e.g. ku
 https://github.com/etcd-io/website/blob/main/content/en/docs/v3.5/op-guide/recovery.md
 ```
 
-## Security in Kubernetes 
+## Security in Kubernetes
 
 ```yaml
 Acess to the host must be very secured, if that is compromised everything is compromised:
@@ -2259,7 +2280,7 @@ Assymetric using openssl to generate pub and private key pair on the server, ser
 openssl genrsa -out my-bank.key 1024
 
 - user gets the pub key from the server
-- user sends the pub key to the server and server decrypyts with priavte key 
+- user sends the pub key to the server and server decrypyts with priavte key
 
 This is different from ssh-keygen
 
@@ -2299,7 +2320,7 @@ flow of PKI:
 - symmetric key is used for communication going forward:
 ```
 
-## Root cert, Client cert, Server Cert 
+## Root cert, Client cert, Server Cert
 
 ```yaml
 server components that need certs:
@@ -2311,13 +2332,13 @@ client components through REST to Kube-Api server:
 Admin(us) - admin.crt admin.key
 scheduler - schedular.crt scheduler.key
 kube controller manager
-kubeproxy 
+kubeproxy
 ```
 
-
-## Generate Certificate for the cluster 
+## Generate Certificate for the cluster
 
 Must have at least one certificate authority that to sign this certificate
+
 ```yaml
 certificate tools:
 EASYRSA OPENSSL CFSSL
@@ -2405,14 +2426,14 @@ DNS.4 = KUBERNETES.DEFAULT.SVC.CLUSTER.LOCAL
 1P.1 = 10.96.0.1
 
 sign the certificate:
-OPENSSL X509 -req -in apiserver.csr -CA ca.crt -CAkey ca.key -cacreateserial -out apiserver.crt -extensions v3_req -extfile openssl.cnf -days 1000 
+OPENSSL X509 -req -in apiserver.csr -CA ca.crt -CAkey ca.key -cacreateserial -out apiserver.crt -extensions v3_req -extfile openssl.cnf -days 1000
 
 apiserver.crt:
 
 pass the value to usr/local/bin/kube-apiserver:
 ```
 
-## kubernetes- view certificate details 
+## kubernetes- view certificate details
 
 ```yaml
 The hard way - from scratch:
@@ -2439,7 +2460,7 @@ kubectl logs etcd-master
 ## can go down t docker
 
 docker ps -a
-docker logs containerid 
+docker logs containerid
 
 
 ## grep additions
@@ -2462,13 +2483,14 @@ docker logs containerid
 ## connection with kube-api server refused
 docker ps -a | grep etcd
 
-## use crtctl for crio environments 
+## use crtctl for crio environments
 crtctl ps -a
-//used for envs using crio instead of docker 
+//used for envs using crio instead of docker
 
 ```
 
 ## Certificates API
+
 ```yaml
 ## TLS Certtificates - Certificates wotkflow and API
 Kubernetes has a certificate buit-in API
@@ -2491,7 +2513,7 @@ kubectl get csr
 
 ## approve the reuest
 
-kubectl certifcate approve jane 
+kubectl certifcate approve jane
 
 
 ## get certifcate in yaml format
@@ -2512,7 +2534,7 @@ Anyone who needs to sign certifcate need the CA server root certificcate and pri
 --cluster-signing-cert-file=/etc/kubernetes/pki/ca.key
 ```
 
-## Example of creating and approving certificate 
+## Example of creating and approving certificate
 
 ```yaml
 - Create a CertificateSigningRequest object with the name akshay with the contents of the akshay.csr file
@@ -2536,7 +2558,7 @@ spec:
   request: $(cat akshay.csr | base64 | tr -d '\n')
   signerName: kubernetes.io/kube-apiserver-client
   usages:
-  - client auth 
+  - client auth
 EOF
 
 kubectl get scr
@@ -2555,7 +2577,7 @@ k certificate deny agent-smith
 
 Use a context with a different file name and location:
 
-kubectl config use-context research --kubeconfig /root/my-kube-config 
+kubectl config use-context research --kubeconfig /root/my-kube-config
 
 $HOME/.kube/config:
 kubectl config view
@@ -2582,8 +2604,8 @@ kind: Config
 clusters:
 - name: production
   cluster:
-    certificate-authority: /etc/kubernetes/pki/ca.crt  
-   ## certificate-authority-data: encoded base64 
+    certificate-authority: /etc/kubernetes/pki/ca.crt
+   ## certificate-authority-data: encoded base64
     server: https://controlplane:6443
 
 - name: development
@@ -2648,7 +2670,8 @@ Error in configuration: context was not found for specified context: dev-user@re
 
 ```
 
-## API Groups 
+## API Groups
+
 ```yaml
 Core API and Named API Groups:
 
@@ -2674,10 +2697,10 @@ kubectl proxy
 ## after the service has started
 curl http://locahost:8001 -k
 
-kube proxy is not equal to kubectl proxy 
+kube proxy is not equal to kubectl proxy
 ```
 
-## Authorization 
+## Authorization
 
 ```yaml
 using namespaces to partition users and service account:
@@ -2697,17 +2720,17 @@ Always Allow
 Always Deny
 
 check the mdoe in the /usr/local/bin/kube-apiserver:
-- By default 
+- By default
 --authorization-mode=AlwyasAllow
 
 you can set MUTLIPLE node Auth:
-- It is processed in sequence 
+- It is processed in sequence
 --authorization-mode=Node,RBAC,Webhook
 
 
 
 RBAC:
-kubectl create role developer --verb=list,create,delete --resource=pods 
+kubectl create role developer --verb=list,create,delete --resource=pods
 
 RBAC:
 - Can also create a yaml file with rbac.authorization.k8s.io/v1
@@ -2735,7 +2758,7 @@ rules:
 kubectl create -f developer-group.yaml
 
 link a user to the role object using ROLE BINDING object:
-kubectl create rolebinding dev-user-binding --role=developer --user=dev-user 
+kubectl create rolebinding dev-user-binding --role=developer --user=dev-user
 
 
 Kind: RoleBinding
@@ -2747,7 +2770,7 @@ Get roles:
 kubectl get roles
 kubectl get roles -A
 
-ps -aux | grep authorization 
+ps -aux | grep authorization
 
 k get roles kube-proxy -n kube-system -o yaml
 
@@ -2790,7 +2813,9 @@ subjects:
 answer is  system:bootstrappers:kubeadm:default-node-token
 
 ```
+
 ## Task
+
 ```yaml
 
 k --as dev-user create deployement nginx --image=nginx -n blue
@@ -2873,10 +2898,11 @@ rules:
 
 ```
 
-## Cluster Roles and Roles Binding 
+## Cluster Roles and Roles Binding
+
 ```yaml
 
-cluster scope resources 
+cluster scope resources
 get resources in a namsepace:
 kubectl api-resources --namespaced=true
 
@@ -2951,10 +2977,12 @@ rules:
 
 ```
 
-## Service Accounts in Kubernetes 
-Every namespace has a default service account 
+## Service Accounts in Kubernetes
+
+Every namespace has a default service account
 
 A service account in Kubernetes is a non-human identity that provides a way for applications to authenticate to a Kubernetes cluster's API server
+
 ```yaml
 There are two kinds of accounts -:
 - service account - used by machines like jenkins, prometheus
@@ -2968,7 +2996,7 @@ kubectl get serviceaccount
 
 service account create token stored as a secret object:
 The token is used by the app to authenticate to the k8 api:
-The secret obj is then linked to the service account: 
+The secret obj is then linked to the service account:
 
 kubectl describe secret <secret-name>
 
@@ -3026,7 +3054,7 @@ make sure is inside the container spec:
 
 ```
 
-## Private Repository 
+## Private Repository
 
 ```yaml
 docker login private-registry.io
@@ -3061,7 +3089,7 @@ secret/private-reg-cred created
 
 ```
 
-## DOCKER SECURITY 
+## DOCKER SECURITY
 
 ```yaml
 advisable to specify user to run processes in a container:
@@ -3083,10 +3111,11 @@ docker run --cap-drop KILL ubuntu
 
 run with all priviledges:
 
-docker run --privileged ubuntu 
+docker run --privileged ubuntu
 ```
 
-## Security Context 
+## Security Context
+
 ```yaml
 security context on the spec/kubernetes level:
 spec:
@@ -3110,20 +3139,23 @@ spec:
         capablities:
            add:  ["MAC_ADMIN"]
 
-//CAPABILTIES ARE ONLY SUPPORTED A THE CONTAINER LEVEL 
+//CAPABILTIES ARE ONLY SUPPORTED A THE CONTAINER LEVEL
 
 
 check which user is running processes on a pod:
 
-kubectl exec ubuntu-sleeper -- whoami 
+kubectl exec ubuntu-sleeper -- whoami
 
 ```
+
 ## Network Policy
-- By default, all pods talk to each other 
+
+- By default, all pods talk to each other
 - link a Network Policy to a pod
-Use labels and selectors
+  Use labels and selectors
 - label the pod
-- use podSelector in the network policy 
+- use podSelector in the network policy
+
 ```yaml
 apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
@@ -3147,9 +3179,9 @@ spec:
         cidr: 192.168.5.10/32
    ports:
    - protocol: TCP
-     PORT: 3306 
+     PORT: 3306
 
-  
+
 add external ip not part of the cluster , see above:
 
 
@@ -3207,7 +3239,7 @@ So this is allowing internal app to allow traffic out only to DB and payroll and
 - Egress Allow: payroll
 - Payroll Port: 8080
 - Egress Allow: mysql
-- MySQL Port: 3306 
+- MySQL Port: 3306
 
 
 
@@ -3243,7 +3275,9 @@ spec:
       port: 8080
 
 ```
+
 ## kubectx
+
 ```yaml
 https://github.com/ahmetb/kubectx
 
@@ -3350,7 +3384,7 @@ storage drivers - Dependent on OS:
 AUFS | ZFS | BTRFS | DEVICE MAPPER | OVERLAY
 
 example of volumes on my local computer:
-─ docker volume inspect buildx_buildkit_devops-builder0_state                                              
+─ docker volume inspect buildx_buildkit_devops-builder0_state
 [
     {
         "CreatedAt": "2024-08-07T16:45:54Z",
@@ -3368,15 +3402,18 @@ using rexray volume driver to provision ebs volume from was in the cloud:
 docker run -it \
   --name mysql
   --volume-driver rexray/ebs
-  --mount src=ebs-vol,target=/var/lib/mysql mysql 
+  --mount src=ebs-vol,target=/var/lib/mysql mysql
 ```
 
-## Now Kubernetes Volume 
+## Now Kubernetes Volume
+
 Key Difference:
+
 - Volumes are ephemeral and scoped within a Pod’s lifecycle unless backed by a persistent solution.
 - Storage, especially through PVs and PVCs, is a more permanent solution and can outlive the Pod or be reused by different Pods.
 - So, volumes are more about how data is mounted and accessed in running containers,
--  while storage often refers to the broader, persistent, and external data storage mechanisms.
+- while storage often refers to the broader, persistent, and external data storage mechanisms.
+
 ```yaml
 CRI - Container Runtime Interface
 CNI - Container Networking Interface
@@ -3394,7 +3431,7 @@ volume and mounts:
 - Use a dir in the host location for example
 - Every file created in the volume would be stored in the dir data on my node
 - After specificing the vol and storage,  to access it from the container,mount it to  ..
-- a dir inside the container 
+- a dir inside the container
 spec:
   containers:
   volumes:
@@ -3404,14 +3441,14 @@ spec:
        type: Directory
 
 to access the volume from a container using volume mount:
-- volumemount is spec.container level 
+- volumemount is spec.container level
 spec:
   containers
   - image: alpine
      volumeMounts:
      - mountPath: /opt
-       name: data-volume 
-   
+       name: data-volume
+
 
 volumes:
   - name: data-volume
@@ -3477,7 +3514,7 @@ spec:
      - ReadWriteOnce
   resources:
      requests:
-       storage: 500Mi 
+       storage: 500Mi
 
 k create -f .yaml
 
@@ -3512,7 +3549,9 @@ spec:
 
   persistentVolumeReclaimPolicy: Retain
 ```
+
 ## persistentvolumeclaim - make a storage available to a node
+
 ```yaml
 apiVersion: v1
 kind: PersistentVolumeClaim
@@ -3521,11 +3560,12 @@ metadata:
 spec:
   accessModes:
     - ReadWriteOnce
- # volumeMode: Filesystem
+  # volumeMode: Filesystem
   resources:
     requests:
       storage: 8Gi
 ```
+
 ```yaml
 Let us claim some of that storage for our application. Create a Persistent Volume Claim with the given specification:
 
@@ -3591,8 +3631,10 @@ metadata:
 ```
 
 ## Storage classes
+
 - eliminate the need for a pv
 - create a storage class and reference it in a PVC
+
 ```yaml
 Static prvisioning volume:
 
@@ -3613,7 +3655,7 @@ STEPS:
 - pvc reference the storage class at the spec level
 spec:
   storageClassName: google-storage
-- reference the PVC in the volumes of pod at the spec level 
+- reference the PVC in the volumes of pod at the spec level
 
 notes:
 info
@@ -3622,7 +3664,7 @@ info
 
 step1:
  - create a google storage class for dynamic volume provisioning
- 
+
 storageclass.yaml:
 
 apiVersion: storage.k8s.io/v1
@@ -3673,13 +3715,14 @@ spec:
 ```
 
 ## Networking in Linux
+
 ```yaml
 In Linux:
 list and modify interfaces on the host:
 ip link
 
 see the ip addrs assigned to those interfaces ip addr:
-ip addr 
+ip addr
 
 
 set ip addrs to those interfaces:
@@ -3698,7 +3741,9 @@ check if ip forwarding is enabled, must be set to 1:
 cat  /proc/sys/net/ipv4/ip_forward
 
 ```
+
 ## DNS configuration in Linux Host
+
 ```yaml
 host A wanna ping system B with a host name db - name resolution:
 - on host A
@@ -3744,17 +3789,17 @@ ip netns add red
 ip netns add blue
 
 list the network namespaces:
-ip netns 
+ip netns
 
 run inside the ns to check for interfaces, syou can run for host too:
-this network ns do not have interface yet and no network connnectivity: 
+this network ns do not have interface yet and no network connnectivity:
 ip netns exec red ip link
 ip -n red link
 ip -n red arp
 
 
 connect two namespaces using a virtual internet pair/cable:
-- use a virtual ethernet pair 
+- use a virtual ethernet pair
 
 ip link add veth-red type veth peer name veth-blue
 
@@ -3795,7 +3840,7 @@ ip netns exec red arp
 ## check the newly created virtual interface
 ip link
 
-## turn up the virtual network switch  
+## turn up the virtual network switch
 ip link set dev v-net-0 up
 
 - it is more like an interface for the host
@@ -3839,7 +3884,7 @@ ip -n red addr add 192.168.15.1 dev veth-red
 
 ip -n blue addr add 192.168.15.1 dev veth-blue
 
-## turn the 4 interfaces up to connect to the bridge network 
+## turn the 4 interfaces up to connect to the bridge network
 ip -n red link set  veth-red up
 
 ip -n red link set  veth-red up
@@ -3889,7 +3934,7 @@ ip netns exec blue ping 192.168.1.3
 
 
 ## Need NAT enabled on the host, to send a message to the LAN
-- Mask the ip addr coping from source network with the host add 
+- Mask the ip addr coping from source network with the host add
 
 iptable -t nat -A POSTROUTING -s 192.168.15.0/24 -j MASQUERADE
 
@@ -3913,13 +3958,13 @@ ping 192.168.15.2
 
 ## solution
  Two options
-- port forwarding roles 
+- port forwarding roles
 - expose the private addr identity of the ns to the host route table
 
 ist option is the right way
 
 ## any traffic coming on port 80 on the local host to be forwarded to port 80 of the ns
-iptables -t nat -A PREPOUTING --dport 80 --to-destination 192.168.15.2:80 -j DNAT 
+iptables -t nat -A PREPOUTING --dport 80 --to-destination 192.168.15.2:80 -j DNAT
 
 
 
@@ -3939,14 +3984,14 @@ Either add rules to IP Tables to allow traffic from one namespace to another. Or
 
 ```yaml
 1 no network - docker cannot nreach the outisde world and vice-versa :
-docker run --network none nginx 
+docker run --network none nginx
 
 
 2 host network:
 - container is attached to the host network
 - if you deploy a web app on port 80, then the app is available on port 80 on the host
 
-docker run --network host nginx 
+docker run --network host nginx
 
 if you try and rerun because it wont work, two process cannot share the same port at the same time:
 
@@ -3969,16 +4014,16 @@ ip -n <ns id/container network id> link
 
 external users need ton access the docker container:
 - use port mapping
-- users can access port 80 of the container through the port 8080 on the host 
+- users can access port 80 of the container through the port 8080 on the host
 docker run -p 8080:80 nginx
 
 curl http://192.168.1.10:8080
 
 
-iptables -nvL -t nat 
+iptables -nvL -t nat
 ```
 
-## Cluster Networking 
+## Cluster Networking
 
 ```yaml
 
@@ -3995,7 +4040,7 @@ Important commands:
 
 K8 consist of master and worker nodes:
 - Each nodes should have at least one interface connected to a network  with IP addr
-- The host should have ubique histname set and a unique mac address 
+- The host should have ubique histname set and a unique mac address
 
 search for numeruc, programs, listening, -i - not case sensitive:
 
@@ -4033,16 +4078,16 @@ ip a | grep -B2 192.23.97.3
 - ip a lists all network interfaces and their IP addresses.
 - grep -B2 searches for the string 192.23.97.3 and displays 2 lines before the match.
 
-eth0@if25557: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1450 qdisc noqueue state UP group default 
+eth0@if25557: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1450 qdisc noqueue state UP group default
     link/ether 02:42:c0:17:61:03 brd ff:ff:ff:ff:ff:ff link-netnsid 0
     inet 192.23.97.3/24 brd 192.23.97.255 scope global eth0
 
 
-- ip show route default 
+- ip show route default
  What is the port the kube-scheduler is listening on in the controlplane node?:
 netstat -nplt
 
-netstat -npl | grep -i scheduler 
+netstat -npl | grep -i scheduler
 
 Notice that ETCD is listening on two ports. Which of these have more client connections established?:
 
@@ -4069,36 +4114,42 @@ Ques: We use Containerd as our container runtime. What is the interface/bridge c
 Check for CNI bridge using network namespaces:
 ip nets
 ```
-## Pod Networking 
+
+## Pod Networking
+
 <img src="https://github.com/sheyijojo/kubernetes_CKA_Exams/blob/main/pdfs/network-1.png?raw=true" alt="Description" width="800">
 
 ```yaml
 k8 Networking Model:
-- Every pod should have an IP Address
-- Every pod should be able to talk with every other pod in the same node
-- Every pod should be able to talk with every other Pod on other nodes without NAT
+  - Every pod should have an IP Address
+  - Every pod should be able to talk with every other pod in the same node
+  - Every pod should be able to talk with every other Pod on other nodes without NAT
 
 CNI:
-- CNI helps run script on each pod created automatically
-- E.g a script that helps add IP addr and ns , and connects pods to the route network 
+  - CNI helps run script on each pod created automatically
+  - E.g a script that helps add IP addr and ns , and connects pods to the route network
 
 Container Runtime:
-- A container runtime on each nodes is responbisible for  creating container
-- Container runtime then looks at the CNI configuration and looks for the script I created
-- /etc/cni/net.d/net-script.conflist
-- Then looks at the bin directory /opt/cni/bin/net-script.sh , and executes the script  
+  - A container runtime on each nodes is responbisible for  creating container
+  - Container runtime then looks at the CNI configuration and looks for the script I created
+  - /etc/cni/net.d/net-script.conflist
+  - Then looks at the bin directory /opt/cni/bin/net-script.sh , and executes the script
 ```
-## CNI in Kubernetes 
+
+## CNI in Kubernetes
+
 ```yaml
 - In k8, the container plugins are installed  in :
 ls /opt/cni/bin
 
 - which plugin to be used is stored here:
-/etc/cni/net.d/ 
+/etc/cni/net.d/
 ```
 
 ## CNI Weave
+
 - Solution based on CNI Weaveworks
+
 ```yaml
 kubectl apply -f https://github.com/weaveworks/weave/releases/download/v2.8.1/weave-daemonset-k8s.yaml
 
@@ -4107,7 +4158,7 @@ kubectl apply -f https://github.com/weaveworks/weave/releases/download/v2.8.1/we
 - It deploys an gent or service on each node
 -The communcate with each other to exchange information.
 - Waeve makes ure PODS have the correct route configured to reach the agent
-- The agent takes of other PODS 
+- The agent takes of other PODS
 
 
 DEPLOYING WEAVES ON A CLUSTER:
@@ -4123,10 +4174,11 @@ questions:
 Inspect the kubelet service and identify the container runtime endpoint value is set for Kubernetes.:
 ps aux | grep -i kubelet | grep containerd
 
-ps aux | grep -i kubelet | grep container-runtime 
+ps aux | grep -i kubelet | grep container-runtime
 ```
 
 ## Plugin for IP Management - IPAM
+
 ```yaml
 CNI outsourced IP management to DHCP and host-local:
 
@@ -4169,12 +4221,13 @@ What POD OR addr range configured on weave:
 
 kubctl logs -n kube-system weave-nt-mknr5
 
-kubectl exec busybox -- ip route 
+kubectl exec busybox -- ip route
 ```
 
-## Service Networking 
+## Service Networking
+
 ```YAML
-- You will rarely configure pods to talk with each other, you will usually use a SERVICE. 
+- You will rarely configure pods to talk with each other, you will usually use a SERVICE.
 When a service is created, it is accessible on all pods on the cluster:
 
 - a service is hosted accross a cluster, not bound to a specific node:
@@ -4247,17 +4300,18 @@ k logs kube-proxy-ltbmp  -n kube-system | grep kube-proxy
 
 General commands:
 
-kubectl get all --all-namespaces 
+kubectl get all --all-namespaces
 
 ```
 
-## DNS in Kubernetes 
-- k8 deploys a built-in DNS server by default when you set up the cluster 
+## DNS in Kubernetes
+
+- k8 deploys a built-in DNS server by default when you set up the cluster
 - If you set it up manually, then you have to build it yourself
 - How DNS help Pods resolve each other
 - Focus is purely on PODs and services within the cluster.
 - Whenever the service is created, DNS creates a record and mapping its IP to the DNS
-  
+
 ```yaml
 ## can reach a webserver from a pod within the same namespace
 curl http://web-service
@@ -4271,7 +4325,7 @@ curl http://web-service.apps.svc
 
 ## How services are resolved within the cluster
 
-## FQDN for svc- all services and PODS are groupeed togther into a troot domain for the cluster, which is cluster.local by default 
+## FQDN for svc- all services and PODS are groupeed togther into a troot domain for the cluster, which is cluster.local by default
 curl http://web-service.apps.svc.cluster.local
 
 
@@ -4281,10 +4335,11 @@ curl http://10-244-2-5.apps.pod.cluster.local
 ```
 
 ## CORE DNS in Kubernetes
+
 Every time a pod or service is created it adds a record for it in its database
 
 ```yaml
-- Get Information on the root domain of the cluster in the ConfigMap object 
+- Get Information on the root domain of the cluster in the ConfigMap object
 DNS server maps IP address to services but not the same approach to PODs
 
 - For pods it forms hostname by replacing the dots in IP with dashes. it maps ip with pp-dashes
@@ -4296,7 +4351,7 @@ Recommended DNS server is CoreDNS:
 as part of a replicaset.
 - This POD runs the coredns EXECUTABLE.
 - k8 uses a file called corefile  `cat /etc/coredns/corefile`, which has a number of plugins configured
-- the corefile is passed into the pod has a configMap object. 
+- the corefile is passed into the pod has a configMap object.
 
 How does pod point to the dns SERVER, what address does the pod use to point to:
 - when the dns is deployed, it also creates a service to make it available to other components within a cluster
@@ -4335,10 +4390,9 @@ From the hr pod nslookup the mysql service and redirect the output to a file /ro
  k exec -it hr -- nslookup mysql.payroll > /root/CKA/nslookup.out
 ```
 
-## Ingress in Kubernetes 
+## Ingress in Kubernetes
 
-
-```yaml
+````yaml
 You have load balancers provisioned on google cloud:
 - load balancer is sitting in front of your servcies
 - How do you direct traffic from different load balancers, manage ssl certs, firewall rules
@@ -4368,7 +4422,7 @@ steps:
 
 
 You need an Ingress Controller for Ingress Resource:
-Apparently configured as a deployment 
+Apparently configured as a deployment
 
 ```yaml
 apiVersion: apps/v1
@@ -4486,22 +4540,22 @@ data:
   worker-processes: "2"
 
 
-```
-
+````
 
 ## create INGRESS resource:
+
 ```yaml
 - More about routing traffic and whataview
 
 Use rules when you wanna route traffic on diff conditions:
-- host field diffentiates a yaml file with multiple domain names and a single domain name 
+- host field diffentiates a yaml file with multiple domain names and a single domain name
 So there are two paths:
 1. Splitting traffic by urls with one rule, and split the traffic in two paths
 2. Splitting traffic by hostname, use two rules and one path
 
 ```
-## Ingress Resource
 
+## Ingress Resource
 
 <img src="https://github.com/sheyijojo/kubernetes_CKA_Exams/blob/main/pdfs/ingress-resource.png?raw=true" alt="Description" width="800">
 
@@ -4513,10 +4567,13 @@ kubectl create ingress  --rule="host/path=service:port"**
 kubectl create ingress ingress-test --rule="wear.my-online-store.com/wear*=wear-service:80"**
 
 ```
+
 **Different Controllers Options**
-- Different ingress controllers have different options that can be used to customise the way it works. 
+
+- Different ingress controllers have different options that can be used to customise the way it works.
 - NGINX Ingress controller has many options that can be seen here.
 - one such option that we will use in our labs. The Rewrite target option.
+
 ```yaml
 
 Two apps - watch and wear app displays at http://:/
@@ -4566,7 +4623,7 @@ spec:
         backend:
           serviceName: pay-service
           servicePort: 8282
- 
+
 
 
 - For example: replace(path, rewrite-target)
@@ -4598,7 +4655,7 @@ spec:
           servicePort: 80
         path: /something(/|$)(.*)
 ``
-## Questions 
+## Questions
 ```
 
 ## Ingress steps
@@ -4749,13 +4806,15 @@ Add the additional argument - --iface=eth0 to the existing list of arguments.
 Now apply the modified manifest kube-flannel.yml file using kubectl:
 
 ```
+
 ## Troubleshooting in kubernetes
+
 - Aplication Failure
 - Control Plane Failure
 - Worker Node Failure
 - Networking
-  
-> It is a good idea to write down the flow of your app and check every object in the map to find the root cause 
+
+> It is a good idea to write down the flow of your app and check every object in the map to find the root cause
 
 ```yaml
 if users complain about accessing the app:
@@ -4764,7 +4823,7 @@ if users complain about accessing the app:
    - curl http://web-service-ip:node-port
    -  curl http://10.43.224.12:8080
 2. check the service
-   - kubectl describe service web-service 
+   - kubectl describe service web-service
 3. if the service endpoint is not discored
    - kubectl describe service web-service
    -  check the Selector to Endpoints(which is ip) configured on the pod
@@ -4773,7 +4832,7 @@ Notes: So in the web-service, there is a selector that references the Pod label 
    - kubectl get pod
    - kubectl describe pod
    - kubectl logs web
-   
+
 Watch the container to fail if fails are not produced immediately:
 kubectl logs web -f
 watch logs of previous pod:
@@ -4795,6 +4854,7 @@ k create service clusterip  mysql-service -n alpha --tcp=3306
 ```
 
 ## Question
+
 ```yaml
 Troubleshooting Test 1: A simple 2 tier application is deployed in the alpha namespace. It must display a green web page on success. Click on the App tab at the top of your terminal to view your application. It is currently failed. Troubleshoot and fix the issue.
 
@@ -4824,7 +4884,7 @@ spec:
 
 ## use a particular namespace
 k config --help
-kubectl config set-context --current --namespace=alpha 
+kubectl config set-context --current --namespace=alpha
 
 k descibe deploy webapp-mysql
 
@@ -4834,7 +4894,7 @@ k replace --force -f /tmp/kubectl-edit04287356731.yaml
 - a more complicated use case will have a conifg map associated to the service/pod
 ```
 
-## control plane failures 
+## control plane failures
 
 ```yaml
 ## steps
@@ -4867,20 +4927,20 @@ kubectl logs kube-apiserver-master -n kube-system
 
 for native service:
 
-sudo journalctl -u kube-apiserver 
+sudo journalctl -u kube-apiserver
 ```
 
 ## solution
+
 ```yaml
 kubectl config set-context --current --namespace=alpha
-
 ```
 
-## Dont forget this command 
+## Dont forget this command
 
 `kubectl replace --force -f /tmp/kubectl-edit-2623.yaml`
 
-## 
+##
 
 ```yaml
 trouble shooting the control plane components:
@@ -4893,10 +4953,11 @@ kubectl scale deploy app --replicas=2
 
 kubectl get pods -n kube-system --watch
 
-The controller manager has its cert on the host and use vol mount to mount the dir to access it 
+The controller manager has its cert on the host and use vol mount to mount the dir to access it
 ```
 
-## Worker Nodes Failure 
+## Worker Nodes Failure
+
 ```yaml
 kubectl get nodes
 
@@ -4918,7 +4979,7 @@ journalctl -u kubelet
 
 check the certificate:
 
-openssl x509 -in /var/lib/kubelet/worker-1.crt -text 
+openssl x509 -in /var/lib/kubelet/worker-1.crt -text
 
 condition types - Flags:
 
@@ -4931,12 +4992,11 @@ Ready - True
 ```
 
 ## json
+
 - k get nodes -o json## json
 - k get nodes -o json
 
-  
 ## JSON PATH - Nice to Have
-
 
 ```yaml
 kubectl get nodes -o wide
@@ -4977,7 +5037,7 @@ kubectl get nodes -o=jsonpath='{range  .items[*]}{.metadata.name} {"\t"} {.statu
 {end}'
 
 
-Sudo code for this: 
+Sudo code for this:
 
 FOR EACH NODE
   PRINT NODE NAME \t PRINT CPU COUNT \n
@@ -5044,6 +5104,7 @@ Use a JSON PATH query to identify the context configured for the aws-user in the
 
 kubectl config view --kubeconfig=my-kube-config -o jsonpath="{.contexts[?(@.context.user=='aws-user')].name}" > /opt/outputs/aws-context-name:
 ```
+
 ## kubelet
 
 ```yaml
@@ -5062,9 +5123,11 @@ ls /etc/kubernetes/pki/
 ls /etc/kubernetes/manifest
 
 - config file location
-vim /var/lib/kubelet/config.yaml 
+vim /var/lib/kubelet/config.yaml
 ```
-## Network Trouble shooting 
+
+## Network Trouble shooting
+
 ```yaml
 ## Network Plugin in Kubernetes
 ——————–
@@ -5115,7 +5178,7 @@ Kubernetes resources for coreDNS are:
 
 1. a service account named coredns,
 2. cluster-roles named coredns and kube-dns
-3. clusterrolebindings named coredns and kube-dns, 
+3. clusterrolebindings named coredns and kube-dns,
 4. a deployment named coredns,
 5. a configmap named coredns and a
 6. service named kube-dns.
@@ -5215,7 +5278,6 @@ https://kubernetes.io/docs/tasks/administer-cluster/dns-debugging-resolution/
 
 ```
 
-
 ## exams
 
 ```yml
@@ -5289,7 +5351,6 @@ spec:
       path: /pv/data-analytics # directory location on host
       type: Directory # this field is optional
 ```
-
 
 exam 2
 
@@ -5390,7 +5451,7 @@ spec:
   - digital signature
   - key encipherment
   - client auth
-  
+
 
 
 To approve this certificate, run: kubectl certificate approve john-developer
@@ -5474,7 +5535,9 @@ root@node01:~# exit
 logout
 root@controlplane:~# kubectl get pods
 ```
+
 Exams practice
+
 ```yaml
 Print the names of all deployments in the admin2406 namespace in the following format:
 
@@ -5495,7 +5558,7 @@ Write the result to the file /opt/admin2406_data.
 kubectl -n admin2406 get deployment -o custom-columns=DEPLOYMENT:.metadata.name,CONTAINER_IMAGE:.spec.template.spec.containers[].image,READY_REPLICAS:.status.readyReplicas,NAMESPACE:.metadata.namespace --sort-by=.metadata.name > /opt/admin2406_data
 
 my solution:
-k get deployments.apps -n admin2406 -o=custom-columns=DEPLOYMENT:.metadata.name,CONTAINER_IMAGE:.spec.template.spec.containers[].image,READY_REPLICAS:.status.readyReplicas,NAMESPACE:.metadata.namespace --sort-by=.metadata.name 
+k get deployments.apps -n admin2406 -o=custom-columns=DEPLOYMENT:.metadata.name,CONTAINER_IMAGE:.spec.template.spec.containers[].image,READY_REPLICAS:.status.readyReplicas,NAMESPACE:.metadata.namespace --sort-by=.metadata.name
 
 
 2. A kubeconfig file called admin.kubeconfig has been created in /root/CKA. There is something wrong with the configuration. Troubleshoot and fix it.
@@ -5571,6 +5634,10 @@ spec:
       mountPath: "/etc/secret-volume"
 
 ```
+<<<<<<< Updated upstream
+=======
+
+>>>>>>> Stashed changes
 ## exam part 3
 
 ```yml
@@ -5581,4 +5648,15 @@ kubectl get nodes -o json | jq -c 'paths | grep type | grep -v condition
 kubectl get nodes -o jsonpath='{ .items}' | jq
 
 kubectl get nodes -o jsonpath='{ .items[*].status.addresses[?(@.type=="InternalIP)].addresses}'
+<<<<<<< Updated upstream
+=======
+
+
+curl an ip using sample container:
+
+k run sample --image=alpine/curl -rm -it -- sh
+
+curl np-test-service
+
+>>>>>>> Stashed changes
 ```
