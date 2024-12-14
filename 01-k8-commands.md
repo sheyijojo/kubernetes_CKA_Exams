@@ -799,7 +799,7 @@ There are two stages when considering Node Affinity:
                       - if required during scheduling, and the node label is missing, pod will not be scheduled
                       - if preffered, and label is missing, scheduler will ignore node affinity rule, and place it on node anywhere
 
-- DuringExecution -  state pod is running and a change is made in the env that affects node affinity
+- DuringExecution -  state pod is running and a change is made in the env that affects node affinity.
 By default, DuringExecution is set to default.
 ```
 
@@ -904,7 +904,7 @@ This is not the same as memory, the pod will be terminated if it overshoots OOM:
 ## Daemonsets
 
 ```yaml
-Daemonsets are like replicasets, but it runs one copy of your pod on each node in your cluste:
+Daemonsets are like replicasets, but it runs one copy of your pod on each node in your cluster:
 
 Whenever a new node is added to the cluster a replica of the pod is automatically added to that node:
 
@@ -919,7 +919,7 @@ Use cases:
 Daemonsets:
 kubectl get daemonsets
 
-get in all namespace:
+get DaemonSets in all namespace:
 kubectl get daemonsets -A
 
 Namespace continued:
@@ -931,12 +931,12 @@ kubectl describe ds kube-flannel-ds -n kube-system
 copy from the documentation or use deployment dry run and change it:
 kubectl create deployment elasticsearch -n kube-system --image=aaas --dry-run=client -o yaml
 
-## No replicas
-## change the image name
+No replicas:
+change the image name:
 
 kubectl create -f fluendt.yaml
 
-kubectly get ds -n kube-system
+kubectl get ds -n kube-system
 ```
 
 ## static pods contd
@@ -959,20 +959,20 @@ docker ps
 
 get static pods:
 - static pods usually have node name appended to their name, clue to know them
-- check for the owner reference session, check the kind and name. The kind should be like a Node. otherwise could be Relicaset, or any other object
+- check for the owner reference session, check the kind and name. The kind should be like a Node. otherwise could be Replicaset, or any other object
 
-## another way of getting pod yaml from a running pod
+another way of getting pod yaml from a running pod:
 kubectl get pod name-of-pod -n kube-system -o yaml
 kubectl get nodes
 
 
-## find config files in linux
+find config files in linux:
 find /etc -type f -name "*.conf"
 
-## How many static pods exist in this cluster in all namespaces
+How many static pods exist in this cluster in all namespaces:
 kubectl get pods -A
 
-## path to directory for the static pod
+path to directory for the static pod:
 check the kubelet conf
 cat /var/lib/kubelet/config.yaml   ##for any given static pod config
 ## check for static pod path
@@ -995,7 +995,7 @@ cp static-busybox.yaml  /etc/kubernetes/manifests/
 ```yaml
 Logging in kubernetes:
 
-You need a monitoring server tobe deployed :
+You need a monitoring server to be deployed :
 kubectl apply -f https://github.com/kubernetes-sigs/metrics-server/releases/latest/download/components.yaml
 
 kubectl top node
@@ -1004,7 +1004,8 @@ kubectl top pod
 
 kubectl logs -f event-simulator-pod event-simulator
 
-## ssh into the nodes
+ssh into the nodes:
+
 kubectl get nodes -o wide
 
 ssh internalipaddr
@@ -1021,9 +1022,9 @@ cat /var/lib/kubelet
 kubectl get events -o wide
 
 schedulers logs :
-  kubectl logs my-custom-scheduler --name-space=kube-system
+kubectl logs my-custom-scheduler --name-space=kube-system
 
-find an image witing  a pod:
+find an image witing a pod:
 kubectl describe pod pod-name -n kube-system | grep Image
 
 ```
@@ -1097,7 +1098,7 @@ kubectl edit deployment frontend
 
 or:
 
-k set image deployment frontend simple-webapp=kodkloud/webapp-clor:v2
+k set image deployment frontend simple-webapp=kodkloud/webapp-color:v2
 
 
 kubectl get deployments frontend  --watch
@@ -1229,7 +1230,7 @@ spec:
 ## Approach for editing
 
 ```yaml
-kuubectl edit pod name-of-the-pod
+kubectl edit pod name-of-the-pod
 
 kubectl replace --force -f /tmp/kuubectl-edit-2623.yaml
 
@@ -1331,7 +1332,7 @@ declarivative:
 
 - The data must be in encoded form in secrets. Screts are encoded but not encrypyted:
 
-- Do not check in secret objects to SCM along the code:
+- Do not check in secret objects to SCM along with the code:
 
 encrypt ETCD data at rest
 
