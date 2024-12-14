@@ -51,12 +51,12 @@ value1
 
 ## list all keys in the etcd server o the master node 
 
-kubectl exec etcd-master -n kuube-system etcdctl get / --prefix -keys-only
+kubectl exec etcd-master -n kube-system etcdctl get / --prefix -keys-only
 
 ## The k8 way of storing data in a dir structure
 root dir - registry
 
-resgistry has these under it
+registry has these under it:
    - minions/nodes
    - pods
    - replicasets
@@ -66,7 +66,7 @@ resgistry has these under it
 
 /registry/apiregistration.k8s.io/apiservices/v1.
 
-## In PROD, Etcd is in HA
+In PROD, Etcd is in HA:
 - ETCD instances must know how to talk with each other across multiple master nodes
 - specify the diff instances in the:
 
@@ -77,13 +77,13 @@ resgistry has these under it
 ## ETCD Server API and ETCD cli
 
 ```yaml
-## Additional information about ETCDCTL UtilityETCDCTL is the CLI tool used to interact with ETCD:
+## Additional information about ETCDCTL Utility ETCDCTL is the CLI tool used to interact with ETCD:
 
 - ETCDCTL can interact with ETCD Server using 2 API versions – Version 2 and Version 3.
 
-## ETCD AUTH  
-- you must also specify the path to certificate files so that ETCDCTL can authenticate to the ETCD API Server.
--  The certificate files are available in the etcd-master at the following path.
+ETCD AUTH :
+- you must also specify the path to certificate files so that ETCDCTL can authenticate to the ETCD API Server.:
+-  The certificate files are available in the etcd-master at the following path.:
 
 --cacert /etc/kubernetes/pki/etcd/ca.crt
 --cert /etc/kubernetes/pki/etcd/server.crt
@@ -92,7 +92,7 @@ resgistry has these under it
 
 kubectl exec etcd-controlplane -n kube-system -- sh -c "ETCDCTL_API=3 etcdctl get / --prefix --keys-only --limit=10 --cacert /etc/kubernetes/pki/etcd/ca.crt --cert /etc/kubernetes/pki/etcd/server.crt --key /etc/kubernetes/pki/etcd/server.key"
 
-kubeapiserver connects witht the etcd server:
+kubeapiserver connects with the etcd server:
 
 --etcd-servers=https://127.0.0.1:2379 \\
 
@@ -111,16 +111,16 @@ ps -aux | grep kube-apiserver
 ## Kube-API Server
 ```yaml
 
-## Information on kubeapi is not needed when using kubeadm to bootstrap the installation 
+Information on kubeapi is not needed when using kubeadm to bootstrap the installation:
 - You do not need in
-## But you do if have to set it up from scratch
+## But you do if have to set it up from scratch:
 
 know this options:
 specifying auth for etcd and kubelet within the kubeapiserver:
 
 --etcd-cafile=/var/lib/kubernetes/ca.pem  \\
 --etcd-certfile=/var/lib/kuberntes/kubernetes.pem \\
---etcd=keyfile=/var/lib/kubernetes/kubernetes-key.pem
+--etcd-keyfile=/var/lib/kubernetes/kubernetes-key.pem
 
 --kubelet-certifcate-authority=/var/lib/kubernetes/ca.pem
 --kubelet-client-certificate=/var/lib/kubernetes/kubernetes.pem \\
@@ -132,8 +132,8 @@ specifying auth for etcd and kubelet within the kubeapiserver:
 
 
 ```yaml
-watches for the components in the system, and brings the sys to the desired fucntioning state
-- managers different controllers:
+watches for the components in the system, and brings the system to the desired fucntioning state
+- manages different controllers:
 - watch Status on ships:
 - Remediate situation
 
@@ -152,7 +152,7 @@ All these processes are packages inside the kube-controller-manager:
 - you can add the --node-monitor-period=5s options and the rest
 
 You can also add the --controllers flag to activate which controllers to use:
-- IF controllers have proble, this is where to look
+- IF controllers have problem, this is where to look
 
 
 kubeadm and Non-Kubeadm setup:
@@ -186,8 +186,8 @@ kubescheduler <<  apiserver << kubelet
 ```yaml
 Captain of the ship:
 - They lead all activities on a ship
-- Sole point of contact fro the master ship
-- They load and unload containers on the nodes as instructed by kuubescheduler:
+- Sole point of contact for the master ship
+- They load and unload containers on the nodes as instructed by kubescheduler:
 
 Kubelet in the k8 worker nodes:
 - registers the node with the k8 cluster
@@ -307,7 +307,7 @@ scaling a replica from 3 to 6:
 
 kubectl replace -f replicaset-definition.yaml
 
-## run scale, but the num of replicas remain the same inside the file
+run scale, but the num of replicas remain the same inside the file:
 kubectl scale --replicas=6 -f replicaset-definition.yaml
 
 k scale --replicas=5 replicaset new-replica-set
@@ -346,17 +346,17 @@ Comes higher in the heriarachy
    - Blue-Green:?
 
 similar to the ReplicaSet definition file:
-Deployment produces replicases from its specification in the name of the deployments:
+Deployment produces replicas from its specification in the name of the deployments:
 Deplyment also produces pods in the name of the deployment
 
 
-kubectl run nginx --image=nginx --dry-run=client -o yaml  :
+kubectl run nginx --image=nginx --dry-run=client -o yaml  
 
-kubectl create deployment --image=nginx nginx :
+kubectl create deployment --image=nginx nginx 
 
-kubectl create deployment --image=nginx nginx --dry-run=client -o yaml :
+kubectl create deployment --image=nginx nginx --dry-run=client -o yaml 
 
-kubectl create deployment --image=nginx nginx --dry-run=client -o yaml > nginx-deployment.yaml  :
+kubectl create deployment --image=nginx nginx --dry-run=client -o yaml > nginx-deployment.yaml  
 
 
 ```
@@ -417,7 +417,7 @@ spec:
 ```yaml
 - Services or tiers of apps need to establish connectivity:
 - pods have ip addr but are not static:
-- frontend app might need to coonect to multiple backend redis:
+- frontend app might need to connect to multiple backend redis:
 - A svc is needed for an interface to grp these grp of pods of the backend:
 - This is known as a cluster IP:
 
@@ -436,9 +436,9 @@ spec:
      app: myapp
      type: back-end
 
-## targetPort - port where the backend is exposed
+targetPort - port where the backend is exposed:
 
-## port - where the service is exposed
+port - where the service is exposed:
 
 
 create clusterip service:
@@ -460,10 +460,10 @@ kubectl run custom-nginx --image=nginx --port=8080
 ```yaml
 - In Kubernetes, namespaces provide a mechanism for isolating groups of resources within a single cluster:
 - Names of resources need to be unique within a namespace, but not across namespaces:
--  Namespace-based scoping is applicable only for namespaced objects:
+- Namespace-based scoping is applicable only for namespaced objects:
 - (e.g. Deployments, Services, etc.) and not for cluster-wide objects (e.g. StorageClass, Nodes, PersistentVolumes, etc.):
 
-Connect to a sb-service in a ns caalled "dev"
+Connect to a db-service in a ns called "dev"
 - mysql.connect("db-service")
 
 DNS:
@@ -478,7 +478,7 @@ set the context of a ns:
 - kubectl config set-context $(kubectl config current-context) --namespace=dev
 
 Namespace Operations:
-Can specify Namespace under the metada scetion: name: dev
+Can specify Namespace under the metadata section: name: dev
 kubectl run redis --image=redis --namespace=finance
 
 kubectl get pods --namespace=research
@@ -495,7 +495,7 @@ create namespace(ns):
 kubectl create ns dev-ns
 
 Limit Resource in a ns:
-- create a resource quot in yaml file under spec
+- create a resource quota in yaml file under spec
 kind: ResourceQuota
 metadata:
    name: compute-quota
@@ -542,7 +542,7 @@ kubectl replace --force -f nginx.yaml
 Deploy a redis pod using the redis:alpine image with the labels set to tier=db:
 k run redis --image=redis:alpine --labels=tier=db
 
-Create a service redis-service to expose the redis application within the cluster on port 6379
+Create a service redis-service to expose the redis application within the cluster on port 6379:
 k expose pod redis --port=6379 --name redis-service
 
 
@@ -636,7 +636,7 @@ spec:
          image: simple-webapp
 
 properties attached to each item is by labels :
-check if the scheduler is runnig in namesystem:
+check if the scheduler is running in namesystem:
 selectors help you filter:
 
 kubectl get pods -n kube-system
@@ -694,7 +694,7 @@ Taints and Toleration:
     - Taints are set on Nodes:
     - Tolerarion are set on pods:
 
-kubectl taint nodes node-name key=value:taint-effect
+kubectl taint nodes <node-name> key=value:taint-effect
 
 kubectl taint nodes node1 app=blue:NoSchedule
 
@@ -730,7 +730,7 @@ kubectl taint nodes controlplane node-role.kubernetes.io/control-plane:NoSchedul
 Create a pod in yaml but do not run:
 kubectl run nginx --image=nginx --dry-run=client -o yaml > bee.yaml
 
-get more inforation like nodes from this command:
+get more information like nodes from this command:
 kubectl get pods -o wide
 
 
@@ -739,9 +739,9 @@ kubectl get pods -o wide
 ## Node Selector
 
 ```yaml
-Different kind of workloads run in my cluster, would like to dedicated pods to that node:
+Different kind of workloads run in my cluster, would like to dedicate pods to that node:
 1. Set limitation on the pod:
-   -  You must have first labelled your nodes 
+   -  You must have first label your nodes 
 spec:
    containers:
    - name: data-processor
@@ -789,7 +789,7 @@ spec:
 
 Node Affinity Types:
 
-What if someone chagnes the label on the node, and the pod does not have a node to be scheduled on
+What if someone changes the label on the node, and the pod does not have a node to be scheduled on
 - requiredDuringSchedulingIgnoredDuringExecution:
 - preferredDuringSchedulingRequiredDuringExecution:
 
