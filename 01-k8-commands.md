@@ -79,15 +79,9 @@ In PROD, Etcd is in HA:
 
 - ETCDCTL can interact with ETCD Server using 2 API versions – Version 2 and Version 3.
 
-<<<<<<< Updated upstream
-ETCD AUTH :
-- you must also specify the path to certificate files so that ETCDCTL can authenticate to the ETCD API Server.:
--  The certificate files are available in the etcd-master at the following path.:
-=======
 ## ETCD AUTH
 - you must also specify the path to certificate files so that ETCDCTL can authenticate to the ETCD API Server.
 -  The certificate files are available in the etcd-master at the following path.
->>>>>>> Stashed changes
 
 --cacert /etc/kubernetes/pki/etcd/ca.crt
 --cert /etc/kubernetes/pki/etcd/server.crt
@@ -117,11 +111,7 @@ ps -aux | grep kube-apiserver
 
 ```yaml
 
-<<<<<<< Updated upstream
-Information on kubeapi is not needed when using kubeadm to bootstrap the installation:
-=======
 ## Information on kubeapi is not needed when using kubeadm to bootstrap the installation
->>>>>>> Stashed changes
 - You do not need in
 ## But you do if have to set it up from scratch:
 
@@ -141,7 +131,7 @@ specifying auth for etcd and kubelet within the kubeapiserver:
 ## Kube- controller manager
 
 ```yaml
-watches for the components in the system, and brings the system to the desired fucntioning state
+watches for the components in the system, and brings the system to the desired functioning state
 - manages different controllers:
 - watch Status on ships:
 - Remediate situation
@@ -208,8 +198,8 @@ Kubelet in the k8 worker nodes:
 - reports it to the kube-api server on a timely basis
 
 install kubelet:
-kubeadm tool: It does not deploy the kubelt:
-Have to install it mannaully installed on worker nodes :
+kubeadm tool: It does not deploy the kubelet:
+Have to install it manually on worker nodes :
 
 same with it from scratch:
 
@@ -222,10 +212,10 @@ can be bootstraped
 Every pod can reach other pod because of a networking solution:
 
 - pod network is an internal network that span accross all the nodes in the cluster:
-    - To which all pods connect to
+- To which all pods connect to
 
-- Services are used for communication amoong pods
-   - it is not a container, it is virtual components in the k8 memeory
+- Services are used for communication among pods
+   - it is not a container, it is virtual components in the k8 memory
    - It uses kube-proxy:
 kube proxy is a process that runs on each node in a cluster:
   - looks for new services
@@ -235,9 +225,9 @@ kube proxy is a process that runs on each node in a cluster:
 installation
 kubeadm:
   - runs a pod in the kube-system ns:
-  - Infact runs a Daemonset, A single pod is always deployed on each node in the cluster
+  - Infact runs a Daemonset, A single pod is always deployed on each node in the cluster:
 service:
-  - download the binaries
+  - download the binaries:
 
 kubectl get daemonset -n kube-system
 
@@ -262,12 +252,10 @@ kubectl apply -f pod.yaml
 kuubectl create -f pod.yaml
 
 Create a deployment:
-
 kubectl create deployment --image=nginx nginx
 
 
 Generate Deployment YAML file (-o yaml). Don’t create it(–dry-run):
-
 kubectl create deployment --image=nginx nginx --dry-run=client -o yaml
 
 
@@ -355,17 +343,19 @@ Comes higher in the heriarachy
    - Blue-Green:?
 
 similar to the ReplicaSet definition file:
+
 Deployment produces replicas from its specification in the name of the deployments:
-Deplyment also produces pods in the name of the deployment
+
+Deployment also produces pods in the name of the deployment
 
 
-kubectl run nginx --image=nginx --dry-run=client -o yaml  
+kubectl run nginx --image=nginx --dry-run=client -o yaml
 
-kubectl create deployment --image=nginx nginx 
+kubectl create deployment --image=nginx nginx
 
-kubectl create deployment --image=nginx nginx --dry-run=client -o yaml 
+kubectl create deployment --image=nginx nginx --dry-run=client -o yaml
 
-kubectl create deployment --image=nginx nginx --dry-run=client -o yaml > nginx-deployment.yaml  
+kubectl create deployment --image=nginx nginx --dry-run=client -o yaml > nginx-deployment.yaml
 
 
 ```
@@ -531,6 +521,7 @@ k get pods -n research --no-headers | wc -l
 
 ```yaml
 kubectl create deployment nginx --port 80
+
 kubectl edit deployment nginx
 
 kubectl scale deployment nginx --replicas=5
@@ -571,11 +562,11 @@ kubectl apply -f nginx.yaml
 ```
 
 ```yaml
-## Create a new deployment called redis-deploy in the dev-ns namespace with the redis image. It should have 2 replicas.
+Create a new deployment called redis-deploy in the dev-ns namespace with the redis image. It should have 2 replicas.:
 
 Use imperative commands:.
 
-`kubectl create deployment redis-deploy --image=redis --replicas=2 --namespace=dev-ns
+kubectl create deployment redis-deploy --image=redis --replicas=2 --namespace=dev-ns
 
 kubectl expose pod httpd --port 80
 ```
@@ -750,11 +741,7 @@ kubectl get pods -o wide
 ```yaml
 Different kind of workloads run in my cluster, would like to dedicate pods to that node:
 1. Set limitation on the pod:
-<<<<<<< Updated upstream
-   -  You must have first label your nodes 
-=======
    -  You must have first labelled your nodes
->>>>>>> Stashed changes
 spec:
    containers:
    - name: data-processor
@@ -5634,10 +5621,7 @@ spec:
       mountPath: "/etc/secret-volume"
 
 ```
-<<<<<<< Updated upstream
-=======
 
->>>>>>> Stashed changes
 ## exam part 3
 
 ```yml
