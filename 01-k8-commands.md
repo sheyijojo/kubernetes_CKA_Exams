@@ -1546,7 +1546,7 @@ spec:
       command: ["sh", "-c", "git clone"]
 
 You can configure multiple such initContainers as well:
-like how we did for multi-containers pod. :
+like how we did for multi-containers pod.:
 In that case, each init container is run one at a time in sequential order.:
 ```
 
@@ -2230,7 +2230,7 @@ control access to the APISERVER, that is the first line of defense:
 
 Auth - RBAC, ABAC , Node Auth:
 
-Network policy to restrict communcation between components:
+Network policy to restrict communication between components:
 
 
 
@@ -2269,7 +2269,7 @@ Assymetric using openssl to generate pub and private key pair on the server, ser
 openssl genrsa -out my-bank.key 1024
 
 - user gets the pub key from the server
-- user sends the pub key to the server and server decrypyts with priavte key
+- user sends the pub key to the server and server decrypyts with private key
 
 This is different from ssh-keygen
 
@@ -2356,7 +2356,7 @@ gen a signing in request:
 openssl req -new -key admin.key -subj \ "/CN=kube-admin" -out admin.csr
 admin.csr:
 
-signing request with an exiting sysems group group in cluster:
+signing request with an existing system group group in cluster:
 openssl req -new -key admin.key -subj \ "/CN=kube-admin/O=system:masters" -out admin.csr
 admin.csr:
 
