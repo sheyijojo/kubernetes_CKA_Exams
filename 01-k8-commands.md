@@ -1098,7 +1098,7 @@ kubectl edit deployment frontend
 
 or:
 
-k set image deployment frontend simple-webapp=kodkloud/webapp-color:v2
+k set image deployment frontend simple-webapp=kodekloud/webapp-color:v2
 
 
 kubectl get deployments frontend  --watch
@@ -1330,7 +1330,7 @@ declarivative:
 
 - kubectl create -f secret-data.yaml
 
-- The data must be in encoded form in secrets. Screts are encoded but not encrypyted:
+- The data must be in encoded form in secrets. Secrets are encoded but not encrypyted:
 
 - Do not check in secret objects to SCM along with the code:
 
@@ -1453,7 +1453,7 @@ resources:
 
 
 
---------
+---------
 create a Base 64 encoded secret
 head -c 32 /dev/urandon | base66
 
@@ -1492,7 +1492,7 @@ create another secret file literal:
 ensure all secrets are ecrypted:
 The command reads all Secrets and then updates them to apply server side encryption
 
-kubectl get secrets --al-namsepaces -o json | kubectl replace -f -
+kubectl get secrets --all-namsepaces -o json | kubectl replace -f -
 ```
 
 ## Creating a Multi Container Pod
@@ -1543,10 +1543,11 @@ spec:
   initContainers:
     - name: init-myservice
       image: busybox
-      command: ["sh", "-c", "git clone  ;"]
+      command: ["sh", "-c", "git clone"]
 
 You can configure multiple such initContainers as well:
-like how we did for multi-containers pod. In that case, each init container is run one at a time in sequential order.:
+like how we did for multi-containers pod. :
+In that case, each init container is run one at a time in sequential order.:
 ```
 
 ## Error - pods not valid after editing a pod
@@ -1590,7 +1591,7 @@ drain workloads of a node to move them to another node:
 kubectl drain node-1
 k drain --ignore-daemonsets node01
 
-if a pod is not part of a Repliset: lost forever:
+if a pod is not part of a Replicaset: lost forever:
 k drain node01 --force --ignore-daemonsets
 
 
@@ -1909,7 +1910,7 @@ kubectl uncordon node-1
 example of using the imperative way:
 `kubectl get all -all-namespaces -o yaml > all-deploy-services.yaml`
 
-`k get pods --all-namespaces `
+`k get pods --all-namespaces`
 
 Do not need to stress, ark(Now Velero can help with the backup):
 
@@ -1962,17 +1963,16 @@ k describe service <service-name>
 
 
 
-## What is the version of ETCD running on the cluster?, Check the ETCD Pod or Process
+What is the version of ETCD running on the cluster?, Check the ETCD Pod or Process:
 `k describe pod etcd-controlplane -n kube-system | grep Image`
 
-## Where is the ETCD server certificate file located?
+Where is the ETCD server certificate file located?:
 
- kubectl -n kube-system describe pod etcd-controlplane | grep '\--cert-file'
-
+kubectl -n kube-system describe pod etcd-controlplane | grep '\--cert-file'
 
 --cert-file=/etc/kubernetes/pki/etcd/server.crt
 
-Where is the ETCD CA Certificate file located?
+Where is the ETCD CA Certificate file located?:
 
 --trusted-ca-file=/etc/kubernetes/pki/etcd/ca.crt
 
@@ -2117,7 +2117,7 @@ ETCDCTL_API=3 etcdctl --endpoints=https://192.21.43.19:2379  --cert=/etc/etcd/pk
 ber list
 
 
-## Take a backup of etcd on cluster1 and save it on the student-node at the path /opt/cluster1.db
+Take a backup of etcd on cluster1 and save it on the student-node at the path /opt/cluster1.db:
 Next, inspect the endpoints and certificates used by the etcd pod. We will make use of these to take the backup.
 
 Remember it is a static pod
@@ -2142,12 +2142,13 @@ kubectl describe  pods -n kube-system etcd-cluster1-controlplane  | grep pki
 SSH to the controlplane node of cluster1 and then take the backup using the endpoints and certificates we identified above:
 
  ETCDCTL_API=3 etcdctl --endpoints=https://192.160.244.10:2379 --cacert=/etc/kubernetes/pki/etcd/ca.crt --cert=/etc/kubernetes/pki/etcd/server.crt --key=/etc/kubernetes/pki/etcd/server.key snapshot save /opt/cluster1.db
-Snapshot saved at /opt/cluster1.db
+
+Snapshot saved at /opt/cluster1.db:
 
 
 Finally, copy the backup to the student-node. To do this, go back to the student-node and use scp as shown below:
 
- scp cluster1-controlplane:/opt/cluster1.db /opt
+ scp cluster1-controlplane:/opt/cluster1.db /opt/cluster1.db
 
 
 
@@ -5633,8 +5634,6 @@ kubectl get nodes -o json | jq -c 'paths | grep type | grep -v condition
 kubectl get nodes -o jsonpath='{ .items}' | jq
 
 kubectl get nodes -o jsonpath='{ .items[*].status.addresses[?(@.type=="InternalIP)].addresses}'
-<<<<<<< Updated upstream
-=======
 
 
 curl an ip using sample container:
@@ -5643,5 +5642,4 @@ k run sample --image=alpine/curl -rm -it -- sh
 
 curl np-test-service
 
->>>>>>> Stashed changes
 ```
