@@ -2148,13 +2148,13 @@ Snapshot saved at /opt/cluster1.db:
 
 Finally, copy the backup to the student-node. To do this, go back to the student-node and use scp as shown below:
 
- scp cluster1-controlplane:/opt/cluster1.db /opt/cluster1.db
+scp cluster1-controlplane:/opt/cluster1.db /opt/cluster1.db
 
 
 
 
 
-## question
+question:
 
 An ETCD backup for cluster2 is stored at /opt/cluster2.db. Use this snapshot file to carryout a restore on cluster2 to a new path /var/lib/etcd-data-new.
 
@@ -2174,7 +2174,7 @@ scp /opt/cluster2.db etcd-server:/root
 
 Step 2: Restore the snapshot on the cluster2. Since we are restoring directly on the etcd-server, we can use the endpoint https:/127.0.0.1. Use the same certificates that were identified earlier. Make sure to use the data-dir as /var/lib/etcd-data-new:
 
-etcd-server ~ ➜  ETCDCTL_API=3 etcdctl --endpoints=https://127.0.0.1:2379 --cacert=/etc/etcd/pki/ca.pem --cert=/etc/etcd/pki/etcd.pem
+ETCDCTL_API=3 etcdctl --endpoints=https://127.0.0.1:2379 --cacert=/etc/etcd/pki/ca.pem --cert=/etc/etcd/pki/etcd.pem
 --key=/etc/etcd/pki/etcd-key.pem snapshot restore /root/cluster2.db --data-dir /var/lib/etcd-data-new
 
 
@@ -2224,7 +2224,7 @@ https://github.com/etcd-io/website/blob/main/content/en/docs/v3.5/op-guide/recov
 ## Security in Kubernetes
 
 ```yaml
-Acess to the host must be very secured, if that is compromised everything is compromised:
+Access to the host must be very secured, if that is compromised everything is compromised:
 
 control access to the APISERVER, that is the first line of defense:
 
