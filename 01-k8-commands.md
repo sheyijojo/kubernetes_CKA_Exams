@@ -2438,9 +2438,9 @@ cat /etc/kubernetes/manifests/kube-apiserver.yaml
 
 identify the file where it is stored
 
-## go deeper into the certificate to decode and check details
+go deeper into the certificate to decode and check details:
 
-## lets start with the apiserver cert file
+lets start with the apiserver cert file:
 openssl x509 -in /etc/kubernetes/pki/apiserver.crt  -text -noout
 
 
@@ -2452,11 +2452,11 @@ docker ps -a
 docker logs containerid
 
 
-## grep additions
+grep additions:
 
  k describe pods -n kube-system kube-apiserver-controlplane | grep -E '\.ca$|\.crt$|'
 
-## kube-apiserver
+kube-apiserver:
 --tls-cert-file=/etc/kubernetes/pki/apiserver.crt
 
 ## Identify the Certificate file used to authenticate kube-apiserver as a client to ETCD Server.
@@ -2487,25 +2487,26 @@ Kubernetes has a certificate buit-in API
 once a new admin generates its key and sent to KA8Admin
 He creates a certificate signing object
 
-jane-scr.yaml
+jane-scr.yaml:
+
 apiVersion: certificates.k8s.io/v1
 kind: CertificateSigninRequest
 
-converts the admin key to base64
+converts the admin key to base64:
 
 cat jane.csr | base64
 
-place the encoded object in the request field in the object
+place the encoded object in the request field in the object:
 
 check all siginin requests:
 kubectl get csr
 
-## approve the reuest
+approve the request:
 
 kubectl certifcate approve jane
 
 
-## get certifcate in yaml format
+get certifcate in yaml format:
 
 kubectl get csr jane -o yaml
 
@@ -2531,7 +2532,7 @@ Anyone who needs to sign certifcate need the CA server root certificcate and pri
 - Please note that an additional field called signerName should also be added when creating CSR.
 - For client authentication to the API server we will use the built-in signer kubernetes.io/kube-apiserver-client.
 
-## Answer
+Answer:
 
 cat akshay.csr | base64 -w 0
 
@@ -2578,7 +2579,7 @@ kubectl config use-context prod-user@production
 ## To know the current context, run the command:
 kubectl config --kubeconfig=/root/my-kube-config current-context
 
- k config --kubeconfig=/root/my-kube-config use-context research
+k config --kubeconfig=/root/my-kube-config use-context research
 
 
 sample config file with users, context:
