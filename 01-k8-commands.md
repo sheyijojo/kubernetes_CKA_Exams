@@ -2540,7 +2540,7 @@ apiVersion: certificates.k8s.io/v1
 kind: CertificateSigningRequest
 metadata:
   name: akshay
-spec:
+spec:2
   groups:
   - system:admin
   - system:authenticated
@@ -2575,10 +2575,10 @@ change the context to access production cluster based on the configuration in th
 
 kubectl config use-context prod-user@production
 
-## To know the current context, run the command:
+To know the current context, run the command:
 kubectl config --kubeconfig=/root/my-kube-config current-context
 
- k config --kubeconfig=/root/my-kube-config use-context research
+k config --kubeconfig=/root/my-kube-config use-context research
 
 
 sample config file with users, context:
@@ -5154,11 +5154,11 @@ kubectl apply -f calico.yaml
 Calico is said to have the most advanced cni network plugin.
 
 
-DNS in Kubernetes
+DNS in Kubernetes:
 —————–
 Kubernetes uses CoreDNS. CoreDNS is a flexible, extensible DNS server that can serve as the Kubernetes cluster DNS.
 
-Memory and Pods
+Memory and Pods:
 
 In large scale Kubernetes clusters, CoreDNS’s memory usage is predominantly affected by the number of Pods and Services in the cluster.
 Other factors include the size of the filled DNS answer cache and the rate of queries received (QPS) per CoreDNS instance.
