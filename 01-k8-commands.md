@@ -4935,7 +4935,7 @@ kubectl config set-context --current --namespace=alpha
 ```yaml
 trouble shooting the control plane components:
 
--you know is a static pod if has controlplane appended at the end:
+-you know is a static pod if it has controlplane appended at the end:
 
 - Then look for the manifest file at /etc/kubernetes/manifest
 
@@ -4995,18 +4995,18 @@ kubectl get nodes -o json
 
 json path query:
 - $ not neccessary with kubectl, it does it for you:
-.tems[0].spec.containers[0].image
+.items[0].spec.containers[0].image
 
 
-kubectl get pods -o=jsonpath='{ .tems[0].spec.containers[0].image  }'
+kubectl get pods -o=jsonpath='{ .items[0].spec.containers[0].image  }'
 
-kubectl get pods -o=jsonpath='{  .tems[*].metadata.name   }'
+kubectl get pods -o=jsonpath='{  .items[*].metadata.name   }'
 
-kubectl get pods -o=jsonpath='{ .tems[*].status.nodeInfo.architecture }'
+kubectl get pods -o=jsonpath='{ .items[*].status.nodeInfo.architecture }'
 
-kubectl get pods -o=jsonpath='{ .tems[*].status.capacity.cpu }'
+kubectl get pods -o=jsonpath='{ .items[*].status.capacity.cpu }'
 
-combine bothe commands:
+combine both commands:
 
 kubectl get nodes -o=jsonpath='{ .tems[*].status.nodeInfo.architecture }{"\"}{ .tems[*].status.capacity.cpu }'
 
@@ -5071,7 +5071,7 @@ The osImage is under the nodeInfo section under status of each node.Use JSON PAT
 
 The osImage is under the nodeInfo section under status of each node.:
 
-kubectl get nodes -o=jsonpath='{.items[*].status.nodeInfo.osImage}':
+kubectl get nodes -o=jsonpath='{.items[*].status.nodeInfo.osImage}'
 
 
 A set of Persistent Volumes are available. Sort them based on their capacity and store the result in the file /opt/outputs/storage-capacity-sorted.txt.:
