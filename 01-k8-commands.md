@@ -2576,7 +2576,7 @@ change the context to access production cluster based on the configuration in th
 
 kubectl config use-context prod-user@production
 
-## To know the current context, run the command:
+To know the current context, run the command:
 kubectl config --kubeconfig=/root/my-kube-config current-context
 
 k config --kubeconfig=/root/my-kube-config use-context research
@@ -2709,7 +2709,7 @@ Always Allow
 
 Always Deny
 
-check the mdoe in the /usr/local/bin/kube-apiserver:
+check the mode in the /usr/local/bin/kube-apiserver:
 - By default
 --authorization-mode=AlwyasAllow
 
@@ -2772,8 +2772,8 @@ kubectl auth can-i create deployments
 kubectl auth can-i delete nodes
 
 Test users auth as an Admin without authenticating:
-kubectl can-i  create depolyments --as dev-user
-kubectl can-i  create depolyments --as dev-user -n test
+kubectl can-i create depolyments --as dev-user
+kubectl can-i create depolyments --as dev-user -n test
 
 kubectl edit role developer -n blue
 
@@ -2906,12 +2906,12 @@ k get clusterroles --no-headers | wc -l
 kubectl get clusterroles --no-headers  -o json | jq '.items | length'
 
 
-## Get cluster role binding
+Get cluster role binding:
 
  k get clusterrolebinding --no-headers | wc -l
 
-## A new user michelle joined the team. She will be focusing on the nodes in the cluster.
-## Create the required ClusterRoles and ClusterRoleBindings so she gets access to the nodes.
+A new user michelle joined the team. She will be focusing on the nodes in the cluster.:
+Create the required ClusterRoles and ClusterRoleBindings so she gets access to the nodes.:
 
 
 Use the command kubectl create to create a clusterrole and clusterrolebinding for user michelle to grant access to the nodes.
@@ -2919,16 +2919,16 @@ After that test the access using the command:
 
  kubectl auth can-i list nodes --as michelle.
 
-## answer
+answer:
 
 k create clusterrole michelleuser --verb=list --resource=nodes
 
 k create clusterrolebinding michellebind --clusterrole=michelleuser --user=michelle
 
 
-## michelle's responsibilities are growing and now she will be responsible for storage as well.
-## Create the required ClusterRoles and ClusterRoleBindings to allow her access to Storage.
-## Get the API groups and resource names from command kubectl api-resources. Use the given spec:
+michelle's responsibilities are growing and now she will be responsible for storage as well.:
+Create the required ClusterRoles and ClusterRoleBindings to allow her access to Storage.:
+Get the API groups and resource names from command kubectl api-resources. Use the given spec:
 
 
 kubectl auth can-i list storageclasses --as michelle
@@ -2969,7 +2969,7 @@ rules:
 
 ## Service Accounts in Kubernetes
 
-Every namespace has a default service account
+> Every namespace has a default service account
 
 A service account in Kubernetes is a non-human identity that provides a way for applications to authenticate to a Kubernetes cluster's API server
 
@@ -2999,7 +2999,7 @@ kubectl exec -it my-dashboard -- ls /var/run/secrets/kubernetes.io/serviceaccoun
 
 The flow:
 - create service account
-kuubectl create serviceaccounts logging-dash
+kubectl create serviceaccounts logging-dash
 
 - create a token for the service account
 kubectl create token logging-dash
@@ -3463,7 +3463,7 @@ Support of diff types of strogae solutions:
 Persistent volume:
 - volumes stated above is only bound to pod definition file
 
-- Need more centrally managed and user can carve out vols as needed
+- Need more centrally managed volume and user can carve out vols as needed
 
 - PV is a cluster wide pool of storage volumes configured by an admin to be used by users deploying volume on the cluster using PVC
 
@@ -3695,7 +3695,7 @@ spec:
   volumes:
     - name: task-pv-storage
       persistentVolumeClaim:
-        claimName: myclaim
+        claimName: my-claim
   containers:
     - name: task-pv-container
       image: nginx
@@ -4030,7 +4030,7 @@ Important commands:
 
 K8 consist of master and worker nodes:
 - Each nodes should have at least one interface connected to a network  with IP addr
-- The host should have ubique histname set and a unique mac address
+- The host should have unique hostname set and a unique mac address
 
 search for numeruc, programs, listening, -i - not case sensitive:
 
@@ -4059,7 +4059,7 @@ Note: In the official exam, all essential CNI deployment details will be provide
 
 ## Question
 
-- What is the network interface configured for cluster connectivity on the controlplane node?
+- What is the network interface configured for cluster connectivity on the controlplane node?:
 
 - node-to-node communication
 
@@ -4146,8 +4146,8 @@ kubectl apply -f https://github.com/weaveworks/weave/releases/download/v2.8.1/we
 
 - so CNI plugin is deployed on the cluster
 - It deploys an gent or service on each node
--The communcate with each other to exchange information.
-- Waeve makes ure PODS have the correct route configured to reach the agent
+-They communicate with each other to exchange information.
+- Waeve makes sure PODS have the correct route configured to reach the agent
 - The agent takes of other PODS
 
 
@@ -4258,10 +4258,10 @@ ps aux | grep kube-api-server
 
 iptables -L -t nat | grep db-service
 
- See these rules also in kube-proxy logs :
+See these rules also in kube-proxy logs :
 cat /var/log/kube-proxy.log
 
-What network range are the nodes in the cluster part of?:
+What network ranges are the nodes in the cluster part of?:
 - one way to do this is to make use of the ipcalc utility. If it is not installed, you can install it by running:
 - check the eth0
 - apt update and the apt install ipcalc
@@ -4278,7 +4278,7 @@ The network is configured with weave. Check the weave pods logs using the comman
 -  k logs -n kube-system weave-net-lfq2s | ipalloc-range
 
 What is the IP Range configured for the services within the cluster?:
-cat /etc/kubernetes/manifests/kube-apiserver.yaml   | grep cluster-ip-range
+cat /etc/kubernetes/manifests/kube-apiserver.yaml  | grep cluster-ip-range
 
 What type of proxy is the kube-proxy configured to use?:
 
@@ -4678,12 +4678,12 @@ kubectl create namespace my-namespace
 ##
 The NGINX Ingress Controller requires a ConfigMap object.
 
-## Create a ConfigMap object with name ingress-nginx-controller in the ingress-nginx namespace.
+Create a ConfigMap object with name ingress-nginx-controller in the ingress-nginx namespace.:
 
 k create configmap ingress-nginx-controller -n ingress-nginx
 
-## The NGINX Ingress Controller requires two ServiceAccounts.
-## Create both ServiceAccount with name ingress-nginx and ingress-nginx-admission in the ingress-nginx namespace.
+The NGINX Ingress Controller requires two ServiceAccounts.:
+Create both ServiceAccount with name ingress-nginx and ingress-nginx-admission in the ingress-nginx namespace.:
 
 
 k create serviceaccount ingress-nginx -n ingress-nginx
@@ -4713,7 +4713,7 @@ k edit svc ingress -n ingress-nginx
 ## create the ingress resource to make the applications vailable at /wear and /watch om the ingress service
 
 create the ingress in the app-space ns:
-- configure correct backend servive for /wear
+- configure correct backend service for /wear
 - configure correct backend service for /watch
 - configure backend port for /wear service
 - configure backend port for /watch service
@@ -4799,7 +4799,7 @@ Now apply the modified manifest kube-flannel.yml file using kubectl:
 
 ## Troubleshooting in kubernetes
 
-- Aplication Failure
+- Application Failure
 - Control Plane Failure
 - Worker Node Failure
 - Networking
@@ -4809,12 +4809,12 @@ Now apply the modified manifest kube-flannel.yml file using kubectl:
 ```yaml
 if users complain about accessing the app:
  steps:
-1. Start with the webapp frontend
+1. Start with the webapp frontend:
    - curl http://web-service-ip:node-port
    -  curl http://10.43.224.12:8080
-2. check the service
+2. check the service:
    - kubectl describe service web-service
-3. if the service endpoint is not discored
+3. if the service endpoint is not discovered:
    - kubectl describe service web-service
    -  check the Selector to Endpoints(which is ip) configured on the pod
 Notes: So in the web-service, there is a selector that references the Pod label name and they must match
