@@ -21,37 +21,36 @@
 The default client is the .etcdctl:
 ./etcdctl
 
-## check version with version 3 or 2
+check version with version 3 or 2:
 ./etcdctl  --version
 
-## API version set
+API version set:
 export ETCDCTL_API=3
 
-## Set a value
+Set a value:
 ./etcdctl put key1 value1
 
-## ./etcdctl get key1
+./etcdctl get key1:
 key1
 value1
 
-## If you deployed ETCD yourself from scratch
+If you deployed ETCD yourself from scratch:
 - Take note of this option passed in the etcd.service:
 
-## This is the address the etcd listens to, Ip of the master node
+This is the address the etcd listens to, Ip of the master node:
 --advertise-client-urls https://${INTERNAL_IP} \\
 
 - You need the url configured in the kube-api server when it tries to reach the etcd server
 
-## If you use kubeadm to deploy your cluster
+If you use kubeadm to deploy your cluster:
 - kubeadm deploys the ETCD server for you as a POD in the kubesystem NS
 
 
-
-## list all keys in the etcd server o the master node
+list all keys in the etcd server o the master node:
 
 kubectl exec etcd-master -n kube-system etcdctl get / --prefix -keys-only
 
-## The k8 way of storing data in a dir structure
+The k8 way of storing data in a dir structure:
 root dir - registry
 
 registry has these under it:
@@ -3953,10 +3952,8 @@ ping 192.168.15.2
 
 ist option is the right way
 
-## any traffic coming on port 80 on the local host to be forwarded to port 80 of the ns
+any traffic coming on port 80 on the local host to be forwarded to port 80 of the ns:
 iptables -t nat -A PREPOUTING --dport 80 --to-destination 192.168.15.2:80 -j DNAT
-
-
 
 
 
@@ -4303,23 +4300,24 @@ kubectl get all --all-namespaces
 - Whenever the service is created, DNS creates a record and mapping its IP to the DNS
 
 ```yaml
-## can reach a webserver from a pod within the same namespace
+can reach a webserver from a pod within the same namespace:
 curl http://web-service
 
-## Different namespace for the service called apps(lets assume),
+Different namespace for the service called apps(lets assume),:
 curl http://web-service.apps
 
-## all services are further grouped together into another subdomain called svc created by DNS
+all services are further grouped together into another subdomain called svc created by DNS:
 curl http://web-service.apps.svc
 
 
-## How services are resolved within the cluster
+How services are resolved within the cluster:
 
-## FQDN for svc- all services and PODS are groupeed togther into a troot domain for the cluster, which is cluster.local by default
+FQDN for svc- all services and PODS are groupeed togther into a troot domain for the cluster, which is cluster.local by default:
+
 curl http://web-service.apps.svc.cluster.local
 
 
-## for pods
+for pods:
 k8 replaces the ip with dashes:
 curl http://10-244-2-5.apps.pod.cluster.local
 ```
