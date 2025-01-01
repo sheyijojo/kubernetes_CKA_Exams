@@ -71,14 +71,14 @@ In PROD, Etcd is in HA:
 
 ```
 
-## ETCD Server API and ETCD cli
+## ETCD Server API and ETCD CLI
 
 ```yaml
-## Additional information about ETCDCTL Utility ETCDCTL is the CLI tool used to interact with ETCD:
+Additional information about ETCDCTL Utility ETCDCTL is the CLI tool used to interact with ETCD:
 
 - ETCDCTL can interact with ETCD Server using 2 API versions – Version 2 and Version 3.
 
-## ETCD AUTH
+ETCD AUTH:
 - you must also specify the path to certificate files so that ETCDCTL can authenticate to the ETCD API Server.
 -  The certificate files are available in the etcd-master at the following path.
 
@@ -300,7 +300,7 @@ Spec:
          type: front-end  ## gotten from Replicaset metadata
 
 scaling a replica from 3 to 6:
-- edit the replica-definnition-file
+- edit the replica-definition-file
 - edit the replicas to 6
 
 kubectl replace -f replicaset-definition.yaml
@@ -381,13 +381,15 @@ kubectl create deployment --image=nginx nginx --replicas=4 --dry-run=client -o y
 
 Target port:
 - port on the Pod
-
+e.g 80
 Port:
 - Port of the service
-
+e.g 80
 NodePort: 30000 - 32767
 - Port on the node
 
+curl the svc:
+curl http://192.168.1.2:30008 
 ```
 
 ## sample service with declarative model
