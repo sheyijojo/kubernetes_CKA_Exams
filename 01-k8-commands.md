@@ -813,7 +813,18 @@ kubectl create deployment red --replicas=2 --image=nginx -o yaml > sample.yaml
 ```
 
 ## Create Deployment with Affinity to a Label on controlnode
+```yaml
+  spec:
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: node-role.kubernetes.io/control-plane
+                operator: Exists
 
+NodeAffinity is different from pod affinity nd so on. Take note:
+```
 ```yaml
 apiVersion: apps/v1
 kind: Deployment
