@@ -693,7 +693,7 @@ Allow a pod to be placed on a node by allowing a toleration on the pod:
 Taints and Toleration:
 - This is a pod to node relationship, what pods can be placed on the node:
     - Taints are set on Nodes:
-    - Tolerarion are set on pods:
+    - Toleration are set on pods:
 
 kubectl taint nodes <node-name> key=value:taint-effect
 
@@ -813,18 +813,7 @@ kubectl create deployment red --replicas=2 --image=nginx -o yaml > sample.yaml
 ```
 
 ## Create Deployment with Affinity to a Label on controlnode
-```yaml
-  spec:
-      affinity:
-        nodeAffinity:
-          requiredDuringSchedulingIgnoredDuringExecution:
-            nodeSelectorTerms:
-            - matchExpressions:
-              - key: node-role.kubernetes.io/control-plane
-                operator: Exists
 
-NodeAffinity is different from pod affinity nd so on. Take note:
-```
 ```yaml
 apiVersion: apps/v1
 kind: Deployment
