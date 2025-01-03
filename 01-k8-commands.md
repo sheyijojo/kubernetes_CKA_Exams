@@ -914,8 +914,31 @@ Use cases:
 1. Monitoring solution
 2. Logs viewer
 3. Kube Proxy
-4. weave-net
+4. weave-net(Networking solution)
 
+
+example:
+
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: elasticsearch
+  namespace: kube-system
+  labels:
+    app: shey
+spec:
+  selector:
+    matchLabels:
+      app: shey
+  template:
+    metadata:
+      labels:
+        app: shey
+    spec:
+      tolerations:
+      containers:
+      - name: elasticsearch
+        image: registry.k8s.io/fluentd-elasticsearch:1.20
 
 Daemonsets:
 kubectl get daemonsets
