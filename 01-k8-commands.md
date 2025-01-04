@@ -1361,11 +1361,14 @@ kubectl get configmaps
 
 Injecting ConfigMap different ways into pods:
 
-1. ## env
-envFrom:
-  - configMapRef:
-          name: app-config
-2. ##single env
+1. ## envFrom
+containers: 
+- name: simpe-app
+  image: myimage
+  envFrom:
+    - configMapRef:
+        name: app-config
+1. ##single env
 
 env:
   - name: APP_COLOR
@@ -1374,7 +1377,7 @@ env:
            name: app-config
            key: APP_COLOR
 
-3. ## Volumes
+3. Volumes:
 volumes
 - name: app-config-volume
   configMap
