@@ -1223,10 +1223,10 @@ Configuring applications comprises understanding the following concepts:
 - Configuring Secrets
 
 
-## docker
+docker:
 CMD
 
-## SPECIFY DIFFERENT cmd to start a docker
+SPECIFY DIFFERENT cmd to start a docker:
 
 docker run ubuntu [COMMAND]
 docker run ubuntu sleep 5
