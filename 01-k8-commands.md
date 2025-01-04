@@ -953,7 +953,7 @@ Daemonsets shortcut:
 kubectl describe ds kube-flannel-ds -n kube-system
 
 copy from the documentation or use deployment dry run and change it:
-kubectl create deployment elasticsearch -n kube-system --image=aaas --dry-run=client -o yaml
+kubectl create deployment elasticsearch -n kube-system --image=myimage --dry-run=client -o yaml
 
 No replicas:
 change the image name:
@@ -999,18 +999,102 @@ kubectl get pods -A
 path to directory for the static pod:
 check the kubelet conf
 cat /var/lib/kubelet/config.yaml   ##for any given static pod config
-## check for static pod path
+
+check for static pod path:
 
 ```
+## configmap as volume for a scheduler
+```yml
+Let's create a configmap that the new scheduler will employ using the concept of ConfigMap as a volume.:
+We have already given a configMap definition file called my-scheduler-configmap.yaml at /root/ path that will create a configmap with name my-scheduler-config using the content of file /root/my-scheduler-config.yaml:
 
-## create a static pod name static-busybox that uses the busy-box image and the command sleep 1000
+
+cat my-scheduler-configmap.yaml 
+
+apiVersion: v1
+data:
+  my-scheduler-config.yaml: |
+    apiVersion: kubescheduler.config.k8s.io/v1
+    kind: KubeSchedulerConfiguration
+    profiles:
+      - schedulerName: my-scheduler
+    leaderElection:
+      leaderElect: false
+kind: ConfigMap
+metadata:
+  creationTimestamp: null
+  name: my-scheduler-config
+  namespace: kube-system
+
+
+cat my-scheduler-config.yaml
+
+
+apiVersion: kubescheduler.config.k8s.io/v1
+kind: KubeSchedulerConfiguration
+profiles:
+  - schedulerName: my-scheduler
+leaderElection:
+  leaderElect: false
+
+
+
+cat my-scheduler.yaml
+
+
+apiVersion: v1
+kind: Pod
+metadata:
+  labels:
+    run: my-scheduler
+  name: my-scheduler
+  namespace: kube-system
+spec:
+  serviceAccountName: my-scheduler
+  containers:
+  - command:
+    - /usr/local/bin/kube-scheduler
+    - --config=/etc/kubernetes/my-scheduler/my-scheduler-config.yaml
+    image: <use-correct-image>
+    livenessProbe:
+      httpGet:
+        path: /healthz
+        port: 10259
+        scheme: HTTPS
+      initialDelaySeconds: 15
+    name: kube-second-scheduler
+    readinessProbe:
+      httpGet:
+        path: /healthz
+        port: 10259
+        scheme: HTTPS
+    resources:
+      requests:
+        cpu: '0.1'
+    securityContext:
+      privileged: false
+    volumeMounts:
+      - name: config-volume
+        mountPath: /etc/kubernetes/my-scheduler
+  hostNetwork: false
+  hostPID: false
+  volumes:
+    - name: config-volume
+      configMap:
+        name: my-scheduler-config
+```
+
+
+## exercise
 
 ```yaml
+create a static pod name static-busybox that uses the busy-box image and the command sleep 1000:
+
 kubectl run static-busybox --image=busybox --dry-run=client -o yaml --command -- sleep 1000 > static-busybox.yaml
 cp static-busybox.yaml  /etc/kubernetes/manifests/
 ```
 
-## watch while your pods get deployed
+## watch while your pods get deployed:
 
 `kubectl get pods --watch`
 
@@ -1026,6 +1110,7 @@ kubectl top node
 
 kubectl top pod
 
+Must specify the name of the container explicity:
 kubectl logs -f event-simulator-pod event-simulator
 
 ssh into the nodes:
@@ -1053,48 +1138,17 @@ kubectl describe pod pod-name -n kube-system | grep Image
 
 ```
 
-## configmap sample
 
-```yaml
-apiVersion: v1
-data:
-  my-scheduler-config.yaml: |
-    apiVersion: kubescheduler.config.k8s.io/v1
-    kind: KubeSchedulerConfiguration
-    profiles:
-      - schedulerName: my-scheduler
-    leaderElection:
-      leaderElect: false
-kind: ConfigMap
-metadata:
-  creationTimestamp: null
-  name: my-scheduler-config
-  namespace: kube-system
-```
-
-## custom scheduler.
-
-```
-apiVersion: v1
-kind: Pod
-metadata:
-  name: nginx
-spec:
-  containers:
-  - image: nginx
-    name: nginx
-  schedulerName:
-     my-scheduler
-
-```
+## Application Lifecycle
 
 ```yaml
 kubectl logs:
 kubectl logs podname
 
 Rollout and versioning in a deployment:
-- A first deployment triggers a rollout, a new rollout tiggers a new revision
-
+- A first deployment triggers a rollout, a new rollout tiggers a new  deployment revision, called revision 1
+- when the app is upgradedded/container version is updated to a new one, a nwe rollout is triggered, a new deployment revision 
+- called revision 2 is created 
 
 See status of deployment(rollout):
 kubectl rollout status deployment/myapp-deployment
@@ -1157,8 +1211,6 @@ spec:
           protocol: TCP
 
 ```
-
-## Application Lifecycle
 
 ```yaml
 
