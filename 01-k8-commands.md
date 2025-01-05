@@ -1551,7 +1551,7 @@ resources:
 
 
 ---------
-create a Base 64 encoded secret
+create a Base 64 encoded secret:
 head -c 32 /dev/urandon | base66
 
 output: sd24309wnassadasd==
@@ -1588,7 +1588,7 @@ ps aux | grep kube-api| grep encryp
 create another secret file literal:
 
 ensure all secrets are ecrypted:
-The command reads all Secrets and then updates them to apply server side encryption
+The command reads all Secrets and then updates them to apply server side encryption:
 
 kubectl get secrets --all-namsepaces -o json | kubectl replace -f -
 ```
