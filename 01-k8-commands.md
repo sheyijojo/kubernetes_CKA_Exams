@@ -1382,13 +1382,27 @@ volumes
 - name: app-config-volume
   configMap
     name: app-config
+
+
+
+kubectl create configmap webapp-config-map --from-literal=APP_COLOR=darkblue --from-literal=APP_OTHER=disregard
+
+execise:
+spec:
+  containers:
+  - env:
+    - name: APP_COLOR
+      valueFrom:
+            configMapKeyRef:
+              name: webapp-config-map           # The ConfigMap this value comes from.
+              key: APP_COLOR
 ```
 
 ## Secrets
 
 ```yaml
 Secrets are stored in encoded format:
--  Create secret and inject it into pod
+-  Create secret and inject it into pod:
 
 kubectl create secret generic db-secret --from-literal=DB_Host=sql01  --from-literal=DB_User=root  --from-literal=DB_password=passw
 ord123
@@ -1465,7 +1479,7 @@ spec:
         - secretRef:
             name: app-secret
 
-## single env
+single env:
 env:
   - name: DB_Password
     valueFrom:
@@ -1489,8 +1503,14 @@ kubectl create secret generic my-secret --from-literal=key1=supersecret
 get encoded value:
 k get secret my-secret -o yaml
 
+data:
+  DB_Host: mysql
+
+encode the secret:
+echo -n 'mysql' | base64
+
 decode the secret:
-echo "dsvfasrwefees" | base64 --decode
+echo -n "dsvfasrwefees" | base64 --decode
 
 Focus here in this demo is the data stored in the etcd server:
 
@@ -1530,8 +1550,6 @@ resources:
               secret: sd24309wnassadasd==
 
 
-
-
 ---------
 create a Base 64 encoded secret
 head -c 32 /dev/urandon | base66
@@ -1562,7 +1580,8 @@ In the volume section:
       path: /etc/kubernetes/enc           # add this line
       type: DirectoryOrCreate
 
-# check if encrypted provider is present
+
+check if encrypted provider is present:
 
 ps aux | grep kube-api| grep encryp
 
@@ -1584,7 +1603,8 @@ k get pods -n elastic-stack
 k -n elastic-stack logs kibana
 
 Edit the pod in the elastic-stack namespace to add a sidecar container to send logs to Elastic Search:
- Mount the log volume to the sidecar container:.
+
+Mount the log volume to the sidecar container:.
 
 https://kubernetes.io/docs/tasks/access-application-cluster/communicate-containers-same-pod-shared-volume/:
 
