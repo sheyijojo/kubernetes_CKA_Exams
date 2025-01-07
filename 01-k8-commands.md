@@ -2064,6 +2064,7 @@ k describe service <service-name>
 
 What is the version of ETCD running on the cluster?, Check the ETCD Pod or Process:
 `k describe pod etcd-controlplane -n kube-system | grep Image`
+k logs -n kube-system etcd-controlplane | grep 'etcd version'
 
 Where is the ETCD server certificate file located?:
 
@@ -2080,6 +2081,7 @@ Where is the ETCD CA Certificate file located?:
 
 ## we are required to take the necessary backups. Take a snapshot of the ETCD database using the built-in snapshot functionality.
 
+k logs -n kube-system etcd-controlplane | grep 'etcd version'
 
 Store the backup file at location /opt/snapshot-pre-boot.db
 
@@ -2126,6 +2128,15 @@ vim  /etc/kubernetes/manifests/etcd.yaml:
 - We have now restored the etcd snapshot to a new path on the controlplane - /var/lib/etcd-from-backup,
 - so, the only change to be made in the YAML file,
 - is to change the hostPath for the volume called etcd-data from old directory (/var/lib/etcd) to the new directory (/var/lib/etcd-from-backup).
+
+- --data-dir=/var/lib/etcd
+
+   volumeMounts:
+    - mountPath: /var/lib/etcd
+      name: etcd-data
+    - mountPath: /etc/kubernetes/pki/etcd
+      name: etcd-certs
+
 
 volumes:
   - hostPath:
