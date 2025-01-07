@@ -1736,7 +1736,7 @@ Ideally, None of the components should be at an higher version than the kubeapi 
 but.......:
 
 
-controller manager amd kube-scheduler can be at one version lower: X-1
+controller manager and kube-scheduler can be at one version lower: X-1
 kubelet and kube-proxy can be at two version lower: X-2
 
 However, kubectl: X+1 Can be at one version higher than the kube-apiserver
@@ -2024,7 +2024,7 @@ ETCDCLT_API=3 etcdctl \ snapshot save snapshot.db
 status of the snapshot:
 ETCDCLT_API=3 etcdctl \ snapshot status snapshot.db
 
-restore the d cluster from this backup at a later point in time:
+restore the the cluster from this backup at a later point in time:
 
 Stop the kube api server, because the etcd will be restarted and kubeapi depends on it :
 service kube=apiserver stop
