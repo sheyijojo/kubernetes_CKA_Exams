@@ -2077,6 +2077,7 @@ Where is the ETCD CA Certificate file located?:
 
 
 ## The master node in our cluster is planned for a regular maintenance reboot tonight. While we do not anticipate anything to go wrong,
+
 ## we are required to take the necessary backups. Take a snapshot of the ETCD database using the built-in snapshot functionality.
 
 
