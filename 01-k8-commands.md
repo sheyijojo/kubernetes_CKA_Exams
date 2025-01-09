@@ -2163,6 +2163,10 @@ Note 3: This is the simplest way to make sure that ETCD uses the restored data a
 If you do change --data-dir to /var/lib/etcd-from-backup in the ETCD YAML file,
 make sure that the volumeMounts for etcd-data is updated as well,
 with the mountPath pointing to /var/lib/etcd-from-backup (THIS COMPLETE STEP IS OPTIONAL AND NEED NOT BE DONE FOR COMPLETING THE RESTORE)
+
+
+scp cluster1-controlplane:/opt/cluster1.db /opt
+scp /opt/cluster2.db etcd-server:/root
 ```
 
 ## working with multiple k8 clusters
