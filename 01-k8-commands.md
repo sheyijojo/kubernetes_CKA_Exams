@@ -2379,12 +2379,12 @@ cat ~/.ssh/authorized_keys
 
 Certificate Authority (CA):
 
-Assymetric using openssl to generate pub and private key pair on the server, server can have private key securely:
+Assymetric using openssl to generate public and private key pair on the server, server can have private key securely:
 
 openssl genrsa -out my-bank.key 1024
 
 - user gets the pub key from the server
-- user sends the pub key to the server and server decrypyts with private key
+- user sends the pub key to the server and server decrypyts with private key generated above
 
 This is different from ssh-keygen
 
@@ -2416,7 +2416,7 @@ flow of PKI:
 - CA uses its private key to sign CSR - you know all users have a copy of the CA public key:
 - Signed certifcate is sent back to the server:
 - server configures the web app with the signed certificate:
-- users need access, server first sends the certicate with its public key:
+- users need access, server first sends the certicate with its public key inside the cert:
 - users browser reads the certifcate and uses the CA's public key to validate and retrieve the server's public key:
 - Borwser then generates a symmetric key it uses for communication going forward for all communication.:
 - The symmetric key is encrypted using the server as public key and sent back to the server:
@@ -2457,8 +2457,6 @@ openssl req -new -key ca.key -subj "/CN=KUBERNETES-CA" -out ca.csr
 
 SIGN USING THE OPENSSL with the private key ca key pair:
 openssl x509 -req -in ca.csr -signkey ca.key -out ca.crt
-
-
 
 Follow same process for the client but with little tweak by signing with the CA:
 
@@ -2574,20 +2572,20 @@ grep additions:
 kube-apiserver:
 --tls-cert-file=/etc/kubernetes/pki/apiserver.crt
 
-## Identify the Certificate file used to authenticate kube-apiserver as a client to ETCD Server.
+Identify the Certificate file used to authenticate kube-apiserver as a client to ETCD Server.:
 --etcd-certfile=/etc/kubernetes/pki/apiserver-etcd-client.crt
 
-## Identify the ETCD Server Certificate used to host ETCD server.
+Identify the ETCD Server Certificate used to host ETCD server.:
   --tls-cert-file=/etc/kubernetes/pki/apiserver.crt
 
-## What is the Common Name (CN) configured on the ETCD Server certificate?
+What is the Common Name (CN) configured on the ETCD Server certificate?:
 --cert-file=/etc/kubernetes/pki/etcd/server.crt
 
 
-## connection with kube-api server refused
+connection with kube-api server refused:
 docker ps -a | grep etcd
 
-## use crtctl for crio environments
+use crtctl for crio environments:
 crtctl ps -a
 //used for envs using crio instead of docker
 
@@ -2625,7 +2623,7 @@ get certifcate in yaml format:
 
 kubectl get csr jane -o yaml
 
-## to decode it
+to decode it:
 
 echo "a0qahqbqdqh0ndqd-qnasqwdnm" | base64 --decode
 
