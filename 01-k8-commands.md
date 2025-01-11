@@ -2793,11 +2793,11 @@ curl http"//localhost:6443 -k
       --cert admin.crt
       --cacert ca.crt
 
-## another option is to start a proxy client
+another option is to start a proxy client:
 - kubectl proxy uses cred and certs from your kubeconfig file to access the cluster - port 8002
 kubectl proxy
 
-## after the service has started
+after the service has started:
 curl http://locahost:8001 -k
 
 kube proxy is not equal to kubectl proxy
