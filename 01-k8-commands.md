@@ -2768,8 +2768,10 @@ preferences: {}
 
 Error in configuration: context was not found for specified context: dev-user@research
 
+ k config use-context research --kubeconfig=/root/my-kube-config
 
-
+ cp my-kube-config .kube/
+source ~/.bashrc
 
 ```
 
@@ -2829,8 +2831,6 @@ check the mode in the /usr/local/bin/kube-apiserver:
 you can set MUTLIPLE node Auth:
 - It is processed in sequence
 --authorization-mode=Node,RBAC,Webhook
-
-
 
 RBAC:
 kubectl create role developer --verb=list,create,delete --resource=pods
