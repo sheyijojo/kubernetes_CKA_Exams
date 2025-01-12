@@ -3221,6 +3221,7 @@ docker run --privileged ubuntu
 
 ```yaml
 security context on the spec/kubernetes level:
+Applies to all container settings in a pod
 spec:
  securityContext:
     runAsUser: 1000
@@ -3231,7 +3232,7 @@ spec:
 
 
 security context on the container level:
-
+overrizes setings on the pod
 spec:
  containers:
    - name: ubuntu
