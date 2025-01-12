@@ -2826,7 +2826,7 @@ Always Deny
 
 check the mode in the /usr/local/bin/kube-apiserver:
 - By default
---authorization-mode=AlwyasAllow
+--authorization-mode=AlwaysAllow
 
 you can set MUTLIPLE node Auth:
 - It is processed in sequence
@@ -3099,11 +3099,11 @@ kubectl get serviceaccount
 
 service account create token stored as a secret object:
 The token is used by the app to authenticate to the k8 api:
-The secret obj is then linked to the service account:
+The secret object is then linked to the service account:
 
 kubectl describe secret <secret-name>
 
-curl https:49u34u34/api -insecure --header "Authroization: Bearer sdssdmdsdmdmsdmsdm"
+curl https:49u34u34/api -insecure --header "Authorization: Bearer sdssdmdsdmdmsdmsdm"
 
 Default service account with secret token is automatically mounted as volume mount in a pod by default:
 a vol is automatically created for the service acount:
@@ -3205,7 +3205,7 @@ Check what users can do in linux:
 
 /usr/include/linux/capability.h
 
-root user in container does not have has much capabikity as that of linux HOST
+root user in container does not have has much capability as that of linux HOST
 
 CONTROL CAPBILITY TO A USER:
 
