@@ -3378,6 +3378,12 @@ spec:
     - protocol: TCP
       port: 8080
 
+
+   - ports:
+    - port: 53
+      protocol: UDP
+    - port: 53
+      protocol: TCP
 ```
 
 ## kubectx
@@ -3597,6 +3603,7 @@ spec:
        - ReadWriteOnce
    capacity:
       storage: 1Gi
+
    awsElasticBlockStore:
       volumeID: <volume-id>
       fstype: ext4
