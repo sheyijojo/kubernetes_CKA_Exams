@@ -3747,7 +3747,7 @@ metadata:
 - create a storage class and reference it in a PVC
 
 ```yaml
-Static prvisioning volume:
+Static provisioning volume:
 
 gcloud beta compute disks create \
    --size 1GB
