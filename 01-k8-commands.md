@@ -4340,7 +4340,7 @@ kubectl exec busybox -- ip route
 When a service is created, it is accessible on all pods on the cluster:
 
 - a service is hosted accross a cluster, not bound to a specific node:
-- a service accesible ONLY within the cluster is known as clusterIp, gets an IP addr attached to it:
+- a service accesible ONLY within the cluster is known as clusterIp, gets an IP addr attached to it from a predefined range :
 
 Nodeport service:
 - can expose app on a pods externally on all nodes on the cluster, gets an IP Addr
