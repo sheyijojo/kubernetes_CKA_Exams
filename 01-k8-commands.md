@@ -4513,14 +4513,14 @@ You have load balancers provisioned on google cloud:
 - Need to publish ingress as a service such as nodeport. A one-time configuration
 
 You could configure this withougt Ingress:
-cOULD USE REVERSE PROXY SUCH AS NGINX, haproxy, TRAEFIK, GCP HTTP(S) Load balancer (GCE), Contour, Istio
+Could use reverse proxy such as NGINX, haproxy, TRAEFIK, GCP HTTP(S) Load balancer (GCE), Contour, Istio
 
 They are also the Ingress controller:
 - ingress does this in a similar way, with a supported solution like above
 - solution deployed is known as ingress controller
 - Set of Rules you configure  is known as INGRESS RESOURCES, done by using a definition file
 
-- k8 cluster does not come with INgress controller by default
+- k8 cluster does not come with Ingress controller by default
 
 decouples configuration using config map when using example NGINX controller :
 
