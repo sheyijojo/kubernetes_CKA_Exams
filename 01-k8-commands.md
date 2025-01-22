@@ -4784,7 +4784,7 @@ https://kubernetes.github.io/ingress-nginx/examples/rewrite/
 
 k get pods -A
 
-## create an ingress
+create an ingress:
 kubectl create ingress myingress -n critical-space --rule="/pay=pay-service:8282"
 
 k get ingress -n critical-space
