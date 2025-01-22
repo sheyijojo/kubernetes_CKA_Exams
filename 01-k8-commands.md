@@ -4522,7 +4522,7 @@ They are also the Ingress controller:
 
 - k8 cluster does not come with Ingress controller by default
 
-decouples configuration using config map when using example NGINX controller :
+Decouples configuration using config map when using example NGINX controller :
 
 steps:
 - create ingress controller
