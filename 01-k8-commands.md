@@ -5158,7 +5158,7 @@ END FOR
 ```
 
 ```yaml
-## using json path for printing custom columns: Option to using loop
+using json path for printing custom columns: Option to using loop:
 
 kubectl get nodes -o=custom-columns=<COLUMN NAME>:<JSON PATH>
 
@@ -5239,7 +5239,7 @@ vim /var/lib/kubelet/config.yaml
 ## Network Trouble shooting
 
 ```yaml
-## Network Plugin in Kubernetes
+Network Plugin in Kubernetes:
 ——————–
 
 There are several plugins available, and these are some.
@@ -5251,7 +5251,7 @@ To install,
 kubectl apply -f
 https://github.com/weaveworks/weave/releases/download/v2.8.1/weave-daemonset-k8s.yaml
 
-## You can find details about the network plugins in the following documentation :
+You can find details about the network plugins in the following documentation :
 
 https://kubernetes.io/docs/concepts/cluster-administration/addons/#networking-and-network-policy
 
