@@ -4773,7 +4773,7 @@ spec:
 <img src="https://github.com/sheyijojo/kubernetes_CKA_Exams/blob/main/pdfs/ingress-steps.png?raw=true" alt="Description" width="800">
 
 ```yaml
-## Which namespace is the Ingress Resource deployed in?
+Which namespace is the Ingress Resource deployed in?:
 
 
 kubectl get ingress --all-namespaces
@@ -4810,7 +4810,7 @@ k create serviceaccount ingress-nginx -n ingress-nginx
 
 k create serviceaccount nginx-admission -n ingress-nginx
 
-## We have created the Roles, RoleBindings, ClusterRoles, and ClusterRoleBindings for the ServiceAccount. Check it out!!
+We have created the Roles, RoleBindings, ClusterRoles, and ClusterRoleBindings for the ServiceAccount. Check it out!!:
 
 k get roles -n <namespacename>
 
@@ -4830,7 +4830,7 @@ k get svc -n ingress-nginx
 k edit svc ingress -n ingress-nginx
 - edit the NodePort port to 30080
 
-## create the ingress resource to make the applications vailable at /wear and /watch om the ingress service
+create the ingress resource to make the applications vailable at /wear and /watch om the ingress service:
 
 create the ingress in the app-space ns:
 - configure correct backend service for /wear
@@ -4875,7 +4875,7 @@ echo 'deb [signed-by=/etc/apt/keyrings/kubernetes-apt-keyring.gpg] https://pkgs.
 
 sudo apt-get update
 
-# To see the new version labels
+To see the new version labels:
 sudo apt-cache madison kubeadm
 
 sudo apt-get install -y kubelet=1.31.0-1.1 kubeadm=1.31.0-1.1 kubectl=1.31.0-1.1
