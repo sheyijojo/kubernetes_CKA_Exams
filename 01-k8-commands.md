@@ -4930,7 +4930,7 @@ Now apply the modified manifest kube-flannel.yml file using kubectl:
 if users complain about accessing the app:
  steps:
 1. Start with the webapp frontend:
-   - curl http://web-service-ip:node-port
+   -  curl http://web-service-ip:node-port
    -  curl http://10.43.224.12:8080
 2. check the service:
    - kubectl describe service web-service
