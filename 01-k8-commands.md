@@ -4929,14 +4929,14 @@ Now apply the modified manifest kube-flannel.yml file using kubectl:
 ```yaml
 if users complain about accessing the app:
  steps:
-1. Start with the webapp frontend:
+1. Start with the webapp frontend: can you access it?
    -  curl http://web-service-ip:node-port
    -  curl http://10.43.224.12:8080
 2. check the service:
    - kubectl describe service web-service
 3. if the service endpoint is not discovered:
-   - kubectl describe service web-service
-   -  check the Selector to Endpoints(which is ip) configured on the pod
+   -  kubectl describe service web-service
+   -  check the Selector to Endpoints(which is ip) configured on the pod.
 Notes: So in the web-service, there is a selector that references the Pod label name and they must match
 4. check the pod itself and ensure it is in a running state
    - kubectl get pod
@@ -4990,9 +4990,9 @@ spec:
     selector:
       name: mysql
 
-## task questions
+task questions:
 
-## use a particular namespace
+use a particular namespace:
 k config --help
 kubectl config set-context --current --namespace=alpha
 
@@ -5000,8 +5000,8 @@ k descibe deploy webapp-mysql
 
 k replace --force -f /tmp/kubectl-edit04287356731.yaml
 
-## note
-- a more complicated use case will have a conifg map associated to the service/pod
+note:
+- a more complicated use case will have a config map associated to the service/pod
 ```
 
 ## control plane failures
