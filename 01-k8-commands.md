@@ -5421,10 +5421,28 @@ update this on the manifest or service:
 NamespaceExists and NamespaceAutoProvision are both deprecated and replaced with NamespaceLifecycle Admission Controller. 
 
 
+Two types of Admission controllers:
+- Mutation :
+   Change/mutate the object before it is created. E.g When creating a pvc, a user do not specify a storage, but a default storage class is added before the pvc object is created. 
+
+Generally, mutating controllers are invoked first before the validating ones 
+- Validating:
+   They validate the request and allow or deny it. 
+
+There are other that can do both. 
 
 
+Creating custom admission controllers:
+- MutatingAdmissionWebhook
+- ValidatingAdmissionWebhook 
 
+Can configure the webhook to point to a server that is hosted within k8 or externally 
+
+
+    
 ```
+<img src="https://github.com/sheyijojo/kubernetes_CKA_Exams/blob/main/pdfs/admission-controller-webhook.png?raw=true" alt="Description" width="800">
+
 
 
 
