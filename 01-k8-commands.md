@@ -5213,6 +5213,10 @@ Use a JSON PATH query to identify the context configured for the aws-user in the
 kubectl config view --kubeconfig=my-kube-config -o jsonpath="{.contexts[?(@.context.user=='aws-user')].name}" > /opt/outputs/aws-context-name
 ```
 
+
+
+
+
 ## kubelet
 
 ```yaml
@@ -5385,6 +5389,32 @@ DNS Troubleshooting:
 https://kubernetes.io/docs/tasks/administer-cluster/dns-debugging-resolution/
 
 ```
+
+
+## 2025 Updates 
+```yml
+Admission Controllers:
+
+check which admission controller plugins is enabled by default:
+
+kube-apiserver -h | grep enable-admission-plugins 
+
+kubectl exec kube-apiserver-controlplane -n kube-system -- kube-apiserver -h | grep enable-admission-plugins 
+
+
+update this on the manifest or service 
+
+- --enable-admission-plugins=NodeRestriction, NamespaceAutoProvision
+- --disable-admission-plugins=NodeRestriction, NamespaceAutoProvision, DefaultStorageClass
+
+
+NamespaceExists and NamespaceAutoProvision are both deprecated and replaced with NamespaceLifecycle Admission Controller. 
+
+
+```
+
+
+
 
 ## exams
 
