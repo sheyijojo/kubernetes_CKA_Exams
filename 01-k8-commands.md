@@ -5441,14 +5441,21 @@ Can configure the webhook to point to a server that is hosted within k8 or exter
 Our own admission webhook server sends a request to all the built-in admission controllers, it hits the webhook that was configured on the k8 server, then makes a call to the admission webhook server by passing 
 an admission review object in a JSON format(See diagram):
 
-Then the admission webhook responds with an admission review object 
+Then the admission webhook responds with an admission review object:
+with a result if the request is allowed or not 
 ```
 <img src="https://github.com/sheyijojo/kubernetes_CKA_Exams/blob/main/pdfs/admission-controller-webhook.png?raw=true" alt="Description" width="800">
 
 
 <img src="https://github.com/sheyijojo/kubernetes_CKA_Exams/blob/main/pdfs/admission-review-object.png?raw=true" alt="Description" width="800">
 
+## webhook server sample Go, Python sudo
 
+<img src="https://github.com/sheyijojo/kubernetes_CKA_Exams/blob/main/pdfs/web-hookserver-external.png?raw=true" alt="Description" width="800">
+
+<img src="https://github.com/sheyijojo/kubernetes_CKA_Exams/blob/main/pdfs/webhook-server-sudocode-python.png?raw=true" alt="Description" width="800">
+
+<img src="https://github.com/sheyijojo/kubernetes_CKA_Exams/blob/main/pdfs/webhook-server-sudo-2.png?raw=true" alt="Description" width="800">
 
 
 
