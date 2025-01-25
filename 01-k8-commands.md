@@ -5402,7 +5402,11 @@ kube-apiserver -h | grep enable-admission-plugins
 kubectl exec kube-apiserver-controlplane -n kube-system -- kube-apiserver -h | grep enable-admission-plugins 
 
 
-update this on the manifest or service 
+vi /etc/kubernetes/manifests/kube-apiserver.yaml
+
+- --enable-admission-plugins=NodeRestriction
+
+update this on the manifest or service:
 
 - --enable-admission-plugins=NodeRestriction, NamespaceAutoProvision
 - --disable-admission-plugins=NodeRestriction, NamespaceAutoProvision, DefaultStorageClass
