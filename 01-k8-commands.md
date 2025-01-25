@@ -5393,6 +5393,8 @@ https://kubernetes.io/docs/tasks/administer-cluster/dns-debugging-resolution/
 
 ## 2025 Updates 
 ```yml
+
+kubectl ---> Authentication -----> Authorization --------> Admission Controllers  -----> create pod 
 Admission Controllers:
 
 check which admission controller plugins is enabled by default:
@@ -5417,6 +5419,9 @@ update this on the manifest or service:
 
 
 NamespaceExists and NamespaceAutoProvision are both deprecated and replaced with NamespaceLifecycle Admission Controller. 
+
+
+
 
 
 ```
