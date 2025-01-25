@@ -5136,15 +5136,13 @@ kubectl get nodes -o=jsonpath='{.items[*].metadata.name}{"\n"}{.items[*].status.
 
 using loops:
 
-`{range  .items[*]}
+`{range .items[*]}
 
-{.metadata.name} {"\t"} {.status.capacity.cpu}{"\n"}
-
-{end}'
-
-kubectl get nodes -o=jsonpath='{range  .items[*]}{.metadata.name} {"\t"} {.status.capacity.cpu}{"\n"}
+     {.metadata.name} {"\t"} {.status.capacity.cpu}{"\n"}
 
 {end}'
+
+kubectl get nodes -o=jsonpath='{range .items[*]}{.metadata.name} {"\t"} {.status.capacity.cpu}{"\n"} {end}'
 
 
 Sudo code for this:
