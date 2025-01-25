@@ -5443,7 +5443,19 @@ an admission review object in a JSON format(See diagram):
 
 Then the admission webhook responds with an admission review object:
 with a result if the request is allowed or not 
+
+Create TLS secret webhook-server-tls for secure webhook communication in webhook-demo namespace.:
+We have already created below cert and key for webhook server which should be used to create secret.:
+
+ k create secret  tls webhook-server-tls --cert=/root/keys/webhook-server-tls.crt -
+-key=/root/keys/webhook-server-tls.key
+
+
 ```
+
+
+
+
 <img src="https://github.com/sheyijojo/kubernetes_CKA_Exams/blob/main/pdfs/admission-controller-webhook.png?raw=true" alt="Description" width="800">
 
 
@@ -5456,6 +5468,7 @@ with a result if the request is allowed or not
 <img src="https://github.com/sheyijojo/kubernetes_CKA_Exams/blob/main/pdfs/webhook-server-sudocode-python.png?raw=true" alt="Description" width="800">
 
 <img src="https://github.com/sheyijojo/kubernetes_CKA_Exams/blob/main/pdfs/webhook-server-sudo-2.png?raw=true" alt="Description" width="800">
+
 
 
 
