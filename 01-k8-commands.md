@@ -5406,6 +5406,10 @@ vi /etc/kubernetes/manifests/kube-apiserver.yaml
 
 - --enable-admission-plugins=NodeRestriction
 
+
+Since the kube-apiserver is running as pod you can check the process to see enabled and disabled plugins.:
+
+ps -ef | grep kube-apiserver | grep admission-plugin
 update this on the manifest or service:
 
 - --enable-admission-plugins=NodeRestriction, NamespaceAutoProvision
