@@ -5491,6 +5491,79 @@ webhooks:
     sideEffects: None
 
 
+
+In previous steps we have deployed demo webhook which does below:
+
+- Denies all request for pod to run as root in container if no securityContext is provided.
+
+- If no value is set for runAsNonRoot, a default of true is applied, and the user ID defaults to 1234
+
+- Allow to run containers as root if runAsNonRoot set explicitly to false in the securityContext
+
+In next steps we have added some pod definitions file for each scenario. Deploy those pods with existing definitions file and validate the behaviour of our webhook:
+
+
+Deploy a pod with no securityContext specified.
+
+apiVersion: v1
+kind: Pod
+metadata:
+  name: pod-with-defaults
+  labels:
+    app: pod-with-defaults
+spec:
+  restartPolicy: OnFailure
+  containers:
+    - name: busybox
+      image: busybox
+      command: ["sh", "-c", "echo I am running as user $(id -u)"]
+
+Deploy pod with a securityContext explicitly allowing it to run as root:
+
+apiVersion: v1
+kind: Pod
+metadata:
+  name: pod-with-override
+  labels:
+    app: pod-with-override
+spec:
+  restartPolicy: OnFailure
+  securityContext:
+    runAsNonRoot: false
+  containers:
+    - name: busybox
+      image: busybox
+      command: ["sh", "-c", "echo I am running as user $(id -u)"]
+
+
+k get pods pod-with-override -o yaml  | grep -i -A2  "security:
+
+
+
+Deploy a pod with a conflicting securityContext i.e. pod running with a user id of 0 (root)
+Mutating webhook should reject the request as its asking to run as root user without setting runAsNonRoot: false
+
+response:
+
+ k create -f pod-with-conflict.yaml 
+Error from server: error when creating "pod-with-conflict.yaml": admission webhook "webhook-server.webhook-demo.svc" denied the request: runAsNonRoot specified, but runAsUser set to 0 (the root user)
+
+
+apiVersion: v1
+kind: Pod
+metadata:
+  name: pod-with-conflict
+  labels:
+    app: pod-with-conflict
+spec:
+  restartPolicy: OnFailure
+  securityContext:
+    runAsNonRoot: true
+    runAsUser: 0
+  containers:
+    - name: busybox
+      image: busybox
+      command: ["sh", "-c", "echo I am running as user $(id -u)"]
 ```
 
 
