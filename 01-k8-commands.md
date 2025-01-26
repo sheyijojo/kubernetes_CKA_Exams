@@ -5632,6 +5632,7 @@ helm commands:
 
 helm search hub wordpress
 
+add bitnami hel chart repo to the cluster 
 helm repo add bitnami https://charts.bitnami.com/bitnami
 
 
@@ -5665,6 +5666,35 @@ helm pull --untar bitnami/wordpress
 helm install my-release ./wordpress
 
 
+Helm Lifescycle Management:
+
+example:
+
+helm install nginx-release bitnami/nginx --version 7.1.0
+
+wanna make changes to config objs or objs:
+k get pods 
+
+k desscribe pod and se bitnami image 
+
+wanna upgrade image:
+helm upgrade nginx-release bitnami/nginx 
+
+see current revision:
+helm list 
+
+
+check all revisions:
+helm history nginx-release 
+
+
+helm rollback nginx-release 1
+ technically doesnt go back to revision 1, creates another revision 3 but same config with revision 1:
+
+pvs, database, external data, rollback won't restore the data. There are options to do that using charthooks. 
+
+
+
 ```
 ## Helm- Helloworld
 <img src="https://github.com/sheyijojo/kubernetes_CKA_Exams/blob/main/pdfs/helm-helloworld.png?raw=true" alt="Description" width="500">
@@ -5673,6 +5703,14 @@ helm install my-release ./wordpress
 
 ## Heml - wordpress
 <img src="https://github.com/sheyijojo/kubernetes_CKA_Exams/blob/main/pdfs/helm-wordpress.png?raw=true" alt="Description" width="500">
+
+
+
+
+
+
+
+
 
 ## exams
 
