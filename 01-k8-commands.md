@@ -5840,10 +5840,7 @@ resources:
   
 kustomize build k8s/ | kubectl apply -f - 
 
- 
 ```
-
-
 
 ## Exams
 
@@ -5851,6 +5848,7 @@ kustomize build k8s/ | kubectl apply -f -
 k expose pod messaging --name=messaging-service --port=6379 --type=ClusterIP --labels tier=msg
 
 question
+
 Create a static pod named static-busybox on the controlplane node that uses the busybox image and the command sleep 1000:
 kubectl run --restart=Never --image=busybox static-busybox --dry-run=client -o yaml --command -- sleep 1000 > /etc/kubernetes/manifests/static-busybox.yaml
 
@@ -5859,9 +5857,12 @@ Expose the hr-web-app created in the previous task as a service named hr-web-app
 The web application listens on port 8080.:
 
 kubectl expose deployment hr-web-app --type=NodePort --port=8080 --name=hr-web-app-service --dry-run=client -o yaml > hr-web-app-service.yaml
+
+
 Now, in generated service definition file add the nodePort field with the given port number under the ports section and create a service.:
 
 my solution mistake:
+
  k expose deployment hr-web-app --type=NodePort --port=8080  --target-port=30082 --name=hr-web-app-service --labels app=hr-web-app
 
 
