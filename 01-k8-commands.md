@@ -5603,8 +5603,23 @@ helm upgrade wordpress (rev2)
 helm rollback wordpress (rev3)
 
 
-```
+Charts are a collection of files. They contain instructions that Helm needs to know to create the collection of objects needed in a k8 :cluster.
 
+By using charts and objects, helm in a way intsalls application in my cluster.:
+
+When a chart is applied to my cluster, a RELEASE is created. A release is single installation of an app using a Helm Chart. 
+On each release, you can have multiple revisions.Each rev is like a snapshot of the application. 
+
+
+We can find helm charts in public repos and use them. 
+
+Helm produces metadata and needs somewhere to save it. It saves it as a k8 Secret.
+```
+## Helm- Helloword
+<img src="https://github.com/sheyijojo/kubernetes_CKA_Exams/blob/main/pdfs/helm-helloworld.png?raw=true" alt="Description" width="500">
+
+## Heml - wordpress
+<img src="https://github.com/sheyijojo/kubernetes_CKA_Exams/blob/main/pdfs/helm-wordpress.png?raw=true" alt="Description" width="500">
 
 ## exams
 
