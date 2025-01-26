@@ -5719,6 +5719,12 @@ pvs, database, external data, rollback won't restore the data. There are options
 
 
 
+## Kustomize
+
+<img src="https://github.com/sheyijojo/kubernetes_CKA_Exams/blob/main/pdfs/kustomize.png?raw=true" alt="Description" width="500">
+
+
+
 
 ## Kustomize
 
@@ -5784,14 +5790,15 @@ commonLabels:
 kustomize build k8s/
 
 output: service,  nginx
+The Kustomize build command combines all the manifests and applies the defined transformations
+
+The Kustomize build command does not apply/deploy the kubernetes resources to a cluster 
+  - The output needs to be redirected to the kubectl apply command 
+  
+
+
  
 ```
-
-## Kustomize
-
-<img src="https://github.com/sheyijojo/kubernetes_CKA_Exams/blob/main/pdfs/kustomize.png?raw=true" alt="Description" width="500">
-
-
 
 
 
