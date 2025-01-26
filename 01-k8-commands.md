@@ -5587,10 +5587,18 @@ spec:
 
 ```yml
 Helm Chart:
-Helm work as a package manager and release manager. Also help us to treat kurbernetes as Apss
+Helm work as a package manager and release manager. Also help us to treat kurbernetes as Apps:
 
 
 sudo snap install --classic
+
+
+helm install wordpress (rev1)
+
+helm upgrade wordpress (rev2)
+
+helm rollback wordpress (rev3)
+
 
 ```
 
