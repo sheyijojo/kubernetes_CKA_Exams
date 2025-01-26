@@ -5842,6 +5842,8 @@ kustomize build k8s/ | kubectl apply -f -
 
 ```
 
+<img src="https://github.com/sheyijojo/kubernetes_CKA_Exams/blob/main/pdfs/managing-directories.png?raw=true" alt="Description" width="500">
+
 ## Exams
 
 ```yml
