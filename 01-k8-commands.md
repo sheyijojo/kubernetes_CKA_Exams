@@ -5806,6 +5806,11 @@ kubectl apply -k k8s/
 to delete:
 kustomize build k8s/ | kubectl delete -f -
 kubectl delete -k k8s/ 
+
+
+apiVersion: hard code it, even though it takes default 
+
+
  
 ```
 
