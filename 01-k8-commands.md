@@ -5810,13 +5810,39 @@ kubectl delete -k k8s/
 
 apiVersion: hard code it, even though it takes default 
 
+managing directories:
+kubectl apply -f k8s/api/
 
+kubectl apply -f k8s/db/
+
+Can get cubersome :
+- go to k8s folder and and place Kustomization in the directory
+resources:
+  - api/api-deply.yaml
+  - api/api-service.yaml   
+  - db/db-deply.yaml
+  - db/db-service.yaml
+##Customizations that need to be made 
+commonLabels: 
+  company: mycompany 
+
+kustomize build k8s/ | kubectl apply -f - 
+
+Not still a perfect solution:
+
+add a seperate kustomization.yaml in each sub-directories and still have root Kustomization.yaml
+
+resources:
+  - api/
+  - db/
+  - cache/
+  - kafka/
  
 ```
 
 
 
-## exams
+## Exams
 
 ```yml
 k expose pod messaging --name=messaging-service --port=6379 --type=ClusterIP --labels tier=msg
