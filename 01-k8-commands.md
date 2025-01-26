@@ -5740,7 +5740,10 @@ Overlays: customize behaviors per env basis
 
 overlays/dev  , overlays/stg, overlays/prod 
 
+Kustomize
+Base + Overlay  ==  Final Manifests
 
+```
 
 ## Kustomize
 
