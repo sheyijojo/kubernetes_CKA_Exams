@@ -5724,15 +5724,27 @@ pvs, database, external data, rollback won't restore the data. There are options
 
 ```yml
 
-Managing environment 
+Managing environment :
 
-Same deployment but different config for each env 
+Same deployment but different config for each env :
 
-dev/nginx.yml  stg/nginx.yml  prod/nginx.yml 
+dev/nginx.yml  stg/nginx.yml  prod/nginx.yml :
+
+k apply of dev/nginx  
+This is just scaling the replicas. This is not a scalable solution:
+
+
+Two concepts
+Base config: Default accross your environment 
+Overlays: customize behaviors per env basis 
+
+overlays/dev  , overlays/stg, overlays/prod 
 
 
 
-```
+## Kustomize
+
+<img src="https://github.com/sheyijojo/kubernetes_CKA_Exams/blob/main/pdfs/kustomize.png?raw=true" alt="Description" width="500">
 
 
 
