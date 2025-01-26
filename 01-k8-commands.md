@@ -5611,12 +5611,32 @@ When a chart is applied to my cluster, a RELEASE is created. A release is single
 On each release, you can have multiple revisions.Each rev is like a snapshot of the application. 
 
 
-We can find helm charts in public repos and use them. 
+We can find helm charts in public repos and use them. :
 
-Helm produces metadata and needs somewhere to save it. It saves it as a k8 Secret.
+Helm produces metadata and needs somewhere to save it. It saves it as a k8 Secret.:
+
+artifacthub.io:
+- you see thousand of charts there 
+
+
+
+components of helm chart:
+- templates(folder)
+- values.yaml
+- Chart.yaml
+- LICENSE
+- README.md
+type  " application or library
+
+
+
+
+
 ```
-## Helm- Helloword
+## Helm- Helloworld
 <img src="https://github.com/sheyijojo/kubernetes_CKA_Exams/blob/main/pdfs/helm-helloworld.png?raw=true" alt="Description" width="500">
+
+
 
 ## Heml - wordpress
 <img src="https://github.com/sheyijojo/kubernetes_CKA_Exams/blob/main/pdfs/helm-wordpress.png?raw=true" alt="Description" width="500">
