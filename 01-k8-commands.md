@@ -5626,7 +5626,7 @@ components of helm chart:
 - Chart.yaml
 - LICENSE
 - README.md
-type  " application or library
+type - application or library
 
 
 
