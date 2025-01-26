@@ -5733,7 +5733,7 @@ dev/nginx.yml  stg/nginx.yml  prod/nginx.yml :
 k apply of dev/nginx  
 This is just scaling the replicas. This is not a scalable solution:
 
-
+Comes built in to kubctl, but still need to check for latest version , k doesnt come with latest version 
 Two concepts
 Base config: Default accross your environment 
 Overlays: customize behaviors per env basis 
@@ -5743,6 +5743,48 @@ overlays/dev  , overlays/stg, overlays/prod
 Kustomize
 Base + Overlay  ==  Final Manifests
 
+
+Kustomize vs Helm :
+
+Helm use of go templates to allow assinging var to properties 
+Helm is more than just a tool to customize configs on a per env basis. Helm is also a package manager for your app
+Helm provides conditionals, loops, functions, amd hooks 
+Helm templates are not valid YAML as thet use go templating 
+Helm is complex templates become hard to read unlike Kustomize which is pure yaml.
+
+
+
+Install Kustomize
+
+curl gitbusocnten masster/hack-----
+
+kustomize version --short :
+
+
+
+structure  :
+
+k8s folder
+   nginx-depl.yaml
+   nginx-service
+   kustomization.yaml
+
+
+kustomization.yaml
+##kurbenetes resources that need to be managed by kustomize
+resources:
+  - nginx-deploy.yaml
+  - nginx-service.yaml   
+
+##Customizations that need to be made 
+commonLabels: 
+  company: mycompany 
+
+
+kustomize build k8s/
+
+output: service,  nginx
+ 
 ```
 
 ## Kustomize
