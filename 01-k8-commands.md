@@ -5796,7 +5796,16 @@ The Kustomize build command does not apply/deploy the kubernetes resources to a 
   - The output needs to be redirected to the kubectl apply command 
   
 
+to run it: 
 
+kustomize build k8s/ | kubectl apply -f - 
+
+do it natively: 
+kubectl apply -k k8s/
+
+to delete:
+kustomize build k8s/ | kubectl delete -f -
+kubectl delete -k k8s/ 
  
 ```
 
