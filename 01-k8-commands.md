@@ -5628,8 +5628,41 @@ components of helm chart:
 - README.md
 type - application or library
 
+helm commands:
+
+helm search hub wordpress
+
+helm repo add bitnami https://charts.bitnami.com/bitnami
 
 
+
+helm install my-release bitnami/wordpress
+
+helm search repo wordpress
+
+helm list
+
+helm unistall my-release 
+
+
+helm repo list 
+
+helm repo update 
+
+
+Customizing Helm Chart Parameters:
+
+set before installing:
+helm install --set wordpressBlogName="Helm Tutorials" my-release bitnami/wordpress
+
+custom values:
+helm install --values custom-values.yml my-release bitnami/wordpress
+
+can pull:
+helm pull bitnami/wordpress
+helm pull --untar bitnami/wordpress
+
+helm install my-release ./wordpress
 
 
 ```
