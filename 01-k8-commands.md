@@ -5576,14 +5576,17 @@ spec:
 
 ## webhook server sample Go, Python sudo
 
-<img src="https://github.com/sheyijojo/kubernetes_CKA_Exams/blob/main/pdfs/web-hookserver-external.png?raw=true" alt="Description" width="800">
+<img src="https://github.com/sheyijojo/kubernetes_CKA_Exams/blob/main/pdfs/web-hookserver-external.png?raw=true" alt="Description" width="500">
 
-<img src="https://github.com/sheyijojo/kubernetes_CKA_Exams/blob/main/pdfs/webhook-server-sudocode-python.png?raw=true" alt="Description" width="800">
+<img src="https://github.com/sheyijojo/kubernetes_CKA_Exams/blob/main/pdfs/webhook-server-sudocode-python.png?raw=true" alt="Description" width="500">
 
-<img src="https://github.com/sheyijojo/kubernetes_CKA_Exams/blob/main/pdfs/webhook-server-sudo-2.png?raw=true" alt="Description" width="800">
+<img src="https://github.com/sheyijojo/kubernetes_CKA_Exams/blob/main/pdfs/webhook-server-sudo-2.png?raw=true" alt="Description" width="500">
 
 
 ## Updates 2025 - Helm 
+
+<img src="https://github.com/sheyijojo/kubernetes_CKA_Exams/blob/main/pdfs/helmchart.png?raw=true" alt="Description" width="500">
+
 
 ```yml
 Helm Chart:
