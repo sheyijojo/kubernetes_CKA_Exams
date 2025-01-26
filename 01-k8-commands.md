@@ -5837,6 +5837,9 @@ resources:
   - db/
   - cache/
   - kafka/
+  
+kustomize build k8s/ | kubectl apply -f - 
+
  
 ```
 
