@@ -5675,10 +5675,23 @@ helm install nginx-release bitnami/nginx --version 7.1.0
 wanna make changes to config objs or objs:
 k get pods 
 
-k desscribe pod and se bitnami image 
+k describe pod and set bitnami image 
 
-wanna upgrade image:
+wanna upgrade a release:
 helm upgrade nginx-release bitnami/nginx 
+
+upgrade a release app version from 1.22.0 to 1.23.X:
+- To get this, need to upgrade the chart from current version of nginx-12.0.4 to 13.
+- 13 contains app version of 1.23. 0  :
+- I upgraded mine to 18, which is the latest chart version, downloaded on my k8n portal:
+
+helm upgrade dazzling-web bitnami/nginx --version 18
+
+but the current andswer is --version 13 which gives app version of 1.23.4 specifically 
+
+rollback to version 3:
+
+helm rollback dazzling-web 3
 
 see current revision:
 helm list 
@@ -5707,6 +5720,19 @@ pvs, database, external data, rollback won't restore the data. There are options
 
 
 
+## Kustomize
+
+```yml
+
+Managing environment 
+
+Same deployment but different config for each env 
+
+dev/nginx.yml  stg/nginx.yml  prod/nginx.yml 
+
+
+
+```
 
 
 
