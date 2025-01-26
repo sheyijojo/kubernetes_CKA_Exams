@@ -5583,6 +5583,14 @@ spec:
 <img src="https://github.com/sheyijojo/kubernetes_CKA_Exams/blob/main/pdfs/webhook-server-sudo-2.png?raw=true" alt="Description" width="800">
 
 
+## Updates 2025 - Helm 
+
+```yml
+Helm Chart:
+
+
+
+```
 
 
 ## exams
