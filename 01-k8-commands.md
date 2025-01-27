@@ -5815,8 +5815,9 @@ kubectl apply -f k8s/api/
 
 kubectl apply -f k8s/db/
 
-Can get cubersome :
+This becomes to get cubersome :
 - go to k8s folder and and place Kustomization in the directory
+- Because we get to add kustomizatin.yml in each dir
 resources:
   - api/api-deply.yaml
   - api/api-service.yaml   
@@ -5839,6 +5840,69 @@ resources:
   - kafka/
   
 kustomize build k8s/ | kubectl apply -f - 
+
+
+This becomes cumbersom:
+
+kubectl apply -f k8s/ | kubectl apply -f k8s/cache -f k8s/api -f k8s/db 
+
+kubectl delete -f k8s/ | kubectl apply -f k8s/cache -f k8s/api -f k8s/db 
+
+using kustomize: 
+apiVersion: kustomize.config.k8s.io/v1beta1 
+kind: Kustomization
+
+resources:
+- api/api-deply.yaml
+- cache/redis-deply.yaml 
+
+
+
+kustomize build k8s/
+
+kustomize build k8s/ | kubectl apply -f - 
+
+kubectl apply -k k8s/
+
+
+Best solution
+Create a kustomization.yaml in each suub-directories and a root kustomization.yaml.:
+Reference the sub-directory kustomization.yaml in in the root
+
+Example:
+sub directories:
+api, cache, db
+
+api subdirectory
+k8s/api/
+   api-deply.yaml
+   api-service.yaml
+   kustomization.yaml
+ 
+Now the api kustomization.yaml file in the api folder
+
+##kurbenetes resources that need to be managed by kustomize
+resources:
+  - api-deply.yaml
+  - api-service.yaml   
+
+now do it for the rest of the subfolders, cache and db
+
+in the root folder: 
+k8s/kustomization.yaml
+
+apiVersion: Kustomize.config.k8s.io/v1beta1
+kind: Kustomization 
+
+resources:
+  - api/
+  - cache/
+  - db/
+  
+kustomize build k8s/ 
+kustomize build k8s/ | kubectl apply -f -
+
+
 
 ```
 
