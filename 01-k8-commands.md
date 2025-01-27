@@ -5927,15 +5927,34 @@ commonAnnotations:
 
 Image Transformers:
 kustomization.yaml
+
 images:
   - name: nginx
     newName: haproxy 
+
+can also do for tags:
+images:
+  - name: nginx
+    newTag: 2.4
+
+or combine both
+images:
+  - name: nginx
+    newName: haproxy 
+    newTag: 2.4
+
+
+
 
 ```
 <img src="https://github.com/sheyijojo/kubernetes_CKA_Exams/blob/main/pdfs/commonLabel-transformers.png?raw=true" alt="Description" width="500">
 
 
 <img src="https://github.com/sheyijojo/kubernetes_CKA_Exams/blob/main/pdfs/image-transformation.png?raw=true" alt="Description" width="500">
+
+
+<img src="https://github.com/sheyijojo/kubernetes_CKA_Exams/blob/main/pdfs/image-transformation-02.png.png?raw=true" alt="Description" width="500">
+
 
 
 ## Exams
