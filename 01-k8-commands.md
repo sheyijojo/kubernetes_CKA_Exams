@@ -6023,6 +6023,28 @@ Can add new config that is not present in the base folder. More like additional 
 <img src="https://github.com/sheyijojo/kubernetes_CKA_Exams/blob/main/pdfs/patches-21.png?raw=true" alt="Description" width="500">
 
 
+
+## Components
+
+```yaml
+Components provide the ability to define resuable pieces of configuration logic(resources + patches) that can be included in multiple overlays 
+
+Components are useful in situations where apps support mutliple optional features that need to be enabled only in a subset of overlays 
+
+```
+<img src="https://github.com/sheyijojo/kubernetes_CKA_Exams/blob/main/pdfs/patches-22.png?raw=true" alt="Description" width="500">
+
+
+<img src="https://github.com/sheyijojo/kubernetes_CKA_Exams/blob/main/pdfs/patches-23.png?raw=true" alt="Description" width="500">
+
+<img src="https://github.com/sheyijojo/kubernetes_CKA_Exams/blob/main/pdfs/patches-24.png?raw=true" alt="Description" width="500">
+
+
+<img src="https://github.com/sheyijojo/kubernetes_CKA_Exams/blob/main/pdfs/patches-25.png?raw=true" alt="Description" width="500">
+
+
+
+
 ## Exams
 
 ```yml
