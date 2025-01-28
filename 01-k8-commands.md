@@ -6043,7 +6043,13 @@ Components are useful in situations where apps support mutliple optional feature
 <img src="https://github.com/sheyijojo/kubernetes_CKA_Exams/blob/main/pdfs/patches-25.png?raw=true" alt="Description" width="500">
 
 
+## Security (2025 Updates)
 
+```yaml
+Custom Resource Definition (CRD)
+
+
+```
 
 ## Exams
 
