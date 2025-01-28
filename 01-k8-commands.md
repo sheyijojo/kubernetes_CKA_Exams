@@ -5944,7 +5944,11 @@ images:
 
 <img src="https://github.com/sheyijojo/kubernetes_CKA_Exams/blob/main/pdfs/patches.png?raw=true" alt="Description" width="500">
 
+<img src="https://github.com/sheyijojo/kubernetes_CKA_Exams/blob/main/pdfs/patches-02.png?raw=true" alt="Description" width="500">
+
 ```yaml
+Patches is another method to modifying kubernetes configs 
+
 
 ```
 
