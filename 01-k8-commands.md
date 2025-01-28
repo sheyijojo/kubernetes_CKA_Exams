@@ -5956,7 +5956,17 @@ Two ways of working with patches
 
 json 6902 Patch 
 Strategic merge Patch 
+
+
+
 ```
+### Inline vs seperate file 
+
+<img src="https://github.com/sheyijojo/kubernetes_CKA_Exams/blob/main/pdfs/patches-04.png?raw=true" alt="Description" width="500">
+
+
+<img src="https://github.com/sheyijojo/kubernetes_CKA_Exams/blob/main/pdfs/patches-05.png?raw=true" alt="Description" width="500">
+
 
 ## Exams
 
