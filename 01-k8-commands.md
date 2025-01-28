@@ -6048,8 +6048,17 @@ Components are useful in situations where apps support mutliple optional feature
 ```yaml
 Custom Resource Definition (CRD)
 
+CRD needs a Custom Controller to create the CRD object 
+
 
 ```
+<img src="https://github.com/sheyijojo/kubernetes_CKA_Exams/blob/main/pdfs/sec01.png?raw=true" alt="Description" width="500">
+
+<img src="https://github.com/sheyijojo/kubernetes_CKA_Exams/blob/main/pdfs/sec02.png?raw=true" alt="Description" width="500">
+
+
+<img src="https://github.com/sheyijojo/kubernetes_CKA_Exams/blob/main/pdfs/sec03.png?raw=true" alt="Description" width="500">
+
 
 ## Exams
 
