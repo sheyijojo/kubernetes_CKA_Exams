@@ -5943,7 +5943,7 @@ images:
 ## Patches
 
 <img src="https://github.com/sheyijojo/kubernetes_CKA_Exams/blob/
-pactches.JPG?raw=true" alt="Description" width="500">
+pactches.png?raw=true" alt="Description" width="500">
 
 ```yaml
 
