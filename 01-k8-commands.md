@@ -5946,10 +5946,16 @@ images:
 
 <img src="https://github.com/sheyijojo/kubernetes_CKA_Exams/blob/main/pdfs/patches-02.png?raw=true" alt="Description" width="500">
 
+### Json vs Strategic merge patach 
+<img src="https://github.com/sheyijojo/kubernetes_CKA_Exams/blob/main/pdfs/patches-03.png?raw=true" alt="Description" width="500">
+
 ```yaml
 Patches is another method to modifying kubernetes configs 
 
+Two ways of working with patches 
 
+json 6902 Patch 
+Strategic merge Patch 
 ```
 
 ## Exams
