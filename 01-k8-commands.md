@@ -6000,7 +6000,28 @@ Strategic merge Patch
 
 
 <img src="https://github.com/sheyijojo/kubernetes_CKA_Exams/blob/main/pdfs/patches-17.png?raw=true" alt="Description" width="500">
+
 ## Overlays 
+
+```yml
+Putting everything together and understand use cases of using kustomize 
+
+Can add new config that is not present in the base folder. More like additional customization per overlays/ 
+
+
+```
+
+
+<img src="https://github.com/sheyijojo/kubernetes_CKA_Exams/blob/main/pdfs/patches-18.png?raw=true" alt="Description" width="500">
+
+
+<img src="https://github.com/sheyijojo/kubernetes_CKA_Exams/blob/main/pdfs/patches-19.png?raw=true" alt="Description" width="500">
+
+<img src="https://github.com/sheyijojo/kubernetes_CKA_Exams/blob/main/pdfs/patches-20.png?raw=true" alt="Description" width="500">
+
+
+<img src="https://github.com/sheyijojo/kubernetes_CKA_Exams/blob/main/pdfs/patches-21.png?raw=true" alt="Description" width="500">
+
 
 ## Exams
 
