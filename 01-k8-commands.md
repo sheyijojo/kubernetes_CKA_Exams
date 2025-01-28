@@ -5985,6 +5985,9 @@ Strategic merge Patch
 <img src="https://github.com/sheyijojo/kubernetes_CKA_Exams/blob/main/pdfs/patches-11.png?raw=true" alt="Description" width="500">
 
 
+## patch list 
+
+
 ## Exams
 
 ```yml
