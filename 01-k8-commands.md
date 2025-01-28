@@ -5985,8 +5985,22 @@ Strategic merge Patch
 <img src="https://github.com/sheyijojo/kubernetes_CKA_Exams/blob/main/pdfs/patches-11.png?raw=true" alt="Description" width="500">
 
 
-## patch list 
+## patch list Operations
 
+<img src="https://github.com/sheyijojo/kubernetes_CKA_Exams/blob/main/pdfs/patches-12.png?raw=true" alt="Description" width="500">
+
+<img src="https://github.com/sheyijojo/kubernetes_CKA_Exams/blob/main/pdfs/patches-13.png?raw=true" alt="Description" width="500">
+
+<img src="https://github.com/sheyijojo/kubernetes_CKA_Exams/blob/main/pdfs/patches-14.png?raw=true" alt="Description" width="500">
+
+
+<img src="https://github.com/sheyijojo/kubernetes_CKA_Exams/blob/main/pdfs/patches-15.png?raw=true" alt="Description" width="500">
+
+<img src="https://github.com/sheyijojo/kubernetes_CKA_Exams/blob/main/pdfs/patches-16.png?raw=true" alt="Description" width="500">
+
+
+<img src="https://github.com/sheyijojo/kubernetes_CKA_Exams/blob/main/pdfs/patches-17.png?raw=true" alt="Description" width="500">
+## Overlays 
 
 ## Exams
 
