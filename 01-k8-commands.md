@@ -5968,6 +5968,23 @@ Strategic merge Patch
 <img src="https://github.com/sheyijojo/kubernetes_CKA_Exams/blob/main/pdfs/patches-05.png?raw=true" alt="Description" width="500">
 
 
+## Patches Dictionary 
+
+<img src="https://github.com/sheyijojo/kubernetes_CKA_Exams/blob/main/pdfs/patches-06.png?raw=true" alt="Description" width="500">
+
+
+<img src="https://github.com/sheyijojo/kubernetes_CKA_Exams/blob/main/pdfs/patches-07.png?raw=true" alt="Description" width="500">
+
+<img src="https://github.com/sheyijojo/kubernetes_CKA_Exams/blob/main/pdfs/patches-08.png?raw=true" alt="Description" width="500">
+
+<img src="https://github.com/sheyijojo/kubernetes_CKA_Exams/blob/main/pdfs/patches-09.png?raw=true" alt="Description" width="500">
+
+
+<img src="https://github.com/sheyijojo/kubernetes_CKA_Exams/blob/main/pdfs/patches-10.png?raw=true" alt="Description" width="500">
+
+<img src="https://github.com/sheyijojo/kubernetes_CKA_Exams/blob/main/pdfs/patches-11.png?raw=true" alt="Description" width="500">
+
+
 ## Exams
 
 ```yml
