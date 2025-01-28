@@ -389,7 +389,7 @@ NodePort: 30000 - 32767
 - Port on the node
 
 curl the svc:
-curl http://192.168.1.2:30008 
+curl http://192.168.1.2:30008
 ```
 
 ## sample service with declarative model
@@ -1003,13 +1003,15 @@ cat /var/lib/kubelet/config.yaml   ##for any given static pod config
 check for static pod path:
 
 ```
+
 ## configmap as volume for a scheduler
+
 ```yml
 Let's create a configmap that the new scheduler will employ using the concept of ConfigMap as a volume.:
 We have already given a configMap definition file called my-scheduler-configmap.yaml at /root/ path that will create a configmap with name my-scheduler-config using the content of file /root/my-scheduler-config.yaml:
 
 
-cat my-scheduler-configmap.yaml 
+cat my-scheduler-configmap.yaml
 
 apiVersion: v1
 data:
@@ -1084,7 +1086,6 @@ spec:
         name: my-scheduler-config
 ```
 
-
 ## exercise
 
 ```yaml
@@ -1138,7 +1139,6 @@ kubectl describe pod pod-name -n kube-system | grep Image
 
 ```
 
-
 ## Application Lifecycle
 
 ```yaml
@@ -1147,8 +1147,8 @@ kubectl logs podname
 
 Rollout and versioning in a deployment:
 - A first deployment triggers a rollout, a new rollout tiggers a new  deployment revision, called revision 1
-- when the app is upgradedded/container version is updated to a new one, a nwe rollout is triggered, a new deployment revision 
-- called revision 2 is created 
+- when the app is upgradedded/container version is updated to a new one, a nwe rollout is triggered, a new deployment revision
+- called revision 2 is created
 
 See status of deployment(rollout):
 kubectl rollout status deployment/myapp-deployment
@@ -1362,7 +1362,7 @@ kubectl get configmaps
 Injecting ConfigMap different ways into pods:
 
 1. ## envFrom
-containers: 
+containers:
 - name: simpe-app
   image: myimage
   envFrom:
@@ -5213,10 +5213,6 @@ Use a JSON PATH query to identify the context configured for the aws-user in the
 kubectl config view --kubeconfig=my-kube-config -o jsonpath="{.contexts[?(@.context.user=='aws-user')].name}" > /opt/outputs/aws-context-name
 ```
 
-
-
-
-
 ## kubelet
 
 ```yaml
@@ -5390,18 +5386,18 @@ https://kubernetes.io/docs/tasks/administer-cluster/dns-debugging-resolution/
 
 ```
 
+## 2025 Updates
 
-## 2025 Updates 
 ```yml
 
-kubectl ---> Authentication -----> Authorization --------> Admission Controllers  -----> create pod 
+kubectl ---> Authentication -----> Authorization --------> Admission Controllers  -----> create pod
 Admission Controllers:
 
 check which admission controller plugins is enabled by default:
 
-kube-apiserver -h | grep enable-admission-plugins 
+kube-apiserver -h | grep enable-admission-plugins
 
-kubectl exec kube-apiserver-controlplane -n kube-system -- kube-apiserver -h | grep enable-admission-plugins 
+kubectl exec kube-apiserver-controlplane -n kube-system -- kube-apiserver -h | grep enable-admission-plugins
 
 
 vi /etc/kubernetes/manifests/kube-apiserver.yaml
@@ -5418,31 +5414,31 @@ update this on the manifest or service:
 - --disable-admission-plugins=NodeRestriction, NamespaceAutoProvision, DefaultStorageClass
 
 
-NamespaceExists and NamespaceAutoProvision are both deprecated and replaced with NamespaceLifecycle Admission Controller. 
+NamespaceExists and NamespaceAutoProvision are both deprecated and replaced with NamespaceLifecycle Admission Controller.
 
 
 Two types of Admission controllers:
 - Mutation :
-   Change/mutate the object before it is created. E.g When creating a pvc, a user do not specify a storage, but a default storage class is added before the pvc object is created. 
+   Change/mutate the object before it is created. E.g When creating a pvc, a user do not specify a storage, but a default storage class is added before the pvc object is created.
 
-Generally, mutating controllers are invoked first before the validating ones 
+Generally, mutating controllers are invoked first before the validating ones
 - Validating:
-   They validate the request and allow or deny it. 
+   They validate the request and allow or deny it.
 
-There are other that can do both. 
+There are other that can do both.
 
 
 Creating custom admission controllers:
 - MutatingAdmissionWebhook
-- ValidatingAdmissionWebhook 
+- ValidatingAdmissionWebhook
 
 Can configure the webhook to point to a server that is hosted within k8 or externally:
 
-Our own admission webhook server sends a request to all the built-in admission controllers, it hits the webhook that was configured on the k8 server, then makes a call to the admission webhook server by passing 
+Our own admission webhook server sends a request to all the built-in admission controllers, it hits the webhook that was configured on the k8 server, then makes a call to the admission webhook server by passing
 an admission review object in a JSON format(See diagram):
 
 Then the admission webhook responds with an admission review object:
-with a result if the request is allowed or not 
+with a result if the request is allowed or not
 
 Create TLS secret webhook-server-tls for secure webhook communication in webhook-demo namespace.:
 We have already created below cert and key for webhook server which should be used to create secret.:
@@ -5545,7 +5541,7 @@ Mutating webhook should reject the request as its asking to run as root user wit
 
 response:
 
- k create -f pod-with-conflict.yaml 
+ k create -f pod-with-conflict.yaml
 Error from server: error when creating "pod-with-conflict.yaml": admission webhook "webhook-server.webhook-demo.svc" denied the request: runAsNonRoot specified, but runAsUser set to 0 (the root user)
 
 
@@ -5566,11 +5562,7 @@ spec:
       command: ["sh", "-c", "echo I am running as user $(id -u)"]
 ```
 
-
-
-
 <img src="https://github.com/sheyijojo/kubernetes_CKA_Exams/blob/main/pdfs/admission-controller-webhook.png?raw=true" alt="Description" width="800">
-
 
 <img src="https://github.com/sheyijojo/kubernetes_CKA_Exams/blob/main/pdfs/admission-review-object.png?raw=true" alt="Description" width="800">
 
@@ -5582,11 +5574,9 @@ spec:
 
 <img src="https://github.com/sheyijojo/kubernetes_CKA_Exams/blob/main/pdfs/webhook-server-sudo-2.png?raw=true" alt="Description" width="500">
 
-
-## Updates 2025 - Helm 
+## Updates 2025 - Helm
 
 <img src="https://github.com/sheyijojo/kubernetes_CKA_Exams/blob/main/pdfs/helmchart.png?raw=true" alt="Description" width="500">
-
 
 ```yml
 Helm Chart:
@@ -5607,8 +5597,8 @@ Charts are a collection of files. They contain instructions that Helm needs to k
 
 By using charts and objects, helm in a way intsalls application in my cluster.:
 
-When a chart is applied to my cluster, a RELEASE is created. A release is single installation of an app using a Helm Chart. 
-On each release, you can have multiple revisions.Each rev is like a snapshot of the application. 
+When a chart is applied to my cluster, a RELEASE is created. A release is single installation of an app using a Helm Chart.
+On each release, you can have multiple revisions.Each rev is like a snapshot of the application.
 
 
 We can find helm charts in public repos and use them. :
@@ -5616,7 +5606,7 @@ We can find helm charts in public repos and use them. :
 Helm produces metadata and needs somewhere to save it. It saves it as a k8 Secret.:
 
 artifacthub.io:
-- you see thousand of charts there 
+- you see thousand of charts there
 
 
 
@@ -5632,7 +5622,7 @@ helm commands:
 
 helm search hub wordpress
 
-add bitnami hel chart repo to the cluster 
+add bitnami hel chart repo to the cluster
 helm repo add bitnami https://charts.bitnami.com/bitnami
 
 
@@ -5643,12 +5633,12 @@ helm search repo wordpress
 
 helm list
 
-helm unistall my-release 
+helm unistall my-release
 
 
-helm repo list 
+helm repo list
 
-helm repo update 
+helm repo update
 
 
 Customizing Helm Chart Parameters:
@@ -5673,12 +5663,12 @@ example:
 helm install nginx-release bitnami/nginx --version 7.1.0
 
 wanna make changes to config objs or objs:
-k get pods 
+k get pods
 
-k describe pod and set bitnami image 
+k describe pod and set bitnami image
 
 wanna upgrade a release:
-helm upgrade nginx-release bitnami/nginx 
+helm upgrade nginx-release bitnami/nginx
 
 upgrade a release app version from 1.22.0 to 1.23.X:
 - To get this, need to upgrade the chart from current version of nginx-12.0.4 to 13.
@@ -5687,44 +5677,40 @@ upgrade a release app version from 1.22.0 to 1.23.X:
 
 helm upgrade dazzling-web bitnami/nginx --version 18
 
-but the current andswer is --version 13 which gives app version of 1.23.4 specifically 
+but the current andswer is --version 13 which gives app version of 1.23.4 specifically
 
 rollback to version 3:
 
 helm rollback dazzling-web 3
 
 see current revision:
-helm list 
+helm list
 
 
 check all revisions:
-helm history nginx-release 
+helm history nginx-release
 
 
 helm rollback nginx-release 1
  technically doesnt go back to revision 1, creates another revision 3 but same config with revision 1:
 
-pvs, database, external data, rollback won't restore the data. There are options to do that using charthooks. 
+pvs, database, external data, rollback won't restore the data. There are options to do that using charthooks.
 
 
 
 ```
+
 ## Helm- Helloworld
+
 <img src="https://github.com/sheyijojo/kubernetes_CKA_Exams/blob/main/pdfs/helm-helloworld.png?raw=true" alt="Description" width="500">
 
-
-
 ## Heml - wordpress
+
 <img src="https://github.com/sheyijojo/kubernetes_CKA_Exams/blob/main/pdfs/helm-wordpress.png?raw=true" alt="Description" width="500">
-
-
 
 ## Kustomize
 
 <img src="https://github.com/sheyijojo/kubernetes_CKA_Exams/blob/main/pdfs/kustomize.png?raw=true" alt="Description" width="500">
-
-
-
 
 ## Kustomize
 
@@ -5736,15 +5722,15 @@ Same deployment but different config for each env :
 
 dev/nginx.yml  stg/nginx.yml  prod/nginx.yml :
 
-k apply of dev/nginx  
+k apply of dev/nginx
 This is just scaling the replicas. This is not a scalable solution:
 
-Comes built in to kubctl, but still need to check for latest version , k doesnt come with latest version 
+Comes built in to kubctl, but still need to check for latest version , k doesnt come with latest version
 Two concepts
-Base config: Default accross your environment 
-Overlays: customize behaviors per env basis 
+Base config: Default accross your environment
+Overlays: customize behaviors per env basis
 
-overlays/dev  , overlays/stg, overlays/prod 
+overlays/dev  , overlays/stg, overlays/prod
 
 Kustomize
 Base + Overlay  ==  Final Manifests
@@ -5752,10 +5738,10 @@ Base + Overlay  ==  Final Manifests
 
 Kustomize vs Helm :
 
-Helm use of go templates to allow assinging var to properties 
+Helm use of go templates to allow assinging var to properties
 Helm is more than just a tool to customize configs on a per env basis. Helm is also a package manager for your app
-Helm provides conditionals, loops, functions, amd hooks 
-Helm templates are not valid YAML as thet use go templating 
+Helm provides conditionals, loops, functions, amd hooks
+Helm templates are not valid YAML as thet use go templating
 Helm is complex templates become hard to read unlike Kustomize which is pure yaml.
 
 
@@ -5780,11 +5766,11 @@ kustomization.yaml
 ##kurbenetes resources that need to be managed by kustomize
 resources:
   - nginx-deploy.yaml
-  - nginx-service.yaml   
+  - nginx-service.yaml
 
-##Customizations that need to be made 
-commonLabels: 
-  company: mycompany 
+##Customizations that need to be made
+commonLabels:
+  company: mycompany
 
 
 kustomize build k8s/
@@ -5792,23 +5778,23 @@ kustomize build k8s/
 output: service,  nginx
 The Kustomize build command combines all the manifests and applies the defined transformations
 
-The Kustomize build command does not apply/deploy the kubernetes resources to a cluster 
-  - The output needs to be redirected to the kubectl apply command 
-  
+The Kustomize build command does not apply/deploy the kubernetes resources to a cluster
+  - The output needs to be redirected to the kubectl apply command
 
-to run it: 
 
-kustomize build k8s/ | kubectl apply -f - 
+to run it:
 
-do it natively: 
+kustomize build k8s/ | kubectl apply -f -
+
+do it natively:
 kubectl apply -k k8s/
 
 to delete:
 kustomize build k8s/ | kubectl delete -f -
-kubectl delete -k k8s/ 
+kubectl delete -k k8s/
 
 
-apiVersion: hard code it, even though it takes default 
+apiVersion: hard code it, even though it takes default
 
 managing directories:
 kubectl apply -f k8s/api/
@@ -5820,14 +5806,14 @@ This becomes to get cubersome :
 - Because we get to add kustomizatin.yml in each dir
 resources:
   - api/api-deply.yaml
-  - api/api-service.yaml   
+  - api/api-service.yaml
   - db/db-deply.yaml
   - db/db-service.yaml
-##Customizations that need to be made 
-commonLabels: 
-  company: mycompany 
+##Customizations that need to be made
+commonLabels:
+  company: mycompany
 
-kustomize build k8s/ | kubectl apply -f - 
+kustomize build k8s/ | kubectl apply -f -
 
 Not still a perfect solution:
 
@@ -5838,29 +5824,29 @@ resources:
   - db/
   - cache/
   - kafka/
-  
-kustomize build k8s/ | kubectl apply -f - 
+
+kustomize build k8s/ | kubectl apply -f -
 
 
 This becomes cumbersom:
 
-kubectl apply -f k8s/ | kubectl apply -f k8s/cache -f k8s/api -f k8s/db 
+kubectl apply -f k8s/ | kubectl apply -f k8s/cache -f k8s/api -f k8s/db
 
-kubectl delete -f k8s/ | kubectl apply -f k8s/cache -f k8s/api -f k8s/db 
+kubectl delete -f k8s/ | kubectl apply -f k8s/cache -f k8s/api -f k8s/db
 
-using kustomize: 
-apiVersion: kustomize.config.k8s.io/v1beta1 
+using kustomize:
+apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 
 resources:
 - api/api-deply.yaml
-- cache/redis-deply.yaml 
+- cache/redis-deply.yaml
 
 
 
 kustomize build k8s/
 
-kustomize build k8s/ | kubectl apply -f - 
+kustomize build k8s/ | kubectl apply -f -
 
 kubectl apply -k k8s/
 
@@ -5878,28 +5864,28 @@ k8s/api/
    api-deply.yaml
    api-service.yaml
    kustomization.yaml
- 
+
 Now the api kustomization.yaml file in the api folder
 
 ##kurbenetes resources that need to be managed by kustomize
 resources:
   - api-deply.yaml
-  - api-service.yaml   
+  - api-service.yaml
 
 now do it for the rest of the subfolders, cache and db
 
-in the root folder: 
+in the root folder:
 k8s/kustomization.yaml
 
 apiVersion: Kustomize.config.k8s.io/v1beta1
-kind: Kustomization 
+kind: Kustomization
 
 resources:
   - api/
   - cache/
   - db/
-  
-kustomize build k8s/ 
+
+kustomize build k8s/
 kustomize build k8s/ | kubectl apply -f -
 
 
@@ -5908,18 +5894,18 @@ kustomize build k8s/ | kubectl apply -f -
 
 <img src="https://github.com/sheyijojo/kubernetes_CKA_Exams/blob/main/pdfs/managing-directories.png?raw=true" alt="Description" width="500">
 
-## kustomization continues 
+## kustomization continues
 
 ```yml
 common transformers:
 commonLabel
 namePrefix/Suffix
 Namespace
-commonAnnotations 
+commonAnnotations
 
 kustomization.yaml
 namePrefix: kodekloud-
-nameSuffix: -dev 
+nameSuffix: -dev
 namespace: lab
 commonAnnotations:
   branch: master
@@ -5930,7 +5916,7 @@ kustomization.yaml
 
 images:
   - name: nginx
-    newName: haproxy 
+    newName: haproxy
 
 can also do for tags:
 images:
@@ -5940,22 +5926,28 @@ images:
 or combine both
 images:
   - name: nginx
-    newName: haproxy 
+    newName: haproxy
     newTag: 2.4
 
 
 
 
 ```
-<img src="https://github.com/sheyijojo/kubernetes_CKA_Exams/blob/main/pdfs/commonLabel-transformers.png?raw=true" alt="Description" width="500">
 
+<img src="https://github.com/sheyijojo/kubernetes_CKA_Exams/blob/main/pdfs/commonLabel-transformers.png?raw=true" alt="Description" width="500">
 
 <img src="https://github.com/sheyijojo/kubernetes_CKA_Exams/blob/main/pdfs/image-transformation.png?raw=true" alt="Description" width="500">
 
-
 <img src="https://github.com/sheyijojo/kubernetes_CKA_Exams/blob/main/pdfs/image-transformation-02.png.png?raw=true" alt="Description" width="500">
 
+## Patches
 
+<img src="https://github.com/sheyijojo/kubernetes_CKA_Exams/blob/
+pactches.JPG?raw=true" alt="Description" width="500">
+
+```yaml
+
+```
 
 ## Exams
 
