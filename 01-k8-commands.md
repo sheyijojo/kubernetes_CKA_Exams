@@ -6043,6 +6043,125 @@ Components are useful in situations where apps support mutliple optional feature
 <img src="https://github.com/sheyijojo/kubernetes_CKA_Exams/blob/main/pdfs/patches-25.png?raw=true" alt="Description" width="500">
 
 
+
+
+## Examples - Patches 
+
+```yaml
+resources:
+  - mongo-depl.yaml
+  - nginx-depl.yaml
+  - mongo-service.yaml
+
+patches:
+  - target:
+      kind: Deployment
+      name: nginx-deployment
+    patch: |-
+      - op: replace
+        path: /spec/replicas
+        value: 3
+
+  - target:
+      kind: Deployment
+      name: mongo-deployment
+    path: mongo-label-patch.yaml
+
+  - target:
+      kind: Service
+      name: mongo-cluster-ip-service
+    patch: |-
+      - op: replace
+        path: /spec/ports/0/port
+        value: 30000
+
+      - op: replace
+        path: /spec/ports/0/targetPort
+        value: 30000
+
+
+In api-patch.yaml create a strategic merge patch to remove the memcached container.:
+api-depl.yaml:
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: api-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      component: api
+  template:
+    metadata:
+      labels:
+        component: api
+    spec:
+      containers:
+        - name: nginx
+          image: nginx
+        - name: memcached
+          image: memcached
+
+
+api-patch.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: api-deployment
+spec:
+  template:
+    spec:
+      containers:
+        - $patch: delete
+          name: memcached
+
+kustomize build k8s/ | kubectl apply -f -
+
+
+Create an inline json6902 patch in the kustomization.yaml file to remove the label org: KodeKloud from the mongo-deployment.:
+
+
+mongo-deply.yaml:
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mongo-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      component: mongo
+  template:
+    metadata:
+      labels:
+        component: mongo
+        org: KodeKloud
+    spec:
+      containers:
+        - name: mongo
+          image: mongo
+
+kustomization.yaml
+
+resources:
+  - mongo-depl.yaml
+  - api-depl.yaml
+  - mongo-service.yaml
+
+patches:
+  - target:
+      kind: Deployment
+      name: mongo-deployment
+    patch: |-
+      - op: remove
+        path: /spec/template/metadata/labels/org
+        
+
+
+```
+
 ## Security (2025 Updates)
 
 ```yaml
