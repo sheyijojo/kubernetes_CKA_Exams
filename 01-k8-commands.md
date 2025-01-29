@@ -6159,7 +6159,55 @@ patches:
         path: /spec/template/metadata/labels/org
         
 
+Question:
+Update the api image in the api-deployment to use caddy docker image in the QA environment.:
 
+Perform this using an inline JSON6902 patch.:
+Note: Please ensure to apply the updated config for QA environment before validation.:
+
+
+k8s/overlays/QA/kustomization.yaml :
+
+bases:
+  - ../../base
+commonLabels:
+  environment: QA
+
+patches:
+  - target:
+      kind: Deployment
+      name: api-deployment
+    patch: |-
+          - op: replace
+            path: /spec/template/spec/containers/0/image
+            value: caddy
+
+
+k8s/base/api-deployment.yaml :
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: api-deployment
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      component: api
+  template:
+    metadata:
+      labels:
+        component: api
+    spec:
+      containers:
+        - name: api
+          image: nginx
+          env:
+            - name: DB_CONNECTION
+              value: db.kodekloud.com
+
+
+kustomize build  k8s/overlays/QA/ | kubectl apply -f -
 ```
 
 ## Security (2025 Updates)
