@@ -6606,4 +6606,37 @@ k run sample --image=alpine/curl -rm -it -- sh
 
 curl np-test-service
 
+
+kubectl get nodes -o jsonpath='{.items[*].status.addresses[?(@.type=="InternalIP")].address}' > /root/CKA/node_ips
+
+ kubectl get pods -o jsonpath='{ .items[*].status.addresses[?(@type=="InternalIP")].address }'
+
+
+apiVersion: v1
+kind: Pod
+metadata:
+  creationTimestamp: null
+  labels:
+    run: multi-pod
+  name: multi-pod
+spec:
+  containers:
+  - image: nginx
+    name: alpha
+    env:
+      - name: name
+        value: "alpha"
+
+  - image: busybox
+    name: beta
+    command: ["sleep", "4800"]
+    env:
+    - name: name
+      value: "beta"
+    resources: {}
+  dnsPolicy: ClusterFirst
+  restartPolicy: Always
+status: {}
 ```
+
+
