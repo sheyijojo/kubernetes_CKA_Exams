@@ -6609,7 +6609,7 @@ curl np-test-service
 
 kubectl get nodes -o jsonpath='{.items[*].status.addresses[?(@.type=="InternalIP")].address}' > /root/CKA/node_ips
 
- kubectl get pods -o jsonpath='{ .items[*].status.addresses[?(@type=="InternalIP")].address }'
+kubectl get pods -o jsonpath='{ .items[*].status.addresses[?(@type=="InternalIP")].address }'
 
 
 apiVersion: v1
