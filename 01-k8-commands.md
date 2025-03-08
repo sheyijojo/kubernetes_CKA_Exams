@@ -5946,32 +5946,28 @@ images:
 
 <img src="https://github.com/sheyijojo/kubernetes_CKA_Exams/blob/main/pdfs/patches-02.png?raw=true" alt="Description" width="500">
 
-### Json vs Strategic merge patach 
+### Json vs Strategic merge patach
+
 <img src="https://github.com/sheyijojo/kubernetes_CKA_Exams/blob/main/pdfs/patches-03.png?raw=true" alt="Description" width="500">
 
 ```yaml
-Patches is another method to modifying kubernetes configs 
+Patches is another method to modifying kubernetes configs
 
-Two ways of working with patches 
+Two ways of working with patches
 
-json 6902 Patch 
-Strategic merge Patch 
-
-
-
+json 6902 Patch
+Strategic merge Patch
 ```
-### Inline vs seperate file 
+
+### Inline vs seperate file
 
 <img src="https://github.com/sheyijojo/kubernetes_CKA_Exams/blob/main/pdfs/patches-04.png?raw=true" alt="Description" width="500">
 
-
 <img src="https://github.com/sheyijojo/kubernetes_CKA_Exams/blob/main/pdfs/patches-05.png?raw=true" alt="Description" width="500">
 
-
-## Patches Dictionary 
+## Patches Dictionary
 
 <img src="https://github.com/sheyijojo/kubernetes_CKA_Exams/blob/main/pdfs/patches-06.png?raw=true" alt="Description" width="500">
-
 
 <img src="https://github.com/sheyijojo/kubernetes_CKA_Exams/blob/main/pdfs/patches-07.png?raw=true" alt="Description" width="500">
 
@@ -5979,11 +5975,9 @@ Strategic merge Patch
 
 <img src="https://github.com/sheyijojo/kubernetes_CKA_Exams/blob/main/pdfs/patches-09.png?raw=true" alt="Description" width="500">
 
-
 <img src="https://github.com/sheyijojo/kubernetes_CKA_Exams/blob/main/pdfs/patches-10.png?raw=true" alt="Description" width="500">
 
 <img src="https://github.com/sheyijojo/kubernetes_CKA_Exams/blob/main/pdfs/patches-11.png?raw=true" alt="Description" width="500">
-
 
 ## patch list Operations
 
@@ -5993,59 +5987,45 @@ Strategic merge Patch
 
 <img src="https://github.com/sheyijojo/kubernetes_CKA_Exams/blob/main/pdfs/patches-14.png?raw=true" alt="Description" width="500">
 
-
 <img src="https://github.com/sheyijojo/kubernetes_CKA_Exams/blob/main/pdfs/patches-15.png?raw=true" alt="Description" width="500">
 
 <img src="https://github.com/sheyijojo/kubernetes_CKA_Exams/blob/main/pdfs/patches-16.png?raw=true" alt="Description" width="500">
 
-
 <img src="https://github.com/sheyijojo/kubernetes_CKA_Exams/blob/main/pdfs/patches-17.png?raw=true" alt="Description" width="500">
 
-## Overlays 
+## Overlays
 
 ```yml
-Putting everything together and understand use cases of using kustomize 
+Putting everything together and understand use cases of using kustomize
 
-Can add new config that is not present in the base folder. More like additional customization per overlays/ 
-
-
+Can add new config that is not present in the base folder. More like additional customization per overlays/
 ```
 
-
 <img src="https://github.com/sheyijojo/kubernetes_CKA_Exams/blob/main/pdfs/patches-18.png?raw=true" alt="Description" width="500">
-
 
 <img src="https://github.com/sheyijojo/kubernetes_CKA_Exams/blob/main/pdfs/patches-19.png?raw=true" alt="Description" width="500">
 
 <img src="https://github.com/sheyijojo/kubernetes_CKA_Exams/blob/main/pdfs/patches-20.png?raw=true" alt="Description" width="500">
 
-
 <img src="https://github.com/sheyijojo/kubernetes_CKA_Exams/blob/main/pdfs/patches-21.png?raw=true" alt="Description" width="500">
-
-
 
 ## Components
 
 ```yaml
-Components provide the ability to define resuable pieces of configuration logic(resources + patches) that can be included in multiple overlays 
+Components provide the ability to define resuable pieces of configuration logic(resources + patches) that can be included in multiple overlays
 
-Components are useful in situations where apps support mutliple optional features that need to be enabled only in a subset of overlays 
-
+Components are useful in situations where apps support mutliple optional features that need to be enabled only in a subset of overlays
 ```
-<img src="https://github.com/sheyijojo/kubernetes_CKA_Exams/blob/main/pdfs/patches-22.png?raw=true" alt="Description" width="500">
 
+<img src="https://github.com/sheyijojo/kubernetes_CKA_Exams/blob/main/pdfs/patches-22.png?raw=true" alt="Description" width="500">
 
 <img src="https://github.com/sheyijojo/kubernetes_CKA_Exams/blob/main/pdfs/patches-23.png?raw=true" alt="Description" width="500">
 
 <img src="https://github.com/sheyijojo/kubernetes_CKA_Exams/blob/main/pdfs/patches-24.png?raw=true" alt="Description" width="500">
 
-
 <img src="https://github.com/sheyijojo/kubernetes_CKA_Exams/blob/main/pdfs/patches-25.png?raw=true" alt="Description" width="500">
 
-
-
-
-## Examples - Patches 
+## Examples - Patches
 
 ```yaml
 resources:
@@ -6157,7 +6137,7 @@ patches:
     patch: |-
       - op: remove
         path: /spec/template/metadata/labels/org
-        
+
 
 Question:
 Update the api image in the api-deployment to use caddy docker image in the QA environment.:
@@ -6215,17 +6195,14 @@ kustomize build  k8s/overlays/QA/ | kubectl apply -f -
 ```yaml
 Custom Resource Definition (CRD)
 
-CRD needs a Custom Controller to create the CRD object 
-
-
+CRD needs a Custom Controller to create the CRD object
 ```
+
 <img src="https://github.com/sheyijojo/kubernetes_CKA_Exams/blob/main/pdfs/sec01.png?raw=true" alt="Description" width="500">
 
 <img src="https://github.com/sheyijojo/kubernetes_CKA_Exams/blob/main/pdfs/sec02.png?raw=true" alt="Description" width="500">
 
-
 <img src="https://github.com/sheyijojo/kubernetes_CKA_Exams/blob/main/pdfs/sec03.png?raw=true" alt="Description" width="500">
-
 
 ## Exams
 
@@ -6639,4 +6616,153 @@ spec:
 status: {}
 ```
 
+## exam 2
 
+```yaml
+
+student-node ~ ➜  kubectl top node --context cluster1 --no-headers | sort -nr -k2 | head -1
+cluster1-controlplane   127m   1%    703Mi   1%
+
+student-node ~ ➜  kubectl top node --context cluster2 --no-headers | sort -nr -k2 | head -1
+cluster2-controlplane   126m   1%    675Mi   1%
+
+student-node ~ ➜  kubectl top node --context cluster3 --no-headers | sort -nr -k2 | head -1
+cluster3-controlplane   577m   7%    1081Mi   1%
+
+student-node ~ ➜  kubectl top node --context cluster4 --no-headers | sort -nr -k2 | head -1
+cluster4-controlplane   130m   1%    679Mi   1%
+
+helm install --generate-name ./new-version
+
+helm uninstall webpage-server-01 -n default
+
+Deploy a Vertical Pod Autoscaler (VPA) named analytics-vpa for a deployment named analytics-deployment in the cka24456 namespace. The VPA should automatically adjust the CPU and memory requests of the pods to optimize resource utilization. Ensure that the VPA operates in Auto mode, allowing it to evict and recreate pods with updated resource requests as needed.
+
+apiVersion: autoscaling.k8s.io/v1
+kind: VerticalPodAutoscaler
+metadata:
+  name: analytics-vpa
+  namespace: cka24456
+spec:
+  targetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: analytics-deployment
+  updatePolicy:
+    updateMode: "Auto"
+
+    student-node ~ ➜  kubectl -n beta-cka01-arch logs beta-pod-cka01-arch --context cluster1 | grep ERROR > /root/beta-pod-cka01-arch_errors
+
+
+curl http://cluster3-controlplane:NODE-PORT
+
+To make the application work, create a new secret called db-secret-wl05 with the following key values: -
+
+1. DB_Host=mysql-svc-wl05
+2. DB_User=root
+3. DB_Password=password123
+
+Next, configure the web application pod to load the new environment variables from the newly created secret.
+
+
+Note: Check the web application again using the curl command, and the status of the application should be success.
+kubectl create secret generic db-secret-wl05 -n canara-wl05 --from-literal=DB_Host=mysql-svc-wl05 --from-literal=DB_User=root --from-literal=DB_Password=password123
+
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  labels:
+    run: webapp-pod-wl05
+  name: webapp-pod-wl05
+  namespace: canara-wl05
+spec:
+  containers:
+  - image: kodekloud/simple-webapp-mysql
+    name: webapp-pod-wl05
+    envFrom:
+    - secretRef:
+        name: db-secret-wl05
+
+
+curl http://10.17.63.11:31020
+
+
+curl http://kodekloud-ingress.app
+
+kubectl get ingress
+kubectl edit ingress nodeapp-ing-cka08-trb
+
+Under rules: -> host: change example.com to kodekloud-ingress.app
+Under backend: -> service: -> name: Change example-service to nodeapp-svc-cka08-trb
+Change port: -> number: from 80 to 3000
+You should be able to access the app using curl http://kodekloud-ingress.app command now.
+
+
+
+Modify the existing web-gateway on cka5673 namespace to handle HTTPS traffic on port 443 for kodekloud.com, using a TLS certificate stored in a secret named kodekloud-tls.
+
+apiVersion: gateway.networking.k8s.io/v1
+kind: Gateway
+metadata:
+  name: web-gateway
+  namespace: cka5673
+spec:
+  gatewayClassName: kodekloud
+  listeners:
+    - name: https
+      protocol: HTTPS
+      port: 443
+      hostname: kodekloud.com
+      tls:
+        certificateRefs:
+          - name: kodekloud-tls
+
+
+
+  Extend the web-route on cka7395 to direct traffic with the path prefix /api to a service named api-service on port 8080, while all other traffic continues to route to web-service.
+
+  apiVersion: gateway.networking.k8s.io/v1
+  kind: HTTPRoute
+  metadata:
+    name: web-route
+    namespace: cka7395
+  spec:
+    parentRefs:
+    - name: nginx-gateway
+      namespace: nginx-gateway
+    rules:
+    - matches:
+      - path:
+          type: PathPrefix
+          value: /api
+      backendRefs:
+      - name: api-service
+        port: 8080
+    - matches:
+      - path:
+          type: PathPrefix
+          value: /
+      backendRefs:
+      - name: web-service
+        port: 80
+
+
+    journalctl -u kubelet -f
+
+    journalctl -u kubelet -f | grep -v 'connect: connection refused'
+
+
+    Search for etcd-cert, you will notice that the volume name is etcd-certs but the volume mount is trying to mount etcd-cert volume which is incorrect. Fix the volume mount name and save the changes. Let's restart kubelet service after that.
+
+    systemctl restart kubelet
+
+    ETCDCTL_API=3 etcdctl --endpoints=https://[127.0.0.1]:2379 --cacert=/etc/kubernetes/pki/etcd/ca.crt --cert=/etc/kubernetes/pki/etcd/server.crt --key=/etc/kubernetes/pki/etcd/server.key snapshot save /opt/etcd-boot-cka18-trb.db
+
+
+
+
+
+
+
+```
