@@ -7113,9 +7113,108 @@ One of our logging mechanisms needs to read these logs to send them to an upstre
 
 
 
+For this question, please set the context to cluster3 by running:
+
+
+kubectl config use-context cluster3
+
+
+
+We have an external webserver running on student-node which is exposed at port 9999. We have created a service called external-webserver-cka03-svcn that can connect to our local webserver from within the kubernetes cluster3 but at the moment it is not working as expected.
+
+
+
+Fix the issue so that other pods within cluster3 can use external-webserver-cka03-svcn service to access the webserver.
 
 
 
 
 
+Let's check if the webserver is working or not:
+
+student-node ~ ➜  curl student-node:9999
+...
+<h1>Welcome to nginx!</h1>
+...
+
+Now we will check if service is correctly defined:
+
+student-node ~ ➜  kubectl describe svc -n kube-public external-webserver-cka03-svcn
+Name:              external-webserver-cka03-svcn
+Namespace:         kube-public
+.
+.
+Endpoints:         <none> # there are no endpoints for the service
+...
+
+As we can see there is no endpoints specified for the service, hence we won't be able to get any output. Since we can not destroy any k8s object, let's create the endpoint manually for this service as shown below:
+
+student-node ~ ➜  export IP_ADDR=$(ifconfig eth0 | grep inet | head -n1 | awk '{print $2}')
+
+student-node ~ ➜ kubectl --context cluster3 apply -f - <<EOF
+apiVersion: v1
+kind: Endpoints
+metadata:
+  # the name here should match the name of the Service
+  name: external-webserver-cka03-svcn
+  namespace: kube-public
+subsets:
+  - addresses:
+      - ip: $IP_ADDR
+    ports:
+      - port: 9999
+EOF
+
+Finally check if the curl test works now:
+
+student-node ~ ➜  kubectl --context cluster3 run -n kube-public --rm  -i test-curl-pod --image=curlimages/curl --restart=Never -- curl -m 2 external-webserver-cka03-svcn
+...
+<title>Welcome to nginx!</title>
+...
+
+
+student-node ~ ➜  kubectl create secret generic db-user-pass-cka17-arch --from-file=/opt/db-user-pass
+
+
+
+
+
+
+
+Let's look into the network policy
+
+kubectl edit networkpolicy cyan-np-cka28-trb -n cyan-ns-cka28-trb
+
+Under spec: -> egress: you will notice there is not cidr: block has been added, since there is no restrcitions on egress traffic so we can update it as below. Further you will notice that the port used in the policy is 8080 but the app is running on default port which is 80 so let's update this as well (under egress and ingress):
+
+Change port: 8080 to port: 80
+- ports:
+  - port: 80
+    protocol: TCP
+  to:
+  - ipBlock:
+      cidr: 0.0.0.0/0
+
+Now, lastly notice that there is no POD selector has been used in ingress section but this app is supposed to be accessible from cyan-white-cka28-trb pod under default namespace. So let's edit it to look like as below:
+
+ingress:
+- from:
+  - namespaceSelector:
+      matchLabels:
+        kubernetes.io/metadata.name: default
+   podSelector:
+      matchLabels:
+        app: cyan-white-cka28-trb
+
+Now, let's try to access the app from cyan-white-pod-cka28-trb
+
+kubectl exec -it cyan-white-cka28-trb -- sh
+curl cyan-svc-cka28-trb.cyan-ns-cka28-trb.svc.cluster.local
+
+Also make sure its not accessible from the other pod(s)
+
+kubectl exec -it cyan-black-cka28-trb -- sh
+curl cyan-svc-cka28-trb.cyan-ns-cka28-trb.svc.cluster.local
+
+It should not work from this pod. So its looking good now
 ```
