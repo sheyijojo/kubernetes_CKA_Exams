@@ -6760,6 +6760,359 @@ spec:
     ETCDCTL_API=3 etcdctl --endpoints=https://[127.0.0.1]:2379 --cacert=/etc/kubernetes/pki/etcd/ca.crt --cert=/etc/kubernetes/pki/etcd/server.crt --key=/etc/kubernetes/pki/etcd/server.key snapshot save /opt/etcd-boot-cka18-trb.db
 
 
+```
+
+## exam 3
+
+```
+
+kubectl get deploy -n <NAMESPACE> <DEPLOYMENT-NAME> -o json | jq -r '.spec.template.spec.containers[].image'
+
+kubectl get pods --show-labels -n spectra-1267
+
+student-node ~ ➜  kubectl get pods -n spectra-1267 -o=custom-columns='POD_NAME:metadata.name,IP_ADDR:status.podIP' --sort-by=.status.podIP
+
+POD_NAME   IP_ADDR
+pod-12     10.42.0.18
+pod-23     10.42.0.19
+pod-34     10.42.0.20
+pod-21     10.42.0.21
+...
+
+# store the output to /root/pod_ips
+student-node ~ ➜  kubectl get pods -n spectra-1267 -o=custom-columns='POD_NAME:metadata.name,IP_ADDR:status.podIP' --sort-by=.status.podIP > /root/pod_ips_cka05_svcn
+
+
+
+Next, create a Horizontal Pod Autoscaler (HPA) named web-ui-hpa to manage the scaling of the web-ui-deployment. This HPA should be configured to respond to CPU utilization, increasing the number of pods by 20% when CPU utilization exceeds 65%. Additionally, set the scale-up behavior to apply every 45 seconds, and configure the scale-down behavior to reduce the number of pods by 10% every 60 seconds. Use the following configuration:
+
+
+
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: web-ui-hpa
+  namespace: ck1967
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: web-ui-deployment
+  minReplicas: 2
+  maxReplicas: 12
+  metrics:
+    - type: Resource
+      resource:
+        name: cpu
+        target:
+          type: Utilization
+          averageUtilization: 65
+  behavior:
+    scaleUp:
+      policies:
+        - type: Percent
+          value: 20
+          periodSeconds: 45
+    scaleDown:
+      policies:
+        - type: Percent
+          value: 10
+          periodSeconds: 60
+
+
+
+
+student-node ~ ➜  echo cluster3,cluster3-controlplane > /opt/high_memory_node
+
+
+apiVersion: v1
+kind: Pod
+metadata:
+  name: looper-cka16-arch
+spec:
+  containers:
+  - name: busybox
+    image: busybox
+    command: ["/bin/sh", "-c", "while true; do echo hello; sleep 10;done"]
+
+
+A pod definition file is created at /root/peach-pod-cka05-str.yaml on the student-node. Update this manifest file to create a persistent volume claim called peach-pvc-cka05-str to claim a 100Mi of storage from peach-pv-cka05-str PV (this is already created). Use the access mode ReadWriteOnce.
+
+
+Further add peach-pvc-cka05-str PVC to peach-pod-cka05-str POD and mount the volume at /var/www/html location. Ensure that the pod is running and the PV is bound.
+
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: peach-pvc-cka05-str
+spec:
+  volumeName: peach-pv-cka05-str
+  accessModes:
+  - ReadWriteOnce
+  resources:
+    requests:
+      storage: 100Mi
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: peach-pod-cka05-str
+spec:
+  containers:
+  - image: nginx
+    name: nginx
+    volumeMounts:
+      - mountPath: "/var/www/html"
+        name: nginx-volume
+  volumes:
+    - name: nginx-volume
+      persistentVolumeClaim:
+        claimName: peach-pvc-cka05-str
+
+
+Configure a web-portal-httproute within the cka3658 namespace to facilitate traffic distribution. Route 80% of the traffic to web-portal-service-v1 and 20% to the new version, web-portal-service-v2.
+
+Note: Gateway has already been created in the nginx-gateway namespace.
+To test the gateway, SH into the cluster2-controlplane and execute the following command:
+
+
+curl http://cluster2-controlplane:30080
+
+
+
+Switch to cluster2 by executing the following command:
+
+kubectl config use-context cluster2
+
+Next, check all the deployments and services in the cka3658 namespace with the command:
+
+kubectl get deploy,svc -n cka3658
+
+Review the gateway that has been created in the nginx-gateway namespace using the command:
+
+kubectl get gateway -n nginx-gateway
+
+You should see output similar to:
+
+NAME            CLASS   ADDRESS   PROGRAMMED   AGE
+nginx-gateway   nginx             True         36m
+
+Now, create an HTTPRoute in the cka3658 namespace with the name web-portal-httproute to distribute traffic based on specified weights. Use the following YAML configuration:
+
+apiVersion: gateway.networking.k8s.io/v1
+kind: HTTPRoute
+metadata:
+  name: web-portal-httproute
+  namespace: cka3658
+spec:
+  parentRefs:
+    - name: nginx-gateway
+      namespace: nginx-gateway
+  rules:
+    - matches:
+        - path:
+            type: PathPrefix
+            value: /
+      backendRefs:
+        - name: web-portal-service-v1
+          port: 80
+          weight: 80
+        - name: web-portal-service-v2
+          port: 80
+          weight: 20
+
+For this question, please set the context to cluster1 by running:
+
+kubectl config use-context cluster1
+
+A service account called deploy-cka19-trb is created in cluster1 along with a cluster role called deploy-cka19-trb-role. This role should have the permissions to get all the deployments under the default namespace. However, at the moment, it is not able to.
+
+Find out what is wrong and correct it so that the deploy-cka19-trb service account is able to get deployments under default namespace.
+
+
+
+Let's see if deploy-cka19-trb service account is able to get the deployments.
+kubectl auth can-i get deployments --as=system:serviceaccount:default:deploy-cka19-trb
+
+We can see its not since we are getting no in the output.
+
+Let's look into the cluster role:
+kubectl get clusterrole deploy-cka19-trb-role -o yaml
+
+The rules would be fine but we can see that there is no cluster role binding and service account associated with this. So let's create a cluster role binding.
+
+kubectl create clusterrolebinding deploy-cka19-trb-role-binding --clusterrole=deploy-cka19-trb-role --serviceaccount=default:deploy-cka19-trb
+
+Let's see if deploy-cka19-trb service account is able to get the deployments now.
+
+kubectl auth can-i get deployments --as=system:serviceaccount:d
+
+
+
+
+
+
+The demo-pod-cka29-trb pod is stuck in a Pending state. Look into the issue to fix it. Make sure the pod is in the Running state and stable
+
+
+
+
+
+
+Look into the POD events
+kubectl get event --field-selector involvedObject.name=demo-pod-cka29-trb
+
+You will see some Warnings like:
+
+Warning   FailedScheduling   pod/demo-pod-cka29-trb   0/3 nodes are available: 3 pod has unbound immediate PersistentVolumeClaims. preemption: 0/3 nodes are available: 3 Preemption is not helpful for scheduling.
+
+This seems to be something related to PersistentVolumeClaims, Let's check that:
+
+kubectl get pvc
+
+You will notice that demo-pvc-cka29-trb is stuck in Pending state. Let's dig into it
+
+kubectl get event --field-selector involvedObject.name=demo-pvc-cka29-trb
+
+You will notice this error:
+
+Warning   VolumeMismatch   persistentvolumeclaim/demo-pvc-cka29-trb   Cannot bind to requested volume "demo-pv-cka29-trb": incompatible accessMode
+
+Which means the PVC is using incompatible accessMode, let's check the it out
+
+kubectl get pvc demo-pvc-cka29-trb -o yaml
+kubectl get pv demo-pv-cka29-trb -o yaml
+
+Let's re-create the PVC with correct access mode i.e ReadWriteMany
+
+kubectl get pvc demo-pvc-cka29-trb -o yaml > /tmp/pvc.yaml
+vi /tmp/pvc.yaml
+
+Under spec: change accessModes: from ReadWriteOnce to ReadWriteMany
+Delete the old PVC and create new
+
+kubectl delete pvc demo-pvc-cka29-trb
+kubectl apply -f /tmp/pvc.yaml
+
+Check the POD now
+
+kubectl get pod demo-pod-cka29-trb
+
+It should be good now.
+
+
+
+
+
+
+
+For this question, please set the context to cluster1 by running:
+
+kubectl config use-context cluster1
+
+We want to deploy a python based application on the cluster using a template located at /root/olive-app-cka10-str.yaml on student-node. However, before you proceed we need to make some modifications to the YAML file as per details given below:
+
+The YAML should also contain a persistent volume claim with name olive-pvc-cka10-str to claim a 100Mi of storage from olive-pv-cka10-str PV.
+
+Update the deployment to add a sidecar container named busybox, which can use busybox image (you might need to add a sleep command for this container to keep it running.)
+
+Share the python-data volume with this container and mount the same at path /usr/src. Make sure this container only has read permissions on this volume.
+
+Finally, create a pod using this YAML and make sure the POD is in Running state.
+
+Note: Additionally, you can expose a NodePort service for the application. The service should be named olive-svc-cka10-str and expose port 5000 with a nodePort value of 32006.
+However, inclusion/exclusion of this service won't affect the validation for this task
+
+
+Update olive-app-cka10-str.yaml template so that it looks like as below:
+
+---
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: olive-pvc-cka10-str
+spec:
+  accessModes:
+  - ReadWriteMany
+  storageClassName: olive-stc-cka10-str
+  volumeName: olive-pv-cka10-str
+  resources:
+    requests:
+      storage: 100Mi
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: olive-app-cka10-str
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: olive-app-cka10-str
+    spec:
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: kubernetes.io/hostname
+                operator: In
+                values:
+                  - cluster1-node01
+      containers:
+      - name: python
+        image: poroko/flask-demo-app
+        ports:
+        - containerPort: 5000
+        volumeMounts:
+        - name: python-data
+          mountPath: /usr/share/
+      - name: busybox
+        image: busybox
+        command:
+          - "bin/sh"
+          - "-c"
+          - "sleep 10000"
+        volumeMounts:
+          - name: python-data
+            mountPath: "/usr/src"
+            readOnly: true
+      volumes:
+      - name: python-data
+        persistentVolumeClaim:
+          claimName: olive-pvc-cka10-str
+  selector:
+    matchLabels:
+      app: olive-app-cka10-str
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: olive-svc-cka10-str
+spec:
+  type: NodePort
+  ports:
+    - port: 5000
+      nodePort: 32006
+  selector:
+    app: olive-app-cka10-str
+
+Apply the template:
+
+kubectl apply -f olive-app-cka10-str.yaml
+
+
+A pod called elastic-app-cka02-arch is running in the default namespace. The YAML file for this pod is available at /root/elastic-app-cka02-arch.yaml on the student-node. The single application container in this pod writes logs to the file /var/log/elastic-app.log.
+
+
+One of our logging mechanisms needs to read these logs to send them to an upstream logging server but we don't want to increase the read overhead for our main application container so recreate this POD with an additional sidecar container that will run along with the application container and print to the STDOUT by running the command tail -f /var/log/elastic-app.log. You can use busybox image for this sidecar container.
+
+
+
+
 
 
 
