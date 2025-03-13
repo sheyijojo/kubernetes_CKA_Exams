@@ -7218,3 +7218,25 @@ curl cyan-svc-cka28-trb.cyan-ns-cka28-trb.svc.cluster.local
 
 It should not work from this pod. So its looking good now
 ```
+
+## API Groups
+
+```yaml
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: pod-reader
+rules:
+- apiGroups: [""]
+  resources: ["pods"]
+  verbs: ["get", "list", "watch"]
+- apiGroups: ["apps"]
+  resources: ["deployments", "statefulsets"]
+  verbs: ["get", "list"]
+- apiGroups: ["rbac.authorization.k8s.io"]
+  resources: ["roles", "rolebindings"]
+  verbs: ["get", "list"]
+
+
+
+```
