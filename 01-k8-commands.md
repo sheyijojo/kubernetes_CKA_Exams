@@ -6362,7 +6362,11 @@ Details
 
 
 
-Create a new user called john. Grant him access to the cluster. John should have permission to create, list, get, update and delete pods in the development namespace . The private key exists in the location: /root/CKA/john.key and csr at /root/CKA/john.csr.
+Create a new user called john. Grant him access to the cluster.
+
+ John should have permission to create, list, get, update and delete pods in the development namespace . 
+
+The private key exists in the location: /root/CKA/john.key and csr at /root/CKA/john.csr.
 
 Important Note: As of kubernetes 1.19, the CertificateSigningRequest object expects a signerName.
 
@@ -6384,11 +6388,15 @@ spec:
 
 
 
-To approve this certificate, run: kubectl certificate approve john-developer
+To approve this certificate, run:
 
-Next, create a role developer and rolebinding developer-role-binding, run the command:
+kubectl certificate approve john-developer
 
-$ kubectl create role developer --resource=pods --verb=create,list,get,update,delete --namespace=development
+Next, create a role developer and rolebinding developer-role-binding,
+
+ run the command:
+
+kubectl create role developer --resource=pods --verb=create,list,get,update,delete --namespace=development
 
 $ kubectl create rolebinding developer-role-binding --role=developer --user=john --namespace=development
 
@@ -6501,8 +6509,7 @@ Run the below command to know the cluster information:
 kubectl cluster-info --kubeconfig /root/CKA/admin.kubeconfig
 
 
-3.
-A new deployment called alpha-mysql has been deployed in the alpha namespace. However, the pods are not running. Troubleshoot and fix the issue. The deployment should make use of the persistent volume alpha-pv to be mounted at /var/lib/mysql and should use the environment variable MYSQL_ALLOW_EMPTY_PASSWORD=1 to make use of an empty root password.
+3.A new deployment called alpha-mysql has been deployed in the alpha namespace. However, the pods are not running. Troubleshoot and fix the issue. The deployment should make use of the persistent volume alpha-pv to be mounted at /var/lib/mysql and should use the environment variable MYSQL_ALLOW_EMPTY_PASSWORD=1 to make use of an empty root password.
 
 Important: Do not alter the persistent volume.
 
@@ -6651,7 +6658,7 @@ spec:
   updatePolicy:
     updateMode: "Auto"
 
-    student-node ~ ➜  kubectl -n beta-cka01-arch logs beta-pod-cka01-arch --context cluster1 | grep ERROR > /root/beta-pod-cka01-arch_errors
+ kubectl -n beta-cka01-arch logs beta-pod-cka01-arch --context cluster1 | grep ERROR > /root/beta-pod-cka01-arch_errors
 
 
 curl http://cluster3-controlplane:NODE-PORT
@@ -6764,7 +6771,7 @@ spec:
 
 ## exam 3
 
-```
+```yml
 
 kubectl get deploy -n <NAMESPACE> <DEPLOYMENT-NAME> -o json | jq -r '.spec.template.spec.containers[].image'
 
@@ -6779,7 +6786,7 @@ pod-34     10.42.0.20
 pod-21     10.42.0.21
 ...
 
-# store the output to /root/pod_ips
+store the output to /root/pod_ips:
 student-node ~ ➜  kubectl get pods -n spectra-1267 -o=custom-columns='POD_NAME:metadata.name,IP_ADDR:status.podIP' --sort-by=.status.podIP > /root/pod_ips_cka05_svcn
 
 
@@ -6950,17 +6957,12 @@ kubectl auth can-i get deployments --as=system:serviceaccount:d
 
 
 
-
-
 The demo-pod-cka29-trb pod is stuck in a Pending state. Look into the issue to fix it. Make sure the pod is in the Running state and stable
 
 
 
-
-
-
 Look into the POD events
-kubectl get event --field-selector involvedObject.name=demo-pod-cka29-trb
+kubectl get event --field-selector involvedObject.name=demo-pod-cka29-trb  :
 
 You will see some Warnings like:
 
