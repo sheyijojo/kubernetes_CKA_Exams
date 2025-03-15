@@ -7242,3 +7242,10 @@ rules:
 
 
 ```
+
+## Introduction to Autoscaling 
+```yml
+Cluster Autoscaler 
+Horizontal Pod Autoscaler(HPA)
+Vertical Pod Autoscaler(HPA)
+```
