@@ -7281,4 +7281,36 @@ status:
   currentReplicas: 0
   desiredReplicas: 0
 
+
+Vertical Pod Autoscaler:
+Does not come built in 
+
+apiVersion: "autoscaling.k8s.io/v1"
+kind: VerticalPodAutoscaler
+metadata:
+  name: hamster-vpa
+spec:
+  # recommenders field can be unset when using the default recommender.
+  # When using an alternative recommender, the alternative recommender's name
+  # can be specified as the following in a list.
+  # recommenders: 
+  #   - name: 'alternative'
+  targetRef:
+    apiVersion: "apps/v1"
+    kind: Deployment
+    name: hamster
+  updatePolicy:
+    updateMode" "Auto, off, initial, Recreate"
+  resourcePolicy:
+    containerPolicies:
+      - containerName: '*'
+        minAllowed:
+          cpu: 100m
+          memory: 50Mi
+        maxAllowed:
+          cpu: 1
+          memory: 500Mi
+        controlledResources: ["cpu", "memory"]
+
+
 ```
