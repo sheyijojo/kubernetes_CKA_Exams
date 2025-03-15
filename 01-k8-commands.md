@@ -7248,4 +7248,17 @@ rules:
 Cluster Autoscaler 
 Horizontal Pod Autoscaler(HPA)
 Vertical Pod Autoscaler(HPA)
+
+Manual way:
+Must have the metric server to run this command :
+kubectl top pod my-pod 
+kubectl scale deployment my-app --replicas=3
+
+HPA :
+kubectl autoscale deployment my-app --cpu-percent=50 --min=1 --max=10
+
+kubectl get hpa
+
+kubectl delete hpa NAME
+
 ```
