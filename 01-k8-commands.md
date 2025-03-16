@@ -7361,3 +7361,29 @@ spec:
         from: All
 
 ```
+```yml
+
+apiVersion: gateway.networking.k8s.io/v1
+kind: HTTPRoute
+metadata:
+  name: frontend-route
+  namespace: default
+spec:
+  parentRefs:
+  - name: nginx-gateway
+    namespace: nginx-gateway
+  rules:
+  - matches:
+    - path:
+        type: PathPrefix
+        value: /
+    backendRefs:
+    - name: frontend-svc
+      port: 80
+```
+
+## exam 4
+
+```yml
+
+```
