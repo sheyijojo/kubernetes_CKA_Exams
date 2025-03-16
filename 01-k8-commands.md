@@ -7385,5 +7385,707 @@ spec:
 ## exam 4
 
 ```yml
+question 2
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: data-pv-cka02-str
+spec:
+  capacity:
+    storage: 128Mi
+  accessModes:
+    - ReadWriteOnce
+  hostPath:
+    path: /opt/data-pv-cka02-str
+  storageClassName: manual
+
+---
+
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: data-pvc-cka02-str
+spec:
+  storageClassName: manual
+  volumeName: data-pv-cka02-str
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 50Mi
+
+
+ques 5 
+You will see an configmap named nginx-config-cka04-trb which seems to be the correct one.
+Edit the nginx-dp-cka04-trb deployment now
+
+kubectl edit deploy nginx-dp-cka04-trb
+
+6. 
+
+The blue-dp-cka09-trb deployment is having 0 out of 1 pods running. Fix the issue to make sure that pod is up and running.
+kubectl logs blue-dp-cka09-trb-xxxx -c init-container
+
+kubectl edit deploy blue-dp-cka09-trb
+
+Under initContainers: -> - command: add -c to the next line of - sh, so final command should look like this
+   initContainers:
+   - command:
+     - sh
+     - -c
+     - echo 'Welcome!'
+
+kubectl get event --field-selector involvedObject.name=blue-dp-cka09-trb-xxxxx
+
+kubectl edit deploy blue-dp-cka09-trb
+
+Under volumeMounts: -> - mountPath: /etc/nginx/nginx.conf -> name: nginx-config add subPath: nginx.conf and save the changes.
+Finally, the pod should be in running state.
+
+7.
+kubectl --context cluster1 get service service-cka25-arch -o jsonpath='{.spec.ports[0].targetPort}'
+
+8. 
+There is a requirement to share a volume between two containers that are running within the same pod. Use the following instructions to create the pod and related objects:
+
+
+- Create a pod named grape-pod-cka06-str.
+
+- The main container should use the nginx image and mount a volume called grape-vol-cka06-str at path /var/log/nginx.
+
+- The sidecar container can use busybox image, you might need to add a sleep command to this container to keep it running. Next, mount the same volume called grape-vol-cka06-str at the path /usr/src.
+
+- The volume should be of type emptyDir.
+ans:
+apiVersion: v1
+kind: Pod
+metadata:
+  name: grape-pod-cka06-str
+spec:
+  containers:
+  - name: nginx
+    image: nginx
+    volumeMounts:
+      - name: grape-vol-cka06-str
+        mountPath: "/var/log/nginx"
+  - name: busybox
+    image: busybox
+    command:
+      - "bin/sh"
+      - "-c"
+      - "sleep 10000"
+    volumeMounts:
+      - name: grape-vol-cka06-str
+        mountPath: "/usr/src"
+  volumes:
+  - name: grape-vol-cka06-str
+    emptyDir: {}
+
+
+9. There is an existing persistent volume called orange-pv-cka13-trb. A persistent volume claim called orange-pvc-cka13-trb is created to claim storage from orange-pv-cka13-trb.
+
+
+However, this PVC is stuck in a Pending state. As of now, there is no data in the volume.
+
+
+Troubleshoot and fix this issue, making sure that orange-pvc-cka13-trb PVC is in Bound state.
+
+ans:
+
+Solution
+List the PVC to check its status
+kubectl  get pvc
+
+So we can see orange-pvc-cka13-trb PVC is in Pending state and its requesting a storage of 150Mi. Let's look into the events
+
+kubectl get events --sort-by='.metadata.creationTimestamp' -A
+
+You will see some errors as below:
+
+Warning   VolumeMismatch            persistentvolumeclaim/orange-pvc-cka13-trb          Cannot bind to requested volume "orange-pv-cka13-trb": requested PV is too small
+
+Let's look into orange-pv-cka13-trb volume
+
+kubectl get pv
+
+We can see that orange-pv-cka13-trb volume is of 100Mi capacity which means its too small to request 150Mi of storage.
+Let's edit orange-pvc-cka13-trb PVC to adjust the storage requested.
+
+kubectl get pvc orange-pvc-cka13-trb -o yaml > /tmp/orange-pvc-cka13-trb.yaml
+vi /tmp/orange-pvc-cka13-trb.yaml
+
+Under resources: -> requests: -> storage: change 150Mi to 100Mi and save.
+Delete old PVC and apply the change:
+
+kubectl delete pvc orange-pvc-cka13-trb
+kubectl apply -f /tmp/orange-pvc-cka13-trb.yaml 
+
+
+10. 
+1. We deployed an app using a deployment called web-dp-cka06-trb. It's using the httpd:latest image. There is a corresponding service called web-service-cka06-trb that exposes this app on the node port 30005. However, the app is not accessible!
+
+
+Troubleshoot and fix this issue. Make sure you are able to access the app using curl http://cluster1-controlplane:30005 comman
+ans:Solution
+List the deployments to see if all PODs under web-dp-cka06-trb deployment are up and running.
+kubectl get deploy
+
+You will notice that 0 out of 1 PODs are up, so let's look into the POD now.
+
+kubectl get pod
+
+You will notice that web-dp-cka06-trb-xxx pod is in Pending state, so let's checkout the relevant events.
+
+kubectl get event --field-selector involvedObject.name=web-dp-cka06-trb-xxx
+
+You should see some error/warning like this:
+
+Warning   FailedScheduling   pod/web-dp-cka06-trb-76b697c6df-h78x4   0/1 nodes are available: 1 persistentvolumeclaim "web-cka06-trb" not found. preemption: 0/1 nodes are available: 1 Preemption is not helpful for scheduling.
+
+Let's look into the PVCs
+
+kubectl get pvc
+
+You should see web-pvc-cka06-trb in the output but as per logs the POD was looking for web-cka06-trb PVC. Let's update the deployment to fix this.
+
+kubectl edit deploy web-dp-cka06-trb
+
+Under volumes: -> name: web-str-cka06-trb -> persistentVolumeClaim: -> claimName change web-cka06-trb to web-pvc-cka06-trb and save the changes.
+
+Look into the POD again to make sure its running now
+
+kubectl get pod
+
+You will find that its still failing, most probably with ErrImagePull or ImagePullBackOff error. Now lets update the deployment again to make sure its using the correct image.
+
+kubectl edit deploy web-dp-cka06-trb
+
+Under spec: -> containers: -> change image from httpd:letest to httpd:latest and save the changes.
+Look into the POD again to make sure its running now
+
+kubectl get pod
+
+You will notice that POD is still crashing, let's look into the POD logs.
+
+kubectl logs web-dp-cka06-trb-xxxx
+
+If there are no useful logs then look into the events
+
+kubectl get event --field-selector involvedObject.name=web-dp-cka06-trb-xxxx --sort-by='.lastTimestamp'
+
+You should see some errors/warnings as below
+
+Warning   FailedPostStartHook   pod/web-dp-cka06-trb-67dccb7487-2bjgf   Exec lifecycle hook ([/bin -c echo 'Test Page' > /usr/local/apache2/htdocs/index.html]) for Container "web-container" in Pod "web-dp-cka06-trb-67dccb7487-2bjgf_default(4dd6565e-7f1a-4407-b3d9-ca595e6d4e95)" failed - error: rpc error: code = Unknown desc = failed to exec in container: failed to start exec "c980799567c8176db5931daa2fd56de09e84977ecd527a1d1f723a862604bd7c": OCI runtime exec failed: exec failed: unable to start container process: exec: "/bin": permission denied: unknown, message: ""
+
+Let's look into the lifecycle hook of the pod
+
+kubectl edit deploy web-dp-cka06-trb
+
+Under containers: -> lifecycle: -> postStart: -> exec: -> command: change /bin to /bin/sh
+Look into the POD again to make sure its running now
+
+kubectl get pod
+
+Finally pod should be in running state. Let's try to access the webapp now.
+
+curl http://cluster1-controlplane:30005
+
+You will see error curl: (7) Failed to connect to cluster1-controlplane port 30005: Connection refused
+Let's look into the service
+
+kubectl edit svc web-service-cka06-trb
+
+Let's verify if the selector labels and ports are correct as needed. You will note that service is using selector: -> app: web-cka06-trb
+Now, let's verify the app labels:
+
+kubectl get deploy web-dp-cka06-trb -o yaml
+
+Under labels you will see labels: -> deploy: web-app-cka06-trb
+So we can see that service is using wrong selector label, let's edit the service to fix the same
+
+kubectl edit svc web-service-cka06-trb
+
+Let's try to access the webapp now.
+
+curl http://cluster1-controlplane:30005
+
+Boom! app should be accessible now.
+
+
+11. 
+
+A YAML template for a Kubernetes deployment is stored at /root/app-cka07-trb.yaml. However, creating a deployment using this file is failing. Investigate the cause of the errors and fix the issue.
+Make sure that the pod is in running state once deployed.
+
+
+Note: Do not to make any changes in the template file.
+
+ans:
+Try to apply the template:
+kubectl apply -f /root/app-cka07-trb.yaml
+
+You will see an error something like:
+
+Error from server (NotFound): error when creating "/root/app-cka07-trb.yaml": namespaces "app-cka07-trb" not found
+Error from server (NotFound): error when creating "/root/app-cka07-trb.yaml": namespaces "app-cka07-trb" not found
+
+From the error you can see that its looking for app-cka07-trb namespace so let's find out if this namespace exists:
+
+kubectl get ns
+
+You will not see this namespace in the list so let's create it.
+
+Create the namespace
+kubectl create ns app-cka07-trb
+
+Apply the template
+kubectl apply -f /root/app-cka07-trb.yaml
+
+Verify the POD is up
+kubectl get pod -n app-cka07-trb
+
+12.
+
+A pod called check-time-cka03-trb is continuously crashing. Figure out what is causing this and fix it.
+
+
+
+
+Make sure that the check-time-cka03-trb POD is in running state.
+
+This pod prints the current date and time at a pre-defined frequency and saves it to a file. Ensure that it continues this operation once you have fixed it.
+
+13. 
+1. An etcd backup is already stored at the path /opt/cluster1_backup_to_restore.db on the cluster1-controlplane node. Use /root/default.etcd as the --data-dir and restore it on the cluster1-controlplane node itself.
+
+
+You can ssh to the controlplane node by running ssh root@cluster1-controlplane from the student-node.
+
+ans:
+Install etcd utility (if not installed already) and restore the backup:
+
+cluster1-controlplane ~ ➜ cd /tmp
+cluster1-controlplane ~ ➜ export RELEASE=$(curl -s https://api.github.com/repos/etcd-io/etcd/releases/latest | grep tag_name | cut -d '"' -f 4)
+cluster1-controlplane ~ ➜ wget https://github.com/etcd-io/etcd/releases/download/${RELEASE}/etcd-${RELEASE}-linux-amd64.tar.gz
+cluster1-controlplane ~ ➜ tar xvf etcd-${RELEASE}-linux-amd64.tar.gz ; cd etcd-${RELEASE}-linux-amd64
+cluster1-controlplane ~ ➜ mv etcd etcdctl  /usr/local/bin/
+cluster1-controlplane ~ ➜ etcdctl snapshot restore --data-dir /root/default.etcd /opt/cluster1_backup_to_restore.db
+
+
+14.
+Deploy a VPA named backend-scale-optimizer for a deployment named multi-container-deployment which is already present in the default namespace.
+
+The deployment consists of two containers: frontend and backend.
+
+Configure the VPA to manage resource requests for the backend container only, excluding the frontend container from automatic resource adjustments.
+
+Use the following specifications:
+
+VPA update mode: "Off" (recommendation-only mode)
+Resource limits for backend container:
+Minimum CPU: 10m
+Minimum Memory: 10Mi
+Maximum CPU: 300m
+Maximum Memory: 256Mi
+
+ans:
+kubectl config use-context cluster1
+
+Create the VPA resource:
+
+# backend-vpa.yaml
+apiVersion: autoscaling.k8s.io/v1
+kind: VerticalPodAutoscaler
+metadata:
+  name: backend-scale-optimizer
+  namespace: default
+spec:
+  targetRef:
+    apiVersion: "apps/v1"
+    kind: Deployment
+    name: multi-container-deployment
+  updatePolicy:
+    updateMode: "Off"
+  resourcePolicy:
+    containerPolicies:
+    - containerName: backend
+      minAllowed:
+        cpu: 10m
+        memory: 10Mi
+      maxAllowed:
+        cpu: 300m
+        memory: 256Mi
+      controlledResources: ["cpu", "memory"]
+
+# Apply the VPA
+kubectl apply -f backend-vpa.yaml
+
+Over here we face this issue which means we need to install CRDs for VerticalPodAutoscaler:
+
+error: resource mapping not found for name: "backend-scale-optimizer" namespace: "default" from "a": no matches for kind "VerticalPodAutoscaler" in version "autoscaling.k8s.io/v1"
+ensure CRDs are installed first
+
+Let's install the CRDs
+
+# Ref: https://github.com/kubernetes/autoscaler/blob/master/vertical-pod-autoscaler/docs/installation.md
+
+# Clone the Kubernetes autoscaler repository
+git clone https://github.com/kubernetes/autoscaler.git
+cd autoscaler/vertical-pod-autoscaler/
+
+# Install the VPA components
+./hack/vpa-up.sh
+cd -
+
+Retry applying VerticalPodAutoscaler:
+
+kubectl apply -f backend-vpa.yaml
+
+Verify that the VPA resource was created:
+
+kubectl get vpa backend-scale-optimizer -n default
+
+Check the VPA configuration to ensure it's only targeting the backend container:
+
+kubectl describe vpa backend-scale-optimizer -n default
+
+15:
+
+Create HPA api-hpa for a deployment named api-deployment in the api namespace.
+
+The HPA should scale the deployment based on a custom metric named requests_per_second, targeting an average value of 1000 requests per second across all pods.
+
+Set the minimum number of replicas to 1 and the maximum to 5.
+
+Note: You will see FailedComputeMetricsReplicas error in the description of the HPA. This is expected, so ignore the errors with collecting the custom metrics as the adapter isn't installed.
+
+ans:
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: api-hpa
+  namespace: api
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: api-deployment
+  minReplicas: 1
+  maxReplicas: 5
+  metrics:
+  - type: Pods
+    pods:
+      metric:
+        name: requests_per_second
+      target:
+        type: AverageValue
+        averageValue: 1000
+
+16.
+Create an HPA named webapp-hpa
+for a deployment named webapp-deployment in the default namespace with service webapp-service associated to it.
+
+The HPA should scale the deployment based on CPU utilization, maintaining an average CPU usage of 50% across all pods with a minimum of 1 and a maximum of 3 replicas.
+
+Configure the HPA to scale down pods cautiously by setting a stabilization window of 300 seconds to prevent rapid fluctuations in pod count.
+
+ans:
+First, set the context to cluster3:
+
+kubectl config use-context cluster3
+
+Verify that the webapp-deployment exists:
+
+kubectl get deployment webapp-deployment
+
+Create a file named webapp-hpa.yaml with the following content:
+
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: webapp-hpa
+  namespace: default
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: webapp-deployment
+  minReplicas: 1
+  maxReplicas: 3
+  metrics:
+  - type: Resource
+    resource:
+      name: cpu
+      target:
+        type: Utilization
+        averageUtilization: 50
+  behavior:
+    scaleDown:
+      stabilizationWindowSeconds: 300
+
+Apply the HPA configuration:
+
+kubectl apply -f webapp-hpa.yaml
+
+Verify that the HPA has been created with the correct configuration:
+
+kubectl get hpa webapp-hpa
+kubectl describe hpa webapp-hpa
+
+The output should show the target CPU utilization of 50% and the scale-down stabilization window of 300 seconds.
+
+Understanding Stabilization Windows in HPA
+Stabilization windows help prevent rapid fluctuations in the number of replicas during scaling events, particularly when metrics fluctuate around the threshold.
+
+When you set a stabilizationWindowSeconds value for scaling down:
+
+The HPA controller keeps track of the desired number of replicas over a period of time (the stabilization window)
+When deciding whether to scale down, it uses the highest recommendation within that window
+This prevents "flapping" where pods would be repeatedly created and deleted in response to brief metric changes
+In this case, the 300-second (5-minute) stabilization window means that the HPA will only scale down if the recommendation to use fewer replicas has been consistent for at least 5 minutes. This helps maintain system stability and prevents unnecessary pod terminations.
+
+You can also set a separate stabilization window for scaling up by configuring the scaleUp.stabilizationWindowSeconds parameter. When not specified, Kubernetes uses default values of 300 seconds for scale-down and 0 seconds for scale-up.
+
+17.
+
+A manifest file is available at the /root/app-wl03/ on the student-node node. There are some issues with the file; hence couldn't deploy a pod on the cluster3-controlplane node.
+
+After fixing the issues, deploy the pod, and it should be in a running state.
+
+
+NOTE: - Ensure that the existing limits are unchanged.
+
+ans:
+
+cd /root/app-wl03/kubectl create -f app-wl03.yaml 
+The Pod "app-wl03" is invalid: spec.containers[0].resources.requests: Invalid value: "1Gi": must be less than or equal to memory limit
+
+In the spec.containers.resources.requests.memory value is not configured as compare to the memory limit.
+
+As a fix, open the manifest file with the text editor such as vim or nano and set the value to 100Mi or less than 100Mi.
+
+It should be look like as follows: -
+resources:
+     requests:
+       memory: 100Mi
+     limits:
+       memory: 100Mi
+
+
+Final, create the resource from the kubectl create command: -
+
+kubectl create -f app-wl03.yaml 
+pod/app-wl03 created
+
+
+18.
+John is setting up a two tier application stack that is supposed to be accessible using the service curlme-cka01-svcn. To test that the service is accessible, he is using a pod called curlpod-cka01-svcn. However, at the moment, he is unable to get any response from the application.
+
+
+
+Troubleshoot and fix this issue so the application stack is accessible.
+
+
+
+While you may delete and recreate the service curlme-cka01-svcn, please do not alter it in anyway.
+
+ans:
+Test if the service curlme-cka01-svcn is accessible from pod curlpod-cka01-svcn or not.
+kubectl exec curlpod-cka01-svcn -- curl curlme-cka01-svcn
+
+.....
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+  0     0    0     0    0     0      0      0 --:--:--  0:00:10 --:--:--     0
+
+kubectl describe svc curlme-cka01-svcn ''
+
+....
+Name:              curlme-cka01-svcn
+Namespace:         default
+Labels:            <none>
+Annotations:       <none>
+Selector:          run=curlme-ckaO1-svcn
+Type:              ClusterIP
+IP Family Policy:  SingleStack
+IP Families:       IPv4
+IP:                10.109.45.180
+IPs:               10.109.45.180
+Port:              <unset>  80/TCP
+TargetPort:        80/TCP
+Endpoints:         <none>
+Session Affinity:  None
+Events:            <none>
+
+The service has no endpoints configured. As we can delete the resource, let's delete the service and create the service again.
+
+To delete the service, use the command kubectl delete svc curlme-cka01-svcn.
+You can create the service using imperative way or declarative way.
+
+
+Using imperative command:
+kubectl expose pod curlme-cka01-svcn --port=80
+
+
+
+Using declarative manifest:
+
+
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    run: curlme-cka01-svcn
+  name: curlme-cka01-svcn
+spec:
+  ports:
+  - port: 80
+    protocol: TCP
+    targetPort: 80
+  selector:
+    run: curlme-cka01-svcn
+  type: ClusterIP
+
+
+
+
+You can test the connection from curlpod-cka-1-svcn using following.
+
+
+kubectl exec curlpod-cka01-svcn -- curl curlme-cka01-svcn
+
+
+19.
+Create a pod with name tester-cka02-svcn in dev-cka02-svcn namespace with image registry.k8s.io/e2e-test-images/jessie-dnsutils:1.3. Make sure to use command sleep 3600 with restart policy set to Always .
+
+
+Once the tester-cka02-svcn pod is running, store the output of the command nslookup kubernetes.default from tester pod into the file /root/dns_output on student-node.
+
+ans:
+Change to the cluster1 context before attempting the task:
+
+kubectl config use-context cluster1
+
+Since the dev-cka02-svcn namespace doesn't exist, let's create it first:
+
+kubectl create ns dev-cka02-svcn
+
+
+
+Create the pod as per the requirements:
+
+
+kubectl apply -f - << EOF
+apiVersion: v1
+kind: Pod
+metadata:
+  name: tester-cka02-svcn
+  namespace: dev-cka02-svcn
+spec:
+  containers:
+  - name: tester-cka02-svcn
+    image: registry.k8s.io/e2e-test-images/jessie-dnsutils:1.3
+    command:
+      - sleep
+      - "3600"
+  restartPolicy: Always
+EOF
+
+
+
+Now let store the correct output into the /root/dns_output on student-node
+
+kubectl exec -n dev-cka02-svcn -i -t tester-cka02-svcn -- nslookup kubernetes.default > /root/dns_output
+
+
+20.
+We have a deployment named external-app and a service associated with it named external-service in the external namespace already created.
+
+We have to create an HTTPRoute that routes incoming traffic on path / from gateway to the external-service in the external namespace.
+
+Part 1
+
+Create an HTTP Gateway named web-gateway in the nginx-gateway namespace, which uses the nginx gateway class, and listens on port 80, and allows routes from all namespaces.
+Part 2
+
+Create an HTTPRoute named external-route in the external namespace that binds to the web-gateway in the default namespace and routes traffic to the external-service in the external namespace.
+In order to test accessing the service, use curl switch to host cluster1-controlplane.
+
+ssh cluster1-controlplane
+
+# This is the node port where gatewayclass is attached to
+curl localhost:30080
+
+ans:
+
+Step 1: Create the GatewayClass named nginx and create a Gateway in the default namespace
+Create a file named nginx-gateway.yaml:
+
+# Create the Gateway
+apiVersion: gateway.networking.k8s.io/v1
+kind: Gateway
+metadata:
+  name: web-gateway
+  namespace: nginx-gateway
+spec:
+  gatewayClassName: nginx
+  listeners:
+  - name: http
+    port: 80
+    protocol: HTTP
+    allowedRoutes:
+      namespaces:
+        from: All
+
+Note: The allowedRoutes.namespaces.from: All setting explicitly allows routes from all namespaces to bind to this Gateway, which is required for our cross-namespace routing scenario.
+
+Apply it:
+
+kubectl apply -f nginx-gateway.yaml
+
+Step 2: Create the HTTPRoute in the external namespace
+Create a file named external-route.yaml:
+
+apiVersion: gateway.networking.k8s.io/v1beta1
+kind: HTTPRoute
+metadata:
+  name: external-route
+  namespace: external
+spec:
+  parentRefs:
+  - name: web-gateway
+    namespace: nginx-gateway
+  rules:
+  - matches:
+    - path:
+        type: PathPrefix
+        value: /
+    backendRefs:
+    - name: external-service
+      port: 80
+
+Apply the HTTPRoute:
+
+kubectl apply -f external-route.yaml
+
+Step 3: Verify that the HTTPRoute is created and configured correctly
+Describe the HTTPRoute to see its configuration:
+
+kubectl describe httproute external-route -n external
+
+Step 4: Test the routing functionality
+Get the external IP of the Gateway:
+
+kubectl get gateway web-gateway -n nginx-gateway
+
+Test accessing the service using curl:
+
+So switch to host cluster1-controlplane
+
+ssh cluster1-controlplane
+
+curl localhost:30080
+
+You should see traffic being routed to the external-service in the external namespace.
 
 ```
