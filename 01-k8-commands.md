@@ -7340,7 +7340,7 @@ spec:
 ```
 
 ## Gateway API
-
+<img src="https://github.com/sheyijojo/kubernetes_CKA_Exams/blob/main/pdfs/gatewayapi.png?raw=true" alt="Description" width="800">
 ```yml
 
 
