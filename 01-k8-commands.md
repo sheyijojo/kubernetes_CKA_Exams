@@ -7415,16 +7415,16 @@ spec:
       storage: 50Mi
 
 
-ques 5 
+Ques 5 
 You will see an configmap named nginx-config-cka04-trb which seems to be the correct one.
 Edit the nginx-dp-cka04-trb deployment now
 
 kubectl edit deploy nginx-dp-cka04-trb
 
 6. 
-
 The blue-dp-cka09-trb deployment is having 0 out of 1 pods running. Fix the issue to make sure that pod is up and running.
-kubectl logs blue-dp-cka09-trb-xxxx -c init-container
+
+kubectl logs blue-dp-cka09-trb-xxxx -c init-container:
 
 kubectl edit deploy blue-dp-cka09-trb
 
@@ -7453,7 +7453,9 @@ There is a requirement to share a volume between two containers that are running
 
 - The main container should use the nginx image and mount a volume called grape-vol-cka06-str at path /var/log/nginx.
 
-- The sidecar container can use busybox image, you might need to add a sleep command to this container to keep it running. Next, mount the same volume called grape-vol-cka06-str at the path /usr/src.
+- The sidecar container can use busybox image, you might need to add a sleep command to this container to keep it running. 
+
+- Next, mount the same volume called grape-vol-cka06-str at the path /usr/src.
 
 - The volume should be of type emptyDir.
 ans:
