@@ -5404,7 +5404,7 @@ vi /etc/kubernetes/manifests/kube-apiserver.yaml
 
 - --enable-admission-plugins=NodeRestriction
 
-
+ k exec -it -n kube-system kube-apiserver-controlplane -- kube-apiserver -h | grep enable-admission-plugins | grep -Ei ' MutatingAdmission|ValidatingAdmissionWebhook|NamespaceAutoProvision|NamespaceLifecycle'
 Since the kube-apiserver is running as pod you can check the process to see enabled and disabled plugins.:
 
 ps -ef | grep kube-apiserver | grep admission-plugin
@@ -5417,15 +5417,17 @@ update this on the manifest or service:
 NamespaceExists and NamespaceAutoProvision are both deprecated and replaced with NamespaceLifecycle Admission Controller.
 
 
+Validating & Mutating Admission Controllers:
+
 Two types of Admission controllers:
 - Mutation :
    Change/mutate the object before it is created. E.g When creating a pvc, a user do not specify a storage, but a default storage class is added before the pvc object is created.
 
 Generally, mutating controllers are invoked first before the validating ones
 - Validating:
-   They validate the request and allow or deny it.
+   They validate the request and allow or deny it. E.g NamespaceExists is a validating admission controller
 
-There are other that can do both.
+There are others that can do both validating and mutating.
 
 
 Creating custom admission controllers:
