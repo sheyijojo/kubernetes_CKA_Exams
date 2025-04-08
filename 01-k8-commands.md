@@ -5617,7 +5617,6 @@ kubectl get hpa
 kubectl delete hpa NAME
 
 
-
 kubectl get all -n namespaces
 
 apiVersion: autoscaling/v1
@@ -5638,7 +5637,7 @@ status:
 
 
 Vertical Pod Autoscaler:
-Does not come built in 
+Does not come built in, hence ust be deployed from github repo 
 
 apiVersion: "autoscaling.k8s.io/v1"
 kind: VerticalPodAutoscaler
@@ -5667,6 +5666,13 @@ spec:
           memory: 500Mi
         controlledResources: ["cpu", "memory"]
 
+ updateMode" "Auto, off, initial, Recreate"
+
+off - only recommends, does not change anything :
+Initial - only changes on Pod creation. Not later:
+Recreate - Evicts Pods if usage goes beyonf range :
+Auto - Updates pod to recommended num. Behaves like recreate. But when support for inplace update for pods:
+is availabe this mode will be preferred. :
 
 Another vpa example:
 
@@ -5691,7 +5697,20 @@ spec:
           cpu: 1000m
         controlledResources: ["cpu"]
 
+In-place Resize of Pods:
 
+In Alpha phase v1.27:
+FEATURE_GATES-InPlacePodVerticalScaling=true
+
+spec:
+  containers:
+  - name: my-app
+    image: nginx 
+    resizePolicy:
+      - resourceName: cpu
+        restartPolicy: NotReuired
+      - resourceName: memory
+        restartPolicy: RestartContainer 
 ```
 
 ## Gateway API
