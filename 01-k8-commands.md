@@ -5437,7 +5437,7 @@ Creating custom admission controllers:
 
 Can configure the webhook to point to a server that is hosted within k8 or externally:
 
-Our own admission webhook server sends a request to all the built-in admission controllers, it hits the webhook that was configured on the k8 server, then makes a call to the admission webhook server by passing
+Our own admission webhook server sends a request to all the built-in admission controllers, it hits the webhook(configuration object) that was configured on k8, then makes a call to the admission webhook server by passing
 an admission review object in a JSON format(See diagram):
 
 Then the admission webhook responds with an admission review object:
