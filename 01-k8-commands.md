@@ -5672,7 +5672,7 @@ off - only recommends, does not change anything :
 Initial - only changes on Pod creation. Not later:
 Recreate - Evicts Pods if usage goes beyonf range :
 Auto - Updates pod to recommended num. Behaves like recreate. But when support for inplace update for pods:
-is availabe this mode will be preferred. :
+is available this mode will be preferred. :
 
 Another vpa example:
 
