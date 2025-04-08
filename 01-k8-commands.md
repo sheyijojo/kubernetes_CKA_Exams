@@ -5581,6 +5581,166 @@ spec:
 
 <img src="https://github.com/sheyijojo/kubernetes_CKA_Exams/blob/main/pdfs/helmchart.png?raw=true" alt="Description" width="500">
 
+## Introduction to Autoscaling 
+
+```yml
+Cluster Autoscaler 
+Horizontal Pod Autoscaler(HPA)
+Vertical Pod Autoscaler(HPA)
+
+There are two types of scaling concepts:
+- scaling the workloads 
+- scaling the cluster Infra
+
+
+Vertical scaling is not a common approach in the kubernetes world.
+Manual for VPA:
+k edit pod  & edit the limit for cpu 
+
+
+Manual way for HPA:
+Must have the metric server to run this command:
+kubectl top pod my-pod 
+kubectl scale deployment my-app --replicas=3
+
+Automated way
+Cluster Autoscaler
+Horizontal pod autoscaler
+vertical pod autoscaler 
+
+
+HPA :
+kubectl autoscale deployment my-app --cpu-percent=50 --min=1 --max=10
+
+kubectl get hpa
+
+kubectl delete hpa NAME
+
+
+
+kubectl get all -n namespaces
+
+apiVersion: autoscaling/v1
+kind: HorizontalPodAutoscaler
+metadata:
+  creationTimestamp: null
+  name: nginx-deployment
+spec:
+  maxReplicas: 3
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: nginx-deployment
+  targetCPUUtilizationPercentage: 80
+status:
+  currentReplicas: 0
+  desiredReplicas: 0
+
+
+Vertical Pod Autoscaler:
+Does not come built in 
+
+apiVersion: "autoscaling.k8s.io/v1"
+kind: VerticalPodAutoscaler
+metadata:
+  name: hamster-vpa
+spec:
+  # recommenders field can be unset when using the default recommender.
+  # When using an alternative recommender, the alternative recommender's name
+  # can be specified as the following in a list.
+  # recommenders: 
+  #   - name: 'alternative'
+  targetRef:
+    apiVersion: "apps/v1"
+    kind: Deployment
+    name: hamster
+  updatePolicy:
+    updateMode" "Auto, off, initial, Recreate"
+  resourcePolicy:
+    containerPolicies:
+      - containerName: '*'
+        minAllowed:
+          cpu: 100m
+          memory: 50Mi
+        maxAllowed:
+          cpu: 1
+          memory: 500Mi
+        controlledResources: ["cpu", "memory"]
+
+
+Another vpa example:
+
+---
+apiVersion: "autoscaling.k8s.io/v1"
+kind: VerticalPodAutoscaler
+metadata:
+  name: flask-app
+spec:
+  targetRef:
+    apiVersion: "apps/v1"
+    kind: Deployment
+    name: flask-app-4
+  updatePolicy:
+    updateMode: "Off"  # You can set this to "Auto" if you want automatic updates
+  resourcePolicy:
+    containerPolicies:
+      - containerName: '*'
+        minAllowed:
+          cpu: 100m
+        maxAllowed:
+          cpu: 1000m
+        controlledResources: ["cpu"]
+
+
+```
+
+## Gateway API
+<img src="https://github.com/sheyijojo/kubernetes_CKA_Exams/blob/main/pdfs/gatewayapi.png?raw=true" alt="Description" width="800">
+
+
+
+```yml
+apiVersion: gateway.networking.k8s.io/v1
+kind: Gateway
+metadata:
+  name: nginx-gateway
+  namespace: nginx-gateway
+spec:
+  gatewayClassName: nginx
+  listeners:
+  - name: http
+    protocol: HTTP
+    port: 80
+    allowedRoutes:
+      namespaces:
+        from: All
+
+```
+```yml
+
+apiVersion: gateway.networking.k8s.io/v1
+kind: HTTPRoute
+metadata:
+  name: frontend-route
+  namespace: default
+spec:
+  parentRefs:
+  - name: nginx-gateway
+    namespace: nginx-gateway
+  rules:
+  - matches:
+    - path:
+        type: PathPrefix
+        value: /
+    backendRefs:
+    - name: frontend-svc
+      port: 80
+```
+
+
+
+
+
 ```yml
 Helm Chart:
 Helm work as a package manager and release manager. Also help us to treat kurbernetes as Apps:
@@ -7246,144 +7406,7 @@ rules:
 
 ```
 
-## Introduction to Autoscaling 
-```yml
-Cluster Autoscaler 
-Horizontal Pod Autoscaler(HPA)
-Vertical Pod Autoscaler(HPA)
 
-Manual way:
-Must have the metric server to run this command :
-kubectl top pod my-pod 
-kubectl scale deployment my-app --replicas=3
-
-HPA :
-kubectl autoscale deployment my-app --cpu-percent=50 --min=1 --max=10
-
-kubectl get hpa
-
-kubectl delete hpa NAME
-
-
-
-kubectl get all -n namespaces
-
-apiVersion: autoscaling/v1
-kind: HorizontalPodAutoscaler
-metadata:
-  creationTimestamp: null
-  name: nginx-deployment
-spec:
-  maxReplicas: 3
-  scaleTargetRef:
-    apiVersion: apps/v1
-    kind: Deployment
-    name: nginx-deployment
-  targetCPUUtilizationPercentage: 80
-status:
-  currentReplicas: 0
-  desiredReplicas: 0
-
-
-Vertical Pod Autoscaler:
-Does not come built in 
-
-apiVersion: "autoscaling.k8s.io/v1"
-kind: VerticalPodAutoscaler
-metadata:
-  name: hamster-vpa
-spec:
-  # recommenders field can be unset when using the default recommender.
-  # When using an alternative recommender, the alternative recommender's name
-  # can be specified as the following in a list.
-  # recommenders: 
-  #   - name: 'alternative'
-  targetRef:
-    apiVersion: "apps/v1"
-    kind: Deployment
-    name: hamster
-  updatePolicy:
-    updateMode" "Auto, off, initial, Recreate"
-  resourcePolicy:
-    containerPolicies:
-      - containerName: '*'
-        minAllowed:
-          cpu: 100m
-          memory: 50Mi
-        maxAllowed:
-          cpu: 1
-          memory: 500Mi
-        controlledResources: ["cpu", "memory"]
-
-
-Another vpa example:
-
----
-apiVersion: "autoscaling.k8s.io/v1"
-kind: VerticalPodAutoscaler
-metadata:
-  name: flask-app
-spec:
-  targetRef:
-    apiVersion: "apps/v1"
-    kind: Deployment
-    name: flask-app-4
-  updatePolicy:
-    updateMode: "Off"  # You can set this to "Auto" if you want automatic updates
-  resourcePolicy:
-    containerPolicies:
-      - containerName: '*'
-        minAllowed:
-          cpu: 100m
-        maxAllowed:
-          cpu: 1000m
-        controlledResources: ["cpu"]
-
-
-```
-
-## Gateway API
-<img src="https://github.com/sheyijojo/kubernetes_CKA_Exams/blob/main/pdfs/gatewayapi.png?raw=true" alt="Description" width="800">
-
-
-
-```yml
-apiVersion: gateway.networking.k8s.io/v1
-kind: Gateway
-metadata:
-  name: nginx-gateway
-  namespace: nginx-gateway
-spec:
-  gatewayClassName: nginx
-  listeners:
-  - name: http
-    protocol: HTTP
-    port: 80
-    allowedRoutes:
-      namespaces:
-        from: All
-
-```
-```yml
-
-apiVersion: gateway.networking.k8s.io/v1
-kind: HTTPRoute
-metadata:
-  name: frontend-route
-  namespace: default
-spec:
-  parentRefs:
-  - name: nginx-gateway
-    namespace: nginx-gateway
-  rules:
-  - matches:
-    - path:
-        type: PathPrefix
-        value: /
-    backendRefs:
-    - name: frontend-svc
-      port: 80
-```
 
 ## exam 4
 
