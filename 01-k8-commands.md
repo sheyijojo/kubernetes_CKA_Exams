@@ -5725,9 +5725,24 @@ Interpret VPA recommendations by understanding key parameters like lowerBound, u
 ## Gateway API
 <img src="https://github.com/sheyijojo/kubernetes_CKA_Exams/blob/main/pdfs/gatewayapi.png?raw=true" alt="Description" width="800">
 
-```yml
-Ingress Limitation
 
+
+```yml
+Ingress Limitation:
+
+What if team A an B wanna manage the rules below?
+Multi-tenancy
+Namespace Isolation
+No RBAC for Features
+No Resource 
+
+Next generation of Ingress Load Balancing Service Mesg APIs
+
+Gateway API provides 3 seperate object managed by seperate personas
+
+GatewayClass: Infrastructure providers (nginx, traafik, other load balancers)
+Gateway: Cluster operators will configure this instance of the GatewayClass
+HTTPRoute TCPRoute GRPCRoute: Application developers 
 
 
 ```
