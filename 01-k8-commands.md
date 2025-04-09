@@ -5725,7 +5725,15 @@ Interpret VPA recommendations by understanding key parameters like lowerBound, u
 ## Gateway API
 <img src="https://github.com/sheyijojo/kubernetes_CKA_Exams/blob/main/pdfs/gatewayapi.png?raw=true" alt="Description" width="800">
 
+```yml
+Ingress Limitation
 
+
+
+```
+
+### ingress limitation
+<img src="https://github.com/sheyijojo/kubernetes_CKA_Exams/blob/main/pdfs/ingress_limitation.png?raw=true" alt="Description" width="800">
 
 ```yml
 apiVersion: gateway.networking.k8s.io/v1
@@ -6389,18 +6397,27 @@ Custom Resource Definition (CRD)
 CRD needs a Custom Controller to create the CRD object
 ```
 
-<img src="https://github.com/sheyijojo/kubernetes_CKA_Exams/blob/main/pdfs/sec01.png?raw=true" alt="Description" width="500">
+<img src="https://github.com/sheyijojo/kubernetes_CKA_Exams/blob/main/pdfs/sec01.png?raw=true" alt="Description" width="700">
 
-<img src="https://github.com/sheyijojo/kubernetes_CKA_Exams/blob/main/pdfs/sec02.png?raw=true" alt="Description" width="500">
+#
+<img src="https://github.com/sheyijojo/kubernetes_CKA_Exams/blob/main/pdfs/sec02.png?raw=true" alt="Description" width="700">
 
-<img src="https://github.com/sheyijojo/kubernetes_CKA_Exams/blob/main/pdfs/sec03.png?raw=true" alt="Description" width="500">
+#
+
+<img src="https://github.com/sheyijojo/kubernetes_CKA_Exams/blob/main/pdfs/sec03.png?raw=true" alt="Description" width="700">
+Operator framework:
+Combining CRD and Custom Controller 
+
+Check all operators at operator hub 
+
+
 
 ## Exams
 
 ```yml
 k expose pod messaging --name=messaging-service --port=6379 --type=ClusterIP --labels tier=msg
 
-question
+question:
 
 Create a static pod named static-busybox on the controlplane node that uses the busybox image and the command sleep 1000:
 kubectl run --restart=Never --image=busybox static-busybox --dry-run=client -o yaml --command -- sleep 1000 > /etc/kubernetes/manifests/static-busybox.yaml
