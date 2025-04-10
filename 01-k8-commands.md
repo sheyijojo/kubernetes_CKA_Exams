@@ -7445,6 +7445,7 @@ It should not work from this pod. So its looking good now
 ```
 
 ## API Groups
+kubectl api-resources --output wide
 
 ```yaml
 apiVersion: rbac.authorization.k8s.io/v1
