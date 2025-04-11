@@ -5841,6 +5841,8 @@ type - application or library
 helm commands:
 
 helm search hub wordpress
+or 
+helm search repo wordpress
 
 add bitnami helm chart repo to the cluster:
 helm repo add bitnami https://charts.bitnami.com/bitnami
@@ -5849,15 +5851,18 @@ helm repo add bitnami https://charts.bitnami.com/bitnami
 
 helm install my-release bitnami/wordpress
 
-helm search repo wordpress
 
+list all releases:
 helm list
 
+result: my-release
+
+uninstall release:
 helm unistall my-release
 
 
+remove,add,listdate repo:
 helm repo list
-
 helm repo update
 
 
