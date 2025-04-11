@@ -5848,7 +5848,7 @@ add bitnami helm chart repo to the cluster:
 helm repo add bitnami https://charts.bitnami.com/bitnami
 
 
-
+install chart with a custom release name:
 helm install my-release bitnami/wordpress
 
 
@@ -5874,7 +5874,7 @@ helm install --set wordpressBlogName="Helm Tutorials" my-release bitnami/wordpre
 custom values:
 helm install --values custom-values.yml my-release bitnami/wordpress
 
-can pull:
+can pull in archived form :
 helm pull bitnami/wordpress
 helm pull --untar bitnami/wordpress
 
