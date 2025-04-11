@@ -5806,6 +5806,8 @@ helm upgrade wordpress (rev2)
 
 helm rollback wordpress (rev3)
 
+helm uninstall wordpress 
+
 
 Charts are a collection of files. They contain instructions that Helm needs to know to create the collection of objects needed in a k8 :cluster.
 
