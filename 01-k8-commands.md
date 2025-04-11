@@ -5888,7 +5888,7 @@ helm search hub consul -- consul
 
 Helm Lifescycle Management:
 
-example:
+example: Install an older version 
 
 helm install nginx-release bitnami/nginx --version 7.1.0
 
@@ -5907,7 +5907,7 @@ upgrade a release app version from 1.22.0 to 1.23.X:
 
 helm upgrade dazzling-web bitnami/nginx --version 18
 
-but the current andswer is --version 13 which gives app version of 1.23.4 specifically
+but the current answer is --version 13 which gives app version of 1.23.4 specifically
 
 rollback to version 3:
 
@@ -5920,11 +5920,12 @@ helm list
 check all revisions:
 helm history nginx-release
 
+rollback to revision 1:
 
 helm rollback nginx-release 1
  technically doesnt go back to revision 1, creates another revision 3 but same config with revision 1:
 
-pvs, database, external data, rollback won't restore the data. There are options to do that using charthooks.
+pvs, database, external data, rollback won't restore the data. There are options to do that using chartHooks.:
 
 
 
@@ -5941,6 +5942,13 @@ pvs, database, external data, rollback won't restore the data. There are options
 ## Kustomize
 
 <img src="https://github.com/sheyijojo/kubernetes_CKA_Exams/blob/main/pdfs/kustomize.png?raw=true" alt="Description" width="700">
+
+
+
+
+
+
+
 
 ## Kustomize
 
