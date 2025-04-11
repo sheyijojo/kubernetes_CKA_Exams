@@ -5861,7 +5861,7 @@ uninstall release:
 helm unistall my-release
 
 
-remove,add,listdate repo:
+remove,add, list, update repo:
 helm repo list
 helm repo update
 
