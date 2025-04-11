@@ -5809,12 +5809,16 @@ helm rollback wordpress (rev3)
 helm uninstall wordpress 
 
 
-Charts are a collection of files. They contain instructions that Helm needs to know to create the collection of objects needed in a k8 :cluster.
+Charts are a collection of files. They contain instructions that Helm needs to know to create the collection of objects needed in a k8 cluster.
 
-By using charts and objects, helm in a way intsalls application in my cluster.:
+By using charts and objects, helm in a way installs an application in my cluster.:
 
-When a chart is applied to my cluster, a RELEASE is created. A release is single installation of an app using a Helm Chart.
-On each release, you can have multiple revisions.Each rev is like a snapshot of the application.
+When a chart is applied to my cluster, a RELEASE is created. 
+
+A release is a single installation of an app using a Helm Chart.
+On each release, you can have multiple revisions.
+
+Each rev is like a snapshot of the application.
 
 
 We can find helm charts in public repos and use them. :
@@ -5838,7 +5842,7 @@ helm commands:
 
 helm search hub wordpress
 
-add bitnami hel chart repo to the cluster
+add bitnami helm chart repo to the cluster:
 helm repo add bitnami https://charts.bitnami.com/bitnami
 
 
@@ -5918,15 +5922,15 @@ pvs, database, external data, rollback won't restore the data. There are options
 
 ## Helm- Helloworld
 
-<img src="https://github.com/sheyijojo/kubernetes_CKA_Exams/blob/main/pdfs/helm-helloworld.png?raw=true" alt="Description" width="500">
+<img src="https://github.com/sheyijojo/kubernetes_CKA_Exams/blob/main/pdfs/helm-helloworld.png?raw=true" alt="Description" width="700">
 
 ## Heml - wordpress
 
-<img src="https://github.com/sheyijojo/kubernetes_CKA_Exams/blob/main/pdfs/helm-wordpress.png?raw=true" alt="Description" width="500">
+<img src="https://github.com/sheyijojo/kubernetes_CKA_Exams/blob/main/pdfs/helm-wordpress.png?raw=true" alt="Description" width="700">
 
 ## Kustomize
 
-<img src="https://github.com/sheyijojo/kubernetes_CKA_Exams/blob/main/pdfs/kustomize.png?raw=true" alt="Description" width="500">
+<img src="https://github.com/sheyijojo/kubernetes_CKA_Exams/blob/main/pdfs/kustomize.png?raw=true" alt="Description" width="700">
 
 ## Kustomize
 
