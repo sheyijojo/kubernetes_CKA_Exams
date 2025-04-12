@@ -5796,7 +5796,7 @@ spec:
 Helm Chart:
 Helm work as a package manager and release manager. Also help us to treat kurbernetes as Apps:
 
-
+Installing helm:
 sudo snap install --classic
 
 
@@ -5827,8 +5827,6 @@ Helm produces metadata and needs somewhere to save it. It saves it as a k8 Secre
 
 artifacthub.io:
 - you see thousand of charts there
-
-
 
 components of helm chart:
 - templates(folder)
@@ -5903,7 +5901,7 @@ helm upgrade nginx-release bitnami/nginx
 upgrade a release app version from 1.22.0 to 1.23.X:
 - To get this, need to upgrade the chart from current version of nginx-12.0.4 to 13.
 - 13 contains app version of 1.23. 0  :
-- I upgraded mine to 18, which is the latest chart version, downloaded on my k8n portal:
+- I upgraded mine to 18, which is the latest chart version, downloaded on my k8 portal:
 
 helm upgrade dazzling-web bitnami/nginx --version 18
 
@@ -5960,12 +5958,12 @@ Managing environment :
 
 Same deployment but different config for each env :
 
-dev/nginx.yml  stg/nginx.yml  prod/nginx.yml :
+dev/nginx.yml  stg/nginx.yml  prod/nginx.yml 
 
 k apply of dev/nginx
 This is just scaling the replicas. This is not a scalable solution:
 
-Comes built in to kubctl, but still need to check for latest version , k doesnt come with latest version
+Comes built in to kubectl, but still need to check for latest version , k doesnt come with latest version
 Two concepts
 Base config: Default accross your environment
 Overlays: customize behaviors per env basis
