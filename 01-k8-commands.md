@@ -5907,6 +5907,8 @@ upgrade a release app version from 1.22.0 to 1.23.X:
 
 helm upgrade dazzling-web bitnami/nginx --version 18
 
+helm upgrade dazzling-web bitnami/nginx --version 18.3.6
+
 but the current answer is --version 13 which gives app version of 1.23.4 specifically
 
 rollback to version 3:
