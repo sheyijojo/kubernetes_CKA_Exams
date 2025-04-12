@@ -5964,13 +5964,14 @@ k apply of dev/nginx
 This is just scaling the replicas. This is not a scalable solution:
 
 Comes built in to kubectl, but still need to check for latest version , k doesnt come with latest version
-Two concepts
+Two concepts:
+
 Base config: Default accross your environment
 Overlays: customize behaviors per env basis
 
 overlays/dev  , overlays/stg, overlays/prod
 
-Kustomize
+Kustomize:
 Base + Overlay  ==  Final Manifests
 
 
@@ -5979,14 +5980,14 @@ Kustomize vs Helm :
 Helm use of go templates to allow assinging var to properties
 Helm is more than just a tool to customize configs on a per env basis. Helm is also a package manager for your app
 Helm provides conditionals, loops, functions, amd hooks
-Helm templates are not valid YAML as thet use go templating
+Helm templates are not valid YAML as they use go templating
 Helm is complex templates become hard to read unlike Kustomize which is pure yaml.
 
 
 
 Install Kustomize
 
-curl gitbusocnten masster/hack-----
+curl gitbusocnten master/hack-----
 
 kustomize version --short :
 
@@ -5996,28 +5997,28 @@ structure  :
 
 k8s folder
    nginx-depl.yaml
-   nginx-service
+   nginx-service.yaml
    kustomization.yaml
 
 
 kustomization.yaml
-##kurbenetes resources that need to be managed by kustomize
+kurbenetes resources that need to be managed by kustomize:
 resources:
   - nginx-deploy.yaml
   - nginx-service.yaml
 
-##Customizations that need to be made
+Customizations that need to be made:
 commonLabels:
   company: mycompany
 
 
 kustomize build k8s/
 
-output: service,  nginx
+output: service,  nginx:
 The Kustomize build command combines all the manifests and applies the defined transformations
 
-The Kustomize build command does not apply/deploy the kubernetes resources to a cluster
-  - The output needs to be redirected to the kubectl apply command
+The Kustomize build command does not apply/deploy the kubernetes resources to a cluster:
+  - The output needs to be redirected to the kubectl apply command:
 
 
 to run it:
@@ -6041,13 +6042,14 @@ kubectl apply -f k8s/db/
 
 This becomes to get cubersome :
 - go to k8s folder and and place Kustomization in the directory
-- Because we get to add kustomizatin.yml in each dir
+- Because we get to add kustomization.yml in each dir
 resources:
   - api/api-deply.yaml
   - api/api-service.yaml
   - db/db-deply.yaml
   - db/db-service.yaml
-##Customizations that need to be made
+
+Customizations that need to be made:
 commonLabels:
   company: mycompany
 
@@ -6130,7 +6132,7 @@ kustomize build k8s/ | kubectl apply -f -
 
 ```
 
-<img src="https://github.com/sheyijojo/kubernetes_CKA_Exams/blob/main/pdfs/managing-directories.png?raw=true" alt="Description" width="500">
+<img src="https://github.com/sheyijojo/kubernetes_CKA_Exams/blob/main/pdfs/managing-directories.png?raw=true" alt="Description" width="700">
 
 ## kustomization continues
 
@@ -6448,6 +6450,15 @@ Operator framework:
 Combining CRD and Custom Controller 
 
 Check all operators at operator hub 
+
+
+
+
+
+
+
+
+
 
 
 
