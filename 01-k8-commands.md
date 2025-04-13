@@ -6007,7 +6007,7 @@ resources:
   - nginx-deploy.yaml
   - nginx-service.yaml
 
-Customizations that need to be made:
+Customizations that need to be made to all the object defined in the resource section:
 commonLabels:
   company: mycompany
 
@@ -6044,9 +6044,9 @@ This becomes to get cubersome :
 - go to k8s folder and and place Kustomization in the directory
 - Because we get to add kustomization.yml in each dir
 resources:
-  - api/api-deply.yaml
+  - api/api-depl.yaml
   - api/api-service.yaml
-  - db/db-deply.yaml
+  - db/db-depl.yaml
   - db/db-service.yaml
 
 Customizations that need to be made:
@@ -6092,7 +6092,7 @@ kubectl apply -k k8s/
 
 
 Best solution
-Create a kustomization.yaml in each suub-directories and a root kustomization.yaml.:
+Create a kustomization.yaml in each sub-directories and a root kustomization.yaml.:
 Reference the sub-directory kustomization.yaml in in the root
 
 Example:
@@ -6107,7 +6107,9 @@ k8s/api/
 
 Now the api kustomization.yaml file in the api folder
 
-##kurbenetes resources that need to be managed by kustomize
+kurbenetes resources that need to be managed by kustomize:
+kustomization.yaml:
+
 resources:
   - api-deply.yaml
   - api-service.yaml
@@ -6135,12 +6137,11 @@ kustomize build k8s/ | kubectl apply -f -
 <img src="https://github.com/sheyijojo/kubernetes_CKA_Exams/blob/main/pdfs/managing-directories.png?raw=true" alt="Description" width="700">
 
 ## kustomization continues
-
 ```yml
 common transformers:
 commonLabel
 namePrefix/Suffix
-Namespace
+namespace
 commonAnnotations
 
 kustomization.yaml
@@ -6195,8 +6196,8 @@ Patches is another method to modifying kubernetes configs
 
 Two ways of working with patches
 
-json 6902 Patch
-Strategic merge Patch
+json 6902 Patch:
+Strategic merge Patch:
 ```
 
 ### Inline vs seperate file
@@ -6236,9 +6237,9 @@ Strategic merge Patch
 ## Overlays
 
 ```yml
-Putting everything together and understand use cases of using kustomize
+Putting everything together and understand use cases of using kustomize:
 
-Can add new config that is not present in the base folder. More like additional customization per overlays/
+Can add new config that is not present in the base folder. More like additional customization per overlays/ :
 ```
 
 <img src="https://github.com/sheyijojo/kubernetes_CKA_Exams/blob/main/pdfs/patches-18.png?raw=true" alt="Description" width="500">
