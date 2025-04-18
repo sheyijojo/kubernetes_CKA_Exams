@@ -6434,9 +6434,16 @@ kustomize build  k8s/overlays/QA/ | kubectl apply -f -
 ## Security (2025 Updates)
 
 ```yaml
-Custom Resource Definition (CRD)
+- Custom Resource Definition (CRD)
 
-CRD needs a Custom Controller to create the CRD object
+- CRD needs a Custom Controller to create the CRD object
+
+- Without controllers, the custom resource will just sit there and do nothing and store data locally in our ETCD data stores 
+
+Developing custom controller:
+Monitor the status of the object in etcd and perform actions such as making calls to the flight booking API 
+
+
 ```
 
 <img src="https://github.com/sheyijojo/kubernetes_CKA_Exams/blob/main/pdfs/sec01.png?raw=true" alt="Description" width="700">
@@ -6447,12 +6454,21 @@ CRD needs a Custom Controller to create the CRD object
 #
 
 <img src="https://github.com/sheyijojo/kubernetes_CKA_Exams/blob/main/pdfs/sec03.png?raw=true" alt="Description" width="700">
-Operator framework:
-Combining CRD and Custom Controller 
+
+
+
+## Operator framework:
+
+```yml
+This Combines the  CRD and Custom Controller as one one deployment
+
+kubectl create -f flight-operator.yml 
+
+One of the most popluar operators is the etcd Operator:
 
 Check all operators at operator hub 
 
-
+```
 
 
 
