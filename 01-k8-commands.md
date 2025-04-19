@@ -6818,6 +6818,9 @@ Alternatively, run the following command:
 kubectl run secret-1401 -n admin1401 --image=busybox --dry-run=client -o yaml --command -- sleep 4800 > admin.yaml
 
 
+kubectl annotate deployment nginx-deploy \
+  kubernetes.io/change-cause="Updated nginx image to 1.17" --overwrite
+
 ---
 apiVersion: v1
 kind: Pod
